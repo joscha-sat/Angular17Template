@@ -1,3 +1,20 @@
+@use "index" as *;
+
+
+:root {
+  // Success
+  --success-bg: #{$success-bg};
+  --success-txt: #{$success-txt};
+
+  // Warn
+  --warn-bg: #{$warn-bg};
+  --warn-txt: #{$warn-txt};
+
+  // Error
+  --error-bg: #{$error-bg};
+  --error-txt: #{$error-txt};
+}
+
 /* ---------------------------------- */
 /*  || CSS RESET ||  -----------------*/
 /* ---------------------------------- */
