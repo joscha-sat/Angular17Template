@@ -2,5 +2,11 @@
   "general": {
     "no": "No",
     "yes": "Yes"
+  },
+  "login": {
+    "forgot-password": "Forgot your password?",
+    "login-btn": "Login",
+    "subtitle": "Login with your account",
+    "title": "Login"
   }
 }

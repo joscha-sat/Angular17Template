@@ -1,0 +1,35 @@
+<!-- input -->
+@switch (type) {
+  @case ('text') {
+    <tui-input [formControlName]="fControlName">
+      {{ label }}
+      <input type="text" tuiTextfield />
+    </tui-input>
+  }
+  @case ('email') {
+    <tui-input [formControlName]="fControlName">
+      {{ label }}
+      <input type="email" tuiTextfield />
+    </tui-input>
+  }
+  @case ('password') {
+    <tui-input-password [formControlName]=" fControlName ">
+      {{ label }}
+      <span class="tui-required"></span>
+    </tui-input-password>
+  }
+  @case ('number') {
+    <!--      [tuiTextfieldPostfix]="'978' | tuiCurrency"-->
+    <tui-input-number
+      [formControlName]="fControlName"
+    >
+      {{ label }}
+    </tui-input-number>
+  }
+}
+
+<!-- input invalid, show error -->
+<tui-error
+  [error]="[] | tuiFieldError | async"
+  [formControlName]="fControlName"
+></tui-error>

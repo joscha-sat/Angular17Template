@@ -79,6 +79,11 @@
   gap: var(--gap, 1rem);
 }
 
+// padding wrapper -------------------------------------------- //
+.padding-wrapper-2 {
+  padding: 2rem;
+}
+
 // cursor mixins -------------------------------------------- //
 .pointer:hover {
   cursor: pointer;
@@ -96,4 +101,16 @@
 
 .f700 {
   font-weight: 700;
+}
+
+.form-title {
+  font-size: var(--f-size, 1.25rem);
+  padding-bottom: var(--pb, 1rem);
+  @extend .f700;
+}
+
+.form-subtitle {
+  font-size: var(--f-size, 1rem);
+  padding-bottom: var(--pb, 0.5rem);
+  color: var(--tui-text-03);
 }

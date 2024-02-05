@@ -2,5 +2,11 @@
   "general": {
     "no": "Nein",
     "yes": "Ja"
+  },
+  "login": {
+    "forgot-password": "Passwort vergessen?",
+    "login-btn": "Anmelden",
+    "subtitle": "Bei deinem Konto einloggen",
+    "title": "Login"
   }
 }
