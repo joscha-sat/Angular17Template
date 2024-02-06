@@ -7,7 +7,8 @@
   <button
     tuiIconButton
     type="button"
-    appearance="{{ selected || rla.isActive ? 'primary' : 'secondary' }}"
+    [routerLink]="[navItem.link]"
+    appearance="{{ rla.isActive ? 'primary' : 'secondary' }}"
     routerLinkActive
     #rla="routerLinkActive"
     [tuiHint]="tooltip"
@@ -18,4 +19,3 @@
     <tui-svg src="{{ navItem.icon }}" class=""></tui-svg>
   </button>
 }
-
