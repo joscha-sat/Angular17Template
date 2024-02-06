@@ -1,4 +1,11 @@
 {
+  "alert": {
+    "error": "Fehler",
+    "info": "Info",
+    "neutral": "Hinweis",
+    "success": "Erfolg",
+    "warn": "Warnung"
+  },
   "general": {
     "no": "Nein",
     "yes": "Ja"
