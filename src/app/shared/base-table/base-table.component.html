@@ -1,0 +1,54 @@
+<table
+  [columns]="columns"
+  class="table"
+  tuiTable
+>
+  <!-- HEAD / HEADERS -->
+  <thead>
+  <tr tuiThGroup>
+    <th
+      *ngFor="let header of headers"
+      tuiTh
+    >
+      {{ header }}
+    </th>
+  </tr>
+  </thead>
+
+  <!-- BODY / DATA -->
+  <tbody
+    [data]="tableData"
+    tuiTbody
+  >
+  <tr
+    *ngFor="let item of tableData"
+    tuiTr
+  >
+    <!--  loop ober the colum names displaying the corresponding data of it  -->
+    @for (column of columns; track column) {
+      <td
+        tuiTd
+        *tuiCell="column"
+      >
+        {{ extractNestedProperty(item, column) }}
+      </td>
+    }
+  </tr>
+  </tbody>
+
+
+  <!-- footer with pagination -->
+  <!--  <tfoot>-->
+  <!--  <tr>-->
+  <!--    <td [colSpan]="columns.length">-->
+  <!--      <tui-table-pagination-->
+  <!--        (pageChange)="onPage($event)"-->
+  <!--        (sizeChange)="onSize($event)"-->
+  <!--        [total]="(total$ | async) || 0"-->
+  <!--        class="tui-space_top-2"-->
+  <!--      ></tui-table-pagination>-->
+  <!--    </td>-->
+  <!--  </tr>-->
+  <!--  </tfoot>-->
+</table>
+
