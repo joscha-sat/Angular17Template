@@ -1,5 +1,5 @@
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { TuiAlertModule, TuiRootModule } from "@taiga-ui/core";
+import { TuiAlertModule, TuiDialogModule, TuiRootModule } from "@taiga-ui/core";
 import { ApplicationConfig, importProvidersFrom } from "@angular/core";
 import { provideRouter } from "@angular/router";
 import { routes } from "./app.routes";
@@ -18,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(withInterceptors([authTokenInterceptor, isLoadingInterceptor])),
     provideRouter(routes),
-    importProvidersFrom(TuiRootModule, TuiAlertModule),
+    importProvidersFrom(TuiRootModule, TuiAlertModule, TuiDialogModule),
     TranslateModule.forRoot({
       defaultLanguage: "de",
       loader: {

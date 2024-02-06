@@ -1,6 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { TuiDialogContext, TuiDialogService } from "@taiga-ui/core";
 import { PolymorpheusComponent } from "@tinkoff/ng-polymorpheus";
+import { BaseDialogComponent, DialogData } from "../shared/base-dialog/base-dialog.component";
 
 @Injectable({
   providedIn: "root",
@@ -8,7 +9,7 @@ import { PolymorpheusComponent } from "@tinkoff/ng-polymorpheus";
 export class TuiDialogHelperService {
   dialogService = inject(TuiDialogService);
 
-  openDialog(component: any, data?: any) {
+  openDialog(data?: DialogData, component: any = BaseDialogComponent) {
     this.dialogService
       .open(
         new PolymorpheusComponent(component),

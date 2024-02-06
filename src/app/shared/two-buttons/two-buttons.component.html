@@ -1,0 +1,22 @@
+<div class="actions">
+  <button
+    (click)="onLeftBtnClick()"
+    [appearance]="!leftBtnBg? 'primary' : ''"
+    [size]="size"
+    [style.backgroundColor]="leftBtnBg"
+    [style.color]="leftBtnColor"
+    tuiButton
+  >
+    {{ leftBtnTxt }}
+  </button>
+  <button
+    (click)="onRightBtnClick()"
+    [appearance]="!rightBtnBg? 'primary' : ''"
+    [size]="size"
+    [style.backgroundColor]="rightBtnBg"
+    [style.color]="rightBtnColor"
+    tuiButton
+  >
+    {{ rightBtnTxt }}
+  </button>
+</div>
