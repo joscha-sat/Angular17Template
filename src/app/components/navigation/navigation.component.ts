@@ -18,9 +18,9 @@ export class NavigationComponent implements OnInit {
   // here are all values for the navigation buttons. Each entry adds a nav-button with its values
   navItems: NavItem[] = [
     {
-      tooltip: "Test",
-      icon: "tuiIconBriefcaseLarge",
-      link: NavRoutes.DASHBOARD,
+      tooltip: "Tenant",
+      icon: "tuiIconHomeLarge",
+      link: NavRoutes.TENANT,
     },
     {
       tooltip: "Settings",

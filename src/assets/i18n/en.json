@@ -25,5 +25,9 @@
   },
   "nav": {
     "settings": "Settings"
+  },
+  "tenant": {
+    "new-btn": "Create tenant",
+    "title": "Tenant"
   }
 }

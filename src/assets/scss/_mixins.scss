@@ -114,3 +114,8 @@
   padding-bottom: var(--pb, 0.5rem);
   color: var(--tui-text-03);
 }
+
+.view-title {
+  font-size: 1.625rem;
+  @extend .f700;
+}

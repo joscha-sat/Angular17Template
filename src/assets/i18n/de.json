@@ -25,5 +25,9 @@
   },
   "nav": {
     "settings": "Einstellungen"
+  },
+  "tenant": {
+    "new-btn": "Firma erstellen",
+    "title": "Firmen"
   }
 }

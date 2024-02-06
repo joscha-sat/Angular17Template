@@ -23,61 +23,8 @@ import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taig
   styleUrl: "./base-table.component.scss",
 })
 export class BaseTableComponent implements OnInit {
-
   @Input() tableData: any = [
     {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    }, {
       name: "John Smith",
       age: 30,
       address: { street: "herbstraße" },
