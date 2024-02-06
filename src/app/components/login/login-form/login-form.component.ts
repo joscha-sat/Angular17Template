@@ -31,6 +31,7 @@ export class LoginFormComponent {
   }
 
   submit() {
-    return false;
+    if (this.form?.invalid) return;
   }
 }
+
