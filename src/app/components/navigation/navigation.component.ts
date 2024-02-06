@@ -15,7 +15,6 @@ import { AccountComponent } from "./account/account.component";
   styleUrl: "./navigation.component.scss",
 })
 export class NavigationComponent implements OnInit {
-
   // here are all values for the navigation buttons. Each entry adds a nav-button with its values
   navItems: NavItem[] = [
     {
@@ -24,9 +23,9 @@ export class NavigationComponent implements OnInit {
       link: NavRoutes.DASHBOARD,
     },
     {
-      tooltip: "Test",
-      icon: "tuiIconBriefcaseLarge",
-      link: NavRoutes.DASHBOARD,
+      tooltip: "Settings",
+      icon: "tuiIconSettings",
+      link: NavRoutes.SETTINGS,
     },
   ];
 

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { NavItem } from "../../../enums/nav-items";
 import { TuiButtonModule, TuiHintModule, TuiSvgModule } from "@taiga-ui/core";
-import { RouterLinkActive } from "@angular/router";
+import { Router, RouterLinkActive } from "@angular/router";
 
 @Component({
   selector: "app-nav-button",
@@ -21,7 +21,13 @@ export class NavButtonComponent {
 
   @Output() isClicked: EventEmitter<NavItem> = new EventEmitter<NavItem>(); // Emits the clicked button to the parent component.
 
+  constructor(private router: Router) {
+  }
+
   onClick() {
+    this.router.navigate([this.navItem!.link]).then();
     this.isClicked.emit(this.navItem);
   }
+
+
 }
