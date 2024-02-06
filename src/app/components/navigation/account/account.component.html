@@ -1,0 +1,36 @@
+<tui-hosted-dropdown
+  [(open)]="isOpen"
+  [content]="dropdown"
+  [sided]="true"
+  tuiDropdownAlign="right"
+>
+  <button
+    [pseudoActive]="isOpen || null"
+    appearance="flat"
+    iconRight="tuiIconUserLarge"
+    size="m"
+    tuiIconButton
+    type="button"
+  ></button>
+</tui-hosted-dropdown>
+
+<!-- Drop up content on the bottom for settings and logout -->
+<ng-template #dropdown let-close="close">
+  <tui-data-list>
+    <tui-opt-group class="user-name">
+      {{ userName }}
+    </tui-opt-group>
+
+    <tui-opt-group>
+      @for (option of options; track option) {
+        <!--   settings   -->
+        <button (click)="onOptionsClick(option)" class="dropdown-btn" tuiOption>
+          <tui-svg [src]="option.icon"></tui-svg>
+          {{ option.ngxTitle | translate }}
+        </button>
+      }
+    </tui-opt-group>
+
+
+  </tui-data-list>
+</ng-template>

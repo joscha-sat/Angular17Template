@@ -1,0 +1,40 @@
+.sidebar-wrapper {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100dvh;
+
+  background-color: var(--tui-base-02);
+
+  width: 5.5rem;
+  z-index: 9999;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+
+  justify-content: space-between;
+  align-items: center;
+
+  height: 100%;
+  width: 100%;
+}
+
+.nav-items-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  padding-top: 2.5rem;
+}
+
+.logo-wrapper {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 100%;
+  margin: 1rem 0 1rem 0;
+  background-color: var(--tui-primary);
+}

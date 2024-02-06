@@ -1,0 +1,21 @@
+@if (navItem) {
+  <!-- tooltip -->
+  <ng-template #tooltip>
+    <div>{{ navItem.tooltip }}</div>
+  </ng-template>
+  <!-- nav button -->
+  <button
+    tuiIconButton
+    type="button"
+    appearance="{{ selected || rla.isActive ? 'primary' : 'secondary' }}"
+    routerLinkActive
+    #rla="routerLinkActive"
+    [tuiHint]="tooltip"
+    tuiHintDirection="right"
+    tuiHintAppearance="onDark"
+    (click)="onClick()"
+  >
+    <tui-svg src="{{ navItem.icon }}" class=""></tui-svg>
+  </button>
+}
+

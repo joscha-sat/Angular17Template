@@ -19,5 +19,11 @@
     "login-btn": "Login",
     "subtitle": "Login with your account",
     "title": "Login"
+  },
+  "logout": {
+    "title": "Logout"
+  },
+  "nav": {
+    "settings": "Settings"
   }
 }
