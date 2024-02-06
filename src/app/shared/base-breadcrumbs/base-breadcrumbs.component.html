@@ -1,0 +1,16 @@
+<!-- only display if there are nested routes, > 1 -->
+<ng-container *ngIf="breadcrumbItems.length > 1">
+  <tui-breadcrumbs>
+    <ng-container *ngFor="let item of breadcrumbItems">
+      <a
+        *tuiItem
+        [routerLink]="item.url"
+        tuiLink
+      >
+        {{ item.label }}
+      </a>
+    </ng-container>
+  </tui-breadcrumbs>
+</ng-container>
+
+
