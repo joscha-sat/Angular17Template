@@ -24,7 +24,7 @@ export class NavigationComponent implements OnInit {
     },
     {
       tooltip: "Settings",
-      icon: "tuiIconSettings",
+      icon: "tuiIconSettingsLarge",
       link: NavRoutes.SETTINGS,
     },
   ];
