@@ -1,3 +1,23 @@
 .table {
+  border-collapse: separate;
   width: 100%;
+  border-spacing: 0;
+}
+
+/* Top left and right rounded corners */
+.table thead tr:first-child th:first-child {
+  border-top-left-radius: 1rem;
+}
+
+.table thead tr:first-child th:last-child {
+  border-top-right-radius: 1rem;
+}
+
+/* Bottom left and right rounded corners */
+.table tr:last-child td:first-child {
+  border-bottom-left-radius: 1rem;
+}
+
+.table tr:last-child td:last-child {
+  border-bottom-right-radius: 1rem;
 }

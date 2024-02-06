@@ -1,5 +1,5 @@
-import { Component, Input } from "@angular/core";
-import { TuiTableModule, TuiTablePaginationModule } from "@taiga-ui/addon-table";
+import { Component, Input, OnInit } from "@angular/core";
+import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { TuiLetModule } from "@taiga-ui/cdk";
 import { NgForOf, NgIf } from "@angular/common";
 import { TuiTagModule } from "@taiga-ui/kit";
@@ -22,9 +22,62 @@ import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taig
   templateUrl: "./base-table.component.html",
   styleUrl: "./base-table.component.scss",
 })
-export class BaseTableComponent {
+export class BaseTableComponent implements OnInit {
+
   @Input() tableData: any = [
     {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    }, {
       name: "John Smith",
       age: 30,
       address: { street: "herbstraße" },
@@ -33,6 +86,16 @@ export class BaseTableComponent {
 
   @Input() headers: string[] = ["Name", "Age", "address"];
   @Input() columns: string[] = ["name", "age", "address.street"];
+  total = this.tableData.length;
+
+  page: number = 0;
+  size: number = 10;
+  sizedData = [];
+
+
+  ngOnInit(): void {
+    this.loadPage();
+  }
 
   extractNestedProperty(item: any, key: string): any {
     const keys = key.split(".");
@@ -45,9 +108,18 @@ export class BaseTableComponent {
         return null;
       }
     }
-
-    console.log(value);
-
     return value;
+  }
+
+  onPage($event: TuiTablePagination) {
+    this.size = $event.size;
+    this.page = $event.page;
+
+    this.loadPage();
+  }
+
+  loadPage() {
+    const start = this.page * this.size;
+    this.sizedData = this.tableData.slice(start, start + this.size);
   }
 }

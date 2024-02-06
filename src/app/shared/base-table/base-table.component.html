@@ -8,6 +8,7 @@
   <tr tuiThGroup>
     <th
       *ngFor="let header of headers"
+      [resizable]="true"
       tuiTh
     >
       {{ header }}
@@ -21,7 +22,7 @@
     tuiTbody
   >
   <tr
-    *ngFor="let item of tableData"
+    *ngFor="let item of sizedData"
     tuiTr
   >
     <!--  loop ober the colum names displaying the corresponding data of it  -->
@@ -36,19 +37,20 @@
   </tr>
   </tbody>
 
-
-  <!-- footer with pagination -->
-  <!--  <tfoot>-->
-  <!--  <tr>-->
-  <!--    <td [colSpan]="columns.length">-->
-  <!--      <tui-table-pagination-->
-  <!--        (pageChange)="onPage($event)"-->
-  <!--        (sizeChange)="onSize($event)"-->
-  <!--        [total]="(total$ | async) || 0"-->
-  <!--        class="tui-space_top-2"-->
-  <!--      ></tui-table-pagination>-->
-  <!--    </td>-->
-  <!--  </tr>-->
-  <!--  </tfoot>-->
+  <!--  footer with pagination-->
+  <tfoot>
+  <tr>
+    <td [colSpan]="columns.length">
+      <tui-table-pagination
+        (paginationChange)="onPage($event)"
+        [total]="total || 0"
+        class="tui-space_top-2"
+      ></tui-table-pagination>
+    </td>
+  </tr>
+  </tfoot>
 </table>
+
+
+
 
