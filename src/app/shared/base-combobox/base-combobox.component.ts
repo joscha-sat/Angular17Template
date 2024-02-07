@@ -7,6 +7,7 @@ import {
 } from "@taiga-ui/kit";
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from "@angular/forms";
 import { DropDownItem } from "../../types/DropDownItem";
+import { TuiSizeL, TuiSizeS, TuiTextfieldControllerModule } from "@taiga-ui/core";
 
 @Component({
   selector: "app-base-combobox",
@@ -17,6 +18,7 @@ import { DropDownItem } from "../../types/DropDownItem";
     TuiDataListWrapperModule,
     TuiStringifyContentPipeModule,
     TuiFilterByInputPipeModule,
+    TuiTextfieldControllerModule,
   ],
   templateUrl: "./base-combobox.component.html",
   styleUrl: "./base-combobox.component.scss",
@@ -36,6 +38,8 @@ export class BaseComboboxComponent implements OnChanges {
   @Input() labelKey = "name";
 
   dropDownItems: DropDownItem[] = [];
+  // needed because the data might be given async
+  @Input() size: TuiSizeL | TuiSizeS = "m";
 
   // Returns the label of the item to display in the dropdown menu
   readonly stringify = (item: DropDownItem): string => item.label ?? "";
@@ -50,7 +54,6 @@ export class BaseComboboxComponent implements OnChanges {
     });
   }
 
-  // needed because the data might be given async
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["dataArray"] && changes["dataArray"].currentValue !== changes["dataArray"].previousValue) {
       this.dropDownItems = this.createDropdownItems();

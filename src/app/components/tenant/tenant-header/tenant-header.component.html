@@ -1,20 +1,23 @@
 <div class="container">
-
-  <div>
+  <div class="flex-a-center-g1">
+    <!--  title  -->
     <div class="view-title">
       {{ 'tenant.title' | translate }}
     </div>
 
+    <!--  tenant  dropdown  -->
     <div>
       <form [formGroup]="form">
-        <!--    dropdown  -->
         <app-base-combobox [dataArray]="tenants" fControlName="name" />
       </form>
-    </div>
 
+      <button (click)="checkForm()">
+        check
+      </button>
+    </div>
   </div>
 
-
+  <!-- new tenant button -->
   <button size="m" tuiButton>
     {{ 'tenant.new-btn'  | translate }}
   </button>

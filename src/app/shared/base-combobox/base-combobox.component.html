@@ -1,6 +1,7 @@
 <tui-combo-box
-  [formControlName]="'name'"
+  [formControlName]="fControlName"
   [stringify]="stringify"
+  [tuiTextfieldSize]="size"
   class="dropdown"
 >
   {{ hint }}
@@ -8,5 +9,6 @@
     *tuiDataList
     [itemContent]="stringify | tuiStringifyContent"
     [items]="dropDownItems | tuiFilterByInputWith : stringify "
+    [size]="'s'"
   ></tui-data-list-wrapper>
 </tui-combo-box>

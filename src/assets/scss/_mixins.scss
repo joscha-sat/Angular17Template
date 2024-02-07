@@ -51,6 +51,10 @@
   display: flex;
 }
 
+.flex-a-center-g1 {
+  @extend .flex, .align-center, .gap-1, .wrap;
+}
+
 .wrap {
   flex-wrap: wrap;
 }
@@ -71,6 +75,10 @@
 
 .flex-1 {
   flex: 1;
+}
+
+.gap-1 {
+  gap: var(--gap, 1rem);
 }
 
 // grid mixins -------------------------------------------- //
