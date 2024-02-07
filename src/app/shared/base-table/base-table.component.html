@@ -6,13 +6,15 @@
   <!-- HEAD / HEADERS -->
   <thead>
   <tr tuiThGroup>
-    <th
-      *ngFor="let header of headers"
-      [resizable]="true"
-      tuiTh
-    >
-      {{ header }}
-    </th>
+    @for (header of headers; track header) {
+      <th
+        *tuiHead="columns[0]"
+        [resizable]="true"
+        tuiTh
+      >
+        {{ header }}
+      </th>
+    }
   </tr>
   </thead>
 

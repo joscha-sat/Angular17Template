@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { BehaviorSubject, combineLatest, Observable, of, switchMap } from "rxjs";
 import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
+import { TuiLetModule } from "@taiga-ui/cdk";
 
 @Component({
   selector: "app-base-table-async",
@@ -12,16 +13,17 @@ import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
     TuiTableModule,
     NgForOf,
     TuiTablePaginationModule,
+    TuiLetModule,
   ],
   templateUrl: "./base-table-async.component.html",
   styleUrl: "./base-table-async.component.scss",
 })
-export class BaseTableAsyncComponent<T> implements OnInit {
-  @Input({ required: true }) tableData$: Observable<T[]> = of([]);
+export class BaseTableAsyncComponent implements OnInit {
+  @Input({ required: true }) tableData$: Observable<any[]> = of([]);
   @Input({ required: true }) headers: string[] = [];
   @Input({ required: true }) columns: string[] = [];
 
-  sizedData$: Observable<T[]> | undefined;
+  sizedData$: Observable<any[]> | undefined;
   size$ = new BehaviorSubject<number>(10);
   page$ = new BehaviorSubject<number>(0);
   total$ = new BehaviorSubject<number>(0);
@@ -56,5 +58,4 @@ export class BaseTableAsyncComponent<T> implements OnInit {
     }
     return value;
   }
-
 }

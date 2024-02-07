@@ -7,23 +7,26 @@
   <!-- HEAD / HEADERS -->
   <thead>
   <tr tuiThGroup>
-    <th
-      *ngFor="let header of headers"
-      [resizable]="true"
-      tuiTh
-    >
-      {{ header }}
-    </th>
+    @for (header of headers; track header) {
+      <th
+        *tuiHead="columns[0]"
+        [resizable]="true"
+        tuiTh
+      >
+        {{ header }}
+      </th>
+    }
   </tr>
   </thead>
 
   <!-- BODY / DATA -->
   <tbody
-    [data]="data"
+    *tuiLet="data | tuiTableSort as sortedData"
+    [data]="sortedData"
     tuiTbody
   >
   <tr
-    *ngFor="let item of data"
+    *ngFor="let item of sortedData"
     tuiTr
   >
     <!--  loop ober the colum names displaying the corresponding data of it  -->
