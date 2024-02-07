@@ -1,0 +1,12 @@
+<tui-combo-box
+  [formControlName]="'name'"
+  [stringify]="stringify"
+  class="dropdown"
+>
+  {{ hint }}
+  <tui-data-list-wrapper
+    *tuiDataList
+    [itemContent]="stringify | tuiStringifyContent"
+    [items]="dropDownItems | tuiFilterByInputWith : stringify "
+  ></tui-data-list-wrapper>
+</tui-combo-box>

@@ -1,7 +1,7 @@
 <div class="padding-wrapper-2">
   <div class="content-wrapper">
     <!-- header -->
-    <app-tenant-header />
+    <app-tenant-header [tenants]="tenants()" />
 
     <!-- table -->
     <app-tenant-table [tenants$]="tenants$" />

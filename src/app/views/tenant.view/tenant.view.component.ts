@@ -4,6 +4,7 @@ import { TenantTableComponent } from "../../components/tenant/tenant-table/tenan
 import { TenantService } from "../../api/tenant.service";
 import { Observable, shareReplay } from "rxjs";
 import { Tenant } from "../../models/Tenant";
+import { AsyncPipe } from "@angular/common";
 
 @Component({
   selector: "app-tenant.view",
@@ -11,6 +12,7 @@ import { Tenant } from "../../models/Tenant";
   imports: [
     TenantHeaderComponent,
     TenantTableComponent,
+    AsyncPipe,
   ],
   templateUrl: "./tenant.view.component.html",
   styleUrl: "./tenant.view.component.scss",
@@ -22,7 +24,6 @@ export class TenantViewComponent implements OnInit {
 
   getTenants() {
     this.tenants$ = this.tenantService.getTenants().pipe(shareReplay(1));
-
     this.tenants$.subscribe(res => {
       this.tenants.set(res);
     });

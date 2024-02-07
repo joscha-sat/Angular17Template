@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { TuiBreadcrumbsModule } from "@taiga-ui/kit";
 import { ActivatedRoute, ActivatedRouteSnapshot, RouterLink } from "@angular/router";
 import { TuiLinkModule } from "@taiga-ui/core";
@@ -19,7 +19,7 @@ export type BreadcrumbItem = {
   templateUrl: "./base-breadcrumbs.component.html",
   styleUrl: "./base-breadcrumbs.component.scss",
 })
-export class BaseBreadcrumbsComponent {
+export class BaseBreadcrumbsComponent implements OnInit {
   breadcrumbItems: BreadcrumbItem[] = [];
 
   constructor(private route: ActivatedRoute) {
