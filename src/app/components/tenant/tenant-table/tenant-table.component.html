@@ -1,5 +1,8 @@
-<app-base-table
-  [columns]="tableColumns"
-  [headers]="tableHeaders"
-  [tableData]="tenants"
-/>
+@if (tenants$ | async) {
+  <app-base-table-async
+    [columns]="tableColumns"
+    [headers]="tableHeaders"
+    [tableData$]="tenants$!"
+  />
+}
+

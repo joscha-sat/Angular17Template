@@ -3,6 +3,8 @@ import { BaseTableComponent } from "../../../shared/base-table/base-table.compon
 import { TenantService } from "../../../api/tenant.service";
 import { Tenant } from "../../../models/Tenant";
 import { AsyncPipe } from "@angular/common";
+import { BaseTableAsyncComponent } from "../../../shared/base-table-async/base-table-async.component";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-tenant-table",
@@ -10,6 +12,7 @@ import { AsyncPipe } from "@angular/common";
   imports: [
     BaseTableComponent,
     AsyncPipe,
+    BaseTableAsyncComponent,
   ],
   templateUrl: "./tenant-table.component.html",
   styleUrl: "./tenant-table.component.scss",
@@ -17,17 +20,13 @@ import { AsyncPipe } from "@angular/common";
 export class TenantTableComponent implements OnInit {
   tenantService = inject(TenantService);
 
-  tenants: Tenant[] = [];
+  tenants$: Observable<Tenant[]> | undefined;
   tableHeaders = ["Name"];
   tableColumns = ["name"];
   protected readonly Tenant = Tenant;
 
   getTenants() {
-    this.tenantService.getTenants().subscribe(res => {
-      this.tenants = res;
-
-      console.log(this.tenants);
-    });
+    this.tenants$ = this.tenantService.getTenants();
   }
 
   ngOnInit(): void {
