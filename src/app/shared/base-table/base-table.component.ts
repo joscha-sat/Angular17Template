@@ -23,7 +23,12 @@ import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taig
   styleUrl: "./base-table.component.scss",
 })
 export class BaseTableComponent implements OnInit {
-  @Input() tableData: any = [
+  @Input() tableData: any[] = [
+    {
+      name: "John Smith",
+      age: 30,
+      address: { street: "herbstraße" },
+    },
     {
       name: "John Smith",
       age: 30,
@@ -31,13 +36,13 @@ export class BaseTableComponent implements OnInit {
     },
   ];
 
-  @Input() headers: string[] = ["Name", "Age", "address"];
+  @Input() headers: string[] = ["Name", "Alter", "Adresse"];
   @Input() columns: string[] = ["name", "age", "address.street"];
   total = this.tableData.length;
 
   page: number = 0;
   size: number = 10;
-  sizedData = [];
+  sizedData: any[] = [];
 
 
   ngOnInit(): void {
@@ -49,7 +54,7 @@ export class BaseTableComponent implements OnInit {
     let value = item;
 
     for (const k of keys) {
-      if (value && value.hasOwnProperty(k)) {
+      if (value && Object.prototype.hasOwnProperty.call(value, k)) {
         value = value[k];
       } else {
         return null;
