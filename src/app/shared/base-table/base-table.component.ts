@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { TuiLetModule } from "@taiga-ui/cdk";
 import { NgForOf, NgIf } from "@angular/common";
@@ -26,6 +26,8 @@ export class BaseTableComponent<GenericT> implements OnInit {
   @Input({ required: true }) tableData: GenericT[] = [];
   @Input({ required: true }) headers: string[] = [];
   @Input({ required: true }) columns: string[] = [];
+
+  @Output() rowClickEvent = new EventEmitter();
 
   total = 0;
   page: number = 0;

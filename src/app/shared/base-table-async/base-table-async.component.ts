@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { BehaviorSubject, combineLatest, map, Observable, of, switchMap } from "rxjs";
 import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
@@ -23,6 +23,8 @@ export class BaseTableAsyncComponent implements OnInit {
   @Input({ required: true }) headers: string[] = [];
   @Input({ required: true }) columns: string[] = [];
 
+  @Output() rowClickEvent = new EventEmitter();
+
   sortedColumn = this.columns[0];
   direction = "asc";
 
@@ -30,6 +32,7 @@ export class BaseTableAsyncComponent implements OnInit {
   size$ = new BehaviorSubject<number>(10);
   page$ = new BehaviorSubject<number>(0);
   total$ = new BehaviorSubject<number>(0);
+
 
   ngOnInit() {
     // Sorting data

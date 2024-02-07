@@ -28,7 +28,9 @@
     tuiTbody
   >
   <tr
+    (click)="rowClickEvent.emit(item)"
     *ngFor="let item of sortedData"
+    class="pointer"
     tuiTr
   >
     <!--  loop ober the colum names displaying the corresponding data of it  -->
