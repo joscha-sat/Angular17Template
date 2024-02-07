@@ -7,7 +7,7 @@
 
       <!--  loop over navItems   -->
       <div class="nav-items-wrapper">
-        @for (navItem of navItems; track navItem) {
+        @for (navItem of navItems(); track navItem) {
           <app-nav-button [navItem]="navItem" />
         }
       </div>

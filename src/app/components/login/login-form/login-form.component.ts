@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, signal } from "@angular/core";
 import { BaseInputComponent } from "../../../shared/base-input/base-input.component";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { TuiAlertModule, TuiButtonModule, TuiLinkModule } from "@taiga-ui/core";
@@ -23,7 +23,7 @@ import { LoginBody } from "../../../types/LoginBody.type";
 })
 export class LoginFormComponent {
   form: FormGroup | undefined;
-  isOpen: boolean = false;
+  isOpen = signal<boolean>(false);
   authService = inject(AuthService);
 
   constructor(private fb: FormBuilder) {

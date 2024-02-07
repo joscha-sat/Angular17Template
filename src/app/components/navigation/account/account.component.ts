@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, signal } from "@angular/core";
 import { TuiButtonModule, TuiDataListModule, TuiHostedDropdownModule, TuiSvgModule } from "@taiga-ui/core";
 import { Router, RouterLink } from "@angular/router";
 import { NavRoutes } from "../../../enums/nav-routes";
@@ -28,9 +28,9 @@ export type Option = {
   styleUrl: "./account.component.scss",
 })
 export class AccountComponent implements OnInit {
-  userName: string = "";
-  isOpen: boolean = false;
-  options: Option[] = [
+  userName = signal<string>("");
+  isOpen = signal<boolean>(false);
+  options = signal<Option[]>([
     {
       icon: "tuiIconSettings",
       ngxTitle: "nav.settings",
@@ -40,7 +40,8 @@ export class AccountComponent implements OnInit {
       icon: "tuiIconLogOut",
       ngxTitle: "logout.title",
     },
-  ];
+  ]);
+
   protected readonly NavRoutes = NavRoutes;
   protected readonly tuiIconLogOut = tuiIconLogOut;
   protected readonly tuiIconSettings = tuiIconSettings;
@@ -57,22 +58,23 @@ export class AccountComponent implements OnInit {
     this.getUserName();
   }
 
-  logOut() {
-  }
-
   getUserName() {
     const user = this.authService.getLoggedInUser();
     if (user) {
-      this.userName = user.firstName;
+      this.userName.set(user.firstName);
     }
   }
 
   onOptionsClick(option: Option) {
-
     if (option.ngxTitle.includes("logout")) {
-      console.log("logout");
+
+      this.logOut();
     } else {
       this.router.navigate([option.link]).then();
     }
+  }
+
+  logOut() {
+    console.log("logout");
   }
 }

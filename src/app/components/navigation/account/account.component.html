@@ -1,11 +1,12 @@
 <tui-hosted-dropdown
-  [(open)]="isOpen"
+  (openChange)="isOpen.set($event)"
   [content]="dropdown"
+  [open]="isOpen()"
   [sided]="true"
   tuiDropdownAlign="right"
 >
   <button
-    [pseudoActive]="isOpen || null"
+    [pseudoActive]="isOpen() || null"
     appearance="flat"
     iconRight="tuiIconUserLarge"
     size="m"
@@ -22,7 +23,7 @@
     </tui-opt-group>
 
     <tui-opt-group>
-      @for (option of options; track option) {
+      @for (option of options(); track option) {
         <!--   settings   -->
         <button (click)="onOptionsClick(option)" class="dropdown-btn" tuiOption>
           <tui-svg [src]="option.icon"></tui-svg>

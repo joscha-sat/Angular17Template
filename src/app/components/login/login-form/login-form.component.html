@@ -8,7 +8,7 @@
 
 
   <!-- forgot password, TODO: add forgot passwort dialog / logic -->
-  <button (click)="isOpen = true" class="forgot-pw-button" tuiLink type="button">
+  <button (click)="isOpen.set(true)" class="forgot-pw-button" tuiLink type="button">
     {{ 'login.forgot-password' | translate }}
   </button>
 

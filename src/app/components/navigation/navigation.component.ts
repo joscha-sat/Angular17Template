@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, signal } from "@angular/core";
 import { NavItem } from "../../enums/nav-items";
 import { NavRoutes } from "../../enums/nav-routes";
 import { NavButtonComponent } from "./nav-button/nav-button.component";
 import { AccountComponent } from "./account/account.component";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-navigation",
@@ -15,21 +16,36 @@ import { AccountComponent } from "./account/account.component";
   styleUrl: "./navigation.component.scss",
 })
 export class NavigationComponent implements OnInit {
-  // here are all values for the navigation buttons. Each entry adds a nav-button with its values
-  navItems: NavItem[] = [
-    {
-      tooltip: "Tenant",
-      icon: "tuiIconHomeLarge",
-      link: NavRoutes.TENANT,
-    },
-    {
-      tooltip: "Settings",
-      icon: "tuiIconSettingsLarge",
-      link: NavRoutes.SETTINGS,
-    },
-  ];
+  navItems = signal<NavItem[]>([]);
 
-  ngOnInit(): void {
+  constructor(private translateService: TranslateService) {
   }
 
+  ngOnInit() {
+    this.setTranslatedTextWithNavItems();
+  }
+
+  setTranslatedTextWithNavItems() {
+    this.translateService.get(["tenant.title", "user.title", "settings.title"]).subscribe(translations => {
+      this.navItems.set([
+        {
+          tooltip: translations["tenant.title"],
+          icon: "tuiIconHomeLarge",
+          link: NavRoutes.TENANT,
+        },
+        {
+          tooltip: translations["user.title"],
+          icon: "tuiIconUserLarge",
+          link: NavRoutes.USER,
+        },
+        {
+          tooltip: translations["settings.title"],
+          icon: "tuiIconSettingsLarge",
+          link: NavRoutes.SETTINGS,
+        },
+      ]);
+    });
+  }
 }
+
+
