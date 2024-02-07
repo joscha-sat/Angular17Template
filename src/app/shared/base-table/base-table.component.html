@@ -46,8 +46,8 @@
     <td [colSpan]="columns.length">
       <tui-table-pagination
         (paginationChange)="onPage($event)"
-        [page]="page || 0"
-        [size]="size || 0"
+        [page]="page"
+        [size]="size"
         [total]="total || 0"
         class="tui-space_top-2"
       ></tui-table-pagination>

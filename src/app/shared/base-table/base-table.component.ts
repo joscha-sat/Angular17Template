@@ -27,7 +27,7 @@ export class BaseTableComponent<GenericT> implements OnInit {
   @Input({ required: true }) headers: string[] = [];
   @Input({ required: true }) columns: string[] = [];
 
-  total = this.tableData.length;
+  total = 0;
   page: number = 0;
   size: number = 10;
   sizedData: any[] = [];
@@ -46,6 +46,7 @@ export class BaseTableComponent<GenericT> implements OnInit {
   }
 
   loadPage() {
+    this.total = this.tableData.length;
     const start = this.page * this.size;
     this.tableData = this.sortData(this.sortedColumn, this.direction);
     this.sizedData = this.tableData.slice(start, start + this.size);
