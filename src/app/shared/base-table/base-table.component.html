@@ -8,8 +8,9 @@
   <tr tuiThGroup>
     @for (header of headers; track header) {
       <th
-        *tuiHead="columns[0]"
+        *tuiHead="columns[$index]"
         [resizable]="true"
+        (click)="onSortChange(columns[$index])"
         tuiTh
       >
         {{ header }}
@@ -54,7 +55,3 @@
   </tr>
   </tfoot>
 </table>
-
-
-
-

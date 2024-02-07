@@ -31,6 +31,8 @@ export class BaseTableComponent<GenericT> implements OnInit {
   page: number = 0;
   size: number = 10;
   sizedData: any[] = [];
+  sortedColumn = this.columns[0];
+  direction = "asc";
 
   ngOnInit(): void {
     this.loadPage();
@@ -42,10 +44,40 @@ export class BaseTableComponent<GenericT> implements OnInit {
 
     this.loadPage();
   }
-  
+
   loadPage() {
     const start = this.page * this.size;
+    this.tableData = this.sortData(this.sortedColumn, this.direction);
     this.sizedData = this.tableData.slice(start, start + this.size);
+  }
+
+  sortData(column: any, direction: any): GenericT[] {
+    return this.tableData.sort((a: any, b: any) => {
+      let aColValue = a[column];
+      let bColValue = b[column];
+
+      console.log(aColValue);
+      console.log(bColValue);
+
+      if (!isNaN(Number(aColValue)) && !isNaN(Number(bColValue))) {
+        aColValue = Number(aColValue);
+        bColValue = Number(bColValue);
+      }
+
+      if (aColValue < bColValue) {
+        return direction === "asc" ? -1 : 1;
+      } else if (aColValue > bColValue) {
+        return direction === "asc" ? 1 : -1;
+      }
+
+      return 0;
+    });
+  }
+
+  onSortChange(column: string): void {
+    this.sortedColumn = column;
+    this.direction = this.direction === "asc" ? "desc" : "asc";
+    this.loadPage();
   }
 
   extractNestedProperty(item: any, key: string): any {
