@@ -22,28 +22,15 @@ import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taig
   templateUrl: "./base-table.component.html",
   styleUrl: "./base-table.component.scss",
 })
-export class BaseTableComponent implements OnInit {
-  @Input() tableData: any[] = [
-    {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    },
-    {
-      name: "John Smith",
-      age: 30,
-      address: { street: "herbstraße" },
-    },
-  ];
+export class BaseTableComponent<GenericT> implements OnInit {
+  @Input({ required: true }) tableData: GenericT[] = [];
+  @Input({ required: true }) headers: string[] = [];
+  @Input({ required: true }) columns: string[] = [];
 
-  @Input() headers: string[] = ["Name", "Alter", "Adresse"];
-  @Input() columns: string[] = ["name", "age", "address.street"];
   total = this.tableData.length;
-
   page: number = 0;
   size: number = 10;
   sizedData: any[] = [];
-
 
   ngOnInit(): void {
     this.loadPage();
