@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
-import { BehaviorSubject, combineLatest, Observable, of, switchMap } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable, of, switchMap } from "rxjs";
 import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
 import { TuiLetModule } from "@taiga-ui/cdk";
 
@@ -23,13 +23,21 @@ export class BaseTableAsyncComponent implements OnInit {
   @Input({ required: true }) headers: string[] = [];
   @Input({ required: true }) columns: string[] = [];
 
+  sortedColumn = this.columns[0];
+  direction = "asc";
+
   sizedData$: Observable<any[]> | undefined;
   size$ = new BehaviorSubject<number>(10);
   page$ = new BehaviorSubject<number>(0);
   total$ = new BehaviorSubject<number>(0);
 
   ngOnInit() {
-    // Combine latest values of page and size to paginate the data.
+    // Sorting data
+    this.tableData$ = this.tableData$.pipe(
+      map(data => this.sortData(data, this.sortedColumn, this.direction)),
+    );
+
+    // Combine latest values of page and size to paginate the sorted data.
     this.sizedData$ = combineLatest([this.tableData$, this.page$, this.size$]).pipe(
       switchMap(([data, page, size]) => {
         const startIndex = page * size;
@@ -43,6 +51,34 @@ export class BaseTableAsyncComponent implements OnInit {
   onChangePagination(event: TuiTablePagination) {
     this.page$.next(event.page);
     this.size$.next(event.size);
+  }
+
+  onSortChange(column: string) {
+    this.sortedColumn = column;
+    this.direction = this.direction === "asc" ? "desc" : "asc";
+    this.tableData$ = this.tableData$.pipe(
+      map(data => this.sortData(data, this.sortedColumn, this.direction)),
+    );
+  }
+
+  sortData(data: any[], column: any, direction: any): any[] {
+    return data.sort((a: any, b: any) => {
+      let aColValue = a[column];
+      let bColValue = b[column];
+
+      if (!isNaN(Number(aColValue)) && !isNaN(Number(bColValue))) {
+        aColValue = Number(aColValue);
+        bColValue = Number(bColValue);
+      }
+
+      if (aColValue < bColValue) {
+        return direction === "asc" ? -1 : 1;
+      } else if (aColValue > bColValue) {
+        return direction === "asc" ? 1 : -1;
+      }
+
+      return 0;
+    });
   }
 
   extractNestedProperty(item: any, key: string): any {

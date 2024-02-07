@@ -1,3 +1,4 @@
+<!-- TODO: check sorting logic -->
 <table
   *ngIf="sizedData$ | async as data"
   [columns]="columns"
@@ -9,7 +10,8 @@
   <tr tuiThGroup>
     @for (header of headers; track header) {
       <th
-        *tuiHead="columns[0]"
+        *tuiHead="columns[$index]"
+        (click)="onSortChange(columns[$index])"
         [resizable]="true"
         tuiTh
       >

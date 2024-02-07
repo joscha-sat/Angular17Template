@@ -56,9 +56,6 @@ export class BaseTableComponent<GenericT> implements OnInit {
       let aColValue = a[column];
       let bColValue = b[column];
 
-      console.log(aColValue);
-      console.log(bColValue);
-
       if (!isNaN(Number(aColValue)) && !isNaN(Number(bColValue))) {
         aColValue = Number(aColValue);
         bColValue = Number(bColValue);
