@@ -1,4 +1,5 @@
 <table
+  *ngIf="sizedData$ | async as data"
   [columns]="columns"
   class="table"
   tuiTable
@@ -18,11 +19,11 @@
 
   <!-- BODY / DATA -->
   <tbody
-    [data]="tableData"
+    [data]="data"
     tuiTbody
   >
   <tr
-    *ngFor="let item of sizedData"
+    *ngFor="let item of data"
     tuiTr
   >
     <!--  loop ober the colum names displaying the corresponding data of it  -->
@@ -42,17 +43,14 @@
   <tr>
     <td [colSpan]="columns.length">
       <tui-table-pagination
-        (paginationChange)="onPage($event)"
-        [page]="page"
-        [size]="size"
-        [total]="total || 0"
+        (paginationChange)="onChangePagination($event)"
+        [page]="(page$ | async)|| 0"
+        [size]="(size$ | async) || 0"
+        [total]="(total$ | async) || 0"
         class="tui-space_top-2"
       ></tui-table-pagination>
     </td>
   </tr>
   </tfoot>
 </table>
-
-
-
 

@@ -36,6 +36,18 @@ export class BaseTableComponent<GenericT> implements OnInit {
     this.loadPage();
   }
 
+  onPage($event: TuiTablePagination) {
+    this.size = $event.size;
+    this.page = $event.page;
+
+    this.loadPage();
+  }
+  
+  loadPage() {
+    const start = this.page * this.size;
+    this.sizedData = this.tableData.slice(start, start + this.size);
+  }
+
   extractNestedProperty(item: any, key: string): any {
     const keys = key.split(".");
     let value = item;
@@ -48,17 +60,5 @@ export class BaseTableComponent<GenericT> implements OnInit {
       }
     }
     return value;
-  }
-
-  onPage($event: TuiTablePagination) {
-    this.size = $event.size;
-    this.page = $event.page;
-
-    this.loadPage();
-  }
-
-  loadPage() {
-    const start = this.page * this.size;
-    this.sizedData = this.tableData.slice(start, start + this.size);
   }
 }
