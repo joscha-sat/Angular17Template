@@ -1,0 +1,7 @@
+@if (user$ | async) {
+  <app-base-table-async
+    [tableData$]="user$!"
+    [headers]="tableHeaders"
+    [columns]="tableColumns"
+  />
+}

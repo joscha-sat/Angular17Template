@@ -17,6 +17,7 @@
   "general": {
     "back": "Zurück",
     "cancel": "Abbrechen",
+    "emtpy": "Keine Einträge vorhanden",
     "no": "Nein",
     "ok": "Ok",
     "save": "speichern",

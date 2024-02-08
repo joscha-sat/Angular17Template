@@ -2,9 +2,9 @@ import { Component, inject, OnInit, signal } from "@angular/core";
 import { TenantHeaderComponent } from "../../components/tenant/tenant-header/tenant-header.component";
 import { TenantTableComponent } from "../../components/tenant/tenant-table/tenant-table.component";
 import { TenantService } from "../../api/tenant.service";
-import { Observable, shareReplay } from "rxjs";
 import { Tenant } from "../../models/Tenant";
 import { AsyncPipe } from "@angular/common";
+import { toObservable } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-tenant.view",
@@ -18,18 +18,22 @@ import { AsyncPipe } from "@angular/common";
   styleUrl: "./tenant.view.component.scss",
 })
 export class TenantViewComponent implements OnInit {
+  // | services | --------------------------------------------------------------------------  ||
   tenantService = inject(TenantService);
-  tenants$: Observable<Tenant[]> | undefined;
+
+  // | signals / vars | --------------------------------------------------------------------  ||
   tenants = signal<Tenant[]>([]);
+  tenants$ = toObservable(this.tenants);
 
-  getTenants() {
-    this.tenants$ = this.tenantService.getTenants().pipe(shareReplay(1));
-    this.tenants$.subscribe(res => {
-      this.tenants.set(res);
-    });
-  }
-
+  // | init | ------------------------------------------------------------------------------  ||
   ngOnInit(): void {
     this.getTenants();
+  }
+
+  // | normal methods | --------------------------------------------------------------------  ||
+  getTenants() {
+    this.tenantService.getTenants().subscribe((tenants: Tenant[]) => {
+      this.tenants.set(tenants);
+    });
   }
 }

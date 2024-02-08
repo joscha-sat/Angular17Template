@@ -17,6 +17,7 @@
   "general": {
     "back": "Back",
     "cancel": "Cancel",
+    "emtpy": "No entries available",
     "no": "No",
     "ok": "Ok",
     "save": "save",
