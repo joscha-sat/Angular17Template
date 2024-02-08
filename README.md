@@ -2,6 +2,8 @@
 
 ## Angular Template Structure (how to work with the template):
 
+questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
+
 ### Style (Scss): global scss files are in the assets/scss folder :
 
 - use _mixins.scss for custom global utility classes (directly usable as html class, no imports needed)
