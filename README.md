@@ -1,6 +1,43 @@
 # AngularTemplateV2
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
+## Angular Template Structure (how to work with the template):
+
+### Style (Scss): global scss files are in the assets/scss folder :
+
+- use _mixins.scss for custom global utility classes (directly usable as html class, no imports needed)
+
+- use _colors.scss for repeating color values -> import them into the styles.scss as css variables
+- use _variables.scss for custom repeating scss values
+- Used UI Library: TAIGA UI: https://taiga-ui.dev/getting-started
+  - to change TAIGA UI colors / variables use the styles.scss (there are examples)
+
+### Components:
+
+- Reusable components src/app/shared --> Base components that can be reused with different data / style via @Input() / @Output()
+- View components src/app/components --> A view is split into different component blocks, here are the different component blocks for the view (uses reusable components)
+- Views src/app/views --> Views use the component blocks to display the full UI. It is used as a kind of "Layout-Component" for the different component blocks
+
+### Services:
+
+API: src/app/api
+
+- the api-folder contains api-services responsible for any http request
+
+Helper services: src/app/services
+
+- the services folder contains all services which are used for centralized and reusable methods + data
+
+### Type definition:
+
+#### Typescript classes >  src/app/models
+
+#### Types / Interfaces >  src/app/types
+
+#### Enums > src/app/enums
+
+##
+
+##
 
 ## Development server
 

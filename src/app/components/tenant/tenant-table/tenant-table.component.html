@@ -3,6 +3,7 @@
     [columns]="tableColumns()"
     [headers]="tableHeaders()"
     [tableData$]="tenants$!"
+    (rowClickEvent)="rowClicked($event)"
   />
 }
 
