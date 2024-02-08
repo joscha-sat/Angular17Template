@@ -6,15 +6,9 @@
     </div>
 
     <!--  tenant  dropdown  -->
-    <div>
-      <form [formGroup]="form">
-        <app-base-combobox [dataArray]="tenants" fControlName="name" />
-      </form>
-
-      <button (click)="checkForm()">
-        check
-      </button>
-    </div>
+    <form [formGroup]="form">
+      <app-base-combobox [dataArray]="tenants" fControlName="name" />
+    </form>
   </div>
 
   <!-- new tenant button -->
