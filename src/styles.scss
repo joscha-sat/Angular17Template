@@ -19,12 +19,6 @@
   --error-bg: #{$error-bg};
   --error-txt: #{$error-txt};
 
-  // common device breakpoints
-  --mobile-view: #{mobile-max-with};
-  --tablet-view: #{tablet-min-with};
-  --laptop-view: #{laptop-min-with};
-  --desktop-view: #{desktop-min-with};
-
   /* -------------------------------------------------------------------- */
   /*  || TAIGA UI COLOR ADJUSTMENTS --> exact tui variable names needed!||
   /* -------------------------------------------------------------------- */
