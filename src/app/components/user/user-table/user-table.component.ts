@@ -17,6 +17,8 @@ import { BaseTableComponent } from "../../../shared/base-table/base-table.compon
 })
 export class UserTableComponent {
   @Input({ required: true }) user$: Observable<any> | undefined;
-  tableHeaders: string[] = ["Name"];
-  tableColumns: string[] = ["firstName"];
+
+  // todo: update active
+  tableHeaders: string[] = ["Vorname", "Nachname", "Telefon", "Email", "Aktiv"];
+  tableColumns: string[] = ["firstName", "lastName", "phone", "email", "active"];
 }

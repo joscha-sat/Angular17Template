@@ -35,5 +35,3 @@ export class UserViewComponent implements OnInit {
     });
   }
 }
-
-
