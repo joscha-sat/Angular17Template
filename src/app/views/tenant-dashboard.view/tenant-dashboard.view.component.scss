@@ -1,0 +1,24 @@
+.grid-with-custom-settings {
+}
+
+.view-title {
+  padding-top: 0.55rem;
+}
+
+
+.axes-container {
+  container-type: inline-size;
+  background-color: red;
+}
+
+@container (min-width: 800px) {
+  .grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .axes-container {
+    background-color: blue;
+  }
+}
+
+

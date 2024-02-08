@@ -1,10 +1,18 @@
 {
+  "": "",
   "alert": {
     "error": "Error",
     "info": "Info",
     "neutral": "Notification",
     "success": "Success",
     "warn": "Warning"
+  },
+  "customer": {
+    "title": "Customer",
+    "title-plural": "Customers"
+  },
+  "dashboard": {
+    "title": "Dashboard"
   },
   "general": {
     "back": "Back",
@@ -25,6 +33,13 @@
   },
   "nav": {
     "settings": "Settings"
+  },
+  "object": {
+    "title-plural": "Objects"
+  },
+  "order": {
+    "title": "Order",
+    "title-plural": "Orders"
   },
   "settings": {
     "title": "Settings"

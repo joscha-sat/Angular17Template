@@ -34,8 +34,10 @@ export class BaseComboboxComponent implements OnChanges {
   @Input({ required: true }) fControlName = "";
   @Input() hint: string = "placeholder";
 
-  @Input() idKey = "id";
-  @Input() labelKey = "name";
+
+  // this are the property keys which are converted into the dropdown
+  @Input() idKey = "id";  //default: item.id for the id in createDropdownItems
+  @Input() labelKey = "name"; //default: item.name for the label in createDropdownItems //
 
   dropDownItems: DropDownItem[] = [];
   // needed because the data might be given async

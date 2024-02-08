@@ -1,0 +1,15 @@
+<div class="grid">
+  @for (item of gridDataArray(); track item) {
+    <tui-island class="flex-col-gap1 place-center card">
+      <div>
+        {{ item.count }}
+      </div>
+
+      <div>
+        {{ item.ngxString | translate }}
+      </div>
+    </tui-island>
+  }
+</div>
+
+

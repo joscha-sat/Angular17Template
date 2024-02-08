@@ -1,3 +1,12 @@
-<div class="padding-wrapper-2">
-  <p>dashboard.view works!</p>
+<div class="padding-wrapper-2 flex-col-gap1">
+  <!-- title -->
+  <div class="view-title">
+    Firma {{ 'dashboard.title' | translate }}
+  </div>
+
+
+  <div class="grid-with-custom-settings">
+    <app-tenant-dashboard-grid />
+    <app-tenant-dashboard-axes />
+  </div>
 </div>

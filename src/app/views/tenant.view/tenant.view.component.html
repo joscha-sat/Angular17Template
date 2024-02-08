@@ -1,9 +1,7 @@
-<div class="padding-wrapper-2">
-  <div class="content-wrapper">
-    <!-- header -->
-    <app-tenant-header [tenants]="tenants()" />
+<div class="padding-wrapper-2 flex-col-gap1">
+  <!-- header -->
+  <app-tenant-header [tenants]="tenants()" />
 
-    <!-- table -->
-    <app-tenant-table [tenants$]="tenants$" />
-  </div>
+  <!-- table -->
+  <app-tenant-table [tenants$]="tenants$" />
 </div>

@@ -1,0 +1,16 @@
+<tui-axes
+  [axisXLabels]="months"
+  [horizontalLines]="0"
+  [tuiLineChartHint]="hintContent"
+  [verticalLines]="months.length"
+  class="axes"
+>
+  <tui-line-chart
+    [filled]="true"
+    [height]="getHighestArrayValue()"
+    [value]="values"
+    [width]="months.length"
+    [xStringify]="stringifyMonths"
+    [yStringify]="stringifyValues"
+  ></tui-line-chart>
+</tui-axes>
