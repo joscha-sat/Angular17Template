@@ -7,7 +7,7 @@
 
     <!--  tenant  dropdown  -->
     <form [formGroup]="form">
-      <app-base-combobox [dataArray]="tenants" fControlName="name" />
+      <app-base-combobox [dataArray]="tenants" [hint]="'tenant.select'" fControlName="name" />
     </form>
   </div>
 

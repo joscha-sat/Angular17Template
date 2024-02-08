@@ -19,9 +19,15 @@
   --error-bg: #{$error-bg};
   --error-txt: #{$error-txt};
 
-  /* ----------------------------------------------------------------- */
-  /*  || TAIGA UI COLOR ADJUSTMENTS --> exact variable name needed!||
-  /* ----------------------------------------------------------------- */
+  // common device breakpoints
+  --mobile-view: #{mobile-max-with};
+  --tablet-view: #{tablet-min-with};
+  --laptop-view: #{laptop-min-with};
+  --desktop-view: #{desktop-min-with};
+
+  /* -------------------------------------------------------------------- */
+  /*  || TAIGA UI COLOR ADJUSTMENTS --> exact tui variable names needed!||
+  /* -------------------------------------------------------------------- */
 
   --tui-primary: hsl(162, 35%, 45%);
   --tui-primary-hover: hsl(162, 35%, 55%);

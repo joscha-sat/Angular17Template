@@ -1,4 +1,6 @@
-.grid-with-custom-settings {
+.grid {
+  padding-top: 2rem;
+  grid-template-columns: 2fr 5fr;
 }
 
 .view-title {
@@ -6,19 +8,8 @@
 }
 
 
-.axes-container {
-  container-type: inline-size;
-  background-color: red;
-}
-
-@container (min-width: 800px) {
+@media screen and (max-width: 750px) {
   .grid {
-    grid-template-columns: 1fr 1fr !important;
-  }
-
-  .axes-container {
-    background-color: blue;
+    grid-template-columns: 1fr
   }
 }
-
-

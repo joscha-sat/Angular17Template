@@ -4,7 +4,7 @@
   [tuiTextfieldSize]="size"
   class="dropdown"
 >
-  {{ hint }}
+  {{ hint | translate }}
   <tui-data-list-wrapper
     *tuiDataList
     [itemContent]="stringify | tuiStringifyContent"

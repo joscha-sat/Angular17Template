@@ -33,7 +33,7 @@ export class AccountComponent implements OnInit {
   options = signal<Option[]>([
     {
       icon: "tuiIconSettings",
-      ngxTitle: "nav.settings",
+      ngxTitle: "settings.title",
       link: NavRoutes.SETTINGS,
     },
     {

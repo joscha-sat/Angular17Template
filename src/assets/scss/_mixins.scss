@@ -145,7 +145,7 @@
   /* user setting */
   --min-column-size: 200px;
   --column-count: 4;
-  --gap: 2rem;
+  --gap: 1rem;
 
   /* calculations */
   --breakpoint: calc(var(--min-column-size) * var(--column-count) + (var(--gap) * (var(--column-count) - 1)));

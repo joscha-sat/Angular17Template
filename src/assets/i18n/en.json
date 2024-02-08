@@ -31,9 +31,6 @@
   "logout": {
     "title": "Logout"
   },
-  "nav": {
-    "settings": "Settings"
-  },
   "object": {
     "title-plural": "Objects"
   },
@@ -46,6 +43,7 @@
   },
   "tenant": {
     "new-btn": "Create tenant",
+    "select": "Select tenant",
     "title": "Tenant"
   },
   "user": {

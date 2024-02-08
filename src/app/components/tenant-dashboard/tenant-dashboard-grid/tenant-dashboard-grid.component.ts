@@ -16,7 +16,7 @@ import { count } from "rxjs";
 export class TenantDashboardGridComponent {
   @Input() gridDataArray = signal([
     { count: 5, ngxString: "user.title" },
-    { count: 2, ngxString: "customer.title" },
+    { count: 2, ngxString: "customer.title-plural" },
     { count: 490, ngxString: "order.title-plural" },
     { count: 20, ngxString: "object.title-plural" },
   ]);

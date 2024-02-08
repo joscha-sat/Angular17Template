@@ -1,5 +1,7 @@
-.grid {
-  grid-template-columns: 1fr 1fr;
+.grid-with-custom-settings {
+  --min-column-size: 200px;
+  --column-count: 2;
+  --gap: 1rem;
 }
 
 .card {

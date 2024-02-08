@@ -8,6 +8,7 @@ import {
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from "@angular/forms";
 import { DropDownItem } from "../../types/DropDownItem";
 import { TuiSizeL, TuiSizeS, TuiTextfieldControllerModule } from "@taiga-ui/core";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: "app-base-combobox",
@@ -19,6 +20,7 @@ import { TuiSizeL, TuiSizeS, TuiTextfieldControllerModule } from "@taiga-ui/core
     TuiStringifyContentPipeModule,
     TuiFilterByInputPipeModule,
     TuiTextfieldControllerModule,
+    TranslateModule,
   ],
   templateUrl: "./base-combobox.component.html",
   styleUrl: "./base-combobox.component.scss",

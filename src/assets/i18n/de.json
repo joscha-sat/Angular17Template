@@ -31,9 +31,6 @@
   "logout": {
     "title": "Abmelden"
   },
-  "nav": {
-    "settings": "Einstellungen"
-  },
   "object": {
     "title-plural": "Objekte"
   },
@@ -46,6 +43,7 @@
   },
   "tenant": {
     "new-btn": "Firma erstellen",
+    "select": "Firma auswählen",
     "title": "Firmen"
   },
   "user": {
