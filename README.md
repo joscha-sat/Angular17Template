@@ -11,6 +11,30 @@
 - Used UI Library: TAIGA UI: https://taiga-ui.dev/getting-started
   - to change TAIGA UI colors / variables use the styles.scss (there are examples)
 
+### @media queries and breakpoints src/assets/variables
+
+- values for common device breakpoints are located here
+- globally usable @media queries for desktop, laptop, tablet and mobile are predefined and ready to be used
+  - implement @use "index" as *; in the component.scss where the media query mixin should be used.
+
+#### Example
+
+```
+@use "index" as *;
+
+//desktop-view >> default
+.grid {
+  grid-template-columns: 2fr 5fr;
+}
+
+// tablet-view and below using the @media query mixin
+@include tablet-view {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+```
+
 ### Components:
 
 - Reusable components src/app/shared --> Base components that can be reused with different data / style via @Input() / @Output()
