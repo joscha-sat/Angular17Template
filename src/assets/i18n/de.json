@@ -49,6 +49,7 @@
   },
   "user": {
     "create": "Benutzer erstellen",
-    "title": "Benutzer"
+    "title": "Benutzer",
+    "update": "Benutzer bearbeiten"
   }
 }

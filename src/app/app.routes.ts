@@ -5,6 +5,7 @@ import { SettingsViewComponent } from "./views/settings.view/settings.view.compo
 import { TenantViewComponent } from "./views/tenant.view/tenant.view.component";
 import { UserViewComponent } from "./views/user.view/user.view.component";
 import { TenantDashboardViewComponent } from "./views/tenant-dashboard.view/tenant-dashboard.view.component";
+import { AddEditUserViewComponent } from "./views/user.view/add-edit-user.view/add-edit-user.view.component";
 
 export const routes: Routes = [
   // standard route
@@ -19,7 +20,10 @@ export const routes: Routes = [
 
   // || USER || ----------------------------------------------- // >>
   { path: NavRoutes.USER, component: UserViewComponent },
+  { path: NavRoutes.USER + "/:id", component: AddEditUserViewComponent },
 
   // || SETTINGS || ----------------------------------------------- // >>
   { path: NavRoutes.SETTINGS, component: SettingsViewComponent },
 ];
+
+

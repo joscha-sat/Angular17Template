@@ -49,6 +49,7 @@
   },
   "user": {
     "create": "Create user",
-    "title": "User"
+    "title": "User",
+    "update": "Edit user"
   }
 }

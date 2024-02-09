@@ -4,12 +4,22 @@
       {{ 'user.title' | translate }}
     </div>
   </ng-container>
-  
+
   <ng-container right>
-    <app-base-tui-button>
-      {{ 'user.create'  | translate }}
-    </app-base-tui-button>
+    <div class="flex gap-1">
+
+      <!--    edit  -->
+      <app-base-tui-button>
+        {{ 'user.update'  | translate }}
+      </app-base-tui-button>
+      <!--    add  -->
+      <app-base-tui-button>
+        <app-edit-icon/>
+        {{ 'user.create'  | translate }}
+      </app-base-tui-button>
+    </div>
   </ng-container>
+
 </app-header-layout>
 
 
