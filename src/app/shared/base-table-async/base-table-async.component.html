@@ -39,10 +39,6 @@
         tuiTd
         *tuiCell="column"
       >
-        @if(column === 'active'){
-          <button>active</button>
-        }
-
         {{ extractNestedProperty(item, column) }}
       </td>
     }
