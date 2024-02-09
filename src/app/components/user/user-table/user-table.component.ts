@@ -19,6 +19,7 @@ export class UserTableComponent {
   @Input({ required: true }) user$: Observable<any> | undefined;
 
   // todo: update active visually
-  tableHeaders = signal<string[]>(["Vorname", "Nachname", "Telefon", "Email", "Aktiv"]) ;
-  tableColumns = signal<string[]>(["firstName", "lastName", "phone", "email", "active"]) ;
+  tableHeaders = signal<string[]>(["Vorname", "Nachname", "Telefon", "Email", "Aktiv"]);
+  tableColumns = signal<string[]>(["firstName", "lastName", "phone", "email", "active"]);
 }
+
