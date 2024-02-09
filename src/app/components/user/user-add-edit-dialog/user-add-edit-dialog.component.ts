@@ -14,7 +14,7 @@ import { TwoInputsRowLayoutComponent } from "../../../layouts/two-inputs-row-lay
 import { TuiRadioLabeledModule } from "@taiga-ui/kit";
 import { BaseRadioGroupComponent } from "../../../shared/base-radio-group/base-radio-group.component";
 import { BaseComboboxComponent } from "../../../shared/base-combobox/base-combobox.component";
-import { RoleService } from "../../../api/role.service";
+
 
 @Component({
   selector: 'app-user-add-edit-dialog',
@@ -41,7 +41,6 @@ export class UserAddEditDialogComponent extends BaseDialogComponent implements O
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private rolesService: RoleService,
     @Inject(POLYMORPHEUS_CONTEXT) context: TuiDialogContext<any>,
     dialogService: TuiDialogHelperService
   ) {
