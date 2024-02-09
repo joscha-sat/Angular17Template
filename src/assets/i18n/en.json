@@ -15,9 +15,11 @@
     "title": "Dashboard"
   },
   "general": {
+    "active": "Active",
     "back": "Back",
     "cancel": "Cancel",
     "emtpy": "No entries available",
+    "inactive": "Inactive",
     "no": "No",
     "ok": "Ok",
     "save": "save",

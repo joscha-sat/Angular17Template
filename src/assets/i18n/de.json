@@ -15,9 +15,11 @@
     "title": "Übersicht"
   },
   "general": {
+    "active": "Aktiv",
     "back": "Zurück",
     "cancel": "Abbrechen",
     "emtpy": "Keine Einträge vorhanden",
+    "inactive": "Inaktiv",
     "no": "Nein",
     "ok": "Ok",
     "save": "speichern",

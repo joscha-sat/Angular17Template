@@ -1,0 +1,11 @@
+@if (radioItem) {
+  <tui-radio-labeled
+    [formControlName]="radioItem.fControlName"
+    [item]="radioItem.item"
+    [size]="radioItem.size || 'm'"
+    class="tui-space_bottom-3"
+  >
+    {{ radioItem.ngxTitle | translate }}
+  </tui-radio-labeled>
+}
+
