@@ -3,5 +3,6 @@
     [tableData$]="user$!"
     [headers]="tableHeaders()"
     [columns]="tableColumns()"
+    (rowClickEvent)="userClicked($event)"
   />
 }

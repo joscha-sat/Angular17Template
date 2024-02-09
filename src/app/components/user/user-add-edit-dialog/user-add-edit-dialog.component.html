@@ -1,0 +1,33 @@
+<!-- title -->
+<div class="view-title pb-1">
+  {{ addUserMode() ? ('user.create' | translate) : ('user.update' | translate) }}
+</div>
+
+<!-- user form -->
+@if (form) {
+  <form (ngSubmit)="form.valid && submit()" [formGroup]="form" class="flex-col-gap1">
+    <!--  first name -->
+    <app-base-input label="hint.firstName" fControlName="firstName" type="text"/>
+
+    <!--  last name -->
+    <app-base-input label="hint.lastName" fControlName="lastName" type="text"/>
+
+    <!--  email -->
+    <app-base-input label="hint.email" fControlName="email" type="email"/>
+
+    <!--  phone -->
+    <app-base-input label="hint.phone" fControlName="phone" type="text"/>
+
+    <!--  actions  -->
+    <app-base-save-cancel-btns (cancel)="closeDialog()" [form]="form"/>
+
+  </form>
+}
+
+
+<!--{{ data.email }}-->
+
+
+
+
+

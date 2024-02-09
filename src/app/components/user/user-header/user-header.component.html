@@ -6,18 +6,10 @@
   </ng-container>
 
   <ng-container right>
-    <div class="flex gap-1">
-
-      <!--    edit  -->
-      <app-base-tui-button>
-        {{ 'user.update'  | translate }}
-      </app-base-tui-button>
-      <!--    add  -->
-      <app-base-tui-button>
-        <app-edit-icon/>
-        {{ 'user.create'  | translate }}
-      </app-base-tui-button>
-    </div>
+    <!--    add  -->
+    <app-base-tui-button (clicked)="openCreateUserDialog()">
+      {{ 'user.create'  | translate }}
+    </app-base-tui-button>
   </ng-container>
 
 </app-header-layout>

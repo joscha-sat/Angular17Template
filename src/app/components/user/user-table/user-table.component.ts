@@ -1,8 +1,11 @@
-import { Component, Input, signal } from "@angular/core";
+import { Component, inject, Input, signal } from "@angular/core";
 import { Observable } from "rxjs";
 import { BaseTableAsyncComponent } from "../../../shared/base-table-async/base-table-async.component";
 import { AsyncPipe } from "@angular/common";
 import { BaseTableComponent } from "../../../shared/base-table/base-table.component";
+import { User } from "../../../models/User";
+import { TuiDialogHelperService } from "../../../services/tui-dialog-helper.service";
+import { UserAddEditDialogComponent } from "../user-add-edit-dialog/user-add-edit-dialog.component";
 
 @Component({
   selector: "app-user-table",
@@ -18,8 +21,15 @@ import { BaseTableComponent } from "../../../shared/base-table/base-table.compon
 export class UserTableComponent {
   @Input({ required: true }) user$: Observable<any> | undefined;
 
+  dialogService = inject(TuiDialogHelperService<User>)
+
   // todo: update active visually
   tableHeaders = signal<string[]>(["Vorname", "Nachname", "Telefon", "Email", "Aktiv"]);
   tableColumns = signal<string[]>(["firstName", "lastName", "phone", "email", "active"]);
+
+  userClicked($event: User) {
+    const user = new User($event)
+    this.dialogService.openDialog(UserAddEditDialogComponent, user)
+  }
 }
 

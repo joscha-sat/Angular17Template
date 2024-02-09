@@ -2,19 +2,19 @@
 @switch (type) {
   @case ('text') {
     <tui-input [formControlName]="fControlName">
-      {{ label }}
-      <input type="text" tuiTextfield />
+      {{ label | translate }}
+      <input type="text" tuiTextfield/>
     </tui-input>
   }
   @case ('email') {
     <tui-input [formControlName]="fControlName">
-      {{ label }}
-      <input type="email" tuiTextfield />
+      {{ label | translate }}
+      <input type="email" tuiTextfield/>
     </tui-input>
   }
   @case ('password') {
     <tui-input-password [formControlName]=" fControlName ">
-      {{ label }}
+      {{ label | translate }}
       <span class="tui-required"></span>
     </tui-input-password>
   }
@@ -23,7 +23,7 @@
     <tui-input-number
       [formControlName]="fControlName"
     >
-      {{ label }}
+      {{ label | translate }}
     </tui-input-number>
   }
 }

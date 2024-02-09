@@ -23,6 +23,12 @@
     "save": "speichern",
     "yes": "Ja"
   },
+  "hint": {
+    "email": "E-Mail eingeben",
+    "firstName": "Vorname eingeben",
+    "lastName": "Nachname eingeben",
+    "phone": "Telefonnummer eingeben"
+  },
   "login": {
     "forgot-password": "Passwort vergessen?",
     "login-btn": "Anmelden",

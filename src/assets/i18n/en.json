@@ -23,6 +23,12 @@
     "save": "save",
     "yes": "Yes"
   },
+  "hint": {
+    "email": "Enter email",
+    "firstName": "Enter first name",
+    "lastName": "Enter last name",
+    "phone": "Enter phone number"
+  },
   "login": {
     "forgot-password": "Forgot your password?",
     "login-btn": "Login",

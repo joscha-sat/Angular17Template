@@ -4,6 +4,7 @@ import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from "@angu
 import { TuiErrorModule, TuiTextfieldControllerModule } from "@taiga-ui/core";
 import { AsyncPipe } from "@angular/common";
 import { TuiCurrencyPipeModule } from "@taiga-ui/addon-commerce";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: "app-base-input",
@@ -18,6 +19,7 @@ import { TuiCurrencyPipeModule } from "@taiga-ui/addon-commerce";
     TuiInputNumberModule,
     TuiTextfieldControllerModule,
     TuiCurrencyPipeModule,
+    TranslateModule,
   ],
   templateUrl: "./base-input.component.html",
   styleUrl: "./base-input.component.scss",
