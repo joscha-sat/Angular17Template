@@ -5,6 +5,7 @@ import { TenantService } from "../../api/tenant.service";
 import { Tenant } from "../../models/Tenant";
 import { AsyncPipe } from "@angular/common";
 import { toObservable } from "@angular/core/rxjs-interop";
+import { ViewLayoutComponent } from "../../layouts/view-layout/view-layout.component";
 
 @Component({
   selector: "app-tenant.view",
@@ -13,6 +14,7 @@ import { toObservable } from "@angular/core/rxjs-interop";
     TenantHeaderComponent,
     TenantTableComponent,
     AsyncPipe,
+    ViewLayoutComponent,
   ],
   templateUrl: "./tenant.view.component.html",
   styleUrl: "./tenant.view.component.scss",

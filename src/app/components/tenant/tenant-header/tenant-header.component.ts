@@ -5,6 +5,8 @@ import { Tenant } from "../../../models/Tenant";
 import { BaseComboboxComponent } from "../../../shared/base-combobox/base-combobox.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { TenantService } from "../../../api/tenant.service";
+import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui-button.component";
+import { HeaderLayoutComponent } from "../../../layouts/header-layout/header-layout.component";
 
 @Component({
   selector: "app-tenant-header",
@@ -14,6 +16,8 @@ import { TenantService } from "../../../api/tenant.service";
     TuiButtonModule,
     BaseComboboxComponent,
     ReactiveFormsModule,
+    BaseTuiButtonComponent,
+    HeaderLayoutComponent,
   ],
   templateUrl: "./tenant-header.component.html",
   styleUrl: "./tenant-header.component.scss",
@@ -41,7 +45,7 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     }
   }
 
-  onTenantChange($event: {id: string, label: string}) {
+  onTenantChange($event: { id: string, label: string }) {
     this.tenantService.selectedTenantId.set($event.id)
   }
 }

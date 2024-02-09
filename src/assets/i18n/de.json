@@ -43,11 +43,12 @@
     "title": "Einstellungen"
   },
   "tenant": {
-    "new-btn": "Firma erstellen",
+    "create": "Firma erstellen",
     "select": "Firma auswählen",
     "title": "Firmen"
   },
   "user": {
+    "create": "Benutzer erstellen",
     "title": "Benutzer"
   }
 }

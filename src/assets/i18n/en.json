@@ -43,11 +43,12 @@
     "title": "Settings"
   },
   "tenant": {
-    "new-btn": "Create tenant",
+    "create": "Create tenant",
     "select": "Select tenant",
     "title": "Tenant"
   },
   "user": {
+    "create": "Create user",
     "title": "User"
   }
 }

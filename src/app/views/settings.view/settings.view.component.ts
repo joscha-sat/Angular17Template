@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { BaseTableComponent } from "../../shared/base-table/base-table.component";
 import { TuiIslandModule } from "@taiga-ui/kit";
+import { ViewLayoutComponent } from "../../layouts/view-layout/view-layout.component";
 
 @Component({
   selector: "app-settings.view",
@@ -8,6 +9,7 @@ import { TuiIslandModule } from "@taiga-ui/kit";
   imports: [
     BaseTableComponent,
     TuiIslandModule,
+    ViewLayoutComponent,
   ],
   templateUrl: "./settings.view.component.html",
   styleUrl: "./settings.view.component.scss",

@@ -7,6 +7,7 @@ import { toObservable } from "@angular/core/rxjs-interop";
 import { SuperAdminService } from "../../api/super-admin.service";
 import { TenantService } from "../../api/tenant.service";
 import { AuthService } from "../../api/auth.service";
+import { ViewLayoutComponent } from "../../layouts/view-layout/view-layout.component";
 
 @Component({
   selector: "app-user.view",
@@ -14,6 +15,7 @@ import { AuthService } from "../../api/auth.service";
   imports: [
     UserHeaderComponent,
     UserTableComponent,
+    ViewLayoutComponent,
   ],
   templateUrl: "./user.view.component.html",
   styleUrl: "./user.view.component.scss",

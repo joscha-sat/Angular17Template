@@ -8,6 +8,10 @@ import {
   TenantDashboardAxesComponent,
 } from "../../components/tenant-dashboard/tenant-dashboard-axes/tenant-dashboard-axes.component";
 import { TranslateModule } from "@ngx-translate/core";
+import {
+  TenantDashboardHeaderComponent
+} from "../../components/tenant-dashboard/tenant-dashboard-header/tenant-dashboard-header.component";
+import { ViewLayoutComponent } from "../../layouts/view-layout/view-layout.component";
 
 @Component({
   selector: "app-tenant-dashboard.view",
@@ -18,6 +22,8 @@ import { TranslateModule } from "@ngx-translate/core";
     TenantDashboardGridComponent,
     TenantDashboardAxesComponent,
     TranslateModule,
+    TenantDashboardHeaderComponent,
+    ViewLayoutComponent,
   ],
   templateUrl: "./tenant-dashboard.view.component.html",
   styleUrl: "./tenant-dashboard.view.component.scss",

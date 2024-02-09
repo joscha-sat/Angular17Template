@@ -1,7 +1,15 @@
-<div>
+<app-header-layout>
+  <ng-container left>
+    <div class="view-title">
+      {{ 'user.title' | translate }}
+    </div>
+  </ng-container>
   
-  <div class="view-title">
-    {{ 'user.title' | translate }}
-  </div>
+  <ng-container right>
+    <app-base-tui-button>
+      {{ 'user.create'  | translate }}
+    </app-base-tui-button>
+  </ng-container>
+</app-header-layout>
 
-</div>
+

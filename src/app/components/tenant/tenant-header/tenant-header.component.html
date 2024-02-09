@@ -1,5 +1,5 @@
-<div class="container">
-  <div class="flex-a-center-g1">
+<app-header-layout>
+  <div class="flex-a-center-g1" left>
     <!--  title  -->
     <div class="view-title">
       {{ 'tenant.title' | translate }}
@@ -7,14 +7,23 @@
 
     <!--  tenant  dropdown  -->
     <form [formGroup]="form">
-      <app-base-combobox (valueChange)="onTenantChange($event)" [dataArray]="tenants" [hint]="'tenant.select'" fControlName="name" />
+      <app-base-combobox
+        (valueChange)="onTenantChange($event)"
+        [dataArray]="tenants"
+        [hint]="'tenant.select'"
+        fControlName="name"
+      />
     </form>
   </div>
 
-  <!-- new tenant button -->
-  <button size="m" tuiButton>
-    {{ 'tenant.new-btn'  | translate }}
-  </button>
-</div>
+  <div right>
+    <!-- new tenant button -->
+    <app-base-tui-button>
+      {{ 'tenant.create'  | translate }}
+    </app-base-tui-button>
+  </div>
+
+</app-header-layout>
+
 
 
