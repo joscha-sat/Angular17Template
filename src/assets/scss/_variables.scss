@@ -1,9 +1,9 @@
 // common breakpoints  // the 88px (5.5rem) are coming from the nav-width
 $nav-space: 88px;
-$mobile-view: 499px + $nav-space;
+$mobile-view: 599px + $nav-space;
 $tablet-view: 849px  + $nav-space;
-$laptop-view: 1019px  + $nav-space;
-$desktop-view: 1020px  + $nav-space;
+$laptop-view: 1999px  + $nav-space;
+$desktop-view: 1200px  + $nav-space;
 
 /* --------------------------------------------------------------------------------------------------------------- */
 // IMPORTANT: the order (in .scss files) MUST be like here desktop > laptop > tablet > mobile to work as expected
