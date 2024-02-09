@@ -5,6 +5,8 @@ import { User } from "../../models/User";
 import { UserService } from "../../api/user.service";
 import { toObservable } from "@angular/core/rxjs-interop";
 import { SuperAdminService } from "../../api/super-admin.service";
+import { TenantService } from "../../api/tenant.service";
+import { AuthService } from "../../api/auth.service";
 
 @Component({
   selector: "app-user.view",
@@ -19,20 +21,32 @@ import { SuperAdminService } from "../../api/super-admin.service";
 export class UserViewComponent implements OnInit {
   // | services | --------------------------------------------------------------------------  ||
   userService = inject(UserService);
+  authService = inject(AuthService);
+  tenantService = inject(TenantService);
   superAdminService = inject(SuperAdminService);
-
-  // | signals / vars | --------------------------------------------------------------------  ||
+  // | signals / vars / getters | ----------------------------------------------------------  ||
   users = signal<User[]>([]);
   users$ = toObservable<User[]>(this.users);
 
+  get tenantId(): string {
+    // case super admin
+    if (this.superAdminService.isSuperAdmin()) {
+      return this.tenantService.selectedTenantId()
+    }
+    // case logged in tenant
+    else {
+      return this.authService.getLoggedInUser()?.tenantId || ''
+    }
+  }
+
   // | init | ------------------------------------------------------------------------------  ||
   ngOnInit(): void {
-    // this.getUsers();
+    this.getUsers();
   }
 
   // | normal methods | --------------------------------------------------------------------  ||
-  getUsersOfSelectedTenant() {
-    this.userService.getUsers().subscribe((user: User[]) => {
+  getUsers() {
+    this.userService.getUsers({ tenantId: this.tenantId }).subscribe((user: User[]) => {
       this.users.set(user);
     });
   }

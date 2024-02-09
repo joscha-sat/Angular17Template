@@ -15,9 +15,8 @@ import { TenantQueryParams } from "../types/TenantQueryParams.type";
  * Service Class for the getting or manipulating tenant data
  */
 export class TenantService {
+  selectedTenantId = signal<string>('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
   private readonly baseUrl = environment.baseUrl;
-
-  selectedTenantId = signal<string>('');
 
   constructor(private http: HttpClient) {
   }
