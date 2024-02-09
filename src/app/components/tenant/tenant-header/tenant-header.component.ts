@@ -4,6 +4,7 @@ import { TuiButtonModule } from "@taiga-ui/core";
 import { Tenant } from "../../../models/Tenant";
 import { BaseComboboxComponent } from "../../../shared/base-combobox/base-combobox.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { TenantService } from "../../../api/tenant.service";
 
 @Component({
   selector: "app-tenant-header",
@@ -21,7 +22,7 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
   @Input({ required: true }) tenants: Tenant[] = [];
   form: FormGroup = new FormGroup({});
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private tenantService: TenantService) {
   }
 
   ngOnInit(): void {
@@ -39,4 +40,9 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
       this.form.controls["name"].setValue({ id: this.tenants[0].id, label: this.tenants[0].name });
     }
   }
+
+  onTenantChange($event: {id: string, label: string}) {
+    this.tenantService.selectedTenantId.set($event.id)
+  }
 }
+

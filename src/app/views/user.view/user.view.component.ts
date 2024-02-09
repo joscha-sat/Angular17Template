@@ -4,6 +4,7 @@ import { UserTableComponent } from "../../components/user/user-table/user-table.
 import { User } from "../../models/User";
 import { UserService } from "../../api/user.service";
 import { toObservable } from "@angular/core/rxjs-interop";
+import { SuperAdminService } from "../../api/super-admin.service";
 
 @Component({
   selector: "app-user.view",
@@ -18,6 +19,7 @@ import { toObservable } from "@angular/core/rxjs-interop";
 export class UserViewComponent implements OnInit {
   // | services | --------------------------------------------------------------------------  ||
   userService = inject(UserService);
+  superAdminService = inject(SuperAdminService);
 
   // | signals / vars | --------------------------------------------------------------------  ||
   users = signal<User[]>([]);
@@ -25,11 +27,11 @@ export class UserViewComponent implements OnInit {
 
   // | init | ------------------------------------------------------------------------------  ||
   ngOnInit(): void {
-    this.getUsers();
+    // this.getUsers();
   }
 
   // | normal methods | --------------------------------------------------------------------  ||
-  getUsers() {
+  getUsersOfSelectedTenant() {
     this.userService.getUsers().subscribe((user: User[]) => {
       this.users.set(user);
     });

@@ -3,6 +3,7 @@
   [stringify]="stringify"
   [tuiTextfieldSize]="size"
   class="dropdown"
+  (tuiValueChanges)="onChange($event)"
 >
   {{ hint | translate }}
   <tui-data-list-wrapper

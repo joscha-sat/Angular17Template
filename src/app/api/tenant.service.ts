@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, signal } from "@angular/core";
 import { HttpClient, HttpParams, HttpStatusCode } from "@angular/common/http";
 import { ApiRoutes } from "../enums/api-routes";
 import { catchError, map, Observable, of } from "rxjs";
@@ -16,6 +16,8 @@ import { TenantQueryParams } from "../types/TenantQueryParams.type";
  */
 export class TenantService {
   private readonly baseUrl = environment.baseUrl;
+
+  selectedTenantId = signal<string>('');
 
   constructor(private http: HttpClient) {
   }
