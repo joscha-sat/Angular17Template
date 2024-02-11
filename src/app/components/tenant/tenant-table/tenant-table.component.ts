@@ -28,6 +28,7 @@ export class TenantTableComponent {
   columns = signal<string[]>(['name']);
 
   router = inject(Router);
+  protected readonly Tenant = Tenant;
 
   // method which get triggered on a table row click
   rowClicked($event: Tenant) {

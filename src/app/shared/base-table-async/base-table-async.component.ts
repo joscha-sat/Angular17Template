@@ -22,8 +22,8 @@ import { TuiLetModule } from "@taiga-ui/cdk";
   templateUrl: "./base-table-async.component.html",
   styleUrl: "./base-table-async.component.scss",
 })
-export class BaseTableAsyncComponent implements OnInit {
-  @Input() tableData$: Observable<any[]> = of([]);
+export class BaseTableAsyncComponent<T> implements OnInit {
+  @Input() tableData$: Observable<T[]> = of([]);
   @Input() headers: string[] = [];
   @Input() columns: string[] = [];
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};

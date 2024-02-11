@@ -39,7 +39,7 @@
         <!--    case: has a matched cellTemplatesMap name   -->
         <ng-container *ngIf="cellTemplatesMap[column] as template">
           <ng-container
-            *ngTemplateOutlet="template; context: {$implicit: extractNestedProperty(item, column)}"
+            *ngTemplateOutlet="template; context: {$implicit: extractNestedProperty(item, column), object: item}"
           ></ng-container>
         </ng-container>
 
