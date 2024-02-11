@@ -21,15 +21,15 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 
 #### Example
 
-```
+```css
 @use "index" as *;
 
-//desktop-view >> default
+/*desktop-view >> default */
 .grid {
   grid-template-columns: 2fr 5fr;
 }
 
-// tablet-view and below using the @media query mixin
+/* tablet-view and below using the @media query mixin */
 @include tablet-view {
   .grid {
     grid-template-columns: 1fr;
@@ -43,6 +43,35 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 - View components src/app/components --> A view is split into different component blocks, here are the different component blocks for the view (uses reusable components)
 - Views src/app/views --> Views use the component blocks to display the full UI. It is used as a kind of "Layout-Component" for the different component blocks
 
+### Customizable table columns in parent component, example:
+
+TS:
+
+```
+  @Input({ required: true }) tenants$: Observable<Tenant[]> | undefined;
+  headers = signal<string[]>(['Name']);
+  columns = signal<string[]>(['name']);
+```
+
+HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-template #name"
+
+```angular17html
+@if (tenants$ | async) {
+  <app-base-table-async
+    [tableData$]="tenants$!"
+    (rowClickEvent)="rowClicked($event)"
+    [headers]="headers()"
+    [columns]="columns()"
+    [cellTemplatesMap]="{'name': name}"
+  />
+  <!-- customized column -->
+  <ng-template #name let-value>
+    {{ value }}
+    <app-delete-icon/>
+  </ng-template>
+}
+```
+
 ### Services:
 
 API: src/app/api
@@ -55,13 +84,11 @@ Helper services: src/app/services
 
 ### Type definition:
 
-#### Typescript classes >  src/app/models
+Typescript classes >  src/app/models
 
-#### Types / Interfaces >  src/app/types
+Types (uses type not interfaces, same syntax except "=" before {}) >  src/app/types
 
-#### Enums > src/app/enums
-
-##
+Enums > src/app/enums
 
 ##
 

@@ -7,6 +7,7 @@ import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { NavRoutes } from "../../../enums/nav-routes";
 import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui-button.component";
+import { DeleteIconComponent } from "../../../shared/delete-icon/delete-icon.component";
 
 @Component({
   selector: "app-tenant-table",
@@ -16,23 +17,24 @@ import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui
     AsyncPipe,
     BaseTableAsyncComponent,
     BaseTuiButtonComponent,
+    DeleteIconComponent,
   ],
   templateUrl: "./tenant-table.component.html",
   styleUrl: "./tenant-table.component.scss",
 })
 export class TenantTableComponent {
   @Input({ required: true }) tenants$: Observable<Tenant[]> | undefined;
-
-  router = inject(Router);
-  // method that navigates to the tenant dashboard via tenant id
   headers = signal<string[]>(['Name']);
   columns = signal<string[]>(['name']);
+
+  router = inject(Router);
 
   // method which get triggered on a table row click
   rowClicked($event: Tenant) {
     this.openTenantDashboard($event);
   }
 
+  // method that navigates to the tenant dashboard via tenant id
   openTenantDashboard(tenant: Tenant) {
     const url = `${ NavRoutes.TENANT }/${ NavRoutes.DASHBOARD }/${ tenant.id }`;
     this.router.navigate([url]).then();
