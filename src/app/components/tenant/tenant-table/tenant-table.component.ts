@@ -8,6 +8,7 @@ import { Router } from "@angular/router";
 import { NavRoutes } from "../../../enums/nav-routes";
 import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui-button.component";
 import { DeleteIconComponent } from "../../../shared/delete-icon/delete-icon.component";
+import { TenantService } from "../../../api/tenant.service";
 
 @Component({
   selector: "app-tenant-table",
@@ -28,7 +29,7 @@ export class TenantTableComponent {
   columns = signal<string[]>(['name']);
 
   router = inject(Router);
-  protected readonly Tenant = Tenant;
+  tenantService = inject(TenantService)
 
   // method which get triggered on a table row click
   rowClicked($event: Tenant) {

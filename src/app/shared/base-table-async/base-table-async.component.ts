@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from "@an
 import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { BehaviorSubject, combineLatest, map, Observable, of, switchMap } from "rxjs";
 import { AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from "@angular/common";
-import { TuiLetModule } from "@taiga-ui/cdk";
+import { TUI_DEFAULT_MATCHER, TuiLetModule } from "@taiga-ui/cdk";
 
 @Component({
   selector: "app-base-table-async",
@@ -27,6 +27,7 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   @Input() headers: string[] = [];
   @Input() columns: string[] = [];
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
+  @Input() search: string = '';
 
   @Output() rowClickEvent = new EventEmitter();
 
@@ -38,6 +39,9 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   page$ = new BehaviorSubject<number>(0);
   total$ = new BehaviorSubject<number>(0);
 
+  isMatch(value: unknown): boolean {
+    return !!this.search && TUI_DEFAULT_MATCHER(value, this.search);
+  }
 
   ngOnInit() {
     // Sorting data

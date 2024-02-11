@@ -16,6 +16,7 @@ import { TenantQueryParams } from "../types/TenantQueryParams.type";
  */
 export class TenantService {
   selectedTenantId = signal<string>('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
+  search = signal('');
   private readonly baseUrl = environment.baseUrl;
 
   constructor(private http: HttpClient) {

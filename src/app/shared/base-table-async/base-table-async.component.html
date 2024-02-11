@@ -35,7 +35,7 @@
   >
     <!-- loop over the column names displaying the corresponding data -->
     <ng-container *ngFor="let column of columns;">
-      <td *tuiCell="column" tuiTd>
+      <td *tuiCell="column" [class.match]="isMatch(item[column])" tuiTd>
         <!--    case: has a matched cellTemplatesMap name   -->
         <ng-container *ngIf="cellTemplatesMap[column] as template">
           <ng-container

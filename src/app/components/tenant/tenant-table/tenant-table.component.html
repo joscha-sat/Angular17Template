@@ -4,5 +4,6 @@
     (rowClickEvent)="rowClicked($event)"
     [headers]="headers()"
     [columns]="columns()"
+    [search]="tenantService.search()"
   />
 }

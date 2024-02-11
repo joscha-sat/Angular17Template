@@ -1,26 +1,26 @@
 <!-- input -->
 @switch (type) {
   @case ('text') {
-    <tui-input [formControlName]="fControlName">
+    <tui-input [tuiTextfieldSize]="size" [formControlName]="fControlName">
       {{ label | translate }}
       <input type="text" tuiTextfield/>
     </tui-input>
   }
   @case ('email') {
-    <tui-input [formControlName]="fControlName">
+    <tui-input [tuiTextfieldSize]="size" [formControlName]="fControlName">
       {{ label | translate }}
       <input type="email" tuiTextfield/>
     </tui-input>
   }
   @case ('password') {
-    <tui-input-password [formControlName]=" fControlName ">
+    <tui-input-password [tuiTextfieldSize]="size" [formControlName]=" fControlName ">
       {{ label | translate }}
       <span class="tui-required"></span>
     </tui-input-password>
   }
   @case ('number') {
-    <!--      [tuiTextfieldPostfix]="'978' | tuiCurrency"-->
     <tui-input-number
+      [tuiTextfieldSize]="size"
       [formControlName]="fControlName"
     >
       {{ label | translate }}

@@ -9,6 +9,10 @@ th {
   background-color: #f3f3f5;
 }
 
+.match {
+  background: var(--tui-secondary);
+}
+
 /* Top left and right rounded corners */
 //.table thead tr:first-child th:first-child {
 //  border-top-left-radius: 1rem;

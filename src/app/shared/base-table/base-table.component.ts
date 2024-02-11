@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from "@angular/core";
 import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
-import { TuiLetModule } from "@taiga-ui/cdk";
+import { TUI_DEFAULT_MATCHER, TuiLetModule } from "@taiga-ui/cdk";
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from "@angular/common";
 import { TuiTagModule } from "@taiga-ui/kit";
 import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taiga-ui/core";
@@ -26,18 +26,19 @@ import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taig
   templateUrl: "./base-table.component.html",
   styleUrl: "./base-table.component.scss",
 })
-export class BaseTableComponent<GenericT> implements OnInit {
-  @Input({ required: true }) tableData: GenericT[] = [];
+export class BaseTableComponent implements OnInit {
+  @Input({ required: true }) tableData: any[] = [];
   @Input({ required: true }) headers: string[] = [];
   @Input({ required: true }) columns: string[] = [];
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
+  @Input() search: string = '';
 
   @Output() rowClickEvent = new EventEmitter();
 
   total = 0;
   page: number = 0;
   size: number = 10;
-  sizedData: GenericT[] = [];
+  sizedData: any[] = [];
   sortedColumn = this.columns[0];
   direction = "asc";
 
@@ -99,4 +100,12 @@ export class BaseTableComponent<GenericT> implements OnInit {
 
     return value;
   }
+
+  isMatch(value: any): boolean {
+    return !!this.search && TUI_DEFAULT_MATCHER(value, this.search);
+  }
 }
+
+
+
+

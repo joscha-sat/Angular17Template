@@ -1,10 +1,10 @@
 <!--  form  -->
 <form (ngSubmit)="form?.valid && submit()" [formGroup]="form!" class="flex-col-gap1">
   <!--   email input   -->
-  <app-base-input fControlName="username" type="email" />
+  <app-base-input fControlName="username" size="l" type="email"/>
 
   <!--   password input   -->
-  <app-base-input [type]="'password'" fControlName="password" />
+  <app-base-input [type]="'password'" fControlName="password" size="l"/>
 
 
   <!-- forgot password, TODO: add forgot passwort dialog / logic -->

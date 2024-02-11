@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { TenantService } from "../../../api/tenant.service";
 import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui-button.component";
 import { HeaderLayoutComponent } from "../../../layouts/header-layout/header-layout.component";
+import { BaseInputComponent } from "../../../shared/base-input/base-input.component";
 
 @Component({
   selector: "app-tenant-header",
@@ -18,6 +19,7 @@ import { HeaderLayoutComponent } from "../../../layouts/header-layout/header-lay
     ReactiveFormsModule,
     BaseTuiButtonComponent,
     HeaderLayoutComponent,
+    BaseInputComponent,
   ],
   templateUrl: "./tenant-header.component.html",
   styleUrl: "./tenant-header.component.scss",
@@ -25,6 +27,7 @@ import { HeaderLayoutComponent } from "../../../layouts/header-layout/header-lay
 export class TenantHeaderComponent implements OnInit, OnChanges {
   @Input({ required: true }) tenants: Tenant[] = [];
   form: FormGroup = new FormGroup({});
+  searchForm: FormGroup = new FormGroup({});
 
   constructor(private fb: FormBuilder, private tenantService: TenantService) {
   }
@@ -37,16 +40,24 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     this.form = this.fb.group({
       name: [],
     });
+
+    this.searchForm = this.fb.group({
+      search: []
+    })
+  }
+
+  onTenantChange($event: { id: string, label: string }) {
+    this.tenantService.selectedTenantId.set($event.id)
+  }
+
+  onSearchChange($event: any) {
+    this.tenantService.search.set($event.target.value)
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes["tenants"] && changes["tenants"].currentValue !== changes["tenants"].previousValue && this.form.controls["name"]) {
       this.form.controls["name"].setValue({ id: this.tenants[0].id, label: this.tenants[0].name });
     }
-  }
-
-  onTenantChange($event: { id: string, label: string }) {
-    this.tenantService.selectedTenantId.set($event.id)
   }
 }
 
