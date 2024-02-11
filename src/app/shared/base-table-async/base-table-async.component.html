@@ -8,7 +8,7 @@
   <!-- HEAD / HEADERS -->
   <thead>
   <tr tuiThGroup>
-    @for (header of allHeaders; track header) {
+    @for (header of headers; track header) {
       <th
         *tuiHead="columns[$index]"
         (click)="onSortChange(columns[$index])"
@@ -33,32 +33,19 @@
     class="pointer"
     tuiTr
   >
-    <!--  loop over the colum names displaying the corresponding data of it  -->
-    @for (column of columns; track column) {
-      <ng-container [ngSwitch]="column">
-        <!--  loop over the custom columns able to be adjusted in the parent component  -->
-        @for (cus of customColumns; track cus) {
-          <ng-container *ngSwitchCase="customColumns ? customColumns[$index] : null">
-            <td tuiTd *tuiCell="column">
-              <ng-container *ngIf="cellTemplates?.[$index] as template">
-                <ng-container
-                  *ngTemplateOutlet="template; context: {$implicit: extractNestedProperty(item, column)}"
-                ></ng-container>
-              </ng-container>
-              @if (!cellTemplates?.[$index]) {
-                {{ extractNestedProperty(item, column) }}
-              }
-            </td>
-          </ng-container>
-        }
-        <!-- default, only display value -->
-        <ng-container *ngSwitchDefault>
-          <td tuiTd *tuiCell="column">
-            {{ extractNestedProperty(item, column) }}
-          </td>
+    <!-- loop over the column names displaying the corresponding data -->
+    <ng-container *ngFor="let column of columns;">
+      <td *tuiCell="column" tuiTd>
+        <ng-container *ngIf="cellTemplatesMap[column] as template">
+          <ng-container
+            *ngTemplateOutlet="template; context: {$implicit: extractNestedProperty(item, column)}"
+          ></ng-container>
         </ng-container>
-      </ng-container>
-    }
+        <ng-container *ngIf="!cellTemplatesMap[column]">
+          {{ extractNestedProperty(item, column) }}
+        </ng-container>
+      </td>
+    </ng-container>
   </tr>
   </tbody>
 

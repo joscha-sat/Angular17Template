@@ -27,13 +27,10 @@ import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taig
   styleUrl: "./base-table.component.scss",
 })
 export class BaseTableComponent<GenericT> implements OnInit {
-  @Input() tableData: GenericT[] = [];
-  @Input() headers: string[] = [];
-  @Input() columns: string[] = [];
-  
-  @Input() customHeaders: string[] | undefined;
-  @Input() customColumns: string[] | undefined;
-  @Input() cellTemplates: TemplateRef<any>[] | undefined;
+  @Input({ required: true }) tableData: GenericT[] = [];
+  @Input({ required: true }) headers: string[] = [];
+  @Input({ required: true }) columns: string[] = [];
+  @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
 
   @Output() rowClickEvent = new EventEmitter();
 
@@ -44,22 +41,7 @@ export class BaseTableComponent<GenericT> implements OnInit {
   sortedColumn = this.columns[0];
   direction = "asc";
 
-  get allColumns() {
-    if (this.customColumns) {
-      return [...this.columns, ...this.customColumns!];
-    }
-    return [...this.columns]
-  }
-
-  get allHeaders() {
-    if (this.customHeaders) {
-      return [...this.headers, ...this.customHeaders];
-    }
-    return [...this.headers]
-  }
-
   ngOnInit(): void {
-    this.columns = this.allColumns;
     this.loadPage();
   }
 

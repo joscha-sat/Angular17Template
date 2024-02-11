@@ -26,10 +26,7 @@ export class BaseTableAsyncComponent implements OnInit {
   @Input() tableData$: Observable<any[]> = of([]);
   @Input() headers: string[] = [];
   @Input() columns: string[] = [];
-
-  @Input() customHeaders: string[] | undefined;
-  @Input() customColumns: string[] | undefined;
-  @Input() cellTemplates: TemplateRef<any>[] | undefined;
+  @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
 
   @Output() rowClickEvent = new EventEmitter();
 
@@ -41,22 +38,8 @@ export class BaseTableAsyncComponent implements OnInit {
   page$ = new BehaviorSubject<number>(0);
   total$ = new BehaviorSubject<number>(0);
 
-  get allColumns() {
-    if (this.customColumns) {
-      return [...this.columns, ...this.customColumns!];
-    }
-    return [...this.columns]
-  }
-
-  get allHeaders() {
-    if (this.customHeaders) {
-      return [...this.headers, ...this.customHeaders];
-    }
-    return [...this.headers]
-  }
 
   ngOnInit() {
-    this.columns = this.allColumns;
     // Sorting data
     this.tableData$ = this.tableData$.pipe(
       map(data => this.sortData(data, this.sortedColumn, this.direction)),

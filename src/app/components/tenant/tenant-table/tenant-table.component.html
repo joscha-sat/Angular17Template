@@ -2,8 +2,8 @@
   <app-base-table-async
     [tableData$]="tenants$!"
     (rowClickEvent)="rowClicked($event)"
-    [customHeaders]="customHeaders()"
-    [customColumns]="customColumns()"
+    [headers]="headers()"
+    [columns]="columns()"
   />
 }
 

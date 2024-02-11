@@ -6,6 +6,7 @@ import { BaseTableAsyncComponent } from "../../../shared/base-table-async/base-t
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { NavRoutes } from "../../../enums/nav-routes";
+import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui-button.component";
 
 @Component({
   selector: "app-tenant-table",
@@ -14,6 +15,7 @@ import { NavRoutes } from "../../../enums/nav-routes";
     BaseTableComponent,
     AsyncPipe,
     BaseTableAsyncComponent,
+    BaseTuiButtonComponent,
   ],
   templateUrl: "./tenant-table.component.html",
   styleUrl: "./tenant-table.component.scss",
@@ -23,8 +25,8 @@ export class TenantTableComponent {
 
   router = inject(Router);
   // method that navigates to the tenant dashboard via tenant id
-  customHeaders = signal<string[]>(['Name']);
-  customColumns = signal<string[]>(['name']);
+  headers = signal<string[]>(['Name']);
+  columns = signal<string[]>(['name']);
 
   // method which get triggered on a table row click
   rowClicked($event: Tenant) {

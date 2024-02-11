@@ -2,20 +2,18 @@
   <app-settings-header/>
 
   <app-base-table
-    [cellTemplates]="[name, city]"
+    [cellTemplatesMap]="{'name': name, 'city': city}"
     [columns]="columns"
-    [customColumns]="customColumns"
-    [customHeaders]="customHeaders"
     [headers]="headers"
     [tableData]="tableData"
   />
 
   <ng-template #name let-value>
-    {{ value }}
+    {{ value }} 2
   </ng-template>
 
   <ng-template #city let-value>
-    <span> {{ value }}</span>
+    <span> {{ value }} 3</span>
   </ng-template>
 
 </app-view-layout>

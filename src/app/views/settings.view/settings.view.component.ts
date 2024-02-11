@@ -23,8 +23,6 @@ export class SettingsViewComponent {
     { name: 'Jane', age: 25, city: 'Chicago' },
     { name: 'Mike', age: 35, city: 'Los Angeles' }
   ];
-  headers: string[] = ['Alter'];
-  columns: string[] = ['age'];
-  customHeaders: string[] = ['Name', 'Stadt']
-  customColumns: string[] = ['name', 'city']
+  headers: string[] = ['Name', 'Alter', 'Stadt'];
+  columns: string[] = ['name', 'age', 'city'];
 }
