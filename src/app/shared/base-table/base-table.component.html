@@ -6,7 +6,7 @@
   <!-- HEAD / HEADERS -->
   <thead>
   <tr tuiThGroup>
-    @for (header of headers; track header) {
+    @for (header of allHeaders; track header) {
       <th
         *tuiHead="columns[$index]"
         [resizable]="true"
@@ -32,12 +32,25 @@
   >
     <!--  loop over the colum names displaying the corresponding data of it  -->
     @for (column of columns; track column) {
-      <td
-        tuiTd
-        *tuiCell="column"
-      >
-        {{ extractNestedProperty(item, column) }}
-      </td>
+      <ng-container [ngSwitch]="column">
+        <!--  loop over the custom columns able to be adjusted in the parent component  -->
+        @for (cus of customColumns; track cus) {
+          <ng-container *ngSwitchCase="customColumns ? customColumns[$index] : null">
+            <td tuiTd *tuiCell="column">
+              <ng-container
+                *ngTemplateOutlet="cellTemplates? cellTemplates[$index]: null; context:{$implicit: extractNestedProperty(item, customColumns ? customColumns[$index] : '')
+                }"
+              ></ng-container>
+            </td>
+          </ng-container>
+        }
+        <!-- default, only display value -->
+        <ng-container *ngSwitchDefault>
+          <td tuiTd *tuiCell="column">
+            {{ extractNestedProperty(item, column) }}
+          </td>
+        </ng-container>
+      </ng-container>
     }
   </tr>
   </tbody>
@@ -56,7 +69,7 @@
     </td>
   </tr>
   </tfoot>
-  
+
 </table>
 
 

@@ -17,5 +17,14 @@ import { SettingsHeaderComponent } from "../../components/settings/settings-head
   styleUrl: "./settings.view.component.scss",
 })
 export class SettingsViewComponent {
-
+  // The arrays are filled with some sample data
+  tableData: any[] = [
+    { name: 'John', age: 30, city: 'New York' },
+    { name: 'Jane', age: 25, city: 'Chicago' },
+    { name: 'Mike', age: 35, city: 'Los Angeles' }
+  ];
+  headers: string[] = ['Alter'];
+  columns: string[] = ['age'];
+  customHeaders: string[] = ['Name', 'Stadt']
+  customColumns: string[] = ['name', 'city']
 }

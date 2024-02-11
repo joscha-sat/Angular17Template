@@ -67,6 +67,7 @@ export class UserAddEditDialogComponent extends BaseDialogComponent implements O
 
   loadModelData() {
     this.addUserMode.set(true)
+
     if (!this.context.data) return;
     this.model = this.context.data;
     console.log(this.model)

@@ -1,6 +1,22 @@
 <app-view-layout>
   <app-settings-header/>
 
+  <app-base-table
+    [cellTemplates]="[name, city]"
+    [columns]="columns"
+    [customColumns]="customColumns"
+    [customHeaders]="customHeaders"
+    [headers]="headers"
+    [tableData]="tableData"
+  />
+
+  <ng-template #name let-value>
+    {{ value }}
+  </ng-template>
+
+  <ng-template #city let-value>
+    <span> {{ value }}</span>
+  </ng-template>
 
 </app-view-layout>
 

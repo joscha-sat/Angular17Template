@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from "@angular/core";
 import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { TuiLetModule } from "@taiga-ui/cdk";
-import { NgForOf, NgIf } from "@angular/common";
+import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from "@angular/common";
 import { TuiTagModule } from "@taiga-ui/kit";
 import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taiga-ui/core";
 
@@ -18,6 +18,10 @@ import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taig
     NgIf,
     TuiFormatNumberPipeModule,
     TuiTablePaginationModule,
+    NgSwitch,
+    NgTemplateOutlet,
+    NgSwitchCase,
+    NgSwitchDefault,
   ],
   templateUrl: "./base-table.component.html",
   styleUrl: "./base-table.component.scss",
@@ -26,17 +30,35 @@ export class BaseTableComponent<GenericT> implements OnInit {
   @Input({ required: true }) tableData: GenericT[] = [];
   @Input({ required: true }) headers: string[] = [];
   @Input({ required: true }) columns: string[] = [];
+  @Input() customHeaders: string[] | undefined;
+  @Input() customColumns: string[] | undefined;
+  @Input() cellTemplates: TemplateRef<any>[] | undefined;
 
   @Output() rowClickEvent = new EventEmitter();
 
   total = 0;
   page: number = 0;
   size: number = 10;
-  sizedData: any[] = [];
+  sizedData: GenericT[] = [];
   sortedColumn = this.columns[0];
   direction = "asc";
 
+  get allColumns() {
+    if (this.customColumns) {
+      return [...this.columns, ...this.customColumns!];
+    }
+    return [...this.columns]
+  }
+
+  get allHeaders() {
+    if (this.customHeaders) {
+      return [...this.headers, ...this.customHeaders];
+    }
+    return [...this.headers]
+  }
+
   ngOnInit(): void {
+    this.columns = this.allColumns;
     this.loadPage();
   }
 
@@ -54,7 +76,7 @@ export class BaseTableComponent<GenericT> implements OnInit {
     this.sizedData = this.tableData.slice(start, start + this.size);
   }
 
-  sortData(column: any, direction: any): GenericT[] {
+  sortData(column: any, direction: any): any[] {
     return this.tableData.sort((a: any, b: any) => {
       let aColValue = a[column];
       let bColValue = b[column];
@@ -91,6 +113,7 @@ export class BaseTableComponent<GenericT> implements OnInit {
         return null;
       }
     }
+
     return value;
   }
 }
