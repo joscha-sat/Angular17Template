@@ -7,7 +7,6 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 ### Style (Scss): global scss files are in the assets/scss folder :
 
 - use _mixins.scss for custom global utility classes (directly usable as html class, no imports needed)
-
 - use _colors.scss for repeating color values -> import them into the styles.scss as css variables
 - use _variables.scss for custom repeating scss values
 - Used UI Library: TAIGA UI: https://taiga-ui.dev/getting-started

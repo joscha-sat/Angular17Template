@@ -31,13 +31,16 @@
     tuiTr
   >
     <!-- loop over the column names displaying the corresponding data -->
-    <ng-container *ngFor="let column of columns">
+    <ng-container *ngFor="let column of columns;">
       <td *tuiCell="column" tuiTd>
+        <!--    case: has a matched cellTemplatesMap name   -->
         <ng-container *ngIf="cellTemplatesMap[column] as template">
           <ng-container
             *ngTemplateOutlet="template; context: {$implicit: extractNestedProperty(item, column)}"
           ></ng-container>
         </ng-container>
+
+        <!--    default case, display the value in raw   -->
         <ng-container *ngIf="!cellTemplatesMap[column]">
           {{ extractNestedProperty(item, column) }}
         </ng-container>
