@@ -37,10 +37,14 @@
         @for (cus of customColumns; track cus) {
           <ng-container *ngSwitchCase="customColumns ? customColumns[$index] : null">
             <td tuiTd *tuiCell="column">
-              <ng-container
-                *ngTemplateOutlet="cellTemplates? cellTemplates[$index]: null; context:{$implicit: extractNestedProperty(item, customColumns ? customColumns[$index] : '')
-                }"
-              ></ng-container>
+              <ng-container *ngIf="cellTemplates?.[$index] as template">
+                <ng-container
+                  *ngTemplateOutlet="template; context: {$implicit: extractNestedProperty(item, column)}"
+                ></ng-container>
+              </ng-container>
+              @if (!cellTemplates?.[$index]) {
+                {{ extractNestedProperty(item, column) }}
+              }
             </td>
           </ng-container>
         }

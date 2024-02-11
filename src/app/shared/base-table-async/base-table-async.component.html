@@ -8,7 +8,7 @@
   <!-- HEAD / HEADERS -->
   <thead>
   <tr tuiThGroup>
-    @for (header of headers; track header) {
+    @for (header of allHeaders; track header) {
       <th
         *tuiHead="columns[$index]"
         (click)="onSortChange(columns[$index])"
@@ -33,14 +33,31 @@
     class="pointer"
     tuiTr
   >
-    <!--  loop ober the colum names displaying the corresponding data of it  -->
+    <!--  loop over the colum names displaying the corresponding data of it  -->
     @for (column of columns; track column) {
-      <td
-        tuiTd
-        *tuiCell="column"
-      >
-        {{ extractNestedProperty(item, column) }}
-      </td>
+      <ng-container [ngSwitch]="column">
+        <!--  loop over the custom columns able to be adjusted in the parent component  -->
+        @for (cus of customColumns; track cus) {
+          <ng-container *ngSwitchCase="customColumns ? customColumns[$index] : null">
+            <td tuiTd *tuiCell="column">
+              <ng-container *ngIf="cellTemplates?.[$index] as template">
+                <ng-container
+                  *ngTemplateOutlet="template; context: {$implicit: extractNestedProperty(item, column)}"
+                ></ng-container>
+              </ng-container>
+              @if (!cellTemplates?.[$index]) {
+                {{ extractNestedProperty(item, column) }}
+              }
+            </td>
+          </ng-container>
+        }
+        <!-- default, only display value -->
+        <ng-container *ngSwitchDefault>
+          <td tuiTd *tuiCell="column">
+            {{ extractNestedProperty(item, column) }}
+          </td>
+        </ng-container>
+      </ng-container>
     }
   </tr>
   </tbody>

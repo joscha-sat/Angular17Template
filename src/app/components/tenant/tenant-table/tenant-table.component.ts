@@ -20,17 +20,17 @@ import { NavRoutes } from "../../../enums/nav-routes";
 })
 export class TenantTableComponent {
   @Input({ required: true }) tenants$: Observable<Tenant[]> | undefined;
-  tableHeaders = signal(["Name"]);
-  tableColumns = signal(["name"]);
 
   router = inject(Router);
+  // method that navigates to the tenant dashboard via tenant id
+  customHeaders = signal<string[]>(['Name']);
+  customColumns = signal<string[]>(['name']);
 
   // method which get triggered on a table row click
   rowClicked($event: Tenant) {
     this.openTenantDashboard($event);
   }
 
-  // method that navigates to the tenant dashboard via tenant id
   openTenantDashboard(tenant: Tenant) {
     const url = `${ NavRoutes.TENANT }/${ NavRoutes.DASHBOARD }/${ tenant.id }`;
     this.router.navigate([url]).then();

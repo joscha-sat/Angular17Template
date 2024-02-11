@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from "@angular/core";
 import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
 import { BehaviorSubject, combineLatest, map, Observable, of, switchMap } from "rxjs";
-import { AsyncPipe, NgForOf, NgIf } from "@angular/common";
+import { AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from "@angular/common";
 import { TuiLetModule } from "@taiga-ui/cdk";
 
 @Component({
@@ -14,14 +14,22 @@ import { TuiLetModule } from "@taiga-ui/cdk";
     NgForOf,
     TuiTablePaginationModule,
     TuiLetModule,
+    NgSwitchCase,
+    NgTemplateOutlet,
+    NgSwitch,
+    NgSwitchDefault,
   ],
   templateUrl: "./base-table-async.component.html",
   styleUrl: "./base-table-async.component.scss",
 })
 export class BaseTableAsyncComponent implements OnInit {
-  @Input({ required: true }) tableData$: Observable<any[]> = of([]);
-  @Input({ required: true }) headers: string[] = [];
-  @Input({ required: true }) columns: string[] = [];
+  @Input() tableData$: Observable<any[]> = of([]);
+  @Input() headers: string[] = [];
+  @Input() columns: string[] = [];
+
+  @Input() customHeaders: string[] | undefined;
+  @Input() customColumns: string[] | undefined;
+  @Input() cellTemplates: TemplateRef<any>[] | undefined;
 
   @Output() rowClickEvent = new EventEmitter();
 
@@ -33,8 +41,22 @@ export class BaseTableAsyncComponent implements OnInit {
   page$ = new BehaviorSubject<number>(0);
   total$ = new BehaviorSubject<number>(0);
 
+  get allColumns() {
+    if (this.customColumns) {
+      return [...this.columns, ...this.customColumns!];
+    }
+    return [...this.columns]
+  }
+
+  get allHeaders() {
+    if (this.customHeaders) {
+      return [...this.headers, ...this.customHeaders];
+    }
+    return [...this.headers]
+  }
 
   ngOnInit() {
+    this.columns = this.allColumns;
     // Sorting data
     this.tableData$ = this.tableData$.pipe(
       map(data => this.sortData(data, this.sortedColumn, this.direction)),

@@ -27,9 +27,10 @@ import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taig
   styleUrl: "./base-table.component.scss",
 })
 export class BaseTableComponent<GenericT> implements OnInit {
-  @Input({ required: true }) tableData: GenericT[] = [];
-  @Input({ required: true }) headers: string[] = [];
-  @Input({ required: true }) columns: string[] = [];
+  @Input() tableData: GenericT[] = [];
+  @Input() headers: string[] = [];
+  @Input() columns: string[] = [];
+  
   @Input() customHeaders: string[] | undefined;
   @Input() customColumns: string[] | undefined;
   @Input() cellTemplates: TemplateRef<any>[] | undefined;
