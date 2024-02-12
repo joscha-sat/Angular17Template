@@ -64,7 +64,7 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
     [cellTemplatesMap]="{'name': name}"
   />
 
-  <!-- customized column value = current name value, object = full object (tenant) -->
+  <!-- customized column, value = current name value, object = full object (tenant) -->
   <ng-template #name let-value let-object="object">
     {{ value }} {{ object }}
     <app-delete-icon/>
