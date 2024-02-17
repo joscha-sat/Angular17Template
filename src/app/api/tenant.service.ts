@@ -1,11 +1,11 @@
 import { Injectable, signal } from "@angular/core";
 import { HttpClient, HttpParams, HttpStatusCode } from "@angular/common/http";
-import { ApiRoutes } from "../enums/api-routes";
+import { ApiRoutes } from "../other/enums/api-routes";
 import { catchError, map, Observable, of } from "rxjs";
-import { environment } from "../environment/environment";
-import { ResponseWithRecordsBody } from "../types/ResponseWithRecordsBody.type";
-import { Tenant } from "../models/Tenant";
-import { TenantQueryParams } from "../types/TenantQueryParams.type";
+import { environment } from "../other/environment/environment";
+import { ResponseWithRecordsBody } from "../other/types/ResponseWithRecordsBody.type";
+import { Tenant } from "../other/models/Tenant";
+import { TenantQueryParams } from "../other/types/TenantQueryParams.type";
 
 
 @Injectable({

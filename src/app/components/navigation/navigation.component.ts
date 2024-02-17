@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from "@angular/core";
-import { NavItem } from "../../enums/nav-items";
-import { NavRoutes } from "../../enums/nav-routes";
+import { NavItem } from "../../other/enums/nav-items";
+import { NavRoutes } from "../../other/enums/nav-routes";
 import { NavButtonComponent } from "./nav-button/nav-button.component";
 import { AccountComponent } from "./account/account.component";
 import { TranslateService } from "@ngx-translate/core";

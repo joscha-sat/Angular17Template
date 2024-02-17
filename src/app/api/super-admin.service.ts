@@ -3,12 +3,12 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, map, Observable } from "rxjs";
 
 
-import { ApiRoutes } from "../enums/api-routes";
+import { ApiRoutes } from "../other/enums/api-routes";
 import { HttpClient } from "@angular/common/http";
-import { environment } from "../environment/environment";
-import { User } from "../models/User";
-import { Role } from "../models/Role";
-import { ResponseWithRecordsBody } from "../types/ResponseWithRecordsBody.type";
+import { environment } from "../other/environment/environment";
+import { User } from "../other/models/User";
+import { Role } from "../other/models/Role";
+import { ResponseWithRecordsBody } from "../other/types/ResponseWithRecordsBody.type";
 
 
 @Injectable({
@@ -26,7 +26,7 @@ export class SuperAdminService {
    */
   isSuperAdmin(): boolean {
     const userJSON = localStorage.getItem("user");
-    const parsedUser = JSON.parse(userJSON || "{}");
+    const parsedUser = JSON.parse(userJSON ?? "{}");
     const user = new User(parsedUser);
 
     if (!user.role) return false;

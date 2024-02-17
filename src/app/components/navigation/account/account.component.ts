@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from "@angular/core";
 import { TuiButtonModule, TuiDataListModule, TuiHostedDropdownModule, TuiSvgModule } from "@taiga-ui/core";
 import { Router, RouterLink } from "@angular/router";
-import { NavRoutes } from "../../../enums/nav-routes";
+import { NavRoutes } from "../../../other/enums/nav-routes";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { tuiIconLogOut, tuiIconSettings } from "@taiga-ui/icons";
 import { AuthService } from "../../../api/auth.service";

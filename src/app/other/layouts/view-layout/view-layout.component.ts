@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { UserHeaderComponent } from "../../components/user/user-header/user-header.component";
-import { UserTableComponent } from "../../components/user/user-table/user-table.component";
+import { UserHeaderComponent } from "../../../components/user/user-header/user-header.component";
+import { UserTableComponent } from "../../../components/user/user-table/user-table.component";
+
 
 @Component({
   selector: 'app-view-layout',

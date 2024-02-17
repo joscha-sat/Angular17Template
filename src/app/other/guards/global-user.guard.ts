@@ -2,7 +2,7 @@ import { CanActivateFn, Router } from "@angular/router";
 import { inject } from "@angular/core";
 
 import { NavRoutes } from "../enums/nav-routes";
-import { AuthService } from "../api/auth.service";
+import { AuthService } from "../../api/auth.service";
 
 export const globalUserGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);

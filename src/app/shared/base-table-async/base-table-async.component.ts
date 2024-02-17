@@ -98,7 +98,7 @@ export class BaseTableAsyncComponent<T> implements OnInit {
     let value = item;
 
     for (const k of keys) {
-      if (value && Object.prototype.hasOwnProperty.call(value, k)) {
+      if (value && Object.hasOwn(value, k)) {
         value = value[k];
       } else {
         return null;

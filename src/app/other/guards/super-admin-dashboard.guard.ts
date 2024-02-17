@@ -2,8 +2,8 @@ import { CanActivateFn, Router } from "@angular/router";
 import { inject } from "@angular/core";
 
 import { NavRoutes } from "../enums/nav-routes";
-import { AuthService } from "../api/auth.service";
-import { SuperAdminService } from "../api/super-admin.service";
+import { AuthService } from "../../api/auth.service";
+import { SuperAdminService } from "../../api/super-admin.service";
 
 
 /**

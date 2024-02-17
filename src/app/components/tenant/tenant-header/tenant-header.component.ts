@@ -1,13 +1,14 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { TranslateModule } from "@ngx-translate/core";
 import { TuiButtonModule } from "@taiga-ui/core";
-import { Tenant } from "../../../models/Tenant";
+import { Tenant } from "../../../other/models/Tenant";
 import { BaseComboboxComponent } from "../../../shared/base-combobox/base-combobox.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { TenantService } from "../../../api/tenant.service";
 import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui-button.component";
-import { HeaderLayoutComponent } from "../../../layouts/header-layout/header-layout.component";
+
 import { BaseInputComponent } from "../../../shared/base-input/base-input.component";
+import { HeaderLayoutComponent } from "../../../other/layouts/header-layout/header-layout.component";
 
 @Component({
   selector: "app-tenant-header",

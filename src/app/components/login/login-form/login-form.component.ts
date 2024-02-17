@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { TuiAlertModule, TuiButtonModule, TuiLinkModule } from "@taiga-ui/core";
 import { TranslateModule } from "@ngx-translate/core";
 import { AuthService } from "../../../api/auth.service";
-import { LoginBody } from "../../../types/LoginBody.type";
+import { LoginBody } from "../../../other/types/LoginBody.type";
 
 @Component({
   selector: "app-login-form",

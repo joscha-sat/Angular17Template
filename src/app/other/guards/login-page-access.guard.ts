@@ -1,6 +1,6 @@
 import { CanActivateFn, Router } from "@angular/router";
 import { inject } from "@angular/core";
-import { AuthService } from "../api/auth.service";
+import { AuthService } from "../../api/auth.service";
 
 /**
  * Login Guard:

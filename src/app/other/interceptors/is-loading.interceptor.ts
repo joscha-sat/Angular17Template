@@ -1,11 +1,11 @@
 import { HttpInterceptorFn } from "@angular/common/http";
 import { catchError, finalize, mergeMap, of, timer } from "rxjs";
 import { inject } from "@angular/core";
-import { LoadingService } from "../services/loading.service";
+import { LoadingService } from "../../services/loading.service";
 
 export const isLoadingInterceptor: HttpInterceptorFn = (req, next) => {
 
-  let loadingService = inject(LoadingService);
+  const loadingService = inject(LoadingService);
   // Start a timer that emits after 250ms
   const loadingTimer$ = timer(250);
 

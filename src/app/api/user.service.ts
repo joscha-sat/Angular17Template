@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams, HttpStatusCode } from "@angular/common/http";
-import { ApiRoutes } from "../enums/api-routes";
+import { ApiRoutes } from "../other/enums/api-routes";
 import { catchError, map, Observable, of } from "rxjs";
-import { environment } from "../environment/environment";
-import { User } from "../models/User";
-import { ResponseWithRecordsBody } from "../types/ResponseWithRecordsBody.type";
-import { UserQueryParams } from "../types/UserQueryParams.type";
+import { environment } from "../other/environment/environment";
+import { User } from "../other/models/User";
+import { ResponseWithRecordsBody } from "../other/types/ResponseWithRecordsBody.type";
+import { UserQueryParams } from "../other/types/UserQueryParams.type";
 
 @Injectable({
   providedIn: "root",

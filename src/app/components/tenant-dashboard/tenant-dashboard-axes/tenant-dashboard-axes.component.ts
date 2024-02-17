@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { TuiAxesModule, TuiLineChartModule, TuiLineDaysChartModule } from "@taiga-ui/addon-charts";
 import { TuiContextWithImplicit } from "@taiga-ui/cdk";
 import { TuiPoint } from "@taiga-ui/core";
-import { Months } from "../../../enums/months";
+import { Months } from "../../../other/enums/months";
 
 // TODO: this is dummy data, update to use real data
 
