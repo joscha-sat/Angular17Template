@@ -11,7 +11,7 @@ import { SuperAdminService } from "../../api/super-admin.service";
  * Protects routes from access by non-super-admin users.
  * navigates to user page if user is not super admin.
  */
-export const superAdminDashboardGuard: CanActivateFn = (route, state) => {
+export const superAdminDashboardGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const superAdminService = inject(SuperAdminService);
   const router = inject(Router);

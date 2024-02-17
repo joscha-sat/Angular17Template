@@ -114,7 +114,7 @@ export class UserService {
         map((response) => {
           return response.status === HttpStatusCode.Ok;
         }),
-        catchError((error) => {
+        catchError(() => {
           return of(false);
         }),
       );
