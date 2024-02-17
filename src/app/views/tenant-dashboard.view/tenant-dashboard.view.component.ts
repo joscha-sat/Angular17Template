@@ -11,7 +11,8 @@ import { TranslateModule } from "@ngx-translate/core";
 import {
   TenantDashboardHeaderComponent
 } from "../../components/tenant-dashboard/tenant-dashboard-header/tenant-dashboard-header.component";
-import { ViewLayoutComponent } from "../../layouts/view-layout/view-layout.component";
+import { ViewLayoutComponent } from "../../other/layouts/view-layout/view-layout.component";
+
 
 @Component({
   selector: "app-tenant-dashboard.view",
