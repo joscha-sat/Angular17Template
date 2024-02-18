@@ -24,7 +24,8 @@
     "ok": "Ok",
     "save": "speichern",
     "search": "Suchen",
-    "yes": "Ja"
+    "yes": "Ja",
+    "empty-table": "Keine Einträge vorhanden"
   },
   "hint": {
     "email": "E-Mail eingeben",
@@ -60,5 +61,9 @@
     "create": "Benutzer erstellen",
     "title": "Benutzer",
     "update": "Benutzer bearbeiten"
+  },
+  "customers": {
+    "title": "Kunden",
+    "create": "Kunden erstellen"
   }
 }

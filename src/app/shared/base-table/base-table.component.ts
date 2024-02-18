@@ -4,6 +4,7 @@ import { TUI_DEFAULT_MATCHER, TuiLetModule } from "@taiga-ui/cdk";
 import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from "@angular/common";
 import { TuiTagModule } from "@taiga-ui/kit";
 import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taiga-ui/core";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: "app-base-table",
@@ -22,6 +23,7 @@ import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taig
     NgTemplateOutlet,
     NgSwitchCase,
     NgSwitchDefault,
+    TranslateModule,
   ],
   templateUrl: "./base-table.component.html",
   styleUrl: "./base-table.component.scss",

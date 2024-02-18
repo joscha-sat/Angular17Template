@@ -24,7 +24,8 @@
     "ok": "Ok",
     "save": "save",
     "search": "Search",
-    "yes": "Yes"
+    "yes": "Yes",
+    "empty-table": "No entries available"
   },
   "hint": {
     "email": "Enter email",
@@ -60,5 +61,9 @@
     "create": "Create user",
     "title": "User",
     "update": "Edit user"
+  },
+  "customers": {
+    "title": "Customers",
+    "create": "Create customer"
   }
 }

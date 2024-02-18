@@ -26,18 +26,27 @@ export class NavigationComponent implements OnInit {
   }
 
   setTranslatedTextWithNavItems() {
-    this.translateService.get(["tenant.title", "user.title", "settings.title"]).subscribe(translations => {
+    this.translateService.get(["tenant.title", "user.title", "customers.title", "settings.title"]).subscribe(translations => {
       this.navItems.set([
+        // tenant
         {
           tooltip: translations["tenant.title"],
           icon: "tuiIconHomeLarge",
           link: NavRoutes.TENANT,
         },
+        // user
         {
           tooltip: translations["user.title"],
           icon: "tuiIconUserLarge",
           link: NavRoutes.USER,
         },
+        // customer
+        {
+          tooltip: translations["customers.title"],
+          icon: "tuiIconBriefcaseLarge",
+          link: NavRoutes.CUSTOMERS,
+        },
+        // settings
         {
           tooltip: translations["settings.title"],
           icon: "tuiIconSettingsLarge",
