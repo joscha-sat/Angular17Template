@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from "@angular/core";
 import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
-import { BehaviorSubject, combineLatest, map, Observable, of, switchMap } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable, of, switchMap, tap } from "rxjs";
 import { AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from "@angular/common";
 import { TUI_DEFAULT_MATCHER, TuiLetModule } from "@taiga-ui/cdk";
 import { TranslateModule } from "@ngx-translate/core";
+import { ResponseWithRecords } from "../../api/generic-http.service";
+
+export type FetchDataFunction<T> = (pageNumber: number, pageSize: number) => Observable<ResponseWithRecords<T>>;
 
 @Component({
   selector: "app-base-table-async",
@@ -30,6 +33,7 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   @Input({ required: true }) columns: string[] = [];
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
   @Input() search: string = '';
+  @Input({ required: true }) fetchData!: FetchDataFunction<T>;
 
   @Output() rowClickEvent = new EventEmitter();
 
@@ -54,14 +58,13 @@ export class BaseTableAsyncComponent<T> implements OnInit {
     );
 
     // Combine latest values of page and size to paginate the sorted data.
-    this.sizedData$ = combineLatest([this.tableData$, this.page$, this.size$]).pipe(
-      switchMap(([data, page, size]) => {
-        const startIndex = page * size;
-        const endIndex = startIndex + size;
-        this.total$.next(data.length);
-        return of(data.slice(startIndex, endIndex));
-      }),
-    );
+    this.sizedData$ = combineLatest([this.page$, this.size$]).pipe(
+      switchMap(([page, size]) => {
+        return this.fetchData(page, size).pipe(
+          tap(response => this.total$.next(response.total)),
+          map(response => response.records)
+        );
+      }));
   }
 
   onChangePagination(event: TuiTablePagination) {

@@ -6,6 +6,7 @@
     [columns]="columns()"
     [search]="tenantService.search()"
     [cellTemplatesMap]="{'delete': deleteCell}"
+    [fetchData]="fetchData"
   >
     <ng-template #deleteCell let-object="object">
       <app-delete-icon

@@ -8,6 +8,7 @@ import { SuperAdminService } from "../../api/super-admin.service";
 import { TenantService } from "../../api/tenant.service";
 import { AuthService } from "../../api/auth.service";
 import { ViewLayoutComponent } from "../../other/layouts/view-layout/view-layout.component";
+import { FetchDataFunction } from "../../shared/base-table-async/base-table-async.component";
 
 
 @Component({
@@ -48,9 +49,14 @@ export class UserViewComponent implements OnInit {
   }
 
   // | normal methods | --------------------------------------------------------------------  ||
+
   getUsers() {
     this.userService.getAllUsers({ tenantId: this.tenantId }).subscribe((user) => {
       this.users.set(user.records);
     });
+  }
+
+  fetchUserFn: FetchDataFunction<User> = (page: number, size: number) => {
+    return this.userService.getAllUsers({ tenantId: this.tenantId, limit: size, skip: page * size });
   }
 }

@@ -2,7 +2,7 @@
 
   <app-user-header/>
 
-  <app-user-table [user$]="users$"/>
+  <app-user-table [fetchData]="fetchUserFn" [user$]="users$"/>
 
 </app-view-layout>
 

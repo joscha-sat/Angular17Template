@@ -2,7 +2,10 @@ import { Component, inject, Input, signal } from "@angular/core";
 import { BaseTableComponent } from "../../../shared/base-table/base-table.component";
 import { Tenant } from "../../../other/models/Tenant";
 import { AsyncPipe } from "@angular/common";
-import { BaseTableAsyncComponent } from "../../../shared/base-table-async/base-table-async.component";
+import {
+  BaseTableAsyncComponent,
+  FetchDataFunction
+} from "../../../shared/base-table-async/base-table-async.component";
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { NavRoutes } from "../../../other/enums/nav-routes";
@@ -25,6 +28,7 @@ import { TenantService } from "../../../api/tenant.service";
 })
 export class TenantTableComponent {
   @Input({ required: true }) tenants$: Observable<Tenant[]> | undefined;
+  @Input({ required: true }) fetchData!: FetchDataFunction<Tenant>;
   headers = signal<string[]>(['Name', "Löschen"]);
   columns = signal<string[]>(['name', "delete"]);
 
