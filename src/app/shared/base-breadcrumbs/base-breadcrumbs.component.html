@@ -7,7 +7,7 @@
         [routerLink]="item.url ?? null"
         tuiLink
       >
-        {{ item.label }}
+        {{ item.label + '.title' | translate }}
       </a>
     </ng-container>
   </tui-breadcrumbs>

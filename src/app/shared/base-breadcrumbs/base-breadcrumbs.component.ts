@@ -3,6 +3,7 @@ import { TuiBreadcrumbsModule } from "@taiga-ui/kit";
 import { ActivatedRoute, ActivatedRouteSnapshot, RouterLink } from "@angular/router";
 import { TuiLinkModule } from "@taiga-ui/core";
 import { NgForOf, NgIf } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
 
 export type BreadcrumbItem = {
   url: string | null;
@@ -18,6 +19,7 @@ export type BreadcrumbItem = {
     TuiLinkModule,
     NgIf,
     NgForOf,
+    TranslateModule,
   ],
   templateUrl: "./base-breadcrumbs.component.html",
   styleUrl: "./base-breadcrumbs.component.scss",
