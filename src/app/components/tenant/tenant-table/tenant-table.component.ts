@@ -6,7 +6,6 @@ import {
   BaseTableAsyncComponent,
   FetchDataFunction
 } from "../../../shared/base-table-async/base-table-async.component";
-import { Observable } from "rxjs";
 import { Router } from "@angular/router";
 import { NavRoutes } from "../../../other/enums/nav-routes";
 import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui-button.component";
@@ -27,7 +26,6 @@ import { TenantService } from "../../../api/tenant.service";
   styleUrl: "./tenant-table.component.scss",
 })
 export class TenantTableComponent {
-  @Input({ required: true }) tenants$: Observable<Tenant[]> | undefined;
   @Input({ required: true }) fetchData!: FetchDataFunction<Tenant>;
   headers = signal<string[]>(['Name', "Löschen"]);
   columns = signal<string[]>(['name', "delete"]);
@@ -51,5 +49,6 @@ export class TenantTableComponent {
     this.tenantService.deleteOneTenant(tenant.id).subscribe()
   }
 }
+
 
 

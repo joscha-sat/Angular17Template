@@ -1,5 +1,4 @@
 import { Component, inject, Input, signal } from "@angular/core";
-import { Observable } from "rxjs";
 import {
   BaseTableAsyncComponent,
   FetchDataFunction
@@ -22,7 +21,6 @@ import { UserAddEditDialogComponent } from "../user-add-edit-dialog/user-add-edi
   styleUrl: "./user-table.component.scss",
 })
 export class UserTableComponent {
-  @Input({ required: true }) user$: Observable<any> | undefined;
   @Input({ required: true }) fetchData!: FetchDataFunction<User>;
   dialogService = inject(TuiDialogHelperService<User>)
 
@@ -36,4 +34,5 @@ export class UserTableComponent {
     this.dialogService.openDialog(UserAddEditDialogComponent, user)
   }
 }
+
 

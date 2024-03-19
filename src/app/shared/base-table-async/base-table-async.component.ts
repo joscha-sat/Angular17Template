@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from "@angular/core";
 import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
-import { BehaviorSubject, combineLatest, map, Observable, of, switchMap, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, map, Observable, switchMap, tap } from "rxjs";
 import { AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from "@angular/common";
 import { TUI_DEFAULT_MATCHER, TuiLetModule } from "@taiga-ui/cdk";
 import { TranslateModule } from "@ngx-translate/core";
@@ -28,7 +28,6 @@ export type FetchDataFunction<T> = (pageNumber: number, pageSize: number) => Obs
   styleUrl: "./base-table-async.component.scss",
 })
 export class BaseTableAsyncComponent<T> implements OnInit {
-  @Input({ required: true }) tableData$: Observable<T[]> = of([]);
   @Input({ required: true }) headers: string[] = [];
   @Input({ required: true }) columns: string[] = [];
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
@@ -50,21 +49,14 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   }
 
   ngOnInit() {
-    if (!this.tableData$) return;
-
-    // Sorting data
-    this.tableData$ = this.tableData$.pipe(
-      map(data => this.sortData(data, this.sortedColumn, this.direction)),
-    );
-
-    // Combine latest values of page and size to paginate the sorted data.
     this.sizedData$ = combineLatest([this.page$, this.size$]).pipe(
       switchMap(([page, size]) => {
-        return this.fetchData(page, size).pipe(
-          tap(response => this.total$.next(response.total)),
-          map(response => response.records)
-        );
-      }));
+          return this.fetchData(page, size).pipe(
+            tap(response => this.total$.next(response.total)),
+            map(response => response.records)
+          );
+        }
+      ));
   }
 
   onChangePagination(event: TuiTablePagination) {
@@ -75,9 +67,12 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   onSortChange(column: string) {
     this.sortedColumn = column;
     this.direction = this.direction === "asc" ? "desc" : "asc";
-    this.tableData$ = this.tableData$.pipe(
-      map(data => this.sortData(data, this.sortedColumn, this.direction)),
-    );
+
+    // TODO: implement backend sort
+
+    // this.tableData$ = this.tableData$.pipe(
+    //   map(data => this.sortData(data, this.sortedColumn, this.direction)),
+    // );
   }
 
   sortData(data: any[], column: any, direction: any): any[] {
