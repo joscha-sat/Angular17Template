@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, tap } from 'rxjs';
+import { forkJoin, Observable, Subject, tap } from 'rxjs';
 
 
 import { TuiSnackbarService } from "../services/tui-snackbar.service";
@@ -18,6 +18,8 @@ export type ResponseWithRecords<T> = {
 })
 export class GenericHttpService {
   baseUrl = environment.baseUrl;
+  _refreshObservable = new Subject<void>();
+  refreshObservable$ = this._refreshObservable.asObservable();
 
   constructor(
     private readonly http: HttpClient,

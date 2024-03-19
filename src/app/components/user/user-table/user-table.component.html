@@ -1,7 +1,7 @@
 <app-base-table-async
   (rowClickEvent)="userClicked($event)"
   [columns]="tableColumns()"
-  [fetchData]="fetchData"
+  [fetchData]="fetchDataFn"
   [headers]="tableHeaders()"
 />
 

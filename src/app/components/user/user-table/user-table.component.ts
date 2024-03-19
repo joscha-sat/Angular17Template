@@ -1,13 +1,15 @@
-import { Component, inject, Input, signal } from "@angular/core";
-import {
-  BaseTableAsyncComponent,
-  FetchDataFunction
-} from "../../../shared/base-table-async/base-table-async.component";
+import { Component, inject, signal } from "@angular/core";
+import { BaseTableAsyncComponent } from "../../../shared/base-table-async/base-table-async.component";
 import { AsyncPipe } from "@angular/common";
 import { BaseTableComponent } from "../../../shared/base-table/base-table.component";
 import { User } from "../../../other/models/User";
 import { TuiDialogHelperService } from "../../../services/tui-dialog-helper.service";
 import { UserAddEditDialogComponent } from "../user-add-edit-dialog/user-add-edit-dialog.component";
+import { UserService } from "../../../api/user.service";
+import { TableRefresherComponent } from "../../../shared/table-refresher/table-refresher.component";
+import { SuperAdminService } from "../../../api/super-admin.service";
+import { TenantService } from "../../../api/tenant.service";
+import { AuthService } from "../../../api/auth.service";
 
 @Component({
   selector: "app-user-table",
@@ -20,14 +22,39 @@ import { UserAddEditDialogComponent } from "../user-add-edit-dialog/user-add-edi
   templateUrl: "./user-table.component.html",
   styleUrl: "./user-table.component.scss",
 })
-export class UserTableComponent {
-  @Input({ required: true }) fetchData!: FetchDataFunction<User>;
+export class UserTableComponent extends TableRefresherComponent<User> {
   dialogService = inject(TuiDialogHelperService<User>)
+  userService = inject(UserService)
+  superAdminService = inject(SuperAdminService)
+  tenantService = inject(TenantService)
+  authService = inject(AuthService)
 
   // todo: update active visually
   tableHeaders = signal<string[]>(["Vorname", "Nachname", "Telefon", "Email", "Aktiv"]);
   tableColumns = signal<string[]>(["firstName", "lastName", "phone", "email", "active"]);
 
+  get tenantId(): string {
+    // case super admin
+    if (this.superAdminService.isSuperAdmin()) {
+      return this.tenantService.selectedTenantId()
+    }
+    // case logged in tenant
+    else {
+      return this.authService.getLoggedInUser()?.tenantId ?? ''
+    }
+  }
+
+  getService() {
+    return this.userService;
+  }
+
+  getServiceMethodName() {
+    return 'getAllUsers';
+  }
+
+  override getAdditionalParams() {
+    return { tenantId: this.tenantId };
+  }
 
   userClicked($event: User) {
     const user = new User($event)

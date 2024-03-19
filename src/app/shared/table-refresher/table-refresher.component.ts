@@ -23,19 +23,26 @@ export abstract class TableRefresherComponent<T> {
   // Method must be implemented in each derived component
   abstract getServiceMethodName(): string;
 
+  // Optional method to override in derived components for additional parameters
+  getAdditionalParams(): any {
+    return null;
+  }
+
   fetchDataFn: FetchDataFunction<T> = (page: number, size: number) => {
+    const additionalParams = this.getAdditionalParams();
     return this.refresh$.pipe(
       switchMap(() =>
         this.getService()[this.getServiceMethodName()]({
           limit: size,
-          skip: page * size
+          skip: page * size,
+          ...additionalParams
         }) as Observable<ResponseWithRecords<T>>
       )
     );
   };
 
   refreshDataSubscription() {
-    this.getService().refreshTenants$.subscribe(() => {
+    this.getService().refreshObservable$.subscribe(() => {
       this.refresh$.next(null);
     });
   }
