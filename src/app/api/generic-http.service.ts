@@ -36,20 +36,28 @@ export class GenericHttpService {
     return this.http.get<T>(`${ this.baseUrl }${ endpoint }/${ id }`);
   }
 
-  create<T>(endpoint: string, body: T | T[], elementName: string): Observable<T | T[] | null> {
-    return this.performRequest('post', endpoint, body, undefined, "Erfolg!", `${ elementName } wurde erstellt!`);
+  create<T>(endpoint: string, body: T | T[], articleWithElementName: string): Observable<T | T[] | null> {
+    return this.performRequest('post', endpoint, body, undefined, "Erfolg!", `${ articleWithElementName } wurde erstellt!`).pipe(
+      tap(() => this._refreshObservable.next())
+    );
   }
 
-  update<T>(endpoint: string, body: T | T[], id: idTypes, elementName: string): Observable<T | T[] | null> {
-    return this.performRequest('patch', endpoint, body, id, "Erfolg!", `${ elementName } wurde bearbeitet!`);
+  update<T>(endpoint: string, body: T | T[], id: idTypes, articleWithElementName: string): Observable<T | T[] | null> {
+    return this.performRequest('patch', endpoint, body, id, "Erfolg!", `${ articleWithElementName } wurde bearbeitet!`).pipe(
+      tap(() => this._refreshObservable.next())
+    );
   }
 
-  deleteOne(endpoint: string, id: string | number | (string | number)[], articleWithElementName: string): Observable<unknown> {
-    return this.performRequest('delete', endpoint, undefined, id, "Erfolg!", `${ articleWithElementName } wurde gelöscht!`);
+  deleteOne(endpoint: string, id: idTypes, articleWithElementName: string): Observable<unknown> {
+    return this.performRequest('delete', endpoint, undefined, id, "Erfolg!", `${ articleWithElementName } wurde gelöscht!`).pipe(
+      tap(() => this._refreshObservable.next())
+    );
   }
 
   deleteAll<T>(endpoint: string): Observable<T> {
-    return this.http.delete<T>(`${ this.baseUrl }${ endpoint }`);
+    return this.http.delete<T>(`${ this.baseUrl }${ endpoint }`).pipe(
+      tap(() => this._refreshObservable.next())
+    );
   }
 
   private performRequest<T>(type: 'post' | 'patch' | 'delete', endpoint: string, body?: T | T[], id?: string | number | Array<string | number>, pushTitle?: string, pushText?: string): Observable<T | T[] | null> {

@@ -1,5 +1,5 @@
 import { Injectable, signal } from "@angular/core";
-import { Observable, tap } from "rxjs";
+import { Observable } from "rxjs";
 import { Tenant } from "../other/models/Tenant";
 import { GenericHttpService, idTypes, ResponseWithRecords } from "./generic-http.service";
 
@@ -28,30 +28,22 @@ export class TenantService extends GenericHttpService {
   }
 
   getOneTenant(id: string | number) {
-    return this.getOne<Tenant>(this.endpoint, id)
+    return this.getOne<Tenant>(this.endpoint, id);
   }
 
   createTenant(tenant: Tenant | Tenant[]): Observable<Tenant | Tenant[] | null> {
-    return this.create<Tenant>(this.endpoint, tenant, this.element).pipe(
-      tap(() => this._refreshObservable.next())
-    );
+    return this.create<Tenant>(this.endpoint, tenant, this.element);
   }
 
   updateTenant(tenant: Tenant | Tenant[], id: idTypes): Observable<Tenant | Tenant[] | null> {
-    return this.update<Tenant>(this.endpoint, tenant, id, this.element).pipe(
-      tap(() => this._refreshObservable.next())
-    );
+    return this.update<Tenant>(this.endpoint, tenant, id, this.element);
   }
 
   deleteOneTenant(id: idTypes): Observable<unknown> {
-    return this.deleteOne(this.endpoint, id, this.element).pipe(
-      tap(() => this._refreshObservable.next())
-    );
+    return this.deleteOne(this.endpoint, id, this.element);
   }
 
   deleteAllTenants(): Observable<unknown> {
-    return this.deleteAll<Tenant>(this.endpoint).pipe(
-      tap(() => this._refreshObservable.next())
-    );
+    return this.deleteAll<Tenant>(this.endpoint);
   }
 }
