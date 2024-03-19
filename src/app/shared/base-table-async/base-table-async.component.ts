@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from "@angular/core";
 import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
-import { BehaviorSubject, combineLatest, map, Observable, switchMap, tap } from "rxjs";
+import { BehaviorSubject, catchError, combineLatest, map, Observable, of, switchMap, tap } from "rxjs";
 import { AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from "@angular/common";
 import { TUI_DEFAULT_MATCHER, TuiLetModule } from "@taiga-ui/cdk";
 import { TranslateModule } from "@ngx-translate/core";
@@ -43,6 +43,7 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   size$ = new BehaviorSubject<number>(10);
   page$ = new BehaviorSubject<number>(0);
   total$ = new BehaviorSubject<number>(0);
+  public hasData = new BehaviorSubject<boolean>(false);
 
   isMatch(value: unknown): boolean {
     return !!this.search && TUI_DEFAULT_MATCHER(value, this.search);
@@ -50,14 +51,23 @@ export class BaseTableAsyncComponent<T> implements OnInit {
 
   ngOnInit() {
     this.sizedData$ = combineLatest([this.page$, this.size$]).pipe(
-      switchMap(([page, size]) => {
-          return this.fetchData(page, size).pipe(
-            tap(response => this.total$.next(response.total)),
-            map(response => response.records)
-          );
-        }
-      ));
+      switchMap(([page, size]) =>
+        this.fetchData(page, size).pipe(
+          tap(response => {
+            this.total$.next(response.total);
+            this.hasData.next((response.records && response.records.length > 0));
+          }),
+          map(response => response.records),
+          catchError(() => {
+            // in case of error, display empty state
+            this.hasData.next(false);
+            return of([]);
+          })
+        )
+      ),
+    );
   }
+
 
   onChangePagination(event: TuiTablePagination) {
     this.page$.next(event.page);
