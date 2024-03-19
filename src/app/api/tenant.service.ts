@@ -1,12 +1,15 @@
 import { Injectable, signal } from "@angular/core";
-import { HttpClient, HttpParams, HttpStatusCode } from "@angular/common/http";
-import { ApiRoutes } from "../other/enums/api-routes";
-import { catchError, map, Observable, of } from "rxjs";
-import { environment } from "../other/environment/environment";
-import { ResponseWithRecordsBody } from "../other/types/ResponseWithRecordsBody.type";
+import { Observable, Subject, tap } from "rxjs";
 import { Tenant } from "../other/models/Tenant";
-import { TenantQueryParams } from "../other/types/TenantQueryParams.type";
+import { GenericHttpService, idTypes, ResponseWithRecords } from "./generic-http.service";
 
+type queryParams = {
+  limit?: number;
+  skip?: number;
+
+  name?: string;
+  sort?: string;
+}
 
 @Injectable({
   providedIn: "root",
@@ -14,103 +17,38 @@ import { TenantQueryParams } from "../other/types/TenantQueryParams.type";
 /**
  * Service Class for the getting or manipulating tenant data
  */
-export class TenantService {
-  selectedTenantId = signal<string>('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
+export class TenantService extends GenericHttpService {
+  selectedTenantId = signal('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
   search = signal('');
-  private readonly baseUrl = environment.baseUrl;
+  endpoint = 'tenant';
+  private _refreshTenants = new Subject<void>();
+  public refreshTenants$ = this._refreshTenants.asObservable();
 
-  constructor(private http: HttpClient) {
+  getAllTenants(queryParams?: queryParams): Observable<ResponseWithRecords<Tenant>> {
+    return this.getAll<Tenant>(this.endpoint, queryParams);
   }
 
-  /**
-   * get the tenant data from the api
-   * sets query params for the api call if they are passed in
-   * sets the totalAmount property of the parent PaginationFilterService if data is returned
-   * maps the response to an array of observable user objects with the Tenant.fromJson method
-   * @param queryParams optional query params for the api call
-   */
-  getTenants(queryParams?: TenantQueryParams): Observable<Tenant[]> {
-    let params: HttpParams = new HttpParams();
-
-    if (queryParams) {
-      for (const [key, value] of Object.entries(queryParams)) {
-        if (value !== undefined && value !== null) {
-          params = params.set(key, value.toString());
-        }
-      }
-    }
-
-    // TODO: pagination
-    // params = params
-    //   .set(this.sort !== undefined ? "sort" : "", this.sort ?? "")
-    //   .set(this.endIndex !== "" ? "limit" : "", this.endIndex)
-    //   .set(this.startIndex !== "" ? "skip" : "", this.startIndex);
-
-    return this.http
-      .get<ResponseWithRecordsBody>(this.baseUrl + ApiRoutes.TENANT, { params })
-      .pipe(
-        map((response) => {
-          return response.records.map((tenant: Tenant) => {
-            return new Tenant(tenant);
-          });
-        }),
-      );
-  }
-
-  /**
-   * get detailed tenant data from the api with a tenant
-   * maps the response to a tenant object with the Tenant.fromJson method
-   * @param id the id of the tenant to get
-   */
-  getTenantById(id: string): Observable<Tenant> {
-    return this.http.get<any>(this.baseUrl + ApiRoutes.TENANT + "/" + id).pipe(
-      map((tenant: Tenant) => {
-        return new Tenant(tenant);
-      }),
+  createTenant(tenant: Tenant | Tenant[]): Observable<Tenant | Tenant[] | null> {
+    return this.create<Tenant>(this.endpoint, tenant).pipe(
+      tap(() => this._refreshTenants.next())
     );
   }
 
-  /**
-   * Creates a new tenant with a post request to the api
-   * @param tenantBody the tenant body to create the tenant containing the name
-   * */
-  createTenant(tenantBody: Tenant): Observable<boolean> {
-    return this.http
-      .post<any>(this.baseUrl + ApiRoutes.TENANT, tenantBody, {
-        observe: "response",
-      })
-      .pipe(
-        map((response) => {
-          return response.status === HttpStatusCode.Ok;
-        }),
-        catchError(() => {
-          return of(false);
-        }),
-      );
+  updateTenant(tenant: Tenant | Tenant[], id: idTypes): Observable<Tenant | Tenant[] | null> {
+    return this.update<Tenant>(this.endpoint, tenant, id).pipe(
+      tap(() => this._refreshTenants.next())
+    );
   }
 
-  /**
-   * Updates a tenant with a patch request to the api by id
-   *
-   * @param tenantId the id of the tenant to patch
-   * @param tenantBody
-   */
-  updateTenant(tenantId: string, tenantBody: Tenant): Observable<boolean> {
-    return this.http
-      .patch<any>(
-        this.baseUrl + ApiRoutes.TENANT + "/" + tenantId,
-        tenantBody,
-        {
-          observe: "response",
-        },
-      )
-      .pipe(
-        map((response) => {
-          return response.status === HttpStatusCode.Ok;
-        }),
-        catchError(() => {
-          return of(false);
-        }),
-      );
+  deleteOneTenant(id: idTypes): Observable<unknown> {
+    return this.deleteOne(this.endpoint, id).pipe(
+      tap(() => this._refreshTenants.next())
+    );
+  }
+
+  deleteAllTenants(): Observable<unknown> {
+    return this.deleteAll<Tenant>(this.endpoint).pipe(
+      tap(() => this._refreshTenants.next())
+    );
   }
 }

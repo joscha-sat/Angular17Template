@@ -1,46 +1,53 @@
-import { Injectable } from "@angular/core";
-import { ApiRoutes } from "../other/enums/api-routes";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
-import { GenericHttpService } from "./generic-http.service";
-import { User } from "../other/models/User";
-import { ResponseWithRecordsBody } from "../other/types/ResponseWithRecordsBody.type";
+import { Injectable } from '@angular/core';
+import { GenericHttpService, idTypes, ResponseWithRecords } from "./generic-http.service";
+import { Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { User } from '../other/models/User';
+
+type queryParams = {
+  limit?: number;
+  skip?: number;
+
+  tenantId?: string;
+  lastName?: string;
+  firstName?: string;
+  email?: string;
+  sort?: string;
+}
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root'
 })
 export class UserService extends GenericHttpService {
+  endpoint = 'user';
+  private _refreshUsers = new Subject<void>();
+  public refreshUsers$ = this._refreshUsers.asObservable();
 
-  getUsers(queryParams?: any): Observable<ResponseWithRecordsBody> {
-    return this.getAll(ApiRoutes.USER, queryParams)
+  getAllUsers(queryParams?: queryParams): Observable<ResponseWithRecords<User>> {
+    return this.getAll<User>(this.endpoint, queryParams);
   }
 
-  getUserById(id: string): Observable<User> {
-    return this.getOne<User>(ApiRoutes.USER, id)
+  createUser(user: User | User[]): Observable<User | User[] | null> {
+    return this.create<User>(this.endpoint, user, "Erfolgreich!", "Ein Benutzer wurde erstellt!").pipe(
+      tap(() => this._refreshUsers.next())
+    );
   }
 
-  createUser(user: User): Observable<User | User[] | null> {
-    return this.create<User>(ApiRoutes.USER, user, 'User created', 'A new user has been successfully created.')
+  updateUser(user: User | User[], id: idTypes): Observable<User | User[] | null> {
+    return this.update<User>(this.endpoint, user, id).pipe(
+      tap(() => this._refreshUsers.next())
+    );
   }
 
-  createGlobalUser(user: User): Observable<boolean> {
-    return this.create<User>(ApiRoutes.USER, user, 'User created', 'A new general user has been successfully created.')
-      .pipe(
-        map(response => response !== null)
-      );
+  deleteOneUser(id: idTypes): Observable<unknown> {
+    return this.deleteOne(this.endpoint, id).pipe(
+      tap(() => this._refreshUsers.next())
+    );
   }
 
-  updateUser(user: User, id: string): Observable<boolean> {
-    return this.update<User>(ApiRoutes.USER, user, id, 'User updated', 'The user has been successfully updated.')
-      .pipe(
-        map(response => response !== null)
-      );
-  }
-
-  deleteUser(id: string): Observable<boolean> {
-    return this.deleteOne(ApiRoutes.USER, id, 'User deleted', 'The user has been successfully deleted.')
-      .pipe(
-        map(response => response !== null)
-      );
+  deleteAllUsers(): Observable<User | User[] | null> {
+    return this.deleteAll<User>(this.endpoint).pipe(
+      tap(() => this._refreshUsers.next())
+    );
   }
 }

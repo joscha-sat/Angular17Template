@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Customer } from '../other/models/Customer';
-import { GenericHttpService } from "./generic-http.service";
+import { GenericHttpService, ResponseWithRecords } from "./generic-http.service";
 import { Observable } from "rxjs";
-import { ResponseWithRecordsBody } from "../other/types/ResponseWithRecordsBody.type";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class CustomerService extends GenericHttpService {
   }
 
   // GET ALL Customers
-  getAllCustomers(): Observable<ResponseWithRecordsBody<Customer>> {
+  getAllCustomers(): Observable<ResponseWithRecords<Customer>> {
     return this.getAll<Customer>(this.endpoint);
   }
 

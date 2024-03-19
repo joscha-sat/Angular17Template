@@ -3,8 +3,8 @@ import { BaseInputComponent } from "../../../shared/base-input/base-input.compon
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { TuiAlertModule, TuiButtonModule, TuiLinkModule } from "@taiga-ui/core";
 import { TranslateModule } from "@ngx-translate/core";
-import { AuthService } from "../../../api/auth.service";
-import { LoginBody } from "../../../other/types/LoginBody.type";
+import { AuthService, LoginBody } from "../../../api/auth.service";
+
 
 @Component({
   selector: "app-login-form",

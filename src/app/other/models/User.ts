@@ -18,8 +18,6 @@ export class User extends BaseModel<User> {
 
   constructor(params: Partial<User>) {
     super(params);
-    this.createdAt = new Date(this.createdAt);
-    this.updatedAt = new Date(this.updatedAt);
   }
 
   get fullName() {

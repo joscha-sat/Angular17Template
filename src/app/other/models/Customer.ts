@@ -7,8 +7,6 @@ export class Customer extends BaseModel<Customer> {
 
   constructor(params: Partial<Customer>) {
     super(params);
-    this.createdAt = new Date(this.createdAt);
-    this.updatedAt = new Date(this.updatedAt);
   }
 
   get fullName() {

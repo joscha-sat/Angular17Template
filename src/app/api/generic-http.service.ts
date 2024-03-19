@@ -8,7 +8,7 @@ import { environment } from "../other/environment/environment";
 
 export type idTypes = string | number | (string | number)[]
 
-type ResponseWithRecords<T> = {
+export type ResponseWithRecords<T> = {
   total: number
   records: T[],
 }

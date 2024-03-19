@@ -8,7 +8,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "../other/environment/environment";
 import { User } from "../other/models/User";
 import { Role } from "../other/models/Role";
-import { ResponseWithRecordsBody } from "../other/types/ResponseWithRecordsBody.type";
+import { ResponseWithRecords } from "./generic-http.service";
 
 
 @Injectable({
@@ -44,7 +44,7 @@ export class SuperAdminService {
 
   getGlobalUsers(globalRoles: Role[]): Observable<User[]> {
     return this.http
-      .get<ResponseWithRecordsBody>(this.baseUrl + ApiRoutes.USER)
+      .get<ResponseWithRecords<User>>(this.baseUrl + ApiRoutes.USER)
       .pipe(
         map((response) => {
           const users: User[] = response.records.map((user: User) =>
