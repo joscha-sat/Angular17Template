@@ -29,6 +29,10 @@ export class TenantService extends GenericHttpService {
     return this.getAll<Tenant>(this.endpoint, queryParams);
   }
 
+  getOneTenant(id: string | number) {
+    return this.getOne<Tenant>(this.endpoint, id)
+  }
+
   createTenant(tenant: Tenant | Tenant[]): Observable<Tenant | Tenant[] | null> {
     return this.create<Tenant>(this.endpoint, tenant, this.element).pipe(
       tap(() => this._refreshTenants.next())

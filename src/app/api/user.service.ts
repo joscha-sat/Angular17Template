@@ -28,6 +28,10 @@ export class UserService extends GenericHttpService {
     return this.getAll<User>(this.endpoint, queryParams);
   }
 
+  getOneUser(id: string | number) {
+    return this.getOne<User>(this.endpoint, id)
+  }
+
   createUser(user: User | User[]): Observable<User | User[] | null> {
     return this.create<User>(this.endpoint, user, this.element).pipe(
       tap(() => this._refreshUsers.next())
