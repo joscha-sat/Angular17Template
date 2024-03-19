@@ -1,13 +1,14 @@
 import { Component, inject, OnInit, signal } from "@angular/core";
 import { UserHeaderComponent } from "../../components/user/user-header/user-header.component";
 import { UserTableComponent } from "../../components/user/user-table/user-table.component";
-import { User } from "../../models/User";
+import { User } from "../../other/models/User";
 import { UserService } from "../../api/user.service";
 import { toObservable } from "@angular/core/rxjs-interop";
 import { SuperAdminService } from "../../api/super-admin.service";
 import { TenantService } from "../../api/tenant.service";
 import { AuthService } from "../../api/auth.service";
-import { ViewLayoutComponent } from "../../layouts/view-layout/view-layout.component";
+import { ViewLayoutComponent } from "../../other/layouts/view-layout/view-layout.component";
+
 
 @Component({
   selector: "app-user.view",
@@ -37,7 +38,7 @@ export class UserViewComponent implements OnInit {
     }
     // case logged in tenant
     else {
-      return this.authService.getLoggedInUser()?.tenantId || ''
+      return this.authService.getLoggedInUser()?.tenantId ?? ''
     }
   }
 
@@ -48,8 +49,8 @@ export class UserViewComponent implements OnInit {
 
   // | normal methods | --------------------------------------------------------------------  ||
   getUsers() {
-    this.userService.getUsers({ tenantId: this.tenantId }).subscribe((user: User[]) => {
-      this.users.set(user);
+    this.userService.getAllUsers({ tenantId: this.tenantId }).subscribe((user) => {
+      this.users.set(user.records);
     });
   }
 }

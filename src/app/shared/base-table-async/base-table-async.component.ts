@@ -3,6 +3,7 @@ import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@t
 import { BehaviorSubject, combineLatest, map, Observable, of, switchMap } from "rxjs";
 import { AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from "@angular/common";
 import { TUI_DEFAULT_MATCHER, TuiLetModule } from "@taiga-ui/cdk";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: "app-base-table-async",
@@ -18,14 +19,15 @@ import { TUI_DEFAULT_MATCHER, TuiLetModule } from "@taiga-ui/cdk";
     NgTemplateOutlet,
     NgSwitch,
     NgSwitchDefault,
+    TranslateModule,
   ],
   templateUrl: "./base-table-async.component.html",
   styleUrl: "./base-table-async.component.scss",
 })
 export class BaseTableAsyncComponent<T> implements OnInit {
-  @Input() tableData$: Observable<T[]> = of([]);
-  @Input() headers: string[] = [];
-  @Input() columns: string[] = [];
+  @Input({ required: true }) tableData$: Observable<T[]> = of([]);
+  @Input({ required: true }) headers: string[] = [];
+  @Input({ required: true }) columns: string[] = [];
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
   @Input() search: string = '';
 
@@ -44,6 +46,8 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.tableData$) return;
+    
     // Sorting data
     this.tableData$ = this.tableData$.pipe(
       map(data => this.sortData(data, this.sortedColumn, this.direction)),
@@ -98,7 +102,7 @@ export class BaseTableAsyncComponent<T> implements OnInit {
     let value = item;
 
     for (const k of keys) {
-      if (value && Object.prototype.hasOwnProperty.call(value, k)) {
+      if (value && Object.hasOwn(value, k)) {
         value = value[k];
       } else {
         return null;

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { PaginationEvent, TableFilterEvent, TableSortEvent } from "../types/Pagination.type";
+import { PaginationEvent, TableFilterEvent, TableSortEvent } from "../other/types/Pagination.type";
 
 @Injectable({
   providedIn: "root",
@@ -12,9 +12,6 @@ export abstract class PaginationFilterService {
   totalAmount: number = 0;
   filter: TableFilterEvent = { searchTerm: "", tabIndex: 0 };
   sort!: string;
-
-  protected constructor() {
-  }
 
   private _startIndex: number | undefined = undefined;
 

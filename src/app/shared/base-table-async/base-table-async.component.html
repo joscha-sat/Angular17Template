@@ -1,6 +1,6 @@
 <!-- TODO: check sorting logic -->
 <table
-  *ngIf="sizedData$ | async as data"
+  *ngIf="sizedData$ | async as data; else empty"
   [columns]="columns"
   class="table"
   tuiTable
@@ -68,3 +68,8 @@
   </tfoot>
 </table>
 
+<ng-template #empty>
+  <div>
+    {{ 'general.empty-table' | translate }}
+  </div>
+</ng-template>

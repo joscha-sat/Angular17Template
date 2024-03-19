@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from "@angular/core";
-import { NavItem } from "../../enums/nav-items";
-import { NavRoutes } from "../../enums/nav-routes";
+import { NavItem } from "../../other/enums/nav-items";
+import { NavRoutes } from "../../other/enums/nav-routes";
 import { NavButtonComponent } from "./nav-button/nav-button.component";
 import { AccountComponent } from "./account/account.component";
 import { TranslateService } from "@ngx-translate/core";
@@ -26,18 +26,27 @@ export class NavigationComponent implements OnInit {
   }
 
   setTranslatedTextWithNavItems() {
-    this.translateService.get(["tenant.title", "user.title", "settings.title"]).subscribe(translations => {
+    this.translateService.get(["tenant.title", "user.title", "customers.title", "settings.title"]).subscribe(translations => {
       this.navItems.set([
+        // tenant
         {
           tooltip: translations["tenant.title"],
           icon: "tuiIconHomeLarge",
           link: NavRoutes.TENANT,
         },
+        // user
         {
           tooltip: translations["user.title"],
           icon: "tuiIconUserLarge",
           link: NavRoutes.USER,
         },
+        // customer
+        {
+          tooltip: translations["customers.title"],
+          icon: "tuiIconBriefcaseLarge",
+          link: NavRoutes.CUSTOMERS,
+        },
+        // settings
         {
           tooltip: translations["settings.title"],
           icon: "tuiIconSettingsLarge",

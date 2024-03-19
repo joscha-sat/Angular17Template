@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { BaseTableAsyncComponent } from "../../../shared/base-table-async/base-table-async.component";
 import { AsyncPipe } from "@angular/common";
 import { BaseTableComponent } from "../../../shared/base-table/base-table.component";
-import { User } from "../../../models/User";
+import { User } from "../../../other/models/User";
 import { TuiDialogHelperService } from "../../../services/tui-dialog-helper.service";
 import { UserAddEditDialogComponent } from "../user-add-edit-dialog/user-add-edit-dialog.component";
 

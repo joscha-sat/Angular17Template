@@ -6,8 +6,9 @@ import { routes } from "./app.routes";
 import { HttpClient, provideHttpClient, withInterceptors } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
-import { authTokenInterceptor } from "./interceptors/auth-token.interceptor";
-import { isLoadingInterceptor } from "./interceptors/is-loading.interceptor";
+import { authTokenInterceptor } from "./other/interceptors/auth-token.interceptor";
+import { isLoadingInterceptor } from "./other/interceptors/is-loading.interceptor";
+import { errorInterceptor } from "./other/interceptors/error.interceptor";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -16,7 +17,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideAnimations(),
-    provideHttpClient(withInterceptors([authTokenInterceptor, isLoadingInterceptor])),
+    provideHttpClient(withInterceptors([authTokenInterceptor, isLoadingInterceptor, errorInterceptor])),
     provideRouter(routes),
     importProvidersFrom(TuiRootModule, TuiAlertModule, TuiDialogModule),
     TranslateModule.forRoot({
@@ -26,6 +27,7 @@ export const appConfig: ApplicationConfig = {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
       },
-    }).providers!],
+    }).providers!
+  ],
 };
 

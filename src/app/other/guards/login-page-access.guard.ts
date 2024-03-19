@@ -1,13 +1,13 @@
 import { CanActivateFn, Router } from "@angular/router";
 import { inject } from "@angular/core";
-import { AuthService } from "../api/auth.service";
+import { AuthService } from "../../api/auth.service";
 
 /**
  * Login Guard:
  * Protects the login page from access by authenticated users.
  * navigates to home page if user is logged in.
  */
-export const loginPageAccessGuard: CanActivateFn = (route, state) => {
+export const loginPageAccessGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const router = inject(Router);
   const isLoggedIn = authService.isLoggedIn();

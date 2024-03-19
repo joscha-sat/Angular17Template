@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TranslateModule } from "@ngx-translate/core";
-import { HeaderLayoutComponent } from "../../../layouts/header-layout/header-layout.component";
+import { HeaderLayoutComponent } from "../../../other/layouts/header-layout/header-layout.component";
+
 
 @Component({
   selector: 'app-tenant-dashboard-header',

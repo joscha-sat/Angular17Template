@@ -1,17 +1,20 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpStatusCode } from "@angular/common/http";
-import { ApiRoutes } from "../enums/api-routes";
+import { ApiRoutes } from "../other/enums/api-routes";
 
 import { catchError, map, Observable, of } from "rxjs";
 
 import { Router } from "@angular/router";
 
-import { NavRoutes } from "../enums/nav-routes";
-import { environment } from "../environment/environment";
-import { User } from "../models/User";
-import { LoginBody } from "../types/LoginBody.type";
+import { NavRoutes } from "../other/enums/nav-routes";
+import { environment } from "../other/environment/environment";
+import { User } from "../other/models/User";
 import { SuperAdminService } from "./super-admin.service";
 
+export type LoginBody = {
+  username: string;
+  password: string;
+}
 
 @Injectable({
   providedIn: "root",
@@ -110,18 +113,6 @@ export class AuthService {
       );
   }
 
-  isValidationHashValid(hash: string): Observable<boolean> {
-    return this.http
-      .get<any>(this.baseUrl + ApiRoutes.AUTH + "/validate/" + hash, {
-        observe: "response",
-      })
-      .pipe(
-        map((response) => {
-          return response.status === HttpStatusCode.Ok;
-        }),
-      );
-  }
-
   /**
    * Sends a request to the api to set the password of the user with the given hash from the reset password mail
    * @param passwordBody
@@ -199,7 +190,7 @@ export class AuthService {
       return this.loggedInUser;
     }
     const userJSON = localStorage.getItem("user");
-    const parsedUser = JSON.parse(userJSON || "{}");
+    const parsedUser = JSON.parse(userJSON ?? "{}");
     return new User(parsedUser);
   }
 

@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { NavItem } from "../../../enums/nav-items";
+import { NavItem } from "../../../other/enums/nav-items";
 import { TuiButtonModule, TuiHintModule, TuiSvgModule } from "@taiga-ui/core";
 import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 

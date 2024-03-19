@@ -6,7 +6,7 @@ import {
   TuiStringifyContentPipeModule,
 } from "@taiga-ui/kit";
 import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from "@angular/forms";
-import { DropDownItem } from "../../types/DropDownItem";
+import { DropDownItem } from "../../other/types/DropDownItem";
 import { TuiSizeL, TuiSizeS, TuiTextfieldControllerModule } from "@taiga-ui/core";
 import { TranslateModule } from "@ngx-translate/core";
 import { TuiValueChangesModule } from "@taiga-ui/cdk";

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, signal } from '@angular/core';
-import { User } from "../../../models/User";
+import { User } from "../../../other/models/User";
 import { TranslateModule } from "@ngx-translate/core";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { BaseInputComponent } from "../../../shared/base-input/base-input.component";
@@ -10,10 +10,13 @@ import { BaseDialogComponent } from "../../../shared/base-dialog/base-dialog.com
 import { POLYMORPHEUS_CONTEXT } from "@tinkoff/ng-polymorpheus";
 import { TuiDialogContext } from "@taiga-ui/core";
 import { TuiDialogHelperService } from "../../../services/tui-dialog-helper.service";
-import { TwoInputsRowLayoutComponent } from "../../../layouts/two-inputs-row-layout/two-inputs-row-layout.component";
+
 import { TuiRadioLabeledModule } from "@taiga-ui/kit";
 import { BaseRadioGroupComponent } from "../../../shared/base-radio-group/base-radio-group.component";
 import { BaseComboboxComponent } from "../../../shared/base-combobox/base-combobox.component";
+import {
+  TwoInputsRowLayoutComponent
+} from "../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout.component";
 
 
 @Component({
@@ -70,7 +73,6 @@ export class UserAddEditDialogComponent extends BaseDialogComponent implements O
 
     if (!this.context.data) return;
     this.model = this.context.data;
-    console.log(this.model)
     this.addUserMode.set(false)
   }
 
@@ -78,12 +80,12 @@ export class UserAddEditDialogComponent extends BaseDialogComponent implements O
 
   initForm() {
     this.form = this.fb.group({
-      firstName: [this.model?.firstName || null, Validators.required],
-      lastName: [this.model?.lastName || null, Validators.required],
-      phone: [this.model?.phone || null],
-      active: [this.model?.active || null, Validators.required],
-      email: [this.model?.email || null, Validators.email],
-      role: [{ id: this.model?.role?.id, label: this.model?.role?.name }]
+      firstName: [this.model?.firstName ?? null, Validators.required],
+      lastName: [this.model?.lastName ?? null, Validators.required],
+      phone: [this.model?.phone ?? null],
+      // active: [this.model?.active ?? null, Validators.required],
+      email: [this.model?.email ?? null, Validators.email],
+      // role: [{ id: this.model?.role?.id, label: this.model?.role?.name }]
     });
   }
 

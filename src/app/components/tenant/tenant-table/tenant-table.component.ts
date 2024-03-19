@@ -1,11 +1,11 @@
 import { Component, inject, Input, signal } from "@angular/core";
 import { BaseTableComponent } from "../../../shared/base-table/base-table.component";
-import { Tenant } from "../../../models/Tenant";
+import { Tenant } from "../../../other/models/Tenant";
 import { AsyncPipe } from "@angular/common";
 import { BaseTableAsyncComponent } from "../../../shared/base-table-async/base-table-async.component";
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
-import { NavRoutes } from "../../../enums/nav-routes";
+import { NavRoutes } from "../../../other/enums/nav-routes";
 import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui-button.component";
 import { DeleteIconComponent } from "../../../shared/delete-icon/delete-icon.component";
 import { TenantService } from "../../../api/tenant.service";
