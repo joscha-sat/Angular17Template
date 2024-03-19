@@ -7,11 +7,12 @@ import { Observable } from "rxjs";
   providedIn: 'root'
 })
 export class CustomerService extends GenericHttpService {
+  element = "ein Kunde"
   private readonly endpoint = 'customer';
 
   // ADD ONE Customer
   addCustomer(addCustomerObject: Customer): Observable<Customer | Customer[] | null> {
-    return this.create<Customer>(this.endpoint, addCustomerObject, 'Customer added', 'The customer was successfully added.');
+    return this.create<Customer>(this.endpoint, addCustomerObject, this.element);
   }
 
   // GET ALL Customers
@@ -26,12 +27,12 @@ export class CustomerService extends GenericHttpService {
 
   // UPDATE ONE Customer BY ID
   updateCustomerById(id: string | number, updateCustomerObject: Customer): Observable<Customer | Customer[] | null> {
-    return this.update<Customer>(this.endpoint, updateCustomerObject, id, 'Customer updated', 'The customer was successfully updated.');
+    return this.update<Customer>(this.endpoint, updateCustomerObject, id, this.element);
   }
 
   // DELETE ONE Customer BY ID
   deleteCustomerById(id: number | string): Observable<unknown> {
-    return this.deleteOne(this.endpoint, id, 'Customer deleted', 'The customer was successfully deleted.');
+    return this.deleteOne(this.endpoint, id, this.element);
   }
 
   // DELETE ALL Customers

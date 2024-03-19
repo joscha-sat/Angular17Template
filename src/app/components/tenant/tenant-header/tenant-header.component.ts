@@ -9,6 +9,8 @@ import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui
 
 import { BaseInputComponent } from "../../../shared/base-input/base-input.component";
 import { HeaderLayoutComponent } from "../../../other/layouts/header-layout/header-layout.component";
+import { TuiDialogHelperService } from "../../../services/tui-dialog-helper.service";
+import { TenantAddEditDialogComponent } from "../tenant-add-edit-dialog/tenant-add-edit-dialog.component";
 
 @Component({
   selector: "app-tenant-header",
@@ -30,7 +32,11 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
   form: FormGroup = new FormGroup({});
   searchForm: FormGroup = new FormGroup({});
 
-  constructor(private fb: FormBuilder, private tenantService: TenantService) {
+  constructor(
+    private fb: FormBuilder,
+    private tenantService: TenantService,
+    private dialogService: TuiDialogHelperService
+  ) {
   }
 
   ngOnInit(): void {
@@ -59,6 +65,10 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     if (changes["tenants"] && changes["tenants"].currentValue !== changes["tenants"].previousValue && this.form.controls["name"]) {
       this.form.controls["name"].setValue({ id: this.tenants[0].id, label: this.tenants[0].name });
     }
+  }
+
+  openAddTenantDialog() {
+    this.dialogService.openDialog(TenantAddEditDialogComponent)
   }
 }
 

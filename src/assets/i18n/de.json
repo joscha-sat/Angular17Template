@@ -55,7 +55,9 @@
   "tenant": {
     "create": "Firma erstellen",
     "select": "Firma auswählen",
-    "title": "Firmen"
+    "title": "Firmen",
+    "edit": "Firma bearbeiten",
+    "enter-name": "Firmennamen eingeben"
   },
   "user": {
     "create": "Benutzer erstellen",

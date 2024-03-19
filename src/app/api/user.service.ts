@@ -20,6 +20,7 @@ type queryParams = {
 })
 export class UserService extends GenericHttpService {
   endpoint = 'user';
+  element = "Nutzer"
   private _refreshUsers = new Subject<void>();
   public refreshUsers$ = this._refreshUsers.asObservable();
 
@@ -28,19 +29,19 @@ export class UserService extends GenericHttpService {
   }
 
   createUser(user: User | User[]): Observable<User | User[] | null> {
-    return this.create<User>(this.endpoint, user, "Erfolgreich!", "Ein Benutzer wurde erstellt!").pipe(
+    return this.create<User>(this.endpoint, user, this.element).pipe(
       tap(() => this._refreshUsers.next())
     );
   }
 
   updateUser(user: User | User[], id: idTypes): Observable<User | User[] | null> {
-    return this.update<User>(this.endpoint, user, id).pipe(
+    return this.update<User>(this.endpoint, user, id, this.element).pipe(
       tap(() => this._refreshUsers.next())
     );
   }
 
   deleteOneUser(id: idTypes): Observable<unknown> {
-    return this.deleteOne(this.endpoint, id).pipe(
+    return this.deleteOne(this.endpoint, id, this.element).pipe(
       tap(() => this._refreshUsers.next())
     );
   }

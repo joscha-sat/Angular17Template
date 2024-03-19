@@ -21,6 +21,7 @@ export class TenantService extends GenericHttpService {
   selectedTenantId = signal('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
   search = signal('');
   endpoint = 'tenant';
+  element = "Eine Firma"
   private _refreshTenants = new Subject<void>();
   public refreshTenants$ = this._refreshTenants.asObservable();
 
@@ -29,19 +30,19 @@ export class TenantService extends GenericHttpService {
   }
 
   createTenant(tenant: Tenant | Tenant[]): Observable<Tenant | Tenant[] | null> {
-    return this.create<Tenant>(this.endpoint, tenant).pipe(
+    return this.create<Tenant>(this.endpoint, tenant, this.element).pipe(
       tap(() => this._refreshTenants.next())
     );
   }
 
   updateTenant(tenant: Tenant | Tenant[], id: idTypes): Observable<Tenant | Tenant[] | null> {
-    return this.update<Tenant>(this.endpoint, tenant, id).pipe(
+    return this.update<Tenant>(this.endpoint, tenant, id, this.element).pipe(
       tap(() => this._refreshTenants.next())
     );
   }
 
   deleteOneTenant(id: idTypes): Observable<unknown> {
-    return this.deleteOne(this.endpoint, id).pipe(
+    return this.deleteOne(this.endpoint, id, this.element).pipe(
       tap(() => this._refreshTenants.next())
     );
   }

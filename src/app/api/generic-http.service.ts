@@ -25,18 +25,6 @@ export class GenericHttpService {
   ) {
   }
 
-  create<T>(endpoint: string, body: T | T[], pushTitle?: string, pushText?: string): Observable<T | T[] | null> {
-    return this.performRequest('post', endpoint, body, undefined, pushTitle, pushText);
-  }
-
-  update<T>(endpoint: string, body: T | T[], id: idTypes, pushTitle?: string, pushText?: string): Observable<T | T[] | null> {
-    return this.performRequest('patch', endpoint, body, id, pushTitle, pushText);
-  }
-
-  deleteOne(endpoint: string, id: string | number | (string | number)[], pushTitle?: string, pushText?: string): Observable<unknown> {
-    return this.performRequest('delete', endpoint, undefined, id, pushTitle, pushText);
-  }
-
   getAll<T>(endpoint: string, queryParams?: { [key: string]: any }): Observable<ResponseWithRecords<T>> {
     const params = this.generateParams(queryParams);
     return this.http.get<ResponseWithRecords<T>>(`${ this.baseUrl }${ endpoint }`, { params });
@@ -44,6 +32,18 @@ export class GenericHttpService {
 
   getOne<T>(endpoint: string, id: string | number): Observable<T> {
     return this.http.get<T>(`${ this.baseUrl }${ endpoint }/${ id }`);
+  }
+
+  create<T>(endpoint: string, body: T | T[], elementName: string): Observable<T | T[] | null> {
+    return this.performRequest('post', endpoint, body, undefined, "Erfolg!", `${ elementName } wurde erstellt!`);
+  }
+
+  update<T>(endpoint: string, body: T | T[], id: idTypes, elementName: string): Observable<T | T[] | null> {
+    return this.performRequest('patch', endpoint, body, id, "Erfolg!", `${ elementName } wurde bearbeitet!`);
+  }
+
+  deleteOne(endpoint: string, id: string | number | (string | number)[], articleWithElementName: string): Observable<unknown> {
+    return this.performRequest('delete', endpoint, undefined, id, "Erfolg!", `${ articleWithElementName } wurde gelöscht!`);
   }
 
   deleteAll<T>(endpoint: string): Observable<T> {
@@ -70,11 +70,11 @@ export class GenericHttpService {
         httpOperation(`${ this.baseUrl }${ endpoint }${ Array.isArray(id) && id[index] ? '/' + id[index] : '' }`, item)
       );
       return forkJoin(requests).pipe(
-        tap(() => this.handleHttpSuccess(pushTitle)),
+        tap(() => this.handleHttpSuccess(pushTitle, pushText)),
       );
     } else {
       return httpOperation(`${ this.baseUrl }${ endpoint }${ id ? '/' + id : '' }`, body).pipe(
-        tap(() => this.handleHttpSuccess(pushTitle)),
+        tap(() => this.handleHttpSuccess(pushTitle, pushText)),
       );
     }
   }

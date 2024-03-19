@@ -5,5 +5,12 @@
     [headers]="headers()"
     [columns]="columns()"
     [search]="tenantService.search()"
-  />
+    [cellTemplatesMap]="{'delete': deleteCell}"
+  >
+    <ng-template #deleteCell let-object="object">
+      <app-delete-icon
+        (click)="trashClicked(object); $event.stopPropagation();"
+      />
+    </ng-template>
+  </app-base-table-async>
 }

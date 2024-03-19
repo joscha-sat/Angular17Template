@@ -47,7 +47,7 @@ export class BaseTableAsyncComponent<T> implements OnInit {
 
   ngOnInit() {
     if (!this.tableData$) return;
-    
+
     // Sorting data
     this.tableData$ = this.tableData$.pipe(
       map(data => this.sortData(data, this.sortedColumn, this.direction)),

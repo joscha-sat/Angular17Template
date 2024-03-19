@@ -31,12 +31,19 @@ export class TenantViewComponent implements OnInit {
   // | init | ------------------------------------------------------------------------------  ||
   ngOnInit(): void {
     this.getTenants();
+    this.refreshDataSubscription();
   }
 
   // | normal methods | --------------------------------------------------------------------  ||
   getTenants() {
     this.tenantService.getAllTenants().subscribe((tenants) => {
       this.tenants.set(tenants.records);
+    });
+  }
+
+  refreshDataSubscription() {
+    this.tenantService.refreshTenants$.subscribe(() => {
+      this.getTenants();
     });
   }
 }

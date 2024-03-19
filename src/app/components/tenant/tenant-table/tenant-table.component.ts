@@ -25,8 +25,8 @@ import { TenantService } from "../../../api/tenant.service";
 })
 export class TenantTableComponent {
   @Input({ required: true }) tenants$: Observable<Tenant[]> | undefined;
-  headers = signal<string[]>(['Name']);
-  columns = signal<string[]>(['name']);
+  headers = signal<string[]>(['Name', "Löschen"]);
+  columns = signal<string[]>(['name', "delete"]);
 
   router = inject(Router);
   tenantService = inject(TenantService)
@@ -41,5 +41,11 @@ export class TenantTableComponent {
     const url = `${ NavRoutes.TENANT }/${ NavRoutes.DASHBOARD }/${ tenant.id }`;
     this.router.navigate([url]).then();
   }
+
+  trashClicked(event: Tenant) {
+    const tenant = new Tenant(event)
+    this.tenantService.deleteOneTenant(tenant.id).subscribe()
+  }
 }
+
 

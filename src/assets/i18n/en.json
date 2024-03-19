@@ -55,7 +55,9 @@
   "tenant": {
     "create": "Create tenant",
     "select": "Select tenant",
-    "title": "Tenant"
+    "title": "Tenant",
+    "edit": "Edit tenant",
+    "enter-name": "Enter a tenant name"
   },
   "user": {
     "create": "Create user",
