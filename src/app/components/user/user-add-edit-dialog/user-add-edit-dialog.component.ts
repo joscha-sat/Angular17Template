@@ -73,7 +73,6 @@ export class UserAddEditDialogComponent extends BaseDialogComponent implements O
 
     if (!this.context.data) return;
     this.model = this.context.data;
-    console.log(this.model)
     this.addUserMode.set(false)
   }
 
@@ -84,9 +83,9 @@ export class UserAddEditDialogComponent extends BaseDialogComponent implements O
       firstName: [this.model?.firstName ?? null, Validators.required],
       lastName: [this.model?.lastName ?? null, Validators.required],
       phone: [this.model?.phone ?? null],
-      active: [this.model?.active ?? null, Validators.required],
+      // active: [this.model?.active ?? null, Validators.required],
       email: [this.model?.email ?? null, Validators.email],
-      role: [{ id: this.model?.role?.id, label: this.model?.role?.name }]
+      // role: [{ id: this.model?.role?.id, label: this.model?.role?.name }]
     });
   }
 

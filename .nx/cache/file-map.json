@@ -88,7 +88,7 @@
       },
       {
         "file": "README.md",
-        "hash": "9144236290198609651"
+        "hash": "1097948114185972833"
       },
       {
         "file": "angular.json",
@@ -108,7 +108,7 @@
       },
       {
         "file": "src/app/api/customer.service.ts",
-        "hash": "534673433755623729"
+        "hash": "3894349941090178079"
       },
       {
         "file": "src/app/api/super-admin.service.ts",
@@ -136,7 +136,7 @@
       },
       {
         "file": "src/app/app.config.ts",
-        "hash": "2627392889783441454"
+        "hash": "17854366757800643571"
       },
       {
         "file": "src/app/app.routes.ts",
@@ -644,7 +644,7 @@
       },
       {
         "file": "src/app/views/customers.view/customers.view.component.ts",
-        "hash": "8400529581536484126"
+        "hash": "4663169000907716277"
       },
       {
         "file": "src/app/views/login.view/login.view.component.html",

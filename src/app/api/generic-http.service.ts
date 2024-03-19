@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, forkJoin, Observable, of, tap } from 'rxjs';
+import { forkJoin, Observable, tap } from 'rxjs';
 
 
 import { TuiSnackbarService } from "../services/tui-snackbar.service";
@@ -71,12 +71,10 @@ export class GenericHttpService {
       );
       return forkJoin(requests).pipe(
         tap(() => this.handleHttpSuccess(pushTitle)),
-        catchError((error) => this.handleHttpError(error, pushText))
       );
     } else {
       return httpOperation(`${ this.baseUrl }${ endpoint }${ id ? '/' + id : '' }`, body).pipe(
         tap(() => this.handleHttpSuccess(pushTitle)),
-        catchError((error) => this.handleHttpError(error, pushText))
       );
     }
   }
@@ -100,18 +98,5 @@ export class GenericHttpService {
 
   private handleHttpSuccess(pushTitle?: string, pushText?: string) {
     this._snackBar.openSnackbar("success", pushTitle ?? 'Erfolg!', pushText ?? '')
-  }
-
-  private handleHttpError = (err: any, pushTitle?: string): Observable<null> => {
-    let errMsg = '';
-    if (err.error instanceof ErrorEvent) {
-      // client-side error
-      errMsg = `Error: ${ err.error.message }`;
-    } else {
-      // server-side error
-      errMsg = `Error Code: ${ err.status }, Message: ${ err.message }`;
-    }
-    this._snackBar.openSnackbar("error", pushTitle ?? 'Fehler', errMsg);
-    return of(null);
   }
 }

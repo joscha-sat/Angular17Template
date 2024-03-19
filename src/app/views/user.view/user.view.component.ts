@@ -49,8 +49,8 @@ export class UserViewComponent implements OnInit {
 
   // | normal methods | --------------------------------------------------------------------  ||
   getUsers() {
-    this.userService.getUsers({ tenantId: this.tenantId }).subscribe((user: User[]) => {
-      this.users.set(user);
+    this.userService.getUsers({ tenantId: this.tenantId }).subscribe((user) => {
+      this.users.set(user.records);
     });
   }
 }
