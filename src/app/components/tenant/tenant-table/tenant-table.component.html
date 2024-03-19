@@ -2,7 +2,7 @@
   (rowClickEvent)="rowClicked($event)"
   [cellTemplatesMap]="{'delete': deleteCell}"
   [columns]="columns()"
-  [fetchData]="fetchData"
+  [fetchData]="fetchDataFn!"
   [headers]="headers()"
   [search]="tenantService.search()"
 >

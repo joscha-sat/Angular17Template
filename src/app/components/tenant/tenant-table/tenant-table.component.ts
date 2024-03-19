@@ -1,4 +1,4 @@
-import { Component, inject, Input, signal } from "@angular/core";
+import { Component, inject, OnInit, signal } from "@angular/core";
 import { BaseTableComponent } from "../../../shared/base-table/base-table.component";
 import { Tenant } from "../../../other/models/Tenant";
 import { AsyncPipe } from "@angular/common";
@@ -11,6 +11,8 @@ import { NavRoutes } from "../../../other/enums/nav-routes";
 import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui-button.component";
 import { DeleteIconComponent } from "../../../shared/delete-icon/delete-icon.component";
 import { TenantService } from "../../../api/tenant.service";
+import { BehaviorSubject, switchMap } from "rxjs";
+import { TableRefresherComponent } from "../../../shared/table-refresher/table-refresher.component";
 
 @Component({
   selector: "app-tenant-table",
@@ -25,13 +27,31 @@ import { TenantService } from "../../../api/tenant.service";
   templateUrl: "./tenant-table.component.html",
   styleUrl: "./tenant-table.component.scss",
 })
-export class TenantTableComponent {
-  @Input({ required: true }) fetchData!: FetchDataFunction<Tenant>;
+export class TenantTableComponent extends TableRefresherComponent<Tenant> implements OnInit {
   headers = signal<string[]>(['Name', "Löschen"]);
   columns = signal<string[]>(['name', "delete"]);
-
   router = inject(Router);
-  tenantService = inject(TenantService)
+  tenantService = inject(TenantService);
+  refresh$ = new BehaviorSubject(null);
+
+  ngOnInit(): void {
+    this.refreshDataSubscription()
+  }
+
+  fetchDataFn: FetchDataFunction<Tenant> = (page: number, size: number) => {
+    return this.refresh$.pipe(
+      switchMap(() =>
+        this.tenantService.getAllTenants({ limit: size, skip: page * size })
+      )
+    );
+  };
+
+  refreshDataSubscription() {
+    this.tenantService.refreshTenants$.subscribe(() => {
+      this.refresh$.next(null);
+    });
+  }
+
 
   // method which get triggered on a table row click
   rowClicked($event: Tenant) {
@@ -39,6 +59,7 @@ export class TenantTableComponent {
   }
 
   // method that navigates to the tenant dashboard via tenant id
+
   openTenantDashboard(tenant: Tenant) {
     const url = `${ NavRoutes.TENANT }/${ NavRoutes.DASHBOARD }/${ tenant.id }`;
     this.router.navigate([url]).then();
@@ -48,6 +69,8 @@ export class TenantTableComponent {
     const tenant = new Tenant(event)
     this.tenantService.deleteOneTenant(tenant.id).subscribe()
   }
+
+
 }
 
 

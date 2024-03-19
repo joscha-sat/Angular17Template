@@ -5,8 +5,6 @@ import { TenantService } from "../../api/tenant.service";
 import { Tenant } from "../../other/models/Tenant";
 import { AsyncPipe } from "@angular/common";
 import { ViewLayoutComponent } from "../../other/layouts/view-layout/view-layout.component";
-import { FetchDataFunction } from "../../shared/base-table-async/base-table-async.component";
-import { BehaviorSubject, switchMap } from "rxjs";
 
 
 @Component({
@@ -27,12 +25,11 @@ export class TenantViewComponent implements OnInit {
 
   // | signals / vars | --------------------------------------------------------------------  ||
   tenants = signal<Tenant[]>([]);
-  private refresh$ = new BehaviorSubject<null>(null);
+
 
   // | init | ------------------------------------------------------------------------------  ||
   ngOnInit(): void {
     this.getTenants()
-    this.refreshDataSubscription();
   }
 
   // | normal methods | --------------------------------------------------------------------  ||
@@ -42,17 +39,5 @@ export class TenantViewComponent implements OnInit {
     });
   }
 
-  fetchTenantsFn: FetchDataFunction<Tenant> = (page: number, size: number) => {
-    return this.refresh$.pipe(
-      switchMap(() =>
-        this.tenantService.getAllTenants({ limit: size, skip: page * size })
-      )
-    );
-  };
 
-  refreshDataSubscription() {
-    this.tenantService.refreshTenants$.subscribe(() => {
-      this.refresh$.next(null);
-    });
-  }
 }
