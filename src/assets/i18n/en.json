@@ -18,14 +18,13 @@
     "active": "Active",
     "back": "Back",
     "cancel": "Cancel",
-    "emtpy": "No entries available",
     "inactive": "Inactive",
     "no": "No",
     "ok": "Ok",
     "save": "save",
     "search": "Search",
     "yes": "Yes",
-    "empty-table": "No entries available"
+    "empty": "No entries available"
   },
   "hint": {
     "email": "Enter email",
@@ -65,7 +64,6 @@
     "update": "Edit user"
   },
   "customers": {
-    "title": "Customers",
     "create": "Create customer"
   },
   "http": {
