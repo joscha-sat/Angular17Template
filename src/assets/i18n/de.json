@@ -65,5 +65,13 @@
   "customers": {
     "title": "Kunden",
     "create": "Kunden erstellen"
+  },
+  "http": {
+    "status-500": "Ein interner Server-Fehler ist aufgetreten",
+    "status-409": "Konflikt bei der Anfrage an den Server",
+    "status-404": "Die angeforderte Ressource wurde nicht gefunden",
+    "status-403": "Authentifizierung fehlgeschlagen oder fehlt.",
+    "status-400": "Anfrage ungültig oder fehlerhaft!",
+    "status-406": "Inakzeptable Anfrage an den Server"
   }
 }

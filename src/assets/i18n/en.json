@@ -65,5 +65,13 @@
   "customers": {
     "title": "Customers",
     "create": "Create customer"
+  },
+  "http": {
+    "status-500": "Internal server error",
+    "status-409": "Conflict sending a request to the server",
+    "status-404": "Not found",
+    "status-403": "",
+    "status-400": "",
+    "status-406": ""
   }
 }
