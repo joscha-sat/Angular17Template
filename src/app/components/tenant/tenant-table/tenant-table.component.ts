@@ -2,16 +2,12 @@ import { Component, inject, OnInit, signal } from "@angular/core";
 import { BaseTableComponent } from "../../../shared/base-table/base-table.component";
 import { Tenant } from "../../../other/models/Tenant";
 import { AsyncPipe } from "@angular/common";
-import {
-  BaseTableAsyncComponent,
-  FetchDataFunction
-} from "../../../shared/base-table-async/base-table-async.component";
+import { BaseTableAsyncComponent } from "../../../shared/base-table-async/base-table-async.component";
 import { Router } from "@angular/router";
 import { NavRoutes } from "../../../other/enums/nav-routes";
 import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui-button.component";
 import { DeleteIconComponent } from "../../../shared/delete-icon/delete-icon.component";
 import { TenantService } from "../../../api/tenant.service";
-import { BehaviorSubject, switchMap } from "rxjs";
 import { TableRefresherComponent } from "../../../shared/table-refresher/table-refresher.component";
 
 @Component({
@@ -32,26 +28,14 @@ export class TenantTableComponent extends TableRefresherComponent<Tenant> implem
   columns = signal<string[]>(['name', "delete"]);
   router = inject(Router);
   tenantService = inject(TenantService);
-  refresh$ = new BehaviorSubject(null);
-
-  ngOnInit(): void {
-    this.refreshDataSubscription()
+  
+  getService() {
+    return this.tenantService;
   }
 
-  fetchDataFn: FetchDataFunction<Tenant> = (page: number, size: number) => {
-    return this.refresh$.pipe(
-      switchMap(() =>
-        this.tenantService.getAllTenants({ limit: size, skip: page * size })
-      )
-    );
-  };
-
-  refreshDataSubscription() {
-    this.tenantService.refreshTenants$.subscribe(() => {
-      this.refresh$.next(null);
-    });
+  getServiceMethodName() {
+    return 'getAllTenants';
   }
-
 
   // method which get triggered on a table row click
   rowClicked($event: Tenant) {
