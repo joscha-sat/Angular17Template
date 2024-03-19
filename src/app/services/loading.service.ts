@@ -13,11 +13,11 @@ import { BehaviorSubject } from "rxjs";
 export class LoadingService {
   private loading$ = new BehaviorSubject<boolean>(false); // only true if the request takes longer than 250ms
 
-  setLoadingState(value: boolean) {
-    this.loading$.next(value);
+  get loadingState() {
+    return this.loading$.asObservable();
   }
 
-  getLoadingState() {
-    return this.loading$.asObservable();
+  setLoadingState(value: boolean) {
+    this.loading$.next(value);
   }
 }

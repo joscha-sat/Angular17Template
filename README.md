@@ -84,11 +84,11 @@ Helper services: src/app/services
 
 ### Type definition:
 
-Typescript classes >  src/app/models
+Typescript classes >  src/app/other/models
 
 Types (uses type not interfaces, same syntax except "=" before {}) >  src/app/types
 
-Enums > src/app/enums
+Enums > src/app/other/enums
 
 ##
 

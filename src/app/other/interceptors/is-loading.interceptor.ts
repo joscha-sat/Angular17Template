@@ -1,36 +1,37 @@
-import { HttpInterceptorFn } from "@angular/common/http";
-import { catchError, finalize, mergeMap, of, timer } from "rxjs";
-import { inject } from "@angular/core";
+import { HttpInterceptorFn, HttpResponse } from "@angular/common/http";
+import { catchError, delay, finalize, of, tap } from "rxjs";
+import { inject, signal } from "@angular/core";
 import { LoadingService } from "../../services/loading.service";
 
+// Set initial request count at '0'
+const count = signal(0);
+
 export const isLoadingInterceptor: HttpInterceptorFn = (req, next) => {
+  // Inject the LoadingService
+  const loaderService = inject(LoadingService);
 
-  const loadingService = inject(LoadingService);
-  // Start a timer that emits after 250ms
-  const loadingTimer$ = timer(250);
+  // Increase request count by '1'
+  count.update(val => val + 1);
 
-  loadingService.setLoadingState(false);
-  let completed = false;
+  // Start a subscription that sets loading state to true after 300ms
+  const load$ = of(null).pipe(delay(300)).subscribe(() => loaderService.setLoadingState(true));
 
   return next(req).pipe(
-    mergeMap((event) => {
-      // Request completed before 1 second, set loadingState to false
-      loadingTimer$.subscribe(() => {
-        if (!completed) {
-          loadingService.setLoadingState(true);
-        }
-      });
-      return of(event);
+    tap(res => {
+      if (res instanceof HttpResponse) {
+        // If response received, decrease request count by '1'
+        count.update(value => value - 1);
+      }
     }),
-    catchError((error) => {
-      // Request encountered an error
-      loadingService.setLoadingState(false);
-      throw error;
+    catchError(err => {
+      // If error occurs, decrease request count by '1'
+      count.update(value => value - 1);
+      throw err;
     }),
     finalize(() => {
-      loadingService.setLoadingState(false);
-      completed = true;
-    }),
+      // On finalize, end the subscription and hide the loading state
+      load$.unsubscribe();
+      loaderService.setLoadingState(false);
+    })
   );
 };
-
