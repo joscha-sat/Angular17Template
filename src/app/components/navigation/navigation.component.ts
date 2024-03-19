@@ -26,7 +26,7 @@ export class NavigationComponent implements OnInit {
   }
 
   setTranslatedTextWithNavItems() {
-    this.translateService.get(["tenant.title", "user.title", "customers.title", "settings.title"]).subscribe(translations => {
+    this.translateService.get(["tenant.title", "user.title", "customer.title-plural", "settings.title"]).subscribe(translations => {
       this.navItems.set([
         // tenant
         {
@@ -42,7 +42,7 @@ export class NavigationComponent implements OnInit {
         },
         // customer
         {
-          tooltip: translations["customers.title"],
+          tooltip: translations["customer.title-plural"],
           icon: "tuiIconBriefcaseLarge",
           link: NavRoutes.CUSTOMERS,
         },
