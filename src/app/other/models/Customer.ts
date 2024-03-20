@@ -1,5 +1,4 @@
-import { BaseModel } from "./BaseModel";
-
+import { BaseModel } from './BaseModel';
 
 export class Customer extends BaseModel<Customer> {
   firstName?: string;
@@ -10,6 +9,6 @@ export class Customer extends BaseModel<Customer> {
   }
 
   get fullName() {
-    return this.firstName + " " + this.lastName;
+    return this.firstName + ' ' + this.lastName;
   }
 }

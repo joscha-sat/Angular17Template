@@ -1,12 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { BaseDialogComponent } from "../../../shared/base-dialog/base-dialog.component";
-import { MODE } from "../../../other/enums/mode.enum";
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
-import { TranslateModule } from "@ngx-translate/core";
-import { BaseInputComponent } from "../../../shared/base-input/base-input.component";
-import { BaseSaveCancelBtnsComponent } from "../../../shared/base-save-cancel-btns/base-save-cancel-btns.component";
-import { Tenant } from "../../../other/models/Tenant";
-import { TenantService } from "../../../api/tenant.service";
+import { BaseDialogComponent } from '../../../shared/base-dialog/base-dialog.component';
+import { MODE } from '../../../other/enums/mode.enum';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { BaseInputComponent } from '../../../shared/base-input/base-input.component';
+import { BaseSaveCancelBtnsComponent } from '../../../shared/base-save-cancel-btns/base-save-cancel-btns.component';
+import { Tenant } from '../../../other/models/Tenant';
+import { TenantService } from '../../../api/tenant.service';
 
 @Component({
   selector: 'app-tenant-add-edit-dialog',
@@ -15,17 +20,20 @@ import { TenantService } from "../../../api/tenant.service";
     ReactiveFormsModule,
     TranslateModule,
     BaseInputComponent,
-    BaseSaveCancelBtnsComponent
+    BaseSaveCancelBtnsComponent,
   ],
   templateUrl: './tenant-add-edit-dialog.component.html',
-  styleUrl: './tenant-add-edit-dialog.component.scss'
+  styleUrl: './tenant-add-edit-dialog.component.scss',
 })
-export class TenantAddEditDialogComponent extends BaseDialogComponent implements OnInit {
+export class TenantAddEditDialogComponent
+  extends BaseDialogComponent
+  implements OnInit
+{
   data: Tenant | undefined;
-  mode = MODE.ADD
+  mode = MODE.ADD;
   tenantForm?: FormGroup;
-  fb = inject(FormBuilder)
-  tenantService = inject(TenantService)
+  fb = inject(FormBuilder);
+  tenantService = inject(TenantService);
   protected readonly MODE = MODE;
 
   ngOnInit(): void {
@@ -35,21 +43,23 @@ export class TenantAddEditDialogComponent extends BaseDialogComponent implements
 
   getMode() {
     if (this.context.data) {
-      this.data = this.context.data
-      this.mode = MODE.EDIT
+      this.data = this.context.data;
+      this.mode = MODE.EDIT;
     } else {
-      this.mode = MODE.ADD
+      this.mode = MODE.ADD;
     }
   }
 
   initForm() {
     this.tenantForm = this.fb.group({
-      name: [this.data ?? '', Validators.required]
-    })
+      name: [this.data ?? '', Validators.required],
+    });
   }
 
   addTenant() {
-    this.tenantService.createTenant(new Tenant(this.tenantForm?.value)).subscribe(() => this.closeDialog())
+    this.tenantService
+      .createTenant(new Tenant(this.tenantForm?.value))
+      .subscribe(() => this.closeDialog());
   }
 
   updateTenant() {
@@ -58,9 +68,9 @@ export class TenantAddEditDialogComponent extends BaseDialogComponent implements
 
   submit() {
     if (this.mode === MODE.ADD) {
-      this.addTenant()
+      this.addTenant();
     } else {
-      this.updateTenant()
+      this.updateTenant();
     }
   }
 }

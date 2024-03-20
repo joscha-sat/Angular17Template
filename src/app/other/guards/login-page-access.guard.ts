@@ -1,6 +1,6 @@
-import { CanActivateFn, Router } from "@angular/router";
-import { inject } from "@angular/core";
-import { AuthService } from "../../api/auth.service";
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { AuthService } from '../../api/auth.service';
 
 /**
  * Login Guard:
@@ -14,7 +14,7 @@ export const loginPageAccessGuard: CanActivateFn = () => {
 
   if (isLoggedIn) {
     // navigation to login page
-    return router.parseUrl("/");
+    return router.parseUrl('/');
   }
 
   return !isLoggedIn;

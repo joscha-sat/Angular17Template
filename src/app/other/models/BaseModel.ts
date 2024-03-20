@@ -16,7 +16,6 @@ export abstract class BaseModel<Model extends BaseModel<Model>> {
     this._id = value;
   }
 
-
   // abstract toJSON(): any;
   // abstract fromJSON(json: any): any;
 

@@ -1,7 +1,7 @@
 <div class="actions">
   <button
     (click)="onSubmit($event)"
-    [disabled]="!(form) || form.invalid || customValidatorBoolean"
+    [disabled]="!form || form.invalid || customValidatorBoolean"
     appearance="primary"
     class="saveBtn"
     size="m"

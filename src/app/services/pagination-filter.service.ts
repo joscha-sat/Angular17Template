@@ -1,8 +1,12 @@
-import { Injectable } from "@angular/core";
-import { PaginationEvent, TableFilterEvent, TableSortEvent } from "../other/types/Pagination.type";
+import { Injectable } from '@angular/core';
+import {
+  PaginationEvent,
+  TableFilterEvent,
+  TableSortEvent,
+} from '../other/types/Pagination.type';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 /**
  * abstract service class to be extended by services that need pagination and filtering
@@ -10,7 +14,7 @@ import { PaginationEvent, TableFilterEvent, TableSortEvent } from "../other/type
  */
 export abstract class PaginationFilterService {
   totalAmount: number = 0;
-  filter: TableFilterEvent = { searchTerm: "", tabIndex: 0 };
+  filter: TableFilterEvent = { searchTerm: '', tabIndex: 0 };
   sort!: string;
 
   private _startIndex: number | undefined = undefined;
@@ -19,7 +23,7 @@ export abstract class PaginationFilterService {
     if (this._startIndex !== undefined) {
       return this._startIndex.toString();
     }
-    return "";
+    return '';
   }
 
   private _endIndex: number | undefined = undefined;
@@ -28,7 +32,7 @@ export abstract class PaginationFilterService {
     if (this._endIndex !== undefined) {
       return this._endIndex.toString();
     }
-    return "";
+    return '';
   }
 
   public setPaginationIndices(paginatorIndex: PaginationEvent) {
@@ -42,9 +46,9 @@ export abstract class PaginationFilterService {
 
   public setSorting(sortingEvent: TableSortEvent) {
     if (sortingEvent.sortDirection === 1) {
-      this.sort = `${ sortingEvent.sortColumn }+ASC`;
+      this.sort = `${sortingEvent.sortColumn}+ASC`;
     } else {
-      this.sort = `${ sortingEvent.sortColumn }+DESC`;
+      this.sort = `${sortingEvent.sortColumn}+DESC`;
     }
   }
 

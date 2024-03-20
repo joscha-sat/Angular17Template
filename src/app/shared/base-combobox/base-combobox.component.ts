@@ -1,18 +1,33 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   TuiComboBoxModule,
   TuiDataListWrapperModule,
   TuiFilterByInputPipeModule,
   TuiStringifyContentPipeModule,
-} from "@taiga-ui/kit";
-import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from "@angular/forms";
-import { DropDownItem } from "../../other/types/DropDownItem";
-import { TuiSizeL, TuiSizeS, TuiTextfieldControllerModule } from "@taiga-ui/core";
-import { TranslateModule } from "@ngx-translate/core";
-import { TuiValueChangesModule } from "@taiga-ui/cdk";
+} from '@taiga-ui/kit';
+import {
+  ControlContainer,
+  FormGroupDirective,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { DropDownItem } from '../../other/types/DropDownItem';
+import {
+  TuiSizeL,
+  TuiSizeS,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { TuiValueChangesModule } from '@taiga-ui/cdk';
 
 @Component({
-  selector: "app-base-combobox",
+  selector: 'app-base-combobox',
   standalone: true,
   imports: [
     TuiComboBoxModule,
@@ -24,8 +39,8 @@ import { TuiValueChangesModule } from "@taiga-ui/cdk";
     TranslateModule,
     TuiValueChangesModule,
   ],
-  templateUrl: "./base-combobox.component.html",
-  styleUrl: "./base-combobox.component.scss",
+  templateUrl: './base-combobox.component.html',
+  styleUrl: './base-combobox.component.scss',
   viewProviders: [
     {
       provide: ControlContainer,
@@ -35,20 +50,20 @@ import { TuiValueChangesModule } from "@taiga-ui/cdk";
 })
 export class BaseComboboxComponent implements OnChanges {
   @Input({ required: true }) dataArray: unknown[] = [];
-  @Input({ required: true }) fControlName = "";
-  @Input() hint: string = "placeholder";
-  @Input() size: TuiSizeL | TuiSizeS = "m";
+  @Input({ required: true }) fControlName = '';
+  @Input() hint: string = 'placeholder';
+  @Input() size: TuiSizeL | TuiSizeS = 'm';
 
   // these are the property keys which are converted into the dropdown
-  @Input() idKey = "id";  //default: item.id for the id in createDropdownItems
-  @Input() labelKey = "name"; //default: item.name for the label in createDropdownItems //
+  @Input() idKey = 'id'; //default: item.id for the id in createDropdownItems
+  @Input() labelKey = 'name'; //default: item.name for the label in createDropdownItems //
 
   @Output() valueChange = new EventEmitter();
 
   dropDownItems: DropDownItem[] = [];
 
   // Returns the label of the item to display in the dropdown menu
-  readonly stringify = (item: DropDownItem): string => item.label ?? "";
+  readonly stringify = (item: DropDownItem): string => item.label ?? '';
 
   // creates the dropdown Array depending on the @Input. as default item.name = label and item.id = id
   createDropdownItems(): DropDownItem[] {
@@ -61,7 +76,10 @@ export class BaseComboboxComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["dataArray"] && changes["dataArray"].currentValue !== changes["dataArray"].previousValue) {
+    if (
+      changes['dataArray'] &&
+      changes['dataArray'].currentValue !== changes['dataArray'].previousValue
+    ) {
       this.dropDownItems = this.createDropdownItems();
     }
   }

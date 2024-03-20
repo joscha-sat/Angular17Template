@@ -1,14 +1,14 @@
-import { Component, inject } from "@angular/core";
-import { TranslateModule } from "@ngx-translate/core";
-import { BaseTuiButtonComponent } from "../../../shared/base-tui-button/base-tui-button.component";
+import { Component, inject } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { BaseTuiButtonComponent } from '../../../shared/base-tui-button/base-tui-button.component';
 
-import { EditIconComponent } from "../../../shared/edit-icon/edit-icon.component";
-import { TuiDialogHelperService } from "../../../services/tui-dialog-helper.service";
-import { UserAddEditDialogComponent } from "../user-add-edit-dialog/user-add-edit-dialog.component";
-import { HeaderLayoutComponent } from "../../../other/layouts/header-layout/header-layout.component";
+import { EditIconComponent } from '../../../shared/edit-icon/edit-icon.component';
+import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
+import { UserAddEditDialogComponent } from '../user-add-edit-dialog/user-add-edit-dialog.component';
+import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 
 @Component({
-  selector: "app-user-header",
+  selector: 'app-user-header',
   standalone: true,
   imports: [
     TranslateModule,
@@ -16,13 +16,13 @@ import { HeaderLayoutComponent } from "../../../other/layouts/header-layout/head
     HeaderLayoutComponent,
     EditIconComponent,
   ],
-  templateUrl: "./user-header.component.html",
-  styleUrl: "./user-header.component.scss",
+  templateUrl: './user-header.component.html',
+  styleUrl: './user-header.component.scss',
 })
 export class UserHeaderComponent {
-  dialogService = inject(TuiDialogHelperService)
+  dialogService = inject(TuiDialogHelperService);
 
   openCreateUserDialog() {
-    this.dialogService.openDialog(UserAddEditDialogComponent)
+    this.dialogService.openDialog(UserAddEditDialogComponent);
   }
 }

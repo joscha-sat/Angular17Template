@@ -1,13 +1,18 @@
-import { Component, inject, signal } from "@angular/core";
-import { BaseInputComponent } from "../../../shared/base-input/base-input.component";
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
-import { TuiAlertModule, TuiButtonModule, TuiLinkModule } from "@taiga-ui/core";
-import { TranslateModule } from "@ngx-translate/core";
-import { AuthService, LoginBody } from "../../../api/auth.service";
-
+import { Component, inject, signal } from '@angular/core';
+import { BaseInputComponent } from '../../../shared/base-input/base-input.component';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { TuiAlertModule, TuiButtonModule, TuiLinkModule } from '@taiga-ui/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { AuthService, LoginBody } from '../../../api/auth.service';
 
 @Component({
-  selector: "app-login-form",
+  selector: 'app-login-form',
   standalone: true,
   imports: [
     BaseInputComponent,
@@ -18,8 +23,8 @@ import { AuthService, LoginBody } from "../../../api/auth.service";
     TuiLinkModule,
     TuiAlertModule,
   ],
-  templateUrl: "./login-form.component.html",
-  styleUrl: "./login-form.component.scss",
+  templateUrl: './login-form.component.html',
+  styleUrl: './login-form.component.scss',
 })
 export class LoginFormComponent {
   form: FormGroup | undefined;
@@ -35,8 +40,8 @@ export class LoginFormComponent {
 
   get loginBody(): LoginBody {
     return {
-      username: this.form?.controls["username"].value,
-      password: this.form?.controls["password"].value,
+      username: this.form?.controls['username'].value,
+      password: this.form?.controls['password'].value,
     };
   }
 
@@ -45,4 +50,3 @@ export class LoginFormComponent {
     this.authService.login(this.loginBody).subscribe();
   }
 }
-

@@ -2,15 +2,9 @@
 <ng-container *ngIf="breadcrumbItems.length > 1">
   <tui-breadcrumbs>
     <ng-container *ngFor="let item of breadcrumbItems">
-      <a
-        *tuiItem
-        [routerLink]="item.url ?? null"
-        tuiLink
-      >
+      <a *tuiItem [routerLink]="item.url ?? null" tuiLink>
         {{ item.label + '.title' | translate }}
       </a>
     </ng-container>
   </tui-breadcrumbs>
 </ng-container>
-
-

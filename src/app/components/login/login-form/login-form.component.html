@@ -1,14 +1,22 @@
 <!--  form  -->
-<form (ngSubmit)="form?.valid && submit()" [formGroup]="form!" class="flex-col-gap1">
+<form
+  (ngSubmit)="form?.valid && submit()"
+  [formGroup]="form!"
+  class="flex-col-gap1"
+>
   <!--   email input   -->
-  <app-base-input fControlName="username" size="l" type="email"/>
+  <app-base-input fControlName="username" size="l" type="email" />
 
   <!--   password input   -->
-  <app-base-input [type]="'password'" fControlName="password" size="l"/>
-
+  <app-base-input [type]="'password'" fControlName="password" size="l" />
 
   <!-- forgot password, TODO: add forgot passwort dialog / logic -->
-  <button (click)="isOpen.set(true)" class="forgot-pw-button" tuiLink type="button">
+  <button
+    (click)="isOpen.set(true)"
+    class="forgot-pw-button"
+    tuiLink
+    type="button"
+  >
     {{ 'login.forgot-password' | translate }}
   </button>
 

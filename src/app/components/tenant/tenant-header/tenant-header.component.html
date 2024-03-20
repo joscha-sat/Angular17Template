@@ -17,7 +17,6 @@
   </div>
 
   <div class="flex-a-center-g1" right>
-
     <form [formGroup]="searchForm" style="min-width: 10rem">
       <app-base-input
         (input)="onSearchChange($event)"
@@ -29,11 +28,7 @@
 
     <!-- new tenant button -->
     <app-base-tui-button (clicked)="openAddTenantDialog()">
-      {{ 'tenant.create'  | translate }}
+      {{ 'tenant.create' | translate }}
     </app-base-tui-button>
   </div>
-
 </app-header-layout>
-
-
-
