@@ -8,13 +8,12 @@
       <!--  loop over navItems   -->
       <div class="nav-items-wrapper">
         @for (navItem of navItems(); track navItem) {
-          <app-nav-button [navItem]="navItem"/>
+          <app-nav-button [navItem]="navItem" />
         }
       </div>
     </div>
 
-
     <!--  bottom account settings   -->
-    <app-account/>
+    <app-account />
   </div>
 </div>
