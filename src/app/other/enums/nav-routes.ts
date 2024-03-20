@@ -19,6 +19,7 @@ export enum NavRoutes {
   GLOBAL_USERS = 'global-users',
 
   // auth routes
+  AUTH = 'auth',
   LOGIN = 'login',
   RESET_PASSWORD = 'reset-password',
 

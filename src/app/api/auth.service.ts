@@ -37,7 +37,7 @@ export class AuthService {
 
   login(loginBody: LoginBody): Observable<boolean> {
     return this.http
-      .post<any>(this.buildUrl(ApiRoutes.AUTH, "login"), loginBody, { observe: "response" })
+      .post<any>(this.baseUrl + NavRoutes.AUTH + '/' + NavRoutes.LOGIN, loginBody, { observe: "response" })
       .pipe(
         map((response) => {
           if (response.status === HttpStatusCode.Created) {
