@@ -8,6 +8,7 @@
     "@angular/compiler": "^17.3.1",
     "@angular/core": "^17.3.1",
     "@angular/forms": "^17.3.1",
+    "@angular/localize": "^17.3.1",
     "@angular/platform-browser": "^17.3.1",
     "@angular/platform-browser-dynamic": "^17.3.1",
     "@angular/router": "^17.3.1",
@@ -72,8 +73,12 @@
         "hash": "4689145951703824387"
       },
       {
+        "file": ".husky/pre-commit",
+        "hash": "11175514383867807999"
+      },
+      {
         "file": ".prettierrc",
-        "hash": "16551144615830887604"
+        "hash": "14388251743869352875"
       },
       {
         "file": ".vscode/extensions.json",
@@ -97,11 +102,11 @@
       },
       {
         "file": "package-lock.json",
-        "hash": "6533301882800572264"
+        "hash": "10349657966446892584"
       },
       {
         "file": "package.json",
-        "hash": "7807300590668208648"
+        "hash": "11083326496893260934"
       },
       {
         "file": "src/app/api/auth.service.ts",
@@ -197,7 +202,7 @@
       },
       {
         "file": "src/app/components/navigation/account/account.component.html",
-        "hash": "1723479454108476497"
+        "hash": "14137758901613122487"
       },
       {
         "file": "src/app/components/navigation/account/account.component.scss",
@@ -797,7 +802,7 @@
       },
       {
         "file": "tsconfig.spec.json",
-        "hash": "5059954046679394591"
+        "hash": "17298894116677235060"
       }
     ]
   }

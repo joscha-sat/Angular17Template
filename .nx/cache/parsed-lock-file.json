@@ -396,6 +396,15 @@
         "hash": "sha512-HndsO90k67sFHzd+sII+rhAUksffBvquFuAUCc6QR9WVjILxVg2fY7oBidgS1gKNqu0mptPG0GvuORnaW/0gSg=="
       }
     },
+    "npm:@angular/localize": {
+      "type": "npm",
+      "name": "npm:@angular/localize",
+      "data": {
+        "version": "17.3.1",
+        "packageName": "@angular/localize",
+        "hash": "sha512-ma8PD+DWv68OKgvbmxw7rVohT5HvIYgbmPnVg8lyEz/YkUa9lua0zzrgA+3HUComqv16oVrIaQr00oWxn/9lXQ=="
+      }
+    },
     "npm:@angular/platform-browser": {
       "type": "npm",
       "name": "npm:@angular/platform-browser",
@@ -3319,6 +3328,42 @@
         "version": "1.0.4",
         "packageName": "@tufjs/models",
         "hash": "sha512-qaGV9ltJP0EO25YfFUPhxRVK0evXFIAGicsVXuRim4Ed9cjPxYhNnNJ49SFmbeLgtxpslIkX317IgpfcHPVj/A=="
+      }
+    },
+    "npm:@types/babel__core": {
+      "type": "npm",
+      "name": "npm:@types/babel__core",
+      "data": {
+        "version": "7.20.5",
+        "packageName": "@types/babel__core",
+        "hash": "sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA=="
+      }
+    },
+    "npm:@types/babel__generator": {
+      "type": "npm",
+      "name": "npm:@types/babel__generator",
+      "data": {
+        "version": "7.6.8",
+        "packageName": "@types/babel__generator",
+        "hash": "sha512-ASsj+tpEDsEiFr1arWrlN6V3mdfjRMZt6LtK/Vp/kreFLnr5QH5+DhvD5nINYZXzwJvXeGq+05iUXcAzVrqWtw=="
+      }
+    },
+    "npm:@types/babel__template": {
+      "type": "npm",
+      "name": "npm:@types/babel__template",
+      "data": {
+        "version": "7.4.4",
+        "packageName": "@types/babel__template",
+        "hash": "sha512-h/NUaSyG5EyxBIp8YRxo4RMe2/qQgvyowRwVMzhYhBCONbW8PUsg4lkFMrhgZhUe5z3L3MiLDuvyJ/CaPa2A8A=="
+      }
+    },
+    "npm:@types/babel__traverse": {
+      "type": "npm",
+      "name": "npm:@types/babel__traverse",
+      "data": {
+        "version": "7.20.5",
+        "packageName": "@types/babel__traverse",
+        "hash": "sha512-WXCyOcRtH37HAUkpXhUduaxdm82b4GSlyTqajXviN4EfiuPgNYR109xMCKvpl6zPIpua0DGlMEDCq+g8EdoheQ=="
       }
     },
     "npm:@types/body-parser": {
@@ -10685,6 +10730,11 @@
     },
     {
       "source": "npm:@angular-devkit/build-angular",
+      "target": "npm:@angular/localize",
+      "type": "static"
+    },
+    {
+      "source": "npm:@angular-devkit/build-angular",
       "target": "npm:karma",
       "type": "static"
     },
@@ -11596,6 +11646,36 @@
     {
       "source": "npm:@angular/forms",
       "target": "npm:tslib",
+      "type": "static"
+    },
+    {
+      "source": "npm:@angular/localize",
+      "target": "npm:@angular/compiler",
+      "type": "static"
+    },
+    {
+      "source": "npm:@angular/localize",
+      "target": "npm:@angular/compiler-cli",
+      "type": "static"
+    },
+    {
+      "source": "npm:@angular/localize",
+      "target": "npm:@babel/core",
+      "type": "static"
+    },
+    {
+      "source": "npm:@angular/localize",
+      "target": "npm:@types/babel__core",
+      "type": "static"
+    },
+    {
+      "source": "npm:@angular/localize",
+      "target": "npm:fast-glob",
+      "type": "static"
+    },
+    {
+      "source": "npm:@angular/localize",
+      "target": "npm:yargs",
       "type": "static"
     },
     {
@@ -15106,6 +15186,51 @@
     {
       "source": "npm:minimatch@9.0.3",
       "target": "npm:brace-expansion@2.0.1",
+      "type": "static"
+    },
+    {
+      "source": "npm:@types/babel__core",
+      "target": "npm:@babel/parser",
+      "type": "static"
+    },
+    {
+      "source": "npm:@types/babel__core",
+      "target": "npm:@babel/types",
+      "type": "static"
+    },
+    {
+      "source": "npm:@types/babel__core",
+      "target": "npm:@types/babel__generator",
+      "type": "static"
+    },
+    {
+      "source": "npm:@types/babel__core",
+      "target": "npm:@types/babel__template",
+      "type": "static"
+    },
+    {
+      "source": "npm:@types/babel__core",
+      "target": "npm:@types/babel__traverse",
+      "type": "static"
+    },
+    {
+      "source": "npm:@types/babel__generator",
+      "target": "npm:@babel/types",
+      "type": "static"
+    },
+    {
+      "source": "npm:@types/babel__template",
+      "target": "npm:@babel/parser",
+      "type": "static"
+    },
+    {
+      "source": "npm:@types/babel__template",
+      "target": "npm:@babel/types",
+      "type": "static"
+    },
+    {
+      "source": "npm:@types/babel__traverse",
+      "target": "npm:@babel/types",
       "type": "static"
     },
     {
