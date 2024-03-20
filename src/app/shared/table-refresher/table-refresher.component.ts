@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FetchDataFunction } from "../base-table-async/base-table-async.component";
 import { BehaviorSubject, Observable, switchMap } from "rxjs";
 import { ResponseWithRecords } from "../../api/generic-http.service";
@@ -10,7 +10,7 @@ import { ResponseWithRecords } from "../../api/generic-http.service";
   templateUrl: './table-refresher.component.html',
   styleUrl: './table-refresher.component.scss'
 })
-export abstract class TableRefresherComponent<T> {
+export abstract class TableRefresherComponent<T> implements OnInit {
   refresh$ = new BehaviorSubject(null);
 
   ngOnInit(): void {
@@ -30,6 +30,7 @@ export abstract class TableRefresherComponent<T> {
 
   fetchDataFn: FetchDataFunction<T> = (page: number, size: number) => {
     const additionalParams = this.getAdditionalParams();
+
     return this.refresh$.pipe(
       switchMap(() =>
         this.getService()[this.getServiceMethodName()]({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GenericHttpService, idTypes, ResponseWithRecords } from "./generic-http.service";
 import { Observable } from 'rxjs';
-import { Customer } from "../other/models/Customer";
+import { Customer } from '../other/models/Customer';
 
 
 type queryParams = {
@@ -13,11 +13,15 @@ type queryParams = {
   providedIn: 'root'
 })
 export class CustomerService extends GenericHttpService {
-  endpoint = 'customer';
-  element = "Ein Kunde"
+  endpoint = 'customers';
+  element = 'Ein Kunde';
 
   getAllCustomers(queryParams?: queryParams): Observable<ResponseWithRecords<Customer>> {
     return this.getAll<Customer>(this.endpoint, queryParams);
+  }
+
+  getOneCustomers(id: string | number): Observable<Customer> {
+    return this.getOne<Customer>(this.endpoint, id);
   }
 
   createCustomer(customer: Customer | Customer[]): Observable<Customer | Customer[] | null> {
