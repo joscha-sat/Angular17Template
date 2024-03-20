@@ -4,7 +4,6 @@ import { TenantTableComponent } from "../../components/tenant/tenant-table/tenan
 import { TenantService } from "../../api/tenant.service";
 import { Tenant } from "../../other/models/Tenant";
 import { AsyncPipe } from "@angular/common";
-import { toObservable } from "@angular/core/rxjs-interop";
 import { ViewLayoutComponent } from "../../other/layouts/view-layout/view-layout.component";
 
 
@@ -26,12 +25,11 @@ export class TenantViewComponent implements OnInit {
 
   // | signals / vars | --------------------------------------------------------------------  ||
   tenants = signal<Tenant[]>([]);
-  tenants$ = toObservable(this.tenants);
+
 
   // | init | ------------------------------------------------------------------------------  ||
   ngOnInit(): void {
-    this.getTenants();
-    this.refreshDataSubscription();
+    this.getTenants()
   }
 
   // | normal methods | --------------------------------------------------------------------  ||
@@ -41,9 +39,5 @@ export class TenantViewComponent implements OnInit {
     });
   }
 
-  refreshDataSubscription() {
-    this.tenantService.refreshTenants$.subscribe(() => {
-      this.getTenants();
-    });
-  }
+
 }

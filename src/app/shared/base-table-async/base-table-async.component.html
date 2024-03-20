@@ -1,72 +1,75 @@
 <!-- TODO: check sorting logic -->
-<table
-  *ngIf="sizedData$ | async as data; else empty"
-  [columns]="columns"
-  class="table"
-  tuiTable
->
-  <!-- HEAD / HEADERS -->
-  <thead>
-  <tr tuiThGroup>
-    @for (header of headers; track header) {
-      <th
-        *tuiHead="columns[$index]"
-        (click)="onSortChange(columns[$index])"
-        [resizable]="true"
-        tuiTh
-      >
-        {{ header }}
-      </th>
-    }
-  </tr>
-  </thead>
-
-  <!-- BODY / DATA -->
-  <tbody
-    *tuiLet="data | tuiTableSort as sortedData"
-    [data]="sortedData"
-    tuiTbody
+<ng-container *ngIf="sizedData$ | async as data">
+  <table
+    *ngIf="hasData | async; else empty"
+    [columns]="columns"
+    class="table"
+    tuiTable
   >
-  <tr
-    (click)="rowClickEvent.emit(item)"
-    *ngFor="let item of sortedData"
-    class="pointer"
-    tuiTr
-  >
-    <!-- loop over the column names displaying the corresponding data -->
-    <ng-container *ngFor="let column of columns;">
-      <td *tuiCell="column" [class.match]="isMatch(item[column])" tuiTd>
-        <!--    case: has a matched cellTemplatesMap name   -->
-        <ng-container *ngIf="cellTemplatesMap[column] as template">
-          <ng-container
-            *ngTemplateOutlet="template; context: {$implicit: extractNestedProperty(item, column), object: item}"
-          ></ng-container>
-        </ng-container>
+    <!-- HEAD / HEADERS -->
+    <thead>
+    <tr tuiThGroup>
+      @for (header of headers; track header) {
+        <th
+          *tuiHead="columns[$index]"
+          (click)="onSortChange(columns[$index])"
+          [resizable]="true"
+          tuiTh
+        >
+          {{ header }}
+        </th>
+      }
+    </tr>
+    </thead>
 
-        <!--    default case, display the value in raw   -->
-        <ng-container *ngIf="!cellTemplatesMap[column]">
-          {{ extractNestedProperty(item, column) }}
-        </ng-container>
+    <!-- BODY / DATA -->
+    <tbody
+      *tuiLet="data | tuiTableSort as sortedData"
+      [data]="sortedData"
+      tuiTbody
+    >
+    <tr
+      (click)="rowClickEvent.emit(item)"
+      *ngFor="let item of sortedData"
+      class="pointer"
+      tuiTr
+    >
+      <!-- loop over the column names displaying the corresponding data -->
+      <ng-container *ngFor="let column of columns;">
+        <td *tuiCell="column" [class.match]="isMatch(item[column])" tuiTd>
+          <!--    case: has a matched cellTemplatesMap name   -->
+          <ng-container *ngIf="cellTemplatesMap[column] as template">
+            <ng-container
+              *ngTemplateOutlet="template; context: {$implicit: extractNestedProperty(item, column), object: item}"
+            ></ng-container>
+          </ng-container>
+
+          <!--    default case, display the value in raw   -->
+          <ng-container *ngIf="!cellTemplatesMap[column]">
+            {{ extractNestedProperty(item, column) }}
+          </ng-container>
+        </td>
+      </ng-container>
+    </tr>
+    </tbody>
+
+    <!--  footer with pagination-->
+    <tfoot>
+    <tr>
+      <td [colSpan]="columns.length">
+        <tui-table-pagination
+          (paginationChange)="onChangePagination($event)"
+          [page]="(page$ | async)|| 0"
+          [size]="(size$ | async) || 0"
+          [total]="(total$ | async) || 0"
+          class="tui-space_top-2"
+        ></tui-table-pagination>
       </td>
-    </ng-container>
-  </tr>
-  </tbody>
+    </tr>
+    </tfoot>
+  </table>
+</ng-container>
 
-  <!--  footer with pagination-->
-  <tfoot>
-  <tr>
-    <td [colSpan]="columns.length">
-      <tui-table-pagination
-        (paginationChange)="onChangePagination($event)"
-        [page]="(page$ | async)|| 0"
-        [size]="(size$ | async) || 0"
-        [total]="(total$ | async) || 0"
-        class="tui-space_top-2"
-      ></tui-table-pagination>
-    </td>
-  </tr>
-  </tfoot>
-</table>
 
 <ng-template #empty>
   <div>
