@@ -30,7 +30,6 @@
     "@tinkoff/ng-dompurify": "4.0.0",
     "dompurify": "3.0.10",
     "npm-check-updates": "^16.14.17",
-    "prettier": "^3.2.5",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.2",
     "zone.js": "~0.14.4",
@@ -103,11 +102,11 @@
       },
       {
         "file": "package-lock.json",
-        "hash": "14337489329049371570"
+        "hash": "9199716759831844155"
       },
       {
         "file": "package.json",
-        "hash": "12603666354148625609"
+        "hash": "8246105392027076430"
       },
       {
         "file": "src/app/api/auth.service.ts",
@@ -135,7 +134,7 @@
       },
       {
         "file": "src/app/app.component.html",
-        "hash": "6418803309043284074"
+        "hash": "2280621278983555971"
       },
       {
         "file": "src/app/app.component.scss",

@@ -9189,6 +9189,15 @@
         "hash": "sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g=="
       }
     },
+    "npm:prettier": {
+      "type": "npm",
+      "name": "npm:prettier",
+      "data": {
+        "version": "3.2.5",
+        "packageName": "prettier",
+        "hash": "sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A=="
+      }
+    },
     "npm:pretty-format": {
       "type": "npm",
       "name": "npm:pretty-format",
