@@ -23,7 +23,7 @@ import { TuiDialogHelperService } from "../../services/tui-dialog-helper.service
   ],
 })
 export class BaseSaveCancelBtnsComponent {
-  @Input({ required: true }) form: FormGroup | undefined;
+  @Input({ required: true }) form!: FormGroup;
   @Input() customValidatorBoolean: boolean = false;
   @Input() showDeleteBtn: boolean = false;
   @Input() dialogContext: any;

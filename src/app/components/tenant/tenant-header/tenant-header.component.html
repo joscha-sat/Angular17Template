@@ -28,7 +28,7 @@
     </form>
 
     <!-- new tenant button -->
-    <app-base-tui-button>
+    <app-base-tui-button (clicked)="openAddTenantDialog()">
       {{ 'tenant.create'  | translate }}
     </app-base-tui-button>
   </div>

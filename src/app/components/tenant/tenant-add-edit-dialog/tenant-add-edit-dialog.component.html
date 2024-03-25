@@ -1,0 +1,18 @@
+@if (tenantForm) {
+
+  <div class="view-title pb-1">
+    {{ mode === MODE.ADD ? ('tenant.create' | translate) : 'tenant.edit' | translate }}
+  </div>
+
+  <form [formGroup]="tenantForm" (ngSubmit)="tenantForm.valid && submit()">
+    <!--  NAME INPUT  -->
+    <app-base-input label="tenant.enter-name" fControlName="name" type="text"/>
+
+    <!--  ACTIONS  -->
+    <app-base-save-cancel-btns (cancel)="closeDialog()" [form]="tenantForm"/>
+  </form>
+} @else {
+  {{ 'http.status-400' | translate }}
+}
+
+

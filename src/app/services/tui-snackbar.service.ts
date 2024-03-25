@@ -9,7 +9,7 @@ export class TuiSnackbarService {
   constructor(@Inject(TuiAlertService) private readonly alerts: TuiAlertService) {
   }
 
-  openSnackbar(type: TuiNotificationT, header: string, text: string): void {
+  openSnackbar(type: TuiNotificationT, header: string, text?: string): void {
     this.alerts
       .open(text || "",
         {

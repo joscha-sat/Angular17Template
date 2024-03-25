@@ -3,9 +3,10 @@ import { TuiBreadcrumbsModule } from "@taiga-ui/kit";
 import { ActivatedRoute, ActivatedRouteSnapshot, RouterLink } from "@angular/router";
 import { TuiLinkModule } from "@taiga-ui/core";
 import { NgForOf, NgIf } from "@angular/common";
+import { TranslateModule } from "@ngx-translate/core";
 
 export type BreadcrumbItem = {
-  url: string;
+  url: string | null;
   label: string;
 }
 
@@ -18,6 +19,7 @@ export type BreadcrumbItem = {
     TuiLinkModule,
     NgIf,
     NgForOf,
+    TranslateModule,
   ],
   templateUrl: "./base-breadcrumbs.component.html",
   styleUrl: "./base-breadcrumbs.component.scss",
@@ -39,15 +41,20 @@ export class BaseBreadcrumbsComponent implements OnInit {
     // Add breadcrumb item for each route segment
     const routeUrl = routeSnapshot.url.map(segment => segment.path);
 
-    if (routeUrl.length > 0) {
-      // Generate breadcrumb item values
-      const url = "/" + routeUrl.join("/");
-      const label = routeUrl[routeUrl.length - 1];
+    let accumulatedUrl = '';
 
-      // only strings less than 36 characters (exclude long ids)
-      if (label.length < 36)
+    routeUrl.forEach((urlSegment) => {
+      if (urlSegment.length < 36) {
+        accumulatedUrl += '/' + urlSegment;
+        this.breadcrumbItems.push({
+          label: urlSegment,
+          url: accumulatedUrl
+        });
+      }
+    });
 
-        this.breadcrumbItems.push({ label, url });
+    if (routeUrl && routeUrl.length > 0 && routeUrl[routeUrl.length - 1].length >= 36) {
+      this.breadcrumbItems[this.breadcrumbItems.length - 1].url = null
     }
 
     // Recursively generate breadcrumb items for child routes

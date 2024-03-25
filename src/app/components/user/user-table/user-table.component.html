@@ -1,8 +1,7 @@
-@if (user$ | async) {
-  <app-base-table-async
-    [tableData$]="user$!"
-    [headers]="tableHeaders()"
-    [columns]="tableColumns()"
-    (rowClickEvent)="userClicked($event)"
-  />
-}
+<app-base-table-async
+  (rowClickEvent)="userClicked($event)"
+  [columns]="tableColumns()"
+  [fetchData]="fetchDataFn"
+  [headers]="tableHeaders()"
+/>
+

@@ -18,12 +18,5 @@ import { ViewLayoutComponent } from "../../other/layouts/view-layout/view-layout
   styleUrl: "./settings.view.component.scss",
 })
 export class SettingsViewComponent {
-  // The arrays are filled with some sample data
-  tableData: any[] = [
-    { name: 'John', age: 30, city: 'New York' },
-    { name: 'Jane', age: 25, city: 'Chicago' },
-    { name: 'Mike', age: 35, city: 'Los Angeles' }
-  ];
-  headers: string[] = ['Name', 'Alter', 'Stadt'];
-  columns: string[] = ['name', 'age', 'city'];
+
 }

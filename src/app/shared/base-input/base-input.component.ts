@@ -6,6 +6,8 @@ import { AsyncPipe } from "@angular/common";
 import { TuiCurrencyPipeModule } from "@taiga-ui/addon-commerce";
 import { TranslateModule } from "@ngx-translate/core";
 
+type InputTypes = "text" | "number" | "password" | "email";
+
 @Component({
   selector: "app-base-input",
   standalone: true,
@@ -52,4 +54,4 @@ export class BaseInputComponent {
 }
 
 
-type InputTypes = "text" | "number" | "password" | "email";
+

@@ -1,6 +1,3 @@
 <app-base-table-async
-
-  [columns]="columns()" [headers]="headers()" [tableData$]="customers$!">
-
-
+  [columns]="columns()" [fetchData]="fetchDataFn" [headers]="headers()">
 </app-base-table-async>

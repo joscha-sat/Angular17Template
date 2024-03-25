@@ -14,7 +14,5 @@ export class Role extends BaseModel<Role> {
 
   constructor(params: Partial<Role>) {
     super(params);
-    this.createdAt = new Date(this.createdAt);
-    this.updatedAt = new Date(this.updatedAt);
   }
 }

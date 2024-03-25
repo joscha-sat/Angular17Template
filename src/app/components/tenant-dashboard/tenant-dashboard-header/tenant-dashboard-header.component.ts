@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { TranslateModule } from "@ngx-translate/core";
 import { HeaderLayoutComponent } from "../../../other/layouts/header-layout/header-layout.component";
+import { Tenant } from "../../../other/models/Tenant";
 
 
 @Component({
@@ -14,5 +15,5 @@ import { HeaderLayoutComponent } from "../../../other/layouts/header-layout/head
   styleUrl: './tenant-dashboard-header.component.scss'
 })
 export class TenantDashboardHeaderComponent {
-
+  tenant = input.required<Tenant>()
 }

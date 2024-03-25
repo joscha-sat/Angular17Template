@@ -18,14 +18,13 @@
     "active": "Aktiv",
     "back": "Zurück",
     "cancel": "Abbrechen",
-    "emtpy": "Keine Einträge vorhanden",
     "inactive": "Inaktiv",
     "no": "Nein",
     "ok": "Ok",
     "save": "speichern",
     "search": "Suchen",
     "yes": "Ja",
-    "empty-table": "Keine Einträge vorhanden"
+    "empty": "Keine Einträge vorhanden"
   },
   "hint": {
     "email": "E-Mail eingeben",
@@ -55,7 +54,9 @@
   "tenant": {
     "create": "Firma erstellen",
     "select": "Firma auswählen",
-    "title": "Firmen"
+    "title": "Firmen",
+    "edit": "Firma bearbeiten",
+    "enter-name": "Firmennamen eingeben"
   },
   "user": {
     "create": "Benutzer erstellen",
@@ -63,7 +64,14 @@
     "update": "Benutzer bearbeiten"
   },
   "customers": {
-    "title": "Kunden",
     "create": "Kunden erstellen"
+  },
+  "http": {
+    "status-500": "Ein interner Server-Fehler ist aufgetreten",
+    "status-409": "Konflikt bei der Anfrage an den Server",
+    "status-404": "Die angeforderte Ressource wurde nicht gefunden",
+    "status-403": "Authentifizierung fehlgeschlagen oder fehlt.",
+    "status-400": "Anfrage ungültig oder fehlerhaft!",
+    "status-406": "Inakzeptable Anfrage an den Server"
   }
 }

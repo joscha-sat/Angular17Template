@@ -4,10 +4,10 @@
     <ng-container *ngFor="let item of breadcrumbItems">
       <a
         *tuiItem
-        [routerLink]="item.url"
+        [routerLink]="item.url ?? null"
         tuiLink
       >
-        {{ item.label }}
+        {{ item.label + '.title' | translate }}
       </a>
     </ng-container>
   </tui-breadcrumbs>

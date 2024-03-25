@@ -9,9 +9,12 @@ import { Router } from "@angular/router";
 import { NavRoutes } from "../other/enums/nav-routes";
 import { environment } from "../other/environment/environment";
 import { User } from "../other/models/User";
-import { LoginBody } from "../other/types/LoginBody.type";
 import { SuperAdminService } from "./super-admin.service";
 
+export type LoginBody = {
+  username: string;
+  password: string;
+}
 
 @Injectable({
   providedIn: "root",

@@ -3,8 +3,7 @@
   <ng-container left>
     <!-- title -->
     <div class="view-title">
-      <!--   TODO: load current selected tenant name -->
-      "Firma" {{ 'dashboard.title' | translate }}
+      {{ 'dashboard.title' | translate }} {{ tenant().name }}
     </div>
   </ng-container>
 
