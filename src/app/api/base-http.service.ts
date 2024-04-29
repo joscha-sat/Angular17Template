@@ -2,13 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, Subject, tap } from 'rxjs';
 import { TuiSnackbarService } from '../services/tui-snackbar.service';
+import { environment } from '../other/environment/environment';
 
 export type idTypes = string | number | (string | number)[];
 export type ResponseWithRecords<T> = { total: number; records: T[] };
 
 @Injectable({ providedIn: 'root' })
 export class GenericHttpService {
-  baseUrl = 'http://localhost:3000/';
+  baseUrl = environment.baseUrl;
   _refreshObservable = new Subject<void>();
   refreshObservable$ = this._refreshObservable.asObservable();
 
@@ -28,6 +29,7 @@ export class GenericHttpService {
     queryParams?: { [key: string]: any },
   ): Observable<ResponseWithRecords<T>> {
     const params = this.generateParams(queryParams);
+
     return this.http.get<ResponseWithRecords<T>>(this.getUrl(endpoint), {
       params,
     });
@@ -57,6 +59,7 @@ export class GenericHttpService {
     articleWithElementName: string,
   ): Observable<T[]> {
     const observables: Observable<T>[] = [];
+
     for (const body of bodies) {
       const action = this.createOne(endpoint, body, articleWithElementName);
       observables.push(
@@ -67,6 +70,7 @@ export class GenericHttpService {
         ),
       );
     }
+
     return forkJoin(observables);
   }
 
@@ -77,6 +81,7 @@ export class GenericHttpService {
     articleWithElementName: string,
   ): Observable<T> {
     const action = this.http.patch<T>(this.getUrl(endpoint, id), body);
+
     return this.httpAction(
       action,
       'Erfolg!',
@@ -91,6 +96,7 @@ export class GenericHttpService {
     articleWithElementName: string,
   ): Observable<T[]> {
     const observables: Observable<T>[] = [];
+
     for (const index in bodies) {
       const action = this.updateOne(
         endpoint,
@@ -98,6 +104,7 @@ export class GenericHttpService {
         ids[index],
         articleWithElementName,
       );
+
       observables.push(
         this.httpAction(
           action,
@@ -106,6 +113,7 @@ export class GenericHttpService {
         ),
       );
     }
+
     return forkJoin(observables);
   }
 
@@ -115,6 +123,7 @@ export class GenericHttpService {
     articleWithElementName: string,
   ): Observable<unknown> {
     const action = this.http.delete(this.getUrl(endpoint, id));
+
     return this.httpAction(
       action,
       'Erfolg!',
@@ -128,6 +137,7 @@ export class GenericHttpService {
       .pipe(tap(() => this._refreshObservable.next()));
   }
 
+  // Helper function to handle HTTP actions and show notifications
   private httpAction<T>(
     action: Observable<T>,
     successTitle: string,
