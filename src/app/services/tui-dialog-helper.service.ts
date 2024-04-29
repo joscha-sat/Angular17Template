@@ -8,13 +8,23 @@ import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 export class TuiDialogHelperService<T = any> {
   dialogService = inject(TuiDialogService);
 
-  openDialog(component: any, data?: T) {
+  openDialog(
+    component: any,
+    data?: T,
+    callback?: Function,
+    appearance?: string,
+  ) {
     this.dialogService
-      .open(new PolymorpheusComponent(component), { data: data })
-      .subscribe();
+      .open(new PolymorpheusComponent(component), {
+        data: data,
+        appearance: appearance,
+      })
+      .subscribe(() => {
+        if (callback) callback();
+      });
   }
 
-  close(context: TuiDialogContext<boolean, undefined>) {
+  close(context: TuiDialogContext<boolean>) {
     context.completeWith(false);
   }
 }

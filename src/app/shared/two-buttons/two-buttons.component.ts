@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TuiButtonModule } from '@taiga-ui/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgStyle } from '@angular/common';
 
 // two buttons that stretch evenly to the full parent width including a gap of 1 rem
@@ -10,7 +10,7 @@ import { NgStyle } from '@angular/common';
 @Component({
   selector: 'app-two-buttons',
   standalone: true,
-  imports: [TuiButtonModule, NgStyle],
+  imports: [TuiButtonModule, NgStyle, TranslateModule],
   templateUrl: './two-buttons.component.html',
   styleUrl: './two-buttons.component.scss',
 })

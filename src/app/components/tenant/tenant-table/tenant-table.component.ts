@@ -9,6 +9,8 @@ import { BaseTuiButtonComponent } from '../../../shared/base-tui-button/base-tui
 import { DeleteIconComponent } from '../../../shared/delete-icon/delete-icon.component';
 import { TenantService } from '../../../api/tenant.service';
 import { TableRefresherComponent } from '../../../shared/table-refresher/table-refresher.component';
+import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
+import { DeleteTenantDialogComponent } from '../delete-tenant-dialog/delete-tenant-dialog.component';
 
 @Component({
   selector: 'app-tenant-table',
@@ -31,6 +33,7 @@ export class TenantTableComponent
   columns = signal<string[]>(['name', 'delete']);
   router = inject(Router);
   tenantService = inject(TenantService);
+  dialogService = inject(TuiDialogHelperService);
 
   getService() {
     return this.tenantService;
@@ -54,6 +57,7 @@ export class TenantTableComponent
 
   trashClicked(event: Tenant) {
     const tenant = new Tenant(event);
-    this.tenantService.deleteOneTenant(tenant.id).subscribe();
+    // this.tenantService.deleteOneTenant(tenant.id).subscribe();
+    this.dialogService.openDialog(DeleteTenantDialogComponent, tenant.id);
   }
 }

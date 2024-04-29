@@ -24,7 +24,8 @@
     "save": "save",
     "search": "Search",
     "yes": "Yes",
-    "empty": "No entries available"
+    "empty": "No entries available",
+    "delete": "Delete"
   },
   "hint": {
     "email": "Enter email",

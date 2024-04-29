@@ -12,7 +12,7 @@ export class TuiSnackbarService {
 
   openSnackbar(type: TuiNotificationT, header: string, text?: string): void {
     this.alerts
-      .open(text || '', {
+      .open(text ?? '', {
         label: header,
         autoClose: true,
         hasCloseButton: true,

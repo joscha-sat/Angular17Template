@@ -7,7 +7,7 @@
     [style.color]="leftBtnColor"
     tuiButton
   >
-    {{ leftBtnTxt }}
+    {{ leftBtnTxt | translate }}
   </button>
   <button
     (click)="onRightBtnClick()"
@@ -17,6 +17,6 @@
     [style.color]="rightBtnColor"
     tuiButton
   >
-    {{ rightBtnTxt }}
+    {{ rightBtnTxt | translate }}
   </button>
 </div>

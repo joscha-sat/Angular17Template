@@ -24,7 +24,8 @@
     "save": "speichern",
     "search": "Suchen",
     "yes": "Ja",
-    "empty": "Keine Einträge vorhanden"
+    "empty": "Keine Einträge vorhanden",
+    "delete": "Löschen"
   },
   "hint": {
     "email": "E-Mail eingeben",
