@@ -17,14 +17,7 @@
   </div>
 
   <div class="flex-a-center-g1" right>
-    <form [formGroup]="searchForm" style="min-width: 10rem">
-      <app-base-input
-        (input)="onSearchChange($event)"
-        fControlName="search"
-        label="general.search"
-        type="text"
-      />
-    </form>
+    <app-base-table-search [service]="tenantService" />
 
     <!-- new tenant button -->
     <app-base-tui-button (clicked)="openAddTenantDialog()">

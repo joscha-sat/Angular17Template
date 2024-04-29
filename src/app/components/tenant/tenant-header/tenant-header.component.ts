@@ -17,6 +17,7 @@ import { BaseInputComponent } from '../../../shared/base-input/base-input.compon
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
 import { TenantAddEditDialogComponent } from '../tenant-add-edit-dialog/tenant-add-edit-dialog.component';
+import { BaseTableSearchComponent } from '../../../shared/base-table-search/base-table-search.component';
 
 @Component({
   selector: 'app-tenant-header',
@@ -29,6 +30,7 @@ import { TenantAddEditDialogComponent } from '../tenant-add-edit-dialog/tenant-a
     BaseTuiButtonComponent,
     HeaderLayoutComponent,
     BaseInputComponent,
+    BaseTableSearchComponent,
   ],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',
@@ -36,11 +38,10 @@ import { TenantAddEditDialogComponent } from '../tenant-add-edit-dialog/tenant-a
 export class TenantHeaderComponent implements OnInit, OnChanges {
   @Input({ required: true }) tenants: Tenant[] = [];
   form: FormGroup = new FormGroup({});
-  searchForm: FormGroup = new FormGroup({});
 
   constructor(
     private fb: FormBuilder,
-    private tenantService: TenantService,
+    public tenantService: TenantService,
     private dialogService: TuiDialogHelperService,
   ) {}
 
@@ -52,18 +53,10 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     this.form = this.fb.group({
       name: [],
     });
-
-    this.searchForm = this.fb.group({
-      search: [],
-    });
   }
 
   onTenantChange($event: { id: string; label: string }) {
     this.tenantService.selectedTenantId.set($event.id);
-  }
-
-  onSearchChange($event: any) {
-    this.tenantService.search.set($event.target.value);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
