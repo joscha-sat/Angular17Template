@@ -64,6 +64,7 @@ export class UserAddEditDialogComponent
       phone: formData.phone,
       active: formData.active,
       email: formData.email,
+      roleId: formData.role.id,
     });
   }
 
@@ -87,9 +88,14 @@ export class UserAddEditDialogComponent
       firstName: [this.model?.firstName ?? null, Validators.required],
       lastName: [this.model?.lastName ?? null, Validators.required],
       phone: [this.model?.phone ?? null],
-      // active: [this.model?.active ?? null, Validators.required],
+      active: [this.model?.active ?? true, Validators.required],
       email: [this.model?.email ?? null, Validators.email],
-      // role: [{ id: this.model?.role?.id, label: this.model?.role?.name }]
+      role: [
+        {
+          id: this.model?.role?.id ?? 'a0b10022-ff43-455b-8126-2df604fd9384',
+          label: this.model?.role?.name ?? 'Rolle',
+        },
+      ],
     });
   }
 

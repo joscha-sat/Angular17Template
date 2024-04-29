@@ -57,7 +57,6 @@ export class TenantTableComponent
 
   trashClicked(event: Tenant) {
     const tenant = new Tenant(event);
-    // this.tenantService.deleteOneTenant(tenant.id).subscribe();
     this.dialogService.openDialog(DeleteTenantDialogComponent, tenant.id);
   }
 }

@@ -60,9 +60,10 @@ export class UserTableComponent extends TableRefresherComponent<User> {
     return 'getAllUsers';
   }
 
-  override getAdditionalParams() {
-    return { tenantId: this.tenantId };
-  }
+  // TODO enable to filter by tenantID
+  // override getAdditionalParams() {
+  //   return { tenantId: this.tenantId };
+  // }
 
   userClicked($event: User) {
     const user = new User($event);
