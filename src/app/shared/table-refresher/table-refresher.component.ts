@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FetchDataFunction } from '../base-table-async/base-table-async.component';
 import { BehaviorSubject, Observable, switchMap } from 'rxjs';
-import { ResponseWithRecords } from '../../api/generic-http.service';
+import { ResponseWithRecords } from '../../api/base-http.service';
 
 @Component({
   selector: 'app-table-refresher',

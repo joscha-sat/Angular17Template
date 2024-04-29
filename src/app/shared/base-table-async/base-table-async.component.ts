@@ -32,7 +32,7 @@ import {
 } from '@angular/common';
 import { TUI_DEFAULT_MATCHER, TuiLetModule } from '@taiga-ui/cdk';
 import { TranslateModule } from '@ngx-translate/core';
-import { ResponseWithRecords } from '../../api/generic-http.service';
+import { ResponseWithRecords } from '../../api/base-http.service';
 
 export type FetchDataFunction<T> = (
   pageNumber: number,

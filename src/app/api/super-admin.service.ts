@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../other/environment/environment';
 import { User } from '../other/models/User';
 import { Role } from '../other/models/Role';
-import { ResponseWithRecords } from './generic-http.service';
+import { ResponseWithRecords } from './base-http.service';
 
 @Injectable({
   providedIn: 'root',

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import {
   GenericHttpService,
   idTypes,
   ResponseWithRecords,
-} from './generic-http.service';
-import { Observable } from 'rxjs';
+} from './base-http.service';
 import { Customer } from '../other/models/Customer';
 
 type queryParams = {
@@ -16,37 +16,56 @@ type queryParams = {
   providedIn: 'root',
 })
 export class CustomerService extends GenericHttpService {
-  endpoint = 'customers';
-  element = 'Ein Kunde';
+  endpoint = 'customer';
+  element = 'Ein Kunde'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
 
+  // GET ALL
   getAllCustomers(
     queryParams?: queryParams,
   ): Observable<ResponseWithRecords<Customer>> {
     return this.getAll<Customer>(this.endpoint, queryParams);
   }
 
-  getOneCustomers(id: string | number): Observable<Customer> {
+  // GET ONE
+  getCustomerById(id: string | number): Observable<Customer> {
     return this.getOne<Customer>(this.endpoint, id);
   }
 
-  createCustomer(
-    customer: Customer | Customer[],
-  ): Observable<Customer | Customer[] | null> {
-    return this.create<Customer>(this.endpoint, customer, this.element);
+  // CREATE ONE
+  createOneCustomer(customer: Customer): Observable<Customer> {
+    return this.createOne<Customer>(this.endpoint, customer, this.element);
   }
 
-  updateCustomer(
-    customer: Customer | Customer[],
-    id: idTypes,
-  ): Observable<Customer | Customer[] | null> {
-    return this.update<Customer>(this.endpoint, customer, id, this.element);
+  // CREATE MULTIPLE
+  createMultipleCustomer(customer: Customer[]): Observable<Customer[]> {
+    return this.createMultiple<Customer>(this.endpoint, customer, this.element);
   }
 
-  deleteOneCustomer(id: idTypes): Observable<unknown> {
+  // UPDATE ONE
+  updateCustomerById(id: idTypes, customer: Customer): Observable<Customer> {
+    return this.updateOne<Customer>(this.endpoint, customer, id, this.element);
+  }
+
+  // UPDATE MULTIPLE
+  updateMultipleCustomerById(
+    id: idTypes[],
+    customers: Customer[],
+  ): Observable<Customer[]> {
+    return this.updateMultiple<Customer>(
+      this.endpoint,
+      customers,
+      id,
+      this.element,
+    );
+  }
+
+  // DELETE ONE
+  deleteCustomerById(id: idTypes): Observable<unknown> {
     return this.deleteOne(this.endpoint, id, this.element);
   }
 
-  deleteAllCustomers(): Observable<Customer | Customer[] | null> {
-    return this.deleteAll<Customer>(this.endpoint);
+  // DELETE ALL
+  deleteAllCustomers(): Observable<unknown> {
+    return this.deleteAll<unknown>(this.endpoint);
   }
 }

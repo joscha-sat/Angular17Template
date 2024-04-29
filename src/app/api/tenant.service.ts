@@ -5,7 +5,7 @@ import {
   GenericHttpService,
   idTypes,
   ResponseWithRecords,
-} from './generic-http.service';
+} from './base-http.service';
 
 type queryParams = {
   limit?: number;
@@ -37,17 +37,23 @@ export class TenantService extends GenericHttpService {
     return this.getOne<Tenant>(this.endpoint, id);
   }
 
-  createTenant(
-    tenant: Tenant | Tenant[],
-  ): Observable<Tenant | Tenant[] | null> {
-    return this.create<Tenant>(this.endpoint, tenant, this.element);
+  createOneTenant(tenant: Tenant): Observable<Tenant> {
+    return this.createOne<Tenant>(this.endpoint, tenant, this.element);
   }
 
-  updateTenant(
-    tenant: Tenant | Tenant[],
-    id: idTypes,
-  ): Observable<Tenant | Tenant[] | null> {
-    return this.update<Tenant>(this.endpoint, tenant, id, this.element);
+  createMultipleTenants(tenants: Tenant[]) {
+    return this.createMultiple<Tenant>(this.endpoint, tenants, this.element);
+  }
+
+  updateOneTenantById(tenant: Tenant, id: idTypes): Observable<Tenant> {
+    return this.updateOne<Tenant>(this.endpoint, tenant, id, this.element);
+  }
+
+  updateMultipleTenantsById(
+    id: idTypes[],
+    tenant: Tenant[],
+  ): Observable<Tenant[]> {
+    return this.updateMultiple<Tenant>(this.endpoint, tenant, id, this.element);
   }
 
   deleteOneTenant(id: idTypes): Observable<unknown> {

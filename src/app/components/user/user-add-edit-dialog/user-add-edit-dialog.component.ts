@@ -101,11 +101,11 @@ export class UserAddEditDialogComponent
   }
 
   addUser() {
-    this.userService.createUser(this.userFromFormData).subscribe();
+    this.userService.createOneUser(this.userFromFormData).subscribe();
   }
 
   updateUser() {
     if (!this.model) return;
-    this.userService.updateUser(this.userFromFormData, this.model?.id);
+    this.userService.updateUserById(this.model?.id, this.userFromFormData);
   }
 }

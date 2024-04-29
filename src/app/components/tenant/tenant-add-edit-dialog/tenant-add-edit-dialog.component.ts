@@ -58,7 +58,7 @@ export class TenantAddEditDialogComponent
 
   addTenant() {
     this.tenantService
-      .createTenant(new Tenant(this.tenantForm?.value))
+      .createOneTenant(new Tenant(this.tenantForm?.value))
       .subscribe(() => this.closeDialog());
   }
 
