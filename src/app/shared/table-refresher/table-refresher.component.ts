@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FetchDataFunction } from '../base-table-async/base-table-async.component';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { ResponseWithRecords } from '../../api/base-http.service';
 
 @Component({
@@ -10,8 +10,9 @@ import { ResponseWithRecords } from '../../api/base-http.service';
   templateUrl: './table-refresher.component.html',
   styleUrl: './table-refresher.component.scss',
 })
-export abstract class TableRefresherComponent<T> implements OnInit {
+export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
   refresh$ = new BehaviorSubject(null);
+  private subscription: Subscription | undefined;
 
   ngOnInit(): void {
     this.refreshDataSubscription();
@@ -44,8 +45,14 @@ export abstract class TableRefresherComponent<T> implements OnInit {
   };
 
   refreshDataSubscription() {
-    this.getService().refreshObservable$.subscribe(() => {
+    this.subscription = this.getService().refreshObservable$.subscribe(() => {
       this.refresh$.next(null);
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
