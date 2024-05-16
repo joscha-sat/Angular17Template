@@ -38,9 +38,11 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 
 ### Components:
 
-- Reusable components src/app/shared --> Base components that can be reused with different data / style via @Input() / @Output()
-- View components src/app/components --> A view is split into different component blocks, here are the different component blocks for the view (uses reusable components)
-- Views src/app/views --> Views use the component blocks to display the full UI. It is used as a kind of "Layout-Component" for the different component blocks
+- Reusable components: src/app/shared --> Base components that can be reused with different data / style via @Input() / @Output()
+
+- Components: src/app/components --> A view is split into different component blocks, here are the different component blocks for the view (uses reusable components)
+
+- Views / Pages src/app/views --> Views use the component blocks to display the full UI. It is used as a kind of "Layout-Component" for the different component blocks and are use in the routing
 
 ### Customizable table columns in parent component, example:
 
@@ -61,7 +63,7 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
     (rowClickEvent)="rowClicked($event)"
     [headers]="headers()"
     [columns]="columns()"
-    [cellTemplatesMap]="{'name': name}"
+    [cellTemplatesMap]="{name}"
   />
 
   <!-- customized column, value = current name value, object = full object (tenant) -->
@@ -91,6 +93,8 @@ Types (uses type not interfaces, same syntax except "=" before {}) >  src/app/ty
 Enums > src/app/other/enums
 
 ##
+
+### TODO: How to use dynamic table refresher Class  "extends TableRefresherComponent<Model>" , how to use Dialogs
 
 ## Development server
 
