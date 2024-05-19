@@ -35,11 +35,11 @@ export class TenantTableComponent
   tenantService = inject(TenantService);
   dialogService = inject(TuiDialogHelperService);
 
-  getService() {
+  setTableRefreshService() {
     return this.tenantService;
   }
 
-  getServiceMethodName() {
+  setTableRefreshMethodName() {
     return 'getAllTenants';
   }
 

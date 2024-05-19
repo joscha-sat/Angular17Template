@@ -19,23 +19,23 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
   }
 
   // Method must be implemented in each derived component
-  abstract getService(): any;
+  abstract setTableRefreshService(): any;
 
   // Method must be implemented in each derived component
-  abstract getServiceMethodName(): string;
+  abstract setTableRefreshMethodName(): string;
 
   // Optional method to override in derived components for additional parameters
-  getAdditionalParams(): any {
+  setAdditionalParams(): any {
     return null;
   }
 
   fetchDataFn: FetchDataFunction<T> = (page: number, size: number) => {
-    const additionalParams = this.getAdditionalParams();
+    const additionalParams = this.setAdditionalParams();
 
     return this.refresh$.pipe(
       switchMap(
         () =>
-          this.getService()[this.getServiceMethodName()]({
+          this.setTableRefreshService()[this.setTableRefreshMethodName()]({
             limit: size,
             skip: page * size,
             ...additionalParams,
@@ -45,9 +45,10 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
   };
 
   refreshDataSubscription() {
-    this.subscription = this.getService().refreshObservable$.subscribe(() => {
-      this.refresh$.next(null);
-    });
+    this.subscription =
+      this.setTableRefreshService().refreshObservable$.subscribe(() => {
+        this.refresh$.next(null);
+      });
   }
 
   ngOnDestroy(): void {

@@ -17,11 +17,11 @@ export class CustomerTableComponent extends TableRefresherComponent<Customer> {
   headers = signal<string[]>(['Vorname']);
   columns = signal<string[]>(['firstName']);
 
-  getService(): any {
+  setTableRefreshService(): any {
     return this.customerService;
   }
 
-  getServiceMethodName(): string {
+  setTableRefreshMethodName(): string {
     return 'getAllCustomers';
   }
 }

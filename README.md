@@ -92,9 +92,40 @@ Types (uses type not interfaces, same syntax except "=" before {}) >  src/app/ty
 
 Enums > src/app/other/enums
 
-##
+### Table refresh class: ComponentClass "extends TableRefresherComponent<Model>"
 
-### TODO: How to use dynamic table refresher Class  "extends TableRefresherComponent<Model>" , how to use Dialogs
+Used to automatically refresh the table data after a http request (POST, PATCH, DELETE)
+
+located at: src/app/shared/table-refresher
+
+````
+  // Method must be implemented in each derived component
+  abstract setTableRefreshService(): any;
+
+  // Method must be implemented in each derived component
+  abstract setTableRefreshMethodName(): string;
+
+  // Optional method to override in derived components for additional parameters
+  setAdditionalParams(): any {
+    return null;
+  }
+````
+
+Example usage in a table component:
+
+````
+export class TenantTableComponent extends TableRefresherComponent<Tenant> {
+  setTableRefreshService() {
+    return this.tenantService;
+  }
+
+  setTableRefreshMethodName() {
+    return 'getAllTenants';
+  }
+}
+````
+
+### TODO: how to use Dialogs
 
 ## Development server
 

@@ -52,11 +52,11 @@ export class UserTableComponent extends TableRefresherComponent<User> {
     }
   }
 
-  getService() {
+  setTableRefreshService() {
     return this.userService;
   }
 
-  getServiceMethodName() {
+  setTableRefreshMethodName() {
     return 'getAllUsers';
   }
 
