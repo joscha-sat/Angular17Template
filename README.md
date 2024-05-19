@@ -125,6 +125,34 @@ export class TenantTableComponent extends TableRefresherComponent<Tenant> {
 }
 ````
 
+### Frontend table search (highlight)
+
+HTML: for example header
+
+````html
+
+<app-base-table-search [service]="customerService"/>
+````
+
+Service:
+
+````ts
+search = signal('');
+````
+
+Table:
+
+````angular17html
+
+<app-base-table-async
+  (rowClickEvent)="openEditCustomerDialog($event)"
+  [columns]="columns()"
+  [fetchData]="fetchDataFn"
+  [headers]="headers()"
+  [search]="customerService.search()"
+/>
+````
+
 ### TODO: how to use Dialogs
 
 ## Development server

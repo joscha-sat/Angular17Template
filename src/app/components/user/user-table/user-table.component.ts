@@ -31,7 +31,6 @@ export class UserTableComponent extends TableRefresherComponent<User> {
   tenantService = inject(TenantService);
   authService = inject(AuthService);
 
-  // todo: update active visually
   tableHeaders = signal<string[]>([
     'Vorname',
     'Nachname',

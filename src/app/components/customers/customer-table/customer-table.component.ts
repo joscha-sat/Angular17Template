@@ -4,6 +4,8 @@ import { CustomerService } from '../../../api/customer.service';
 import { Customer } from '../../../other/models/Customer';
 import { TableRefresherComponent } from '../../../shared/table-refresher/table-refresher.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
+import { CustomerAddEditDialogComponent } from '../customer-add-edit-dialog/customer-add-edit-dialog.component';
 
 @Component({
   selector: 'app-customer-table',
@@ -14,9 +16,10 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class CustomerTableComponent extends TableRefresherComponent<Customer> {
   customerService = inject(CustomerService);
+  dialogService = inject(TuiDialogHelperService);
 
-  headers = signal<string[]>(['Vorname']);
-  columns = signal<string[]>(['firstName']);
+  headers = signal<string[]>(['Name']);
+  columns = signal<string[]>(['name']);
 
   setTableRefreshService(): any {
     return this.customerService;
@@ -24,5 +27,9 @@ export class CustomerTableComponent extends TableRefresherComponent<Customer> {
 
   setTableRefreshMethodName(): string {
     return 'getAllCustomers';
+  }
+
+  openEditCustomerDialog($event: Customer) {
+    this.dialogService.openDialog(CustomerAddEditDialogComponent, $event);
   }
 }

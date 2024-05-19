@@ -104,7 +104,6 @@ export class AuthService {
       )
       .pipe(
         map((response) => {
-          console.log(response);
           return response.status === HttpStatusCode.Created;
         }),
         catchError(() => {

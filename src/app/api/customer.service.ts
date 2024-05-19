@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   GenericHttpService,
@@ -16,8 +16,9 @@ type queryParams = {
   providedIn: 'root',
 })
 export class CustomerService extends GenericHttpService {
-  endpoint = 'customer';
+  endpoint = 'customers';
   element = 'Ein Kunde'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
+  search = signal('');
 
   // GET ALL
   getAllCustomers(
