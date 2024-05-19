@@ -10,11 +10,17 @@ import { TableRefresherComponent } from '../../../shared/table-refresher/table-r
 import { SuperAdminService } from '../../../api/super-admin.service';
 import { TenantService } from '../../../api/tenant.service';
 import { AuthService } from '../../../api/auth.service';
+import { BaseBadgeComponent } from '../../../shared/base-badge/base-badge.component';
 
 @Component({
   selector: 'app-user-table',
   standalone: true,
-  imports: [BaseTableAsyncComponent, AsyncPipe, BaseTableComponent],
+  imports: [
+    BaseTableAsyncComponent,
+    AsyncPipe,
+    BaseTableComponent,
+    BaseBadgeComponent,
+  ],
   templateUrl: './user-table.component.html',
   styleUrl: './user-table.component.scss',
 })
