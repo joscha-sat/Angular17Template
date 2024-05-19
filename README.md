@@ -48,13 +48,10 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 
 TS:
 
-```ts
-  @Input({ required: true })
-tenants$
-:
-Observable<Tenant[]> | undefined;
-headers = signal<string[]>(['Name']);
-columns = signal<string[]>(['name']);
+```
+  @Input({ required: true }) tenants$: Observable<Tenant[]> | undefined;
+  headers = signal<string[]>(['Name']);
+  columns = signal<string[]>(['name']);
 ```
 
 HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-template #name"
@@ -101,26 +98,17 @@ Used to automatically refresh the table data after a http request (POST, PATCH, 
 
 located at: src/app/shared/table-refresher
 
-````ts
+````
   // Method must be implemented in each derived component
-abstract
-setTableRefreshService()
-:
-any;
+  abstract setTableRefreshService(): any;
 
-// Method must be implemented in each derived component
-abstract
-setTableRefreshMethodName()
-:
-string;
+  // Method must be implemented in each derived component
+  abstract setTableRefreshMethodName(): string;
 
-// Optional method to override in derived components for additional parameters
-setAdditionalParams()
-:
-any
-{
-  return null;
-}
+  // Optional method to override in derived components for additional parameters
+  setAdditionalParams(): any {
+    return null;
+  }
 ````
 
 Example usage in a table component:
