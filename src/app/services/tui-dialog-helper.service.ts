@@ -11,9 +11,9 @@ export class TuiDialogHelperService<T = any> {
   openDialog(
     component: any,
     data?: T,
-    callback?: Function,
+    callback?: () => void,
     appearance?: string,
-  ) {
+  ): void {
     this.dialogService
       .open(new PolymorpheusComponent(component), {
         data: data,
