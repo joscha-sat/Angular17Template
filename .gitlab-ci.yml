@@ -1,23 +1,67 @@
-image: node:latest
+variables:
+  IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  IMAGE_LATEST: $CI_REGISTRY_IMAGE:latest
+  STACK_DEV: 28apps_templates-web-team
+  # TODO
+  STACK_LIVE: give-me-a-name
+  SERVICE_NAME: angular17plus
 
-cache:
-  paths:
-    - node_modules/
-
-before_script:
-  - npm install -g @angular/cli
-  - npm install
-
-stages:
-  - build
+# -- build --
 
 build:
   stage: build
-  image: node
+  needs: [ ]
+  tags: [ dind ]
   script:
-    - echo "Start building App"
-    - npm run build
-    - echo "Build successfully"
-  artifacts:
-    paths:
-      - dist/*
+    - docker build -t $IMAGE .
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $IMAGE
+
+tag-latest:
+  stage: build
+  tags: [ dind ]
+  needs: [ build ]
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker pull $IMAGE
+    - docker tag $IMAGE $IMAGE_LATEST
+    - docker push $IMAGE_LATEST
+  only:
+    - tags
+
+# -- deploy --
+
+.deploy:
+  stage: deploy
+  needs: [ build ]
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker service update --image $IMAGE --with-registry-auth $STACK_SERVICE
+
+deploy-dev:
+  extends: .deploy
+  tags: [ 28dev2 ]
+  before_script:
+    - export STACK_SERVICE=${STACK_DEV}_${SERVICE_NAME}
+  environment:
+    name: $CI_COMMIT_REF_SLUG
+    url: https://angular.template.dev2.28apps-software.de
+  only:
+    - template
+
+deploy-live:
+  extends: .deploy
+  needs: [ tag-latest ]
+  tags:
+    - TODO-prod
+  before_script:
+    - export STACK_SERVICE=${STACK_LIVE}_${SERVICE_NAME}
+  when: manual
+  environment:
+    name: production
+    # TODO
+    url: https://TODO
+  only:
+    - tags
+
+
