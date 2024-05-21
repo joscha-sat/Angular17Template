@@ -1,15 +1,15 @@
 <app-header-layout>
-
   <ng-container left>
     <div class="view-title">
       {{ 'customer.title-plural' | translate }}
     </div>
   </ng-container>
 
-  <ng-container right>
-    <app-base-tui-button>
+  <div class="flex-a-center-g1" right>
+    <app-base-table-search [service]="customerService" />
+
+    <app-base-tui-button (clicked)="openCreateCustomerDialog()">
       {{ 'customers.create' | translate }}
     </app-base-tui-button>
-  </ng-container>
-
+  </div>
 </app-header-layout>

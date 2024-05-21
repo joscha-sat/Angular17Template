@@ -1,15 +1,12 @@
 <app-base-table-async
   (rowClickEvent)="rowClicked($event)"
-  [cellTemplatesMap]="{'delete': deleteCell}"
+  [cellTemplatesMap]="{ delete: deleteCell }"
   [columns]="columns()"
   [fetchData]="fetchDataFn!"
   [headers]="headers()"
   [search]="tenantService.search()"
 >
   <ng-template #deleteCell let-object="object">
-    <app-delete-icon
-      (click)="trashClicked(object); $event.stopPropagation();"
-    />
+    <app-delete-icon (click)="trashClicked(object); $event.stopPropagation()" />
   </ng-template>
 </app-base-table-async>
-

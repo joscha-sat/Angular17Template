@@ -1,10 +1,9 @@
-import { CanActivateFn, Router } from "@angular/router";
-import { inject } from "@angular/core";
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
 
-import { NavRoutes } from "../enums/nav-routes";
-import { AuthService } from "../../api/auth.service";
-import { SuperAdminService } from "../../api/super-admin.service";
-
+import { NavRoutes } from '../enums/nav-routes';
+import { AuthService } from '../../api/auth.service';
+import { SuperAdminService } from '../../api/super-admin.service';
 
 /**
  * Super Admin Guard:
@@ -22,7 +21,7 @@ export const superAdminDashboardGuard: CanActivateFn = () => {
     const tenantId = authService.getLoggedInUser()?.tenantId;
     if (tenantId != null) {
       return router.navigateByUrl(
-        `${ NavRoutes.TENANT }/${ tenantId }/${ NavRoutes.DASHBOARD }`,
+        `${NavRoutes.TENANT}/${tenantId}/${NavRoutes.DASHBOARD}`,
       );
     }
     return router.navigateByUrl(NavRoutes.USER);

@@ -1,26 +1,25 @@
-import { Component, OnInit } from "@angular/core";
-import { TuiAxesModule, TuiLineChartModule, TuiLineDaysChartModule } from "@taiga-ui/addon-charts";
-import { TuiContextWithImplicit } from "@taiga-ui/cdk";
-import { TuiPoint } from "@taiga-ui/core";
-import { Months } from "../../../other/enums/months";
+import { Component, OnInit } from '@angular/core';
+import {
+  TuiAxesModule,
+  TuiLineChartModule,
+  TuiLineDaysChartModule,
+} from '@taiga-ui/addon-charts';
+import { TuiContextWithImplicit } from '@taiga-ui/cdk';
+import { TuiPoint } from '@taiga-ui/core';
+import { Months } from '../../../other/enums/months';
 
 // TODO: this is dummy data, update to use real data
 
 @Component({
-  selector: "app-tenant-dashboard-axes",
+  selector: 'app-tenant-dashboard-axes',
   standalone: true,
-  imports: [
-    TuiAxesModule,
-    TuiLineDaysChartModule,
-    TuiLineChartModule,
-  ],
-  templateUrl: "./tenant-dashboard-axes.component.html",
-  styleUrl: "./tenant-dashboard-axes.component.scss",
+  imports: [TuiAxesModule, TuiLineDaysChartModule, TuiLineChartModule],
+  templateUrl: './tenant-dashboard-axes.component.html',
+  styleUrl: './tenant-dashboard-axes.component.scss',
 })
 export class TenantDashboardAxesComponent implements OnInit {
   public months: Months[] = Object.values(Months);
   public values: TuiPoint[] = [];
-
 
   ngOnInit(): void {
     this.populateDummyValues();
@@ -36,23 +35,21 @@ export class TenantDashboardAxesComponent implements OnInit {
     });
   }
 
-
-  readonly hintContent = (
-    { $implicit }: TuiContextWithImplicit<readonly TuiPoint[]>): number => $implicit[0][1];
+  readonly hintContent = ({
+    $implicit,
+  }: TuiContextWithImplicit<readonly TuiPoint[]>): number => $implicit[0][1];
 
   readonly stringifyMonths = (t: number) => {
-    return `${ this.months[t] }`;
+    return `${this.months[t]}`;
   };
 
   readonly stringifyValues = (t: number) => {
-    return `${ t } Einsätze`;
+    return `${t} Einsätze`;
   };
-
 
   // Gets the highest value from the array of values to set the y-axis of the chart
   public getHighestArrayValue(): number {
     const columnValues = this.values.map((value) => value[1]);
     return Math.max(...columnValues);
   }
-
 }

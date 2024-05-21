@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './two-inputs-row-layout.component.html',
-  styleUrl: './two-inputs-row-layout.component.scss'
+  styleUrl: './two-inputs-row-layout.component.scss',
 })
-export class TwoInputsRowLayoutComponent {
-
-}
+export class TwoInputsRowLayoutComponent {}

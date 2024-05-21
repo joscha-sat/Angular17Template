@@ -1,3 +1,7 @@
 <app-base-table-async
-  [columns]="columns()" [fetchData]="fetchDataFn" [headers]="headers()">
-</app-base-table-async>
+  (rowClickEvent)="openEditCustomerDialog($event)"
+  [columns]="columns()"
+  [fetchData]="fetchDataFn"
+  [headers]="headers()"
+  [search]="customerService.search()"
+/>

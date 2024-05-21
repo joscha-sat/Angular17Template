@@ -1,65 +1,49 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpStatusCode } from "@angular/common/http";
-import { ApiRoutes } from "../other/enums/api-routes";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpStatusCode } from '@angular/common/http';
+import { ApiRoutes } from '../other/enums/api-routes';
+import { catchError, map, Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
+import { NavRoutes } from '../other/enums/nav-routes';
+import { environment } from '../other/environment/environment';
+import { User } from '../other/models/User';
+import { SuperAdminService } from './super-admin.service';
 
-import { catchError, map, Observable, of } from "rxjs";
-
-import { Router } from "@angular/router";
-
-import { NavRoutes } from "../other/enums/nav-routes";
-import { environment } from "../other/environment/environment";
-import { User } from "../other/models/User";
-import { SuperAdminService } from "./super-admin.service";
+const STORAGE_ACCESS_TOKEN_KEY = 'access_token';
+const STORAGE_REFRESH_TOKEN_KEY = 'refresh_token';
+const STORAGE_USER_KEY = 'user';
 
 export type LoginBody = {
   username: string;
   password: string;
-}
+};
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
-
-/**
- * Service Class for the authentication functionality and api calls
- * allows access to the loggedInUser and the loggedIn flag
- */
 export class AuthService {
   private readonly baseUrl = environment.baseUrl;
   private loggedInUser!: User | null;
-  private selectedTenantId!: string | null;
 
   constructor(
     private http: HttpClient,
     private router: Router,
     private superAdminService: SuperAdminService,
-  ) {
-  }
+  ) {}
 
-  /**
-   * returns the loggedIn Status by checking if the access token and the refresh token are set in the local storage
-   *
-   */
   isLoggedIn(): boolean {
     return (
-      localStorage.getItem("access_token") !== null &&
-      localStorage.getItem("access_token") !== undefined &&
-      localStorage.getItem("refresh_token") !== null &&
-      localStorage.getItem("refresh_token") !== undefined
+      this.getFromLocalStorage(STORAGE_ACCESS_TOKEN_KEY) !== null &&
+      this.getFromLocalStorage(STORAGE_REFRESH_TOKEN_KEY) !== null
     );
   }
 
-  /**
-   * post the login data to the api
-   * if the login is successful: the tokens are saved in the local storage, the user is saved in the service and an Observable of true is returned
-   * otherwise: the loggedIn flag will be set to false and an Observable of false is returned
-   * @param loginBody the login data containing the email and password
-   */
   login(loginBody: LoginBody): Observable<boolean> {
     return this.http
-      .post<any>(this.baseUrl + ApiRoutes.AUTH + "/login", loginBody, {
-        observe: "response",
-      })
+      .post<any>(
+        this.baseUrl + NavRoutes.AUTH + '/' + NavRoutes.LOGIN,
+        loginBody,
+        { observe: 'response' },
+      )
       .pipe(
         map((response) => {
           if (response.status === HttpStatusCode.Created) {
@@ -78,17 +62,13 @@ export class AuthService {
       );
   }
 
-  /**
-   * Sends a request to the api to send a reset password mail to the given email
-   * @param email the email to send the reset password mail to
-   */
   sendResetPasswordMail(email: string): Observable<boolean> {
     return this.http
       .post<any>(
-        this.baseUrl + ApiRoutes.AUTH + "/resetPassword",
+        this.buildUrl(ApiRoutes.AUTH, 'resetPassword'),
         { email: email },
         {
-          observe: "response",
+          observe: 'response',
         },
       )
       .pipe(
@@ -103,8 +83,8 @@ export class AuthService {
 
   validateResetPasswordHash(hash: string): Observable<boolean> {
     return this.http
-      .get<any>(this.baseUrl + ApiRoutes.AUTH + "/validate/" + hash, {
-        observe: "response",
+      .get<any>(this.buildUrl(ApiRoutes.AUTH, 'validate', hash), {
+        observe: 'response',
       })
       .pipe(
         map((response) => {
@@ -113,26 +93,17 @@ export class AuthService {
       );
   }
 
-  /**
-   * Sends a request to the api to set the password of the user with the given hash from the reset password mail
-   * @param passwordBody
-   * @param hash
-   */
-  setPassword(
-    passwordBody: string,
-    hash: string,
-  ): Observable<boolean> {
+  setPassword(passwordBody: string, hash: string): Observable<boolean> {
     return this.http
       .post<any>(
-        this.baseUrl + ApiRoutes.AUTH + "/setPassword/" + hash,
+        this.buildUrl(ApiRoutes.AUTH, 'setPassword', hash),
         passwordBody,
         {
-          observe: "response",
+          observe: 'response',
         },
       )
       .pipe(
         map((response) => {
-          console.log(response);
           return response.status === HttpStatusCode.Created;
         }),
         catchError(() => {
@@ -143,65 +114,71 @@ export class AuthService {
 
   resendInviteMail(userId: string) {
     const userBody = { userId: userId };
-
-    return this.http.post(this.baseUrl + "auth/resendInviteMail", userBody);
+    return this.http.post(this.buildUrl('auth', 'resendInviteMail'), userBody);
   }
 
-  /**
-   * Logs out the user by removing the tokens from the local storage and navigating to the login page
-   */
   logout() {
     this.loggedInUser = null;
-    localStorage.removeItem("user");
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("refresh_token");
+    this.removeFromLocalStorage(STORAGE_USER_KEY);
+    this.removeFromLocalStorage(STORAGE_ACCESS_TOKEN_KEY);
+    this.removeFromLocalStorage(STORAGE_REFRESH_TOKEN_KEY);
     this.router.navigateByUrl(NavRoutes.LOGIN).then();
   }
 
   sendRefreshToken(): Observable<any> {
-    return this.http.post<any>(
-      this.baseUrl + ApiRoutes.AUTH + "/refreshToken",
-      {
-        refreshToken: this.getRefreshToken(),
-      },
-    );
+    return this.http.post<any>(this.buildUrl(ApiRoutes.AUTH, 'refreshToken'), {
+      refreshToken: this.getFromLocalStorage(STORAGE_REFRESH_TOKEN_KEY),
+    });
   }
 
   getRefreshToken(): string | null {
-    return localStorage.getItem("refresh_token");
+    return this.getFromLocalStorage(STORAGE_REFRESH_TOKEN_KEY);
   }
 
   getAccessToken(): string | null {
-    return localStorage.getItem("access_token");
+    return this.getFromLocalStorage(STORAGE_ACCESS_TOKEN_KEY);
   }
 
   setTokens(access_token: string, refresh_token: string) {
-    localStorage.setItem("access_token", access_token);
-    localStorage.setItem("refresh_token", refresh_token);
+    this.setToLocalStorage(STORAGE_ACCESS_TOKEN_KEY, access_token);
+    this.setToLocalStorage(STORAGE_REFRESH_TOKEN_KEY, refresh_token);
   }
 
   setLoggedInUser(user: User) {
     this.loggedInUser = user;
-    localStorage.setItem("user", JSON.stringify(user));
+    this.setToLocalStorage(STORAGE_USER_KEY, JSON.stringify(user));
   }
 
   getLoggedInUser(): User | null {
     if (this.loggedInUser) {
       return this.loggedInUser;
     }
-    const userJSON = localStorage.getItem("user");
-    const parsedUser = JSON.parse(userJSON ?? "{}");
+    const userJSON = this.getFromLocalStorage(STORAGE_USER_KEY);
+    const parsedUser = JSON.parse(userJSON ?? '{}');
     return new User(parsedUser);
   }
 
-  /**
-   * @returns the tenant id of the logged-in user or the selected tenant id of the super admin
-   */
   getTenantId() {
     if (this.superAdminService.isSuperAdmin()) {
-      return this.superAdminService.getSelectedTenantId().value;
+      return this.superAdminService.getSelectedTenantIdStream().value;
     } else {
       return this.getLoggedInUser()?.tenantId;
     }
+  }
+
+  private buildUrl(...parts: string[]): string {
+    return [this.baseUrl, ...parts].join('/');
+  }
+
+  private setToLocalStorage(key: string, value: string) {
+    localStorage.setItem(key, value);
+  }
+
+  private getFromLocalStorage(key: string): string | null {
+    return localStorage.getItem(key);
+  }
+
+  private removeFromLocalStorage(key: string): void {
+    localStorage.removeItem(key);
   }
 }

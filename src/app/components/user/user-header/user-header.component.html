@@ -5,13 +5,13 @@
     </div>
   </ng-container>
 
-  <ng-container right>
+  <div class="flex-a-center-g1" right>
+    <!--  table search  -->
+    <app-base-table-search [service]="userService" />
+
     <!--    add  -->
     <app-base-tui-button (clicked)="openCreateUserDialog()">
-      {{ 'user.create'  | translate }}
+      {{ 'user.create' | translate }}
     </app-base-tui-button>
-  </ng-container>
-
+  </div>
 </app-header-layout>
-
-

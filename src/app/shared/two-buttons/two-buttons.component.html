@@ -1,22 +1,22 @@
 <div class="actions">
   <button
     (click)="onLeftBtnClick()"
-    [appearance]="!leftBtnBg? 'primary' : ''"
+    [appearance]="!leftBtnBg ? 'primary' : ''"
     [size]="size"
     [style.backgroundColor]="leftBtnBg"
     [style.color]="leftBtnColor"
     tuiButton
   >
-    {{ leftBtnTxt }}
+    {{ leftBtnTxt | translate }}
   </button>
   <button
     (click)="onRightBtnClick()"
-    [appearance]="!rightBtnBg? 'secondary' : ''"
+    [appearance]="!rightBtnBg ? 'secondary' : ''"
     [size]="size"
     [style.backgroundColor]="rightBtnBg"
     [style.color]="rightBtnColor"
     tuiButton
   >
-    {{ rightBtnTxt }}
+    {{ rightBtnTxt | translate }}
   </button>
 </div>

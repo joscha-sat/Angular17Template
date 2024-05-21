@@ -23,10 +23,14 @@
   /*  || TAIGA UI COLOR ADJUSTMENTS --> exact tui variable names needed!||
   /* -------------------------------------------------------------------- */
 
-  --tui-primary: hsl(162, 35%, 45%);
-  --tui-primary-hover: hsl(162, 35%, 55%);
+  --tui-primary: hsl(180, 35%, 45%);
+  --tui-primary-hover: hsl(180, 35%, 40%);
+  --tui-primary-active: hsl(180, 35%, 35%);
 
-  --tui-secondary: hsl(162, 35%, 90%);
+  --tui-secondary: hsl(180, 35%, 88%);
+  --tui-secondary-hover: hsl(180, 35%, 85%);
+
+  --tui-link: hsl(180, 35%, 30%);
 }
 
 // #########################################################################################################||

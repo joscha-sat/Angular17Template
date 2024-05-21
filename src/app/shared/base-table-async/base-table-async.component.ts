@@ -1,15 +1,46 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from "@angular/core";
-import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
-import { BehaviorSubject, catchError, combineLatest, map, Observable, of, switchMap, tap } from "rxjs";
-import { AsyncPipe, NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from "@angular/common";
-import { TUI_DEFAULT_MATCHER, TuiLetModule } from "@taiga-ui/cdk";
-import { TranslateModule } from "@ngx-translate/core";
-import { ResponseWithRecords } from "../../api/generic-http.service";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
+import {
+  TuiTableModule,
+  TuiTablePagination,
+  TuiTablePaginationModule,
+} from '@taiga-ui/addon-table';
+import {
+  BehaviorSubject,
+  catchError,
+  combineLatest,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
+import {
+  AsyncPipe,
+  NgForOf,
+  NgIf,
+  NgSwitch,
+  NgSwitchCase,
+  NgSwitchDefault,
+  NgTemplateOutlet,
+} from '@angular/common';
+import { TUI_DEFAULT_MATCHER, TuiLetModule } from '@taiga-ui/cdk';
+import { TranslateModule } from '@ngx-translate/core';
+import { ResponseWithRecords } from '../../api/base-http.service';
 
-export type FetchDataFunction<T> = (pageNumber: number, pageSize: number) => Observable<ResponseWithRecords<T>>;
+export type FetchDataFunction<T> = (
+  pageNumber: number,
+  pageSize: number,
+) => Observable<ResponseWithRecords<T>>;
 
 @Component({
-  selector: "app-base-table-async",
+  selector: 'app-base-table-async',
   standalone: true,
   imports: [
     NgIf,
@@ -24,8 +55,8 @@ export type FetchDataFunction<T> = (pageNumber: number, pageSize: number) => Obs
     NgSwitchDefault,
     TranslateModule,
   ],
-  templateUrl: "./base-table-async.component.html",
-  styleUrl: "./base-table-async.component.scss",
+  templateUrl: './base-table-async.component.html',
+  styleUrl: './base-table-async.component.scss',
 })
 export class BaseTableAsyncComponent<T> implements OnInit {
   @Input({ required: true }) headers: string[] = [];
@@ -37,7 +68,7 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   @Output() rowClickEvent = new EventEmitter();
 
   sortedColumn = this.columns[0];
-  direction = "asc";
+  direction = 'asc';
 
   sizedData$: Observable<any[]> | undefined;
   size$ = new BehaviorSubject<number>(10);
@@ -53,21 +84,20 @@ export class BaseTableAsyncComponent<T> implements OnInit {
     this.sizedData$ = combineLatest([this.page$, this.size$]).pipe(
       switchMap(([page, size]) =>
         this.fetchData(page, size).pipe(
-          tap(response => {
+          tap((response) => {
             this.total$.next(response.total);
-            this.hasData.next((response.records && response.records.length > 0));
+            this.hasData.next(response.records && response.records.length > 0);
           }),
-          map(response => response.records),
+          map((response) => response.records),
           catchError(() => {
             // in case of error, display empty state
             this.hasData.next(false);
             return of([]);
-          })
-        )
+          }),
+        ),
       ),
     );
   }
-
 
   onChangePagination(event: TuiTablePagination) {
     this.page$.next(event.page);
@@ -76,7 +106,7 @@ export class BaseTableAsyncComponent<T> implements OnInit {
 
   onSortChange(column: string) {
     this.sortedColumn = column;
-    this.direction = this.direction === "asc" ? "desc" : "asc";
+    this.direction = this.direction === 'asc' ? 'desc' : 'asc';
 
     // TODO: implement backend sort
 
@@ -96,9 +126,9 @@ export class BaseTableAsyncComponent<T> implements OnInit {
       }
 
       if (aColValue < bColValue) {
-        return direction === "asc" ? -1 : 1;
+        return direction === 'asc' ? -1 : 1;
       } else if (aColValue > bColValue) {
-        return direction === "asc" ? 1 : -1;
+        return direction === 'asc' ? 1 : -1;
       }
 
       return 0;
@@ -106,7 +136,7 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   }
 
   extractNestedProperty(item: any, key: string): any {
-    const keys = key.split(".");
+    const keys = key.split('.');
     let value = item;
 
     for (const k of keys) {

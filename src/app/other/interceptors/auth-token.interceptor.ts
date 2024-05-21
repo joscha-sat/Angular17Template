@@ -1,8 +1,7 @@
-import { catchError, switchMap, throwError } from "rxjs";
-import { AuthService } from "../../api/auth.service";
-import { HttpInterceptorFn, HttpStatusCode } from "@angular/common/http";
-import { inject } from "@angular/core";
-
+import { catchError, switchMap, throwError } from 'rxjs';
+import { AuthService } from '../../api/auth.service';
+import { HttpInterceptorFn, HttpStatusCode } from '@angular/common/http';
+import { inject } from '@angular/core';
 
 export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   // Initialize service instance
@@ -11,7 +10,7 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   // Add authorization header
   req = req.clone({
     setHeaders: {
-      Authorization: "Bearer " + authService.getAccessToken(),
+      Authorization: 'Bearer ' + authService.getAccessToken(),
     },
   });
 
@@ -27,11 +26,14 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
         return authService.sendRefreshToken().pipe(
           switchMap((response) => {
             if (response.status === HttpStatusCode.Created) {
-              authService.setTokens(response.data.access, response.data.refresh);
+              authService.setTokens(
+                response.data.access,
+                response.data.refresh,
+              );
               authService.setLoggedInUser(response.data.user);
               req = req.clone({
                 setHeaders: {
-                  Authorization: "Bearer " + authService.getAccessToken(),
+                  Authorization: 'Bearer ' + authService.getAccessToken(),
                 },
               });
               return next(req);

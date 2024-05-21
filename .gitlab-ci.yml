@@ -1,0 +1,31 @@
+image: node:latest
+
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm install -g @angular/cli
+  - npm install
+
+stages:
+  - lint
+  - build
+
+lint:
+  stage: lint
+  script:
+    - echo "Start linting"
+    - npm run lint
+    - echo "Linting completed"
+
+build:
+  stage: build
+  image: node
+  script:
+    - echo "Start building App"
+    - npm run build
+    - echo "Build successfully"
+  artifacts:
+    paths:
+      - dist/*

@@ -1,23 +1,30 @@
-import { inject, Injectable } from "@angular/core";
-import { TuiDialogContext, TuiDialogService } from "@taiga-ui/core";
-import { PolymorpheusComponent } from "@tinkoff/ng-polymorpheus";
+import { inject, Injectable } from '@angular/core';
+import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class TuiDialogHelperService<T = any> {
   dialogService = inject(TuiDialogService);
 
-  openDialog(component: any, data?: T,) {
+  openDialog(
+    component: any,
+    data?: T,
+    callback?: () => void,
+    appearance?: string,
+  ): void {
     this.dialogService
-      .open(
-        new PolymorpheusComponent(component),
-        { data: data },
-      )
-      .subscribe();
+      .open(new PolymorpheusComponent(component), {
+        data: data,
+        appearance: appearance,
+      })
+      .subscribe(() => {
+        if (callback) callback();
+      });
   }
 
-  close(context: TuiDialogContext<boolean, undefined>) {
+  close(context: TuiDialogContext<boolean>) {
     context.completeWith(false);
   }
 }

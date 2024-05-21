@@ -86,6 +86,18 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "local": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/app/other/environment/environment.ts",
+                  "with": "src/app/other/environment/environment.local.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -93,6 +105,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
+            "local": {
+              "buildTarget": "Angular-Template-V2:build:local"
+            },
             "production": {
               "buildTarget": "Angular-Template-V2:build:production"
             },

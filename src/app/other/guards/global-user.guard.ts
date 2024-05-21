@@ -1,8 +1,8 @@
-import { CanActivateFn, Router } from "@angular/router";
-import { inject } from "@angular/core";
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
 
-import { NavRoutes } from "../enums/nav-routes";
-import { AuthService } from "../../api/auth.service";
+import { NavRoutes } from '../enums/nav-routes';
+import { AuthService } from '../../api/auth.service';
 
 export const globalUserGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
@@ -14,5 +14,5 @@ export const globalUserGuard: CanActivateFn = () => {
     return true;
   }
 
-  return router.navigateByUrl(`${ NavRoutes.ERROR }`);
+  return router.navigateByUrl(`${NavRoutes.ERROR}`);
 };

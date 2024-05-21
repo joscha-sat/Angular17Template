@@ -1,18 +1,18 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { TuiButtonModule } from "@taiga-ui/core";
-import { NgIf } from "@angular/common";
-import { ControlContainer, FormGroup, FormGroupDirective } from "@angular/forms";
-import { TranslateModule } from "@ngx-translate/core";
-import { TuiDialogHelperService } from "../../services/tui-dialog-helper.service";
+import { TuiButtonModule } from '@taiga-ui/core';
+import { NgIf } from '@angular/common';
+import {
+  ControlContainer,
+  FormGroup,
+  FormGroupDirective,
+} from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
+import { TuiDialogHelperService } from '../../services/tui-dialog-helper.service';
 
 @Component({
   selector: 'app-base-save-cancel-btns',
   standalone: true,
-  imports: [
-    TuiButtonModule,
-    NgIf,
-    TranslateModule
-  ],
+  imports: [TuiButtonModule, NgIf, TranslateModule],
   templateUrl: './base-save-cancel-btns.component.html',
   styleUrl: './base-save-cancel-btns.component.scss',
   viewProviders: [
@@ -32,8 +32,7 @@ export class BaseSaveCancelBtnsComponent {
   @Output() cancel = new EventEmitter();
   @Output() delete = new EventEmitter();
 
-  constructor(private dialogService: TuiDialogHelperService) {
-  }
+  constructor(private dialogService: TuiDialogHelperService) {}
 
   onCancel() {
     if (this.cancel.observers.length === 0) {
@@ -47,7 +46,7 @@ export class BaseSaveCancelBtnsComponent {
 
   defaultCancelBehavior() {
     if (this.dialogContext) {
-      this.dialogService.close(this.dialogContext)
+      this.dialogService.close(this.dialogContext);
     }
   }
 

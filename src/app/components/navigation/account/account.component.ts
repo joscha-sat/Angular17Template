@@ -1,20 +1,24 @@
-import { Component, OnInit, signal } from "@angular/core";
-import { TuiButtonModule, TuiDataListModule, TuiHostedDropdownModule, TuiSvgModule } from "@taiga-ui/core";
-import { Router, RouterLink } from "@angular/router";
-import { NavRoutes } from "../../../other/enums/nav-routes";
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
-import { tuiIconLogOut, tuiIconSettings } from "@taiga-ui/icons";
-import { AuthService } from "../../../api/auth.service";
-import { SuperAdminService } from "../../../api/super-admin.service";
+import { Component, OnInit, signal } from '@angular/core';
+import {
+  TuiButtonModule,
+  TuiDataListModule,
+  TuiHostedDropdownModule,
+  TuiSvgModule,
+} from '@taiga-ui/core';
+import { Router, RouterLink } from '@angular/router';
+import { NavRoutes } from '../../../other/enums/nav-routes';
+import { TranslateModule } from '@ngx-translate/core';
+import { tuiIconLogOut, tuiIconSettings } from '@taiga-ui/icons';
+import { AuthService } from '../../../api/auth.service';
 
 export type Option = {
-  icon: string,
-  ngxTitle: string,
-  link?: NavRoutes
-}
+  icon: string;
+  ngxTitle: string;
+  link?: NavRoutes;
+};
 
 @Component({
-  selector: "app-account",
+  selector: 'app-account',
   standalone: true,
   imports: [
     TuiDataListModule,
@@ -24,21 +28,21 @@ export type Option = {
     TuiHostedDropdownModule,
     TuiButtonModule,
   ],
-  templateUrl: "./account.component.html",
-  styleUrl: "./account.component.scss",
+  templateUrl: './account.component.html',
+  styleUrl: './account.component.scss',
 })
 export class AccountComponent implements OnInit {
-  userName = signal<string>("");
+  userName = signal<string>('');
   isOpen = signal<boolean>(false);
   options = signal<Option[]>([
     {
-      icon: "tuiIconSettings",
-      ngxTitle: "settings.title",
+      icon: 'tuiIconSettings',
+      ngxTitle: 'settings.title',
       link: NavRoutes.SETTINGS,
     },
     {
-      icon: "tuiIconLogOut",
-      ngxTitle: "logout.title",
+      icon: 'tuiIconLogOut',
+      ngxTitle: 'logout.title',
     },
   ]);
 
@@ -49,10 +53,7 @@ export class AccountComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private translate: TranslateService,
-    private superAdminService: SuperAdminService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getUserName();
@@ -66,8 +67,7 @@ export class AccountComponent implements OnInit {
   }
 
   onOptionsClick(option: Option) {
-    if (option.ngxTitle.includes("logout")) {
-
+    if (option.ngxTitle.includes('logout')) {
       this.logOut();
     } else {
       this.router.navigate([option.link]).then();
@@ -75,6 +75,6 @@ export class AccountComponent implements OnInit {
   }
 
   logOut() {
-    console.log("logout");
+    this.authService.logout();
   }
 }

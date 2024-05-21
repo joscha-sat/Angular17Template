@@ -1,7 +1,15 @@
 <app-base-table-async
   (rowClickEvent)="userClicked($event)"
+  [cellTemplatesMap]="{ active }"
   [columns]="tableColumns()"
   [fetchData]="fetchDataFn"
   [headers]="tableHeaders()"
-/>
-
+  [search]="userService.search()"
+>
+  <ng-template #active let-value>
+    <app-base-badge
+      [status]="value ? 'success' : 'error'"
+      [value]="value ? 'general.active' : 'general.inactive'"
+    />
+  </ng-template>
+</app-base-table-async>

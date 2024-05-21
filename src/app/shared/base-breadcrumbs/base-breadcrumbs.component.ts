@@ -1,17 +1,21 @@
-import { Component, OnInit } from "@angular/core";
-import { TuiBreadcrumbsModule } from "@taiga-ui/kit";
-import { ActivatedRoute, ActivatedRouteSnapshot, RouterLink } from "@angular/router";
-import { TuiLinkModule } from "@taiga-ui/core";
-import { NgForOf, NgIf } from "@angular/common";
-import { TranslateModule } from "@ngx-translate/core";
+import { Component, OnInit } from '@angular/core';
+import { TuiBreadcrumbsModule } from '@taiga-ui/kit';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  RouterLink,
+} from '@angular/router';
+import { TuiLinkModule } from '@taiga-ui/core';
+import { NgForOf, NgIf } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 export type BreadcrumbItem = {
   url: string | null;
   label: string;
-}
+};
 
 @Component({
-  selector: "app-base-breadcrumbs",
+  selector: 'app-base-breadcrumbs',
   standalone: true,
   imports: [
     TuiBreadcrumbsModule,
@@ -21,14 +25,13 @@ export type BreadcrumbItem = {
     NgForOf,
     TranslateModule,
   ],
-  templateUrl: "./base-breadcrumbs.component.html",
-  styleUrl: "./base-breadcrumbs.component.scss",
+  templateUrl: './base-breadcrumbs.component.html',
+  styleUrl: './base-breadcrumbs.component.scss',
 })
 export class BaseBreadcrumbsComponent implements OnInit {
   breadcrumbItems: BreadcrumbItem[] = [];
 
-  constructor(private route: ActivatedRoute) {
-  }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     // Generate breadcrumb items on init
@@ -39,7 +42,7 @@ export class BaseBreadcrumbsComponent implements OnInit {
     if (!routeSnapshot) return;
 
     // Add breadcrumb item for each route segment
-    const routeUrl = routeSnapshot.url.map(segment => segment.path);
+    const routeUrl = routeSnapshot.url.map((segment) => segment.path);
 
     let accumulatedUrl = '';
 
@@ -48,13 +51,17 @@ export class BaseBreadcrumbsComponent implements OnInit {
         accumulatedUrl += '/' + urlSegment;
         this.breadcrumbItems.push({
           label: urlSegment,
-          url: accumulatedUrl
+          url: accumulatedUrl,
         });
       }
     });
 
-    if (routeUrl && routeUrl.length > 0 && routeUrl[routeUrl.length - 1].length >= 36) {
-      this.breadcrumbItems[this.breadcrumbItems.length - 1].url = null
+    if (
+      routeUrl &&
+      routeUrl.length > 0 &&
+      routeUrl[routeUrl.length - 1].length >= 36
+    ) {
+      this.breadcrumbItems[this.breadcrumbItems.length - 1].url = null;
     }
 
     // Recursively generate breadcrumb items for child routes

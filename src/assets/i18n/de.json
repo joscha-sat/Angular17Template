@@ -24,7 +24,8 @@
     "save": "speichern",
     "search": "Suchen",
     "yes": "Ja",
-    "empty": "Keine Einträge vorhanden"
+    "empty": "Keine Einträge vorhanden",
+    "delete": "Löschen"
   },
   "hint": {
     "email": "E-Mail eingeben",
@@ -71,6 +72,7 @@
     "status-409": "Konflikt bei der Anfrage an den Server",
     "status-404": "Die angeforderte Ressource wurde nicht gefunden",
     "status-403": "Authentifizierung fehlgeschlagen oder fehlt.",
+    "status-401": "Nicht authentifiziert!",
     "status-400": "Anfrage ungültig oder fehlerhaft!",
     "status-406": "Inakzeptable Anfrage an den Server"
   }

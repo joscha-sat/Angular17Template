@@ -3,17 +3,20 @@
   @case ('text') {
     <tui-input [tuiTextfieldSize]="size" [formControlName]="fControlName">
       {{ label | translate }}
-      <input type="text" tuiTextfield/>
+      <input type="text" tuiTextfield />
     </tui-input>
   }
   @case ('email') {
     <tui-input [tuiTextfieldSize]="size" [formControlName]="fControlName">
       {{ label | translate }}
-      <input type="email" tuiTextfield/>
+      <input type="email" tuiTextfield />
     </tui-input>
   }
   @case ('password') {
-    <tui-input-password [tuiTextfieldSize]="size" [formControlName]=" fControlName ">
+    <tui-input-password
+      [tuiTextfieldSize]="size"
+      [formControlName]="fControlName"
+    >
       {{ label | translate }}
       <span class="tui-required"></span>
     </tui-input-password>

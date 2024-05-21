@@ -1,7 +1,6 @@
-import { BaseModel } from "./BaseModel";
-import { Tenant } from "./Tenant";
-import { Role } from "./Role";
-
+import { BaseModel } from './BaseModel';
+import { Tenant } from './Tenant';
+import { Role } from './Role';
 
 export class User extends BaseModel<User> {
   tenantId!: string;
@@ -21,6 +20,6 @@ export class User extends BaseModel<User> {
   }
 
   get fullName() {
-    return this.firstName + " " + this.lastName;
+    return this.firstName + ' ' + this.lastName;
   }
 }

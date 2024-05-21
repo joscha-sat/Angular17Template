@@ -1,7 +1,11 @@
-import { Injectable, signal } from "@angular/core";
-import { Observable } from "rxjs";
-import { Tenant } from "../other/models/Tenant";
-import { GenericHttpService, idTypes, ResponseWithRecords } from "./generic-http.service";
+import { Injectable, signal } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Tenant } from '../other/models/Tenant';
+import {
+  GenericHttpService,
+  idTypes,
+  ResponseWithRecords,
+} from './base-http.service';
 
 type queryParams = {
   limit?: number;
@@ -9,10 +13,10 @@ type queryParams = {
 
   name?: string;
   sort?: string;
-}
+};
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 /**
  * Service Class for the getting or manipulating tenant data
@@ -21,9 +25,11 @@ export class TenantService extends GenericHttpService {
   selectedTenantId = signal('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
   search = signal('');
   endpoint = 'tenant';
-  element = "Eine Firma"
+  element = 'Eine Firma';
 
-  getAllTenants(queryParams?: queryParams): Observable<ResponseWithRecords<Tenant>> {
+  getAllTenants(
+    queryParams?: queryParams,
+  ): Observable<ResponseWithRecords<Tenant>> {
     return this.getAll<Tenant>(this.endpoint, queryParams);
   }
 
@@ -31,12 +37,23 @@ export class TenantService extends GenericHttpService {
     return this.getOne<Tenant>(this.endpoint, id);
   }
 
-  createTenant(tenant: Tenant | Tenant[]): Observable<Tenant | Tenant[] | null> {
-    return this.create<Tenant>(this.endpoint, tenant, this.element);
+  createOneTenant(tenant: Tenant): Observable<Tenant> {
+    return this.createOne<Tenant>(this.endpoint, tenant, this.element);
   }
 
-  updateTenant(tenant: Tenant | Tenant[], id: idTypes): Observable<Tenant | Tenant[] | null> {
-    return this.update<Tenant>(this.endpoint, tenant, id, this.element);
+  createMultipleTenants(tenants: Tenant[]) {
+    return this.createMultiple<Tenant>(this.endpoint, tenants, this.element);
+  }
+
+  updateOneTenantById(tenant: Tenant, id: idTypes): Observable<Tenant> {
+    return this.updateOne<Tenant>(this.endpoint, tenant, id, this.element);
+  }
+
+  updateMultipleTenantsById(
+    id: idTypes[],
+    tenant: Tenant[],
+  ): Observable<Tenant[]> {
+    return this.updateMultiple<Tenant>(this.endpoint, tenant, id, this.element);
   }
 
   deleteOneTenant(id: idTypes): Observable<unknown> {

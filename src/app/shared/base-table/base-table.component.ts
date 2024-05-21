@@ -1,13 +1,35 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from "@angular/core";
-import { TuiTableModule, TuiTablePagination, TuiTablePaginationModule } from "@taiga-ui/addon-table";
-import { TUI_DEFAULT_MATCHER, TuiLetModule } from "@taiga-ui/cdk";
-import { NgForOf, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet } from "@angular/common";
-import { TuiTagModule } from "@taiga-ui/kit";
-import { TuiButtonModule, TuiFormatNumberPipeModule, TuiLinkModule } from "@taiga-ui/core";
-import { TranslateModule } from "@ngx-translate/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
+import {
+  TuiTableModule,
+  TuiTablePagination,
+  TuiTablePaginationModule,
+} from '@taiga-ui/addon-table';
+import { TUI_DEFAULT_MATCHER, TuiLetModule } from '@taiga-ui/cdk';
+import {
+  NgForOf,
+  NgIf,
+  NgSwitch,
+  NgSwitchCase,
+  NgSwitchDefault,
+  NgTemplateOutlet,
+} from '@angular/common';
+import { TuiTagModule } from '@taiga-ui/kit';
+import {
+  TuiButtonModule,
+  TuiFormatNumberPipeModule,
+  TuiLinkModule,
+} from '@taiga-ui/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: "app-base-table",
+  selector: 'app-base-table',
   standalone: true,
   imports: [
     TuiTableModule,
@@ -25,8 +47,8 @@ import { TranslateModule } from "@ngx-translate/core";
     NgSwitchDefault,
     TranslateModule,
   ],
-  templateUrl: "./base-table.component.html",
-  styleUrl: "./base-table.component.scss",
+  templateUrl: './base-table.component.html',
+  styleUrl: './base-table.component.scss',
 })
 export class BaseTableComponent implements OnInit {
   @Input({ required: true }) tableData: any[] = [];
@@ -42,7 +64,7 @@ export class BaseTableComponent implements OnInit {
   size: number = 10;
   sizedData: any[] = [];
   sortedColumn = this.columns[0];
-  direction = "asc";
+  direction = 'asc';
 
   ngOnInit(): void {
     this.loadPage();
@@ -73,9 +95,9 @@ export class BaseTableComponent implements OnInit {
       }
 
       if (aColValue < bColValue) {
-        return direction === "asc" ? -1 : 1;
+        return direction === 'asc' ? -1 : 1;
       } else if (aColValue > bColValue) {
-        return direction === "asc" ? 1 : -1;
+        return direction === 'asc' ? 1 : -1;
       }
 
       return 0;
@@ -84,12 +106,12 @@ export class BaseTableComponent implements OnInit {
 
   onSortChange(column: string): void {
     this.sortedColumn = column;
-    this.direction = this.direction === "asc" ? "desc" : "asc";
+    this.direction = this.direction === 'asc' ? 'desc' : 'asc';
     this.loadPage();
   }
 
   extractNestedProperty(item: any, key: string): any {
-    const keys = key.split(".");
+    const keys = key.split('.');
     let value = item;
 
     for (const k of keys) {
@@ -107,7 +129,3 @@ export class BaseTableComponent implements OnInit {
     return !!this.search && TUI_DEFAULT_MATCHER(value, this.search);
   }
 }
-
-
-
-
