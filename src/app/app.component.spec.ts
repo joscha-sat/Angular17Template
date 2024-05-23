@@ -6,7 +6,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -14,14 +17,19 @@ describe('AppComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-    imports: [RouterTestingModule,
+      imports: [
+        RouterTestingModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
         AppComponent,
         NavigationComponent,
-        LoadingSpinnerComponent],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-}).compileComponents();
+        LoadingSpinnerComponent,
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
