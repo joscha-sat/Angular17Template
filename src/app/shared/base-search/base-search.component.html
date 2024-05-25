@@ -1,0 +1,7 @@
+<input
+  (input)="onSearchChange($event.target)"
+  [value]="searchValue()"
+  placeholder="suchen..."
+/>
+
+<app-base-input (valueChange)="onSearchChange($event)" type="text" />

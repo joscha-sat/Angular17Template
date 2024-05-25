@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   TuiFieldErrorPipeModule,
   TuiInputModule,
@@ -19,6 +19,7 @@ import {
 import { AsyncPipe } from '@angular/common';
 import { TuiCurrencyPipeModule } from '@taiga-ui/addon-commerce';
 import { TranslateModule } from '@ngx-translate/core';
+import { TuiValueChangesModule } from '@taiga-ui/cdk';
 
 type InputTypes = 'text' | 'number' | 'password' | 'email';
 
@@ -36,6 +37,7 @@ type InputTypes = 'text' | 'number' | 'password' | 'email';
     TuiTextfieldControllerModule,
     TuiCurrencyPipeModule,
     TranslateModule,
+    TuiValueChangesModule,
   ],
   templateUrl: './base-input.component.html',
   styleUrl: './base-input.component.scss',
@@ -48,8 +50,10 @@ type InputTypes = 'text' | 'number' | 'password' | 'email';
 })
 export class BaseInputComponent {
   @Input({ required: true }) type: InputTypes = 'text';
-  @Input({ required: true }) fControlName: string = '';
+  @Input() fControlName: string = '';
   @Input() size: TuiSizeL | TuiSizeS = 'm';
+  @Output() valueChange = new EventEmitter();
+
   // workaround to use the input type as default label value
   private _label?: string;
 
@@ -60,5 +64,9 @@ export class BaseInputComponent {
   @Input()
   set label(value: string) {
     this._label = value;
+  }
+
+  onValueChange(value: string) {
+    this.valueChange.emit(value);
   }
 }
