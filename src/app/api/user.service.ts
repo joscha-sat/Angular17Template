@@ -1,16 +1,14 @@
 import { Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
+  BaseQueryParams,
   GenericHttpService,
   idTypes,
   ResponseWithRecords,
 } from './base-http.service';
 import { User } from '../other/models/User';
 
-type queryParams = {
-  skip?: number;
-  limit?: number;
-};
+type QueryParams = BaseQueryParams;
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +20,7 @@ export class UserService extends GenericHttpService {
 
   // GET ALL
   getAllUsers(
-    queryParams?: queryParams,
+    queryParams?: QueryParams,
   ): Observable<ResponseWithRecords<User>> {
     return this.getAll<User>(this.endpoint, queryParams);
   }

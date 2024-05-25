@@ -6,6 +6,12 @@ import { environment } from '../other/environment/environment';
 
 export type idTypes = string | number | (string | number)[];
 export type ResponseWithRecords<T> = { total: number; records: T[] };
+export type BaseQueryParams = {
+  skip?: number;
+  limit?: number;
+  search?: string;
+  sort?: string;
+};
 
 @Injectable({ providedIn: 'root' })
 export class GenericHttpService {

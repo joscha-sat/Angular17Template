@@ -5,6 +5,7 @@ import { TenantService } from '../../api/tenant.service';
 import { Tenant } from '../../other/models/Tenant';
 import { AsyncPipe } from '@angular/common';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
+import { BaseSearchComponent } from '../../shared/base-search/base-search.component';
 
 @Component({
   selector: 'app-tenant.view',
@@ -14,6 +15,7 @@ import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout
     TenantTableComponent,
     AsyncPipe,
     ViewLayoutComponent,
+    BaseSearchComponent,
   ],
   templateUrl: './tenant.view.component.html',
   styleUrl: './tenant.view.component.scss',

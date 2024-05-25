@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { BaseSearchComponent } from './shared/base-search/base-search.component';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     TranslateModule,
     NavigationComponent,
     LoadingSpinnerComponent,
+    BaseSearchComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

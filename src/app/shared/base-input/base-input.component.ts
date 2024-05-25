@@ -50,7 +50,7 @@ type InputTypes = 'text' | 'number' | 'password' | 'email';
 })
 export class BaseInputComponent {
   @Input({ required: true }) type: InputTypes = 'text';
-  @Input() fControlName: string = '';
+  @Input({ required: true }) fControlName: string = '';
   @Input() size: TuiSizeL | TuiSizeS = 'm';
   @Output() valueChange = new EventEmitter();
 
@@ -58,7 +58,7 @@ export class BaseInputComponent {
   private _label?: string;
 
   get label(): string {
-    return this._label || `enter a ${this.type}`;
+    return this._label ?? `enter a ${this.type}`;
   }
 
   @Input()
