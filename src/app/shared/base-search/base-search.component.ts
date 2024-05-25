@@ -1,4 +1,11 @@
-import { Component, EventEmitter, inject, Output, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  OnInit,
+  Output,
+  signal,
+} from '@angular/core';
 import { BaseInputComponent } from '../base-input/base-input.component';
 import { debounceTime, Subject } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -10,7 +17,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './base-search.component.html',
   styleUrl: './base-search.component.scss',
 })
-export class BaseSearchComponent {
+export class BaseSearchComponent implements OnInit {
   enteredSearchTerm = new Subject<string>();
   searchValue = signal('');
   @Output() backendSearchEvent = new EventEmitter<string>();
