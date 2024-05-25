@@ -2,17 +2,14 @@ import { Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Tenant } from '../other/models/Tenant';
 import {
+  BaseQueryParams,
   GenericHttpService,
   idTypes,
   ResponseWithRecords,
 } from './base-http.service';
 
-type queryParams = {
-  limit?: number;
-  skip?: number;
-
-  name?: string;
-  sort?: string;
+type QueryParams = BaseQueryParams & {
+  name: string;
 };
 
 @Injectable({
@@ -28,7 +25,7 @@ export class TenantService extends GenericHttpService {
   element = 'Eine Firma';
 
   getAllTenants(
-    queryParams?: queryParams,
+    queryParams?: QueryParams,
   ): Observable<ResponseWithRecords<Tenant>> {
     return this.getAll<Tenant>(this.endpoint, queryParams);
   }

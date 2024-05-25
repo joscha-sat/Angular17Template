@@ -1,27 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
+  BaseQueryParams,
   GenericHttpService,
   idTypes,
   ResponseWithRecords,
 } from './base-http.service';
 import { Customer } from '../other/models/Customer';
 
-type queryParams = {
-  skip?: number;
-  limit?: number;
-};
+type QueryParams = BaseQueryParams;
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerService extends GenericHttpService {
-  endpoint = 'customer';
+  endpoint = 'customers';
   element = 'Ein Kunde'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
+  search = signal('');
 
   // GET ALL
   getAllCustomers(
-    queryParams?: queryParams,
+    queryParams?: QueryParams,
   ): Observable<ResponseWithRecords<Customer>> {
     return this.getAll<Customer>(this.endpoint, queryParams);
   }

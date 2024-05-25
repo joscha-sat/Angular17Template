@@ -42,8 +42,8 @@ export class UserAddEditDialogComponent
   extends BaseDialogComponent
   implements OnInit
 {
-  model: User | undefined;
-  form: FormGroup | undefined;
+  model?: User;
+  form?: FormGroup;
   addUserMode = signal(true);
 
   constructor(

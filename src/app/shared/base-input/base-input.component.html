@@ -3,7 +3,11 @@
   @case ('text') {
     <tui-input [tuiTextfieldSize]="size" [formControlName]="fControlName">
       {{ label | translate }}
-      <input type="text" tuiTextfield />
+      <input
+        (tuiValueChanges)="onValueChange($event)"
+        type="text"
+        tuiTextfield
+      />
     </tui-input>
   }
   @case ('email') {

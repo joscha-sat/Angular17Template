@@ -5,7 +5,11 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -20,7 +24,10 @@ describe('AppComponent', () => {
         AppComponent,
         NavigationComponent,
         LoadingSpinnerComponent,
-        HttpClientTestingModule,
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
     }).compileComponents();
   }));

@@ -10,11 +10,17 @@ import { TableRefresherComponent } from '../../../shared/table-refresher/table-r
 import { SuperAdminService } from '../../../api/super-admin.service';
 import { TenantService } from '../../../api/tenant.service';
 import { AuthService } from '../../../api/auth.service';
+import { BaseBadgeComponent } from '../../../shared/base-badge/base-badge.component';
 
 @Component({
   selector: 'app-user-table',
   standalone: true,
-  imports: [BaseTableAsyncComponent, AsyncPipe, BaseTableComponent],
+  imports: [
+    BaseTableAsyncComponent,
+    AsyncPipe,
+    BaseTableComponent,
+    BaseBadgeComponent,
+  ],
   templateUrl: './user-table.component.html',
   styleUrl: './user-table.component.scss',
 })
@@ -25,7 +31,6 @@ export class UserTableComponent extends TableRefresherComponent<User> {
   tenantService = inject(TenantService);
   authService = inject(AuthService);
 
-  // todo: update active visually
   tableHeaders = signal<string[]>([
     'Vorname',
     'Nachname',
@@ -52,11 +57,11 @@ export class UserTableComponent extends TableRefresherComponent<User> {
     }
   }
 
-  getService() {
+  setTableRefreshService() {
     return this.userService;
   }
 
-  getServiceMethodName() {
+  setTableRefreshMethodName() {
     return 'getAllUsers';
   }
 

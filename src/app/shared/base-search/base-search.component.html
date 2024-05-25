@@ -1,0 +1,7 @@
+<form [formGroup]="form">
+  <app-base-input
+    (valueChange)="onSearchChange($event)"
+    [fControlName]="'search'"
+    type="text"
+  />
+</form>

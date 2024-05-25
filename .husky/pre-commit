@@ -1,3 +1,2 @@
-# ng test --no-watch --no-progress --browsers=ChromeHeadless
-# ng lint --fix
+npm run lint
 npx prettier --write "**/*.{html,ts}"
