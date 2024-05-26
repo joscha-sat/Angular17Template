@@ -18,6 +18,7 @@ import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/head
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
 import { TenantAddEditDialogComponent } from '../tenant-add-edit-dialog/tenant-add-edit-dialog.component';
 import { BaseTableSearchComponent } from '../../../shared/base-table-search/base-table-search.component';
+import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 
 @Component({
   selector: 'app-tenant-header',
@@ -31,6 +32,7 @@ import { BaseTableSearchComponent } from '../../../shared/base-table-search/base
     HeaderLayoutComponent,
     BaseInputComponent,
     BaseTableSearchComponent,
+    BaseSearchComponent,
   ],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',
@@ -74,5 +76,9 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
 
   openAddTenantDialog() {
     this.dialogService.openDialog(TenantAddEditDialogComponent);
+  }
+
+  searchInTenants($event: string) {
+    this.tenantService.search$.next($event);
   }
 }
