@@ -11,6 +11,7 @@ import { SuperAdminService } from '../../../api/super-admin.service';
 import { TenantService } from '../../../api/tenant.service';
 import { AuthService } from '../../../api/auth.service';
 import { BaseBadgeComponent } from '../../../shared/base-badge/base-badge.component';
+import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 
 @Component({
   selector: 'app-user-table',
@@ -20,6 +21,7 @@ import { BaseBadgeComponent } from '../../../shared/base-badge/base-badge.compon
     AsyncPipe,
     BaseTableComponent,
     BaseBadgeComponent,
+    BaseSearchComponent,
   ],
   templateUrl: './user-table.component.html',
   styleUrl: './user-table.component.scss',
