@@ -8,6 +8,7 @@ import { UserAddEditDialogComponent } from '../user-add-edit-dialog/user-add-edi
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { BaseTableSearchComponent } from '../../../shared/base-table-search/base-table-search.component';
 import { UserService } from '../../../api/user.service';
+import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 
 @Component({
   selector: 'app-user-header',
@@ -18,6 +19,7 @@ import { UserService } from '../../../api/user.service';
     HeaderLayoutComponent,
     EditIconComponent,
     BaseTableSearchComponent,
+    BaseSearchComponent,
   ],
   templateUrl: './user-header.component.html',
   styleUrl: './user-header.component.scss',
@@ -28,5 +30,9 @@ export class UserHeaderComponent {
 
   openCreateUserDialog() {
     this.dialogService.openDialog(UserAddEditDialogComponent);
+  }
+
+  searchInUsers($event: string) {
+    this.userService.search$.next($event);
   }
 }

@@ -1,12 +1,10 @@
-<!--<app-base-search (backendSearchEvent)="searchInUsers($event)" />-->
-
 <app-base-table-async
   (rowClickEvent)="userClicked($event)"
   [cellTemplatesMap]="{ active }"
   [columns]="tableColumns()"
   [fetchData]="fetchDataFn"
   [headers]="tableHeaders()"
-  [search]="userService.search()"
+  [search$]="userService.search$"
 >
   <ng-template #active let-value>
     <app-base-badge

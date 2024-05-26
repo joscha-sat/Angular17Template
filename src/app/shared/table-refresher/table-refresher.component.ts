@@ -29,7 +29,11 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
     return null;
   }
 
-  fetchDataFn: FetchDataFunction<T> = (page: number, size: number) => {
+  fetchDataFn: FetchDataFunction<T> = (
+    page: number,
+    size: number,
+    search?: string,
+  ) => {
     const additionalParams = this.setAdditionalParams();
 
     return this.refresh$.pipe(
@@ -38,6 +42,7 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
           this.setTableRefreshService()[this.setTableRefreshMethodName()]({
             limit: size,
             skip: page * size,
+            search: search,
             ...additionalParams,
           }) as Observable<ResponseWithRecords<T>>,
       ),

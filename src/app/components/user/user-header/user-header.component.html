@@ -6,8 +6,12 @@
   </ng-container>
 
   <div class="flex-a-center-g1" right>
-    <!--  table search  -->
-    <app-base-table-search [service]="userService" />
+    <!--  table search backend  -->
+
+    <app-base-search (backendSearchEvent)="searchInUsers($event)" />
+
+    <!--  table search highlight  -->
+    <!--    <app-base-table-search [service]="userService" />-->
 
     <!--    add  -->
     <app-base-tui-button (clicked)="openCreateUserDialog()">

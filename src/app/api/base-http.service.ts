@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, Subject, tap } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subject, tap } from 'rxjs';
 import { TuiSnackbarService } from '../services/tui-snackbar.service';
 import { environment } from '../other/environment/environment';
 
@@ -18,6 +18,7 @@ export class GenericHttpService {
   baseUrl = environment.baseUrl;
   _refreshObservable = new Subject<void>();
   refreshObservable$ = this._refreshObservable.asObservable();
+  search$ = new BehaviorSubject<string>('');
 
   constructor(
     private readonly http: HttpClient,

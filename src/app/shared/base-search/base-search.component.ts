@@ -38,9 +38,8 @@ export class BaseSearchComponent implements OnInit {
 
   // Update the searchTerm and searchValue each time the search input changes.
   onSearchChange(searchValue: any) {
-    console.log(searchValue);
-    this.enteredSearchTerm.next(searchValue.value);
-    this.searchValue.set(searchValue.value);
+    this.enteredSearchTerm.next(searchValue);
+    this.searchValue.set(searchValue);
   }
 
   searchDebounce() {

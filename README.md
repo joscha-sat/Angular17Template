@@ -125,32 +125,28 @@ export class TenantTableComponent extends TableRefresherComponent<Tenant> {
 }
 ````
 
-### Frontend table search (highlight)
+### Frontend table search
 
-HTML: for example header
+````angular2html
+<!-- search component -->
+<app-base-search (backendSearchEvent)="searchInUsers($event)"/>
 
-````html
-
-<app-base-table-search [service]="customerService"/>
-````
-
-Service:
-
-````ts
-search = signal('');
-````
-
-Table:
-
-````angular17html
-
+<!-- table adjustment (example user) -->
 <app-base-table-async
-  (rowClickEvent)="openEditCustomerDialog($event)"
-  [columns]="columns()"
-  [fetchData]="fetchDataFn"
-  [headers]="headers()"
-  [search]="customerService.search()"
-/>
+  [search$]="userService.search$"
+>
+````
+
+````
+  search$ = new BehaviorSubject<string>('');
+  
+  // the search is in the GenericHttpService (base-http.service) 
+  // and automaticall usable in every api service extending the GenericHttpService
+  // example: export class UserService extends GenericHttpService
+  
+  searchInUsers($event: string) {
+    this.userService.search$.next($event);
+  }
 ````
 
 ### TODO: how to use Dialogs

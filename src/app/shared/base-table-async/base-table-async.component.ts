@@ -18,6 +18,7 @@ import {
   map,
   Observable,
   of,
+  Subscription,
   switchMap,
   tap,
 } from 'rxjs';
@@ -37,6 +38,7 @@ import { ResponseWithRecords } from '../../api/base-http.service';
 export type FetchDataFunction<T> = (
   pageNumber: number,
   pageSize: number,
+  search?: string,
 ) => Observable<ResponseWithRecords<T>>;
 
 @Component({
@@ -62,40 +64,51 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   @Input({ required: true }) headers: string[] = [];
   @Input({ required: true }) columns: string[] = [];
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
-  @Input() search: string = '';
+  @Input() search$ = new BehaviorSubject<string>('');
   @Input({ required: true }) fetchData!: FetchDataFunction<T>;
 
   @Output() rowClickEvent = new EventEmitter();
 
   sortedColumn = this.columns[0];
   direction = 'asc';
-
   sizedData$: Observable<any[]> | undefined;
   size$ = new BehaviorSubject<number>(10);
   page$ = new BehaviorSubject<number>(0);
   total$ = new BehaviorSubject<number>(0);
   public hasData = new BehaviorSubject<boolean>(false);
+  private searchSubscription?: Subscription;
+  private searchText?: string;
 
   isMatch(value: unknown): boolean {
-    return !!this.search && TUI_DEFAULT_MATCHER(value, this.search);
+    return !!this.searchText && TUI_DEFAULT_MATCHER(value, this.searchText);
   }
 
   ngOnInit() {
-    this.sizedData$ = combineLatest([this.page$, this.size$]).pipe(
-      switchMap(([page, size]) =>
-        this.fetchData(page, size).pipe(
+    this.searchSubscription = this.search$.subscribe(
+      (searchText) => (this.searchText = searchText),
+    );
+
+    this.sizedData$ = combineLatest([
+      this.page$,
+      this.size$,
+      this.search$,
+    ]).pipe(
+      switchMap(([page, size, search]) => {
+        console.log(
+          `Calling fetchData with page=${page}, size=${size}, search=${search}`,
+        );
+        return this.fetchData(page, size, search).pipe(
           tap((response) => {
             this.total$.next(response.total);
             this.hasData.next(response.records && response.records.length > 0);
           }),
           map((response) => response.records),
           catchError(() => {
-            // in case of error, display empty state
             this.hasData.next(false);
             return of([]);
           }),
-        ),
-      ),
+        );
+      }),
     );
   }
 

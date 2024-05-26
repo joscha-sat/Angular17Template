@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   BaseQueryParams,
@@ -16,7 +16,6 @@ type QueryParams = BaseQueryParams;
 export class UserService extends GenericHttpService {
   endpoint = 'user';
   element = 'Ein Nutzer'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
-  search = signal('');
 
   // GET ALL
   getAllUsers(
