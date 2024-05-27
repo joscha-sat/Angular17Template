@@ -6,7 +6,9 @@
   </ng-container>
 
   <div class="flex-a-center-g1" right>
-    <app-base-table-search [service]="customerService" />
+    <!--    <app-base-table-search [service]="customerService" />-->
+
+    <app-base-search (backendSearchEvent)="searchInCustomers($event)" />
 
     <app-base-tui-button (clicked)="openCreateCustomerDialog()">
       {{ 'customers.create' | translate }}

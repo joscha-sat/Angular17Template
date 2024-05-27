@@ -6,6 +6,7 @@ import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.serv
 import { CustomerAddEditDialogComponent } from '../customer-add-edit-dialog/customer-add-edit-dialog.component';
 import { BaseTableSearchComponent } from '../../../shared/base-table-search/base-table-search.component';
 import { CustomerService } from '../../../api/customer.service';
+import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 
 @Component({
   selector: 'app-customers-header',
@@ -15,6 +16,7 @@ import { CustomerService } from '../../../api/customer.service';
     TranslateModule,
     BaseTuiButtonComponent,
     BaseTableSearchComponent,
+    BaseSearchComponent,
   ],
   templateUrl: './customers-header.component.html',
   styleUrl: './customers-header.component.scss',
@@ -25,5 +27,9 @@ export class CustomersHeaderComponent {
 
   openCreateCustomerDialog() {
     this.dialogService.openDialog(CustomerAddEditDialogComponent);
+  }
+
+  searchInCustomers($event: string) {
+    this.customerService.search$.next($event);
   }
 }
