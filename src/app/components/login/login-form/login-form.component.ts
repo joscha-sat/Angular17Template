@@ -10,6 +10,8 @@ import {
 import { TuiAlertModule, TuiButtonModule, TuiLinkModule } from '@taiga-ui/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, LoginBody } from '../../../api/auth.service';
+import { Router } from '@angular/router';
+import { NavRoutes } from '../../../other/enums/nav-routes';
 
 @Component({
   selector: 'app-login-form',
@@ -29,6 +31,7 @@ import { AuthService, LoginBody } from '../../../api/auth.service';
 export class LoginFormComponent {
   form: FormGroup | undefined;
   isOpen = signal<boolean>(false);
+  roter = inject(Router);
   authService = inject(AuthService);
 
   constructor(private fb: FormBuilder) {
@@ -47,6 +50,8 @@ export class LoginFormComponent {
 
   submit() {
     if (this.form?.invalid) return;
-    this.authService.login(this.loginBody).subscribe();
+    this.authService.login(this.loginBody).subscribe(() => {
+      this.roter.navigate(['/' + NavRoutes.TENANT]).then();
+    });
   }
 }

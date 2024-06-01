@@ -6,27 +6,45 @@ import { TenantViewComponent } from './views/tenant.view/tenant.view.component';
 import { UserViewComponent } from './views/user.view/user.view.component';
 import { TenantDashboardViewComponent } from './views/tenant-dashboard.view/tenant-dashboard.view.component';
 import { CustomersViewComponent } from './views/customers.view/customers.view.component';
+import { authGuard } from './other/guards/auth.guard';
 
 export const routes: Routes = [
   // standard route
   { path: '', redirectTo: NavRoutes.TENANT, pathMatch: 'full' },
 
   // || TENANT || ----------------------------------------------- // >>
-  { path: NavRoutes.TENANT, component: TenantViewComponent },
+  {
+    path: NavRoutes.TENANT,
+    component: TenantViewComponent,
+    canActivate: [authGuard],
+  },
   {
     path: NavRoutes.TENANT + '/' + NavRoutes.DASHBOARD + '/:id',
     component: TenantDashboardViewComponent,
+    canActivate: [authGuard],
   },
 
   // || LOGIN || ----------------------------------------------- // >>
   { path: NavRoutes.LOGIN, component: LoginViewComponent },
 
   // || USER || ----------------------------------------------- // >>
-  { path: NavRoutes.USER, component: UserViewComponent },
+  {
+    path: NavRoutes.USER,
+    component: UserViewComponent,
+    canActivate: [authGuard],
+  },
 
   // || CUSTOMER || ----------------------------------------------- // >>
-  { path: NavRoutes.CUSTOMERS, component: CustomersViewComponent },
+  {
+    path: NavRoutes.CUSTOMERS,
+    component: CustomersViewComponent,
+    canActivate: [authGuard],
+  },
 
   // || SETTINGS || ----------------------------------------------- // >>
-  { path: NavRoutes.SETTINGS, component: SettingsViewComponent },
+  {
+    path: NavRoutes.SETTINGS,
+    component: SettingsViewComponent,
+    canActivate: [authGuard],
+  },
 ];
