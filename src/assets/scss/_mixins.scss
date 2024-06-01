@@ -85,6 +85,12 @@
   gap: var(--gap, 1rem);
 }
 
+.flex-col-gap1_5 {
+  display: flex !important;
+  flex-direction: column;
+  gap: var(--gap, 1.5rem);
+}
+
 .flex-col-gap2 {
   display: flex !important;
   flex-direction: column;

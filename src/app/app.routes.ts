@@ -7,6 +7,7 @@ import { UserViewComponent } from './views/user.view/user.view.component';
 import { TenantDashboardViewComponent } from './views/tenant-dashboard.view/tenant-dashboard.view.component';
 import { CustomersViewComponent } from './views/customers.view/customers.view.component';
 import { authGuard } from './other/guards/auth.guard';
+import { MapViewComponent } from './views/map.view/map.view.component';
 
 export const routes: Routes = [
   // standard route
@@ -38,6 +39,13 @@ export const routes: Routes = [
   {
     path: NavRoutes.CUSTOMERS,
     component: CustomersViewComponent,
+    canActivate: [authGuard],
+  },
+
+  // || MAP || ----------------------------------------------- // >>
+  {
+    path: NavRoutes.MAP,
+    component: MapViewComponent,
     canActivate: [authGuard],
   },
 

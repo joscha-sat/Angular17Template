@@ -75,5 +75,8 @@
     "status-401": "Nicht authentifiziert!",
     "status-400": "Anfrage ungültig oder fehlerhaft!",
     "status-406": "Inakzeptable Anfrage an den Server"
+  },
+  "map": {
+    "title": "Karte"
   }
 }

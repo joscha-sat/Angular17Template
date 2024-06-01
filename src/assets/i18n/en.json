@@ -75,5 +75,8 @@
     "status-401": "",
     "status-400": "",
     "status-406": ""
+  },
+  "map": {
+    "title": "Map"
   }
 }

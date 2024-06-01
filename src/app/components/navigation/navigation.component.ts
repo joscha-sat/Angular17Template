@@ -28,6 +28,7 @@ export class NavigationComponent implements OnInit {
         'user.title',
         'customer.title-plural',
         'settings.title',
+        'map.title',
       ])
       .subscribe((translations) => {
         this.navItems.set([
@@ -48,6 +49,12 @@ export class NavigationComponent implements OnInit {
             tooltip: translations['customer.title-plural'],
             icon: 'tuiIconBriefcaseLarge',
             link: NavRoutes.CUSTOMERS,
+          },
+          // map
+          {
+            tooltip: translations['map.title'],
+            icon: 'tuiIconMapPinLarge',
+            link: NavRoutes.MAP,
           },
           // settings
           {
