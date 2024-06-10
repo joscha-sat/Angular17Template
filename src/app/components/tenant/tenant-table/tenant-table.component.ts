@@ -8,9 +8,9 @@ import { NavRoutes } from '../../../other/enums/nav-routes';
 import { BaseTuiButtonComponent } from '../../../shared/base-tui-button/base-tui-button.component';
 import { DeleteIconComponent } from '../../../shared/delete-icon/delete-icon.component';
 import { TenantService } from '../../../api/tenant.service';
-import { TableRefresherComponent } from '../../../shared/table-refresher/table-refresher.component';
+import { TableRefresherComponent } from '../../../other/abstract-class-components/table-refresher.component';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
-import { DeleteTenantDialogComponent } from '../delete-tenant-dialog/delete-tenant-dialog.component';
+import { TenantDeleteDialogComponent } from '../tenant-delete-dialog/tenant-delete-dialog.component';
 
 @Component({
   selector: 'app-tenant-table',
@@ -57,6 +57,6 @@ export class TenantTableComponent
 
   trashClicked(event: Tenant) {
     const tenant = new Tenant(event);
-    this.dialogService.openDialog(DeleteTenantDialogComponent, tenant.id);
+    this.dialogService.openDialog(TenantDeleteDialogComponent, tenant.id);
   }
 }

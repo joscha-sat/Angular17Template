@@ -20,6 +20,7 @@ import { TuiRadioLabeledModule } from '@taiga-ui/kit';
 import { BaseRadioGroupComponent } from '../../../shared/base-radio-group/base-radio-group.component';
 import { BaseComboboxComponent } from '../../../shared/base-combobox/base-combobox.component';
 import { TwoInputsRowLayoutComponent } from '../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout.component';
+import { AddEdit } from '../../../other/types/AddEdit.type';
 
 @Component({
   selector: 'app-user-add-edit-dialog',
@@ -40,11 +41,11 @@ import { TwoInputsRowLayoutComponent } from '../../../other/layouts/two-inputs-r
 })
 export class UserAddEditDialogComponent
   extends BaseDialogComponent
-  implements OnInit
+  implements OnInit, AddEdit
 {
   model?: User;
   form?: FormGroup;
-  addUserMode = signal(true);
+  createUserMode = signal(true);
 
   constructor(
     private fb: FormBuilder,
@@ -58,6 +59,7 @@ export class UserAddEditDialogComponent
   get userFromFormData(): User {
     // Reads form data and prepares a user object
     const formData = this.form?.value;
+
     return new User({
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -73,17 +75,17 @@ export class UserAddEditDialogComponent
     this.initForm();
   }
 
-  loadModelData() {
-    this.addUserMode.set(true);
+  loadModelData(): void {
+    this.createUserMode.set(true);
 
     if (!this.context.data) return;
     this.model = this.context.data;
-    this.addUserMode.set(false);
+    this.createUserMode.set(false);
   }
 
   // if the model is provided set the form data with it, else set to null
 
-  initForm() {
+  initForm(): void {
     this.form = this.fb.group({
       firstName: [this.model?.firstName ?? null, Validators.required],
       lastName: [this.model?.lastName ?? null, Validators.required],
@@ -100,13 +102,13 @@ export class UserAddEditDialogComponent
   }
 
   submit() {
-    if (this.addUserMode()) {
-      this.addUser();
+    if (this.createUserMode()) {
+      this.createUser();
     }
     this.updateUser();
   }
 
-  addUser() {
+  createUser() {
     this.userService.createOneUser(this.userFromFormData).subscribe();
   }
 

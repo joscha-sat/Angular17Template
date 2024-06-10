@@ -74,7 +74,7 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     }
   }
 
-  openAddTenantDialog() {
+  openCreateTenantDialog() {
     this.dialogService.openDialog(TenantAddEditDialogComponent);
   }
 

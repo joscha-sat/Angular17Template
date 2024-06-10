@@ -7,13 +7,13 @@ import { TwoButtonsComponent } from '../../../shared/two-buttons/two-buttons.com
 import { TenantService } from '../../../api/tenant.service';
 
 @Component({
-  selector: 'app-delete-tenant-dialog',
+  selector: 'app-tenant-delete-dialog',
   standalone: true,
   imports: [TwoButtonsComponent],
-  templateUrl: './delete-tenant-dialog.component.html',
-  styleUrl: './delete-tenant-dialog.component.scss',
+  templateUrl: './tenant-delete-dialog.component.html',
+  styleUrl: './tenant-delete-dialog.component.scss',
 })
-export class DeleteTenantDialogComponent
+export class TenantDeleteDialogComponent
   extends BaseDialogComponent
   implements OnInit
 {

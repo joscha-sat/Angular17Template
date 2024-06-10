@@ -34,7 +34,7 @@ export class CustomerAddEditDialogComponent
   implements OnInit
 {
   model?: Customer;
-  addCustomerMode = signal(true);
+  createCustomerMode = signal(true);
   form?: FormGroup;
 
   constructor(
@@ -60,11 +60,11 @@ export class CustomerAddEditDialogComponent
   }
 
   loadModelData() {
-    this.addCustomerMode.set(true);
+    this.createCustomerMode.set(true);
 
     if (!this.context.data) return;
     this.model = this.context.data;
-    this.addCustomerMode.set(false);
+    this.createCustomerMode.set(false);
   }
 
   initForm() {
@@ -74,7 +74,7 @@ export class CustomerAddEditDialogComponent
   }
 
   submit() {
-    if (this.addCustomerMode()) {
+    if (this.createCustomerMode()) {
       this.createCustomer();
     }
     this.updateCustomer();

@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { BaseTableAsyncComponent } from '../../../shared/base-table-async/base-table-async.component';
 import { CustomerService } from '../../../api/customer.service';
 import { Customer } from '../../../other/models/Customer';
-import { TableRefresherComponent } from '../../../shared/table-refresher/table-refresher.component';
+import { TableRefresherComponent } from '../../../other/abstract-class-components/table-refresher.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
 import { CustomerAddEditDialogComponent } from '../customer-add-edit-dialog/customer-add-edit-dialog.component';

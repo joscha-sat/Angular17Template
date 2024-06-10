@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FetchDataFunction } from '../base-table-async/base-table-async.component';
+import { FetchDataFunction } from '../../shared/base-table-async/base-table-async.component';
 import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { ResponseWithRecords } from '../../api/base-http.service';
 
 @Component({
   selector: 'app-table-refresher',
+  template: '',
+  styles: '',
   standalone: true,
   imports: [],
-  templateUrl: './table-refresher.component.html',
-  styleUrl: './table-refresher.component.scss',
 })
 export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
   refresh$ = new BehaviorSubject(null);

@@ -6,7 +6,7 @@ import { User } from '../../../other/models/User';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
 import { UserAddEditDialogComponent } from '../user-add-edit-dialog/user-add-edit-dialog.component';
 import { UserService } from '../../../api/user.service';
-import { TableRefresherComponent } from '../../../shared/table-refresher/table-refresher.component';
+import { TableRefresherComponent } from '../../../other/abstract-class-components/table-refresher.component';
 import { SuperAdminService } from '../../../api/super-admin.service';
 import { TenantService } from '../../../api/tenant.service';
 import { AuthService } from '../../../api/auth.service';
