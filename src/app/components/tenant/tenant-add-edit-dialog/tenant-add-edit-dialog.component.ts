@@ -12,6 +12,7 @@ import { BaseInputComponent } from '../../../shared/base-input/base-input.compon
 import { BaseSaveCancelBtnsComponent } from '../../../shared/base-save-cancel-btns/base-save-cancel-btns.component';
 import { Tenant } from '../../../other/models/Tenant';
 import { TenantService } from '../../../api/tenant.service';
+import { AddEdit } from '../../../other/types/AddEdit.type';
 
 @Component({
   selector: 'app-tenant-add-edit-dialog',
@@ -27,7 +28,7 @@ import { TenantService } from '../../../api/tenant.service';
 })
 export class TenantAddEditDialogComponent
   extends BaseDialogComponent
-  implements OnInit
+  implements OnInit, AddEdit
 {
   data: Tenant | undefined;
   mode = MODE.ADD;
@@ -72,5 +73,9 @@ export class TenantAddEditDialogComponent
     } else {
       this.updateTenant();
     }
+  }
+
+  loadModelData(): void {
+    //   TODO
   }
 }

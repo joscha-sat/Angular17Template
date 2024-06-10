@@ -15,6 +15,7 @@ import { BaseSaveCancelBtnsComponent } from '../../../shared/base-save-cancel-bt
 import { TranslateModule } from '@ngx-translate/core';
 import { TwoInputsRowLayoutComponent } from '../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout.component';
 import { CustomerService } from '../../../api/customer.service';
+import { AddEdit } from '../../../other/types/AddEdit.type';
 
 @Component({
   selector: 'app-customer-add-edit-dialog',
@@ -31,7 +32,7 @@ import { CustomerService } from '../../../api/customer.service';
 })
 export class CustomerAddEditDialogComponent
   extends BaseDialogComponent
-  implements OnInit
+  implements OnInit, AddEdit
 {
   model?: Customer;
   createCustomerMode = signal(true);
