@@ -6,6 +6,7 @@ import { TableRefresherComponent } from '../../../other/abstract-class-component
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
 import { CustomerAddEditDialogComponent } from '../customer-add-edit-dialog/customer-add-edit-dialog.component';
+import { Table } from '../../../other/types/Table.type';
 
 @Component({
   selector: 'app-customer-table',
@@ -14,7 +15,10 @@ import { CustomerAddEditDialogComponent } from '../customer-add-edit-dialog/cust
   templateUrl: './customer-table.component.html',
   styleUrl: './customer-table.component.scss',
 })
-export class CustomerTableComponent extends TableRefresherComponent<Customer> {
+export class CustomerTableComponent
+  extends TableRefresherComponent<Customer>
+  implements Table<Customer>
+{
   customerService = inject(CustomerService);
   dialogService = inject(TuiDialogHelperService);
 

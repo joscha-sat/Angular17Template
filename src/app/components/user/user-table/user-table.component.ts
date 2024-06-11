@@ -12,6 +12,7 @@ import { TenantService } from '../../../api/tenant.service';
 import { AuthService } from '../../../api/auth.service';
 import { BaseBadgeComponent } from '../../../shared/base-badge/base-badge.component';
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
+import { Table } from '../../../other/types/Table.type';
 
 @Component({
   selector: 'app-user-table',
@@ -26,21 +27,24 @@ import { BaseSearchComponent } from '../../../shared/base-search/base-search.com
   templateUrl: './user-table.component.html',
   styleUrl: './user-table.component.scss',
 })
-export class UserTableComponent extends TableRefresherComponent<User> {
+export class UserTableComponent
+  extends TableRefresherComponent<User>
+  implements Table<User>
+{
   dialogService = inject(TuiDialogHelperService<User>);
   userService = inject(UserService);
   superAdminService = inject(SuperAdminService);
   tenantService = inject(TenantService);
   authService = inject(AuthService);
 
-  tableHeaders = signal<string[]>([
+  headers = signal<string[]>([
     'Vorname',
     'Nachname',
     'Telefon',
     'Email',
     'Aktiv',
   ]);
-  tableColumns = signal<string[]>([
+  columns = signal<string[]>([
     'firstName',
     'lastName',
     'phone',

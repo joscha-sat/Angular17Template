@@ -1,9 +1,9 @@
 <app-base-table-async
   (rowClickEvent)="userClicked($event)"
   [cellTemplatesMap]="{ active }"
-  [columns]="tableColumns()"
+  [columns]="columns()"
   [fetchData]="fetchDataFn"
-  [headers]="tableHeaders()"
+  [headers]="headers()"
   [search$]="userService.search$"
 >
   <ng-template #active let-value>

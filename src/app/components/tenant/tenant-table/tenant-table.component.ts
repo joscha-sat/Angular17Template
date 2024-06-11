@@ -11,6 +11,7 @@ import { TenantService } from '../../../api/tenant.service';
 import { TableRefresherComponent } from '../../../other/abstract-class-components/table-refresher.component';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
 import { TenantDeleteDialogComponent } from '../tenant-delete-dialog/tenant-delete-dialog.component';
+import { Table } from '../../../other/types/Table.type';
 
 @Component({
   selector: 'app-tenant-table',
@@ -27,13 +28,14 @@ import { TenantDeleteDialogComponent } from '../tenant-delete-dialog/tenant-dele
 })
 export class TenantTableComponent
   extends TableRefresherComponent<Tenant>
-  implements OnInit
+  implements OnInit, Table<Tenant>
 {
-  headers = signal<string[]>(['Name', 'Löschen']);
-  columns = signal<string[]>(['name', 'delete']);
   router = inject(Router);
   tenantService = inject(TenantService);
   dialogService = inject(TuiDialogHelperService);
+
+  headers = signal<string[]>(['Name', 'Löschen']);
+  columns = signal<string[]>(['name', 'delete']);
 
   setTableRefreshService() {
     return this.tenantService;
@@ -49,7 +51,6 @@ export class TenantTableComponent
   }
 
   // method that navigates to the tenant dashboard via tenant id
-
   openTenantDashboard(tenant: Tenant) {
     const url = `${NavRoutes.TENANT}/${NavRoutes.DASHBOARD}/${tenant.id}`;
     this.router.navigate([url]).then();
