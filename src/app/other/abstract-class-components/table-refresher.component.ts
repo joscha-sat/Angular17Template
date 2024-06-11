@@ -33,6 +33,7 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
     page: number,
     size: number,
     search?: string,
+    searchDate?: string,
   ) => {
     const additionalParams = this.setAdditionalParams();
 
@@ -42,7 +43,8 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
           this.setTableRefreshService()[this.setTableRefreshMethodName()]({
             limit: size,
             skip: page * size,
-            search: search,
+            search,
+            searchDate,
             ...additionalParams,
           }) as Observable<ResponseWithRecords<T>>,
       ),

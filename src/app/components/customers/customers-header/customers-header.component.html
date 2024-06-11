@@ -6,9 +6,15 @@
   </ng-container>
 
   <div class="flex-a-center-g1" right>
-    <!--    <app-base-table-search [service]="customerService" />-->
-
     <app-base-search (backendSearchEvent)="searchInCustomers($event)" />
+
+    <form [formGroup]="form">
+      <app-base-date-picker
+        (tuiValueChanges)="dateChanged($event)"
+        fControlName="date"
+        tuiTextfieldSize="m"
+      />
+    </form>
 
     <app-base-tui-button (clicked)="openCreateCustomerDialog()">
       {{ 'customers.create' | translate }}

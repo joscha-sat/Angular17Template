@@ -19,6 +19,7 @@ export class GenericHttpService {
   _refreshObservable = new Subject<void>();
   refreshObservable$ = this._refreshObservable.asObservable();
   search$ = new BehaviorSubject<string>('');
+  searchDate$ = new BehaviorSubject<string>('');
 
   constructor(
     private readonly http: HttpClient,

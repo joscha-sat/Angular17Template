@@ -7,6 +7,11 @@ import { CustomerAddEditDialogComponent } from '../customer-add-edit-dialog/cust
 import { BaseTableSearchComponent } from '../../../shared/base-table-search/base-table-search.component';
 import { CustomerService } from '../../../api/customer.service';
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
+import { DateConverterService } from '../../../services/date-converter.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { BaseDatePickerComponent } from '../../../shared/base-date-picker/base-date-picker.component';
+import { TuiValueChangesModule } from '@taiga-ui/cdk';
+import { TuiTextfieldControllerModule } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-customers-header',
@@ -17,6 +22,10 @@ import { BaseSearchComponent } from '../../../shared/base-search/base-search.com
     BaseTuiButtonComponent,
     BaseTableSearchComponent,
     BaseSearchComponent,
+    BaseDatePickerComponent,
+    TuiValueChangesModule,
+    ReactiveFormsModule,
+    TuiTextfieldControllerModule,
   ],
   templateUrl: './customers-header.component.html',
   styleUrl: './customers-header.component.scss',
@@ -24,6 +33,11 @@ import { BaseSearchComponent } from '../../../shared/base-search/base-search.com
 export class CustomersHeaderComponent {
   dialogService = inject(TuiDialogHelperService);
   customerService = inject(CustomerService);
+  dateConverter = inject(DateConverterService);
+  fb = inject(FormBuilder);
+  form: FormGroup = this.fb.group({
+    date: null,
+  });
 
   openCreateCustomerDialog() {
     this.dialogService.openDialog(CustomerAddEditDialogComponent);
@@ -31,5 +45,10 @@ export class CustomersHeaderComponent {
 
   searchInCustomers($event: string) {
     this.customerService.search$.next($event);
+  }
+
+  dateChanged(tuiDay: any) {
+    const isoDate = this.dateConverter.formatTaigaDateToIsoDate([tuiDay.date]);
+    this.customerService.searchDate$.next(isoDate);
   }
 }

@@ -18,7 +18,6 @@ import {
   map,
   Observable,
   of,
-  Subscription,
   switchMap,
   tap,
 } from 'rxjs';
@@ -41,6 +40,7 @@ export type FetchDataFunction<T> = (
   pageNumber: number,
   pageSize: number,
   search?: string,
+  searchDate?: string,
 ) => Observable<ResponseWithRecords<T>>;
 
 @Component({
@@ -69,6 +69,7 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   @Input({ required: true }) columns: string[] = [];
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
   @Input() search$ = new BehaviorSubject<string>('');
+  @Input() searchDate$ = new BehaviorSubject<string>('');
   @Input({ required: true }) fetchData!: FetchDataFunction<T>;
 
   @Output() rowClickEvent = new EventEmitter();
@@ -80,7 +81,6 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   page$ = new BehaviorSubject<number>(0);
   total$ = new BehaviorSubject<number>(0);
   public hasData = new BehaviorSubject<boolean>(false);
-  private searchSubscription?: Subscription;
   private searchText?: string;
 
   isMatch(value: unknown): boolean {
@@ -88,20 +88,17 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   }
 
   ngOnInit() {
-    this.searchSubscription = this.search$.subscribe(
-      (searchText) => (this.searchText = searchText),
-    );
-
     this.sizedData$ = combineLatest([
       this.page$,
       this.size$,
       this.search$,
+      this.searchDate$,
     ]).pipe(
-      switchMap(([page, size, search]) => {
+      switchMap(([page, size, search, searchDate]) => {
         console.log(
-          `Calling fetchData with page=${page}, size=${size}, search=${search}`,
+          `Calling fetchData with page=${page}, size=${size}, search=${search}, searchDate=${searchDate}`,
         );
-        return this.fetchData(page, size, search).pipe(
+        return this.fetchData(page, size, search, searchDate).pipe(
           tap((response) => {
             this.total$.next(response.total);
             this.hasData.next(response.records && response.records.length > 0);
@@ -132,25 +129,25 @@ export class BaseTableAsyncComponent<T> implements OnInit {
     // );
   }
 
-  sortData(data: any[], column: any, direction: any): any[] {
-    return data.sort((a: any, b: any) => {
-      let aColValue = a[column];
-      let bColValue = b[column];
-
-      if (!isNaN(Number(aColValue)) && !isNaN(Number(bColValue))) {
-        aColValue = Number(aColValue);
-        bColValue = Number(bColValue);
-      }
-
-      if (aColValue < bColValue) {
-        return direction === 'asc' ? -1 : 1;
-      } else if (aColValue > bColValue) {
-        return direction === 'asc' ? 1 : -1;
-      }
-
-      return 0;
-    });
-  }
+  // sortData(data: any[], column: any, direction: any): any[] {
+  //   return data.sort((a: any, b: any) => {
+  //     let aColValue = a[column];
+  //     let bColValue = b[column];
+  //
+  //     if (!isNaN(Number(aColValue)) && !isNaN(Number(bColValue))) {
+  //       aColValue = Number(aColValue);
+  //       bColValue = Number(bColValue);
+  //     }
+  //
+  //     if (aColValue < bColValue) {
+  //       return direction === 'asc' ? -1 : 1;
+  //     } else if (aColValue > bColValue) {
+  //       return direction === 'asc' ? 1 : -1;
+  //     }
+  //
+  //     return 0;
+  //   });
+  // }
 
   extractNestedProperty(item: any, key: string): any {
     const keys = key.split('.');
