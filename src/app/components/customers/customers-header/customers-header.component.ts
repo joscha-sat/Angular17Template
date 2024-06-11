@@ -35,6 +35,7 @@ export class CustomersHeaderComponent {
   customerService = inject(CustomerService);
   dateConverter = inject(DateConverterService);
   fb = inject(FormBuilder);
+
   form: FormGroup = this.fb.group({
     date: null,
   });
@@ -48,6 +49,11 @@ export class CustomersHeaderComponent {
   }
 
   dateChanged(tuiDay: any) {
+    if (!tuiDay.date) {
+      this.customerService.searchDate$.next('');
+      return;
+    }
+
     const isoDate = this.dateConverter.formatTaigaDateToIsoDate([tuiDay.date]);
     this.customerService.searchDate$.next(isoDate);
   }

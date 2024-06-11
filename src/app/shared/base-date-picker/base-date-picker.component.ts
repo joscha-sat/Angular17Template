@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { TuiFieldErrorPipeModule, TuiInputDateModule } from '@taiga-ui/kit';
-import { TuiErrorModule } from '@taiga-ui/core';
+import { TuiErrorModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -17,6 +17,7 @@ import { AsyncPipe } from '@angular/common';
     ReactiveFormsModule,
     TuiFieldErrorPipeModule,
     AsyncPipe,
+    TuiTextfieldControllerModule,
   ],
   templateUrl: './base-date-picker.component.html',
   styleUrl: './base-date-picker.component.scss',
