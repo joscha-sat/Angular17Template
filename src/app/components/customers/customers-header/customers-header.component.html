@@ -10,7 +10,7 @@
 
     <form [formGroup]="form">
       <app-base-date-picker
-        (tuiValueChanges)="dateChanged($event)"
+        [service]="customerService"
         fControlName="date"
         tuiTextfieldSize="m"
       />

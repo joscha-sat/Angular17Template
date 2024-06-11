@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import {
   ControlContainer,
   FormGroupDirective,
@@ -7,6 +7,9 @@ import {
 import { TuiFieldErrorPipeModule, TuiInputDateModule } from '@taiga-ui/kit';
 import { TuiErrorModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { AsyncPipe } from '@angular/common';
+import { TuiValueChangesModule } from '@taiga-ui/cdk';
+import { DateConverterService } from '../../services/date-converter.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-base-date-picker',
@@ -18,6 +21,7 @@ import { AsyncPipe } from '@angular/common';
     TuiFieldErrorPipeModule,
     AsyncPipe,
     TuiTextfieldControllerModule,
+    TuiValueChangesModule,
   ],
   templateUrl: './base-date-picker.component.html',
   styleUrl: './base-date-picker.component.scss',
@@ -29,6 +33,20 @@ import { AsyncPipe } from '@angular/common';
   ],
 })
 export class BaseDatePickerComponent {
+  dateConverter = inject(DateConverterService);
+
   hint = input<string>('Datum auswählen');
   fControlName = input.required<string>();
+  service = input.required<{ searchDate$: BehaviorSubject<string> }>();
+
+  dateChangeEvent(tuiDay: any) {
+    if (!tuiDay) {
+      this.service().searchDate$.next('');
+      return;
+    }
+
+    // searches in the backend via searchDate param
+    const isoDate = this.dateConverter.formatTaigaDateToIsoDate([tuiDay]);
+    this.service().searchDate$.next(isoDate);
+  }
 }
