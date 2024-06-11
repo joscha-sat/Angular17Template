@@ -9,6 +9,7 @@ import { BaseTableSearchComponent } from '../../../shared/base-table-search/base
 import { UserService } from '../../../api/user.service';
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 import { EditIconComponent } from '../../../shared/base-icons/edit-icon/edit-icon.component';
+import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-search-date.component';
 
 @Component({
   selector: 'app-user-header',
@@ -20,6 +21,7 @@ import { EditIconComponent } from '../../../shared/base-icons/edit-icon/edit-ico
     EditIconComponent,
     BaseTableSearchComponent,
     BaseSearchComponent,
+    BaseSearchDateComponent,
   ],
   templateUrl: './user-header.component.html',
   styleUrl: './user-header.component.scss',

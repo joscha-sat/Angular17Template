@@ -19,6 +19,7 @@ import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.serv
 import { TenantAddEditDialogComponent } from '../tenant-add-edit-dialog/tenant-add-edit-dialog.component';
 import { BaseTableSearchComponent } from '../../../shared/base-table-search/base-table-search.component';
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
+import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-search-date.component';
 
 @Component({
   selector: 'app-tenant-header',
@@ -33,6 +34,7 @@ import { BaseSearchComponent } from '../../../shared/base-search/base-search.com
     BaseInputComponent,
     BaseTableSearchComponent,
     BaseSearchComponent,
+    BaseSearchDateComponent,
   ],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',

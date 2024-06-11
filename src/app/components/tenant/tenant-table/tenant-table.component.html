@@ -5,6 +5,7 @@
   [fetchData]="fetchDataFn!"
   [headers]="headers()"
   [search$]="tenantService.search$"
+  [searchDate$]="tenantService.searchDate$"
 >
   <ng-template #deleteCell let-object="object">
     <app-delete-icon (click)="trashClicked(object); $event.stopPropagation()" />

@@ -5,6 +5,7 @@
   [fetchData]="fetchDataFn"
   [headers]="headers()"
   [search$]="userService.search$"
+  [searchDate$]="userService.searchDate$"
 >
   <ng-template #active let-value>
     <app-base-badge
