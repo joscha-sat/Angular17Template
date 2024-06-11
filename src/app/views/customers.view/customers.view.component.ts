@@ -4,6 +4,8 @@ import { UserTableComponent } from '../../components/user/user-table/user-table.
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
 import { CustomersHeaderComponent } from '../../components/customers/customers-header/customers-header.component';
 import { CustomerTableComponent } from '../../components/customers/customer-table/customer-table.component';
+import { BaseDatePickerComponent } from '../../shared/base-date-picker/base-date-picker.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-customers.view',
@@ -14,6 +16,8 @@ import { CustomerTableComponent } from '../../components/customers/customer-tabl
     ViewLayoutComponent,
     CustomersHeaderComponent,
     CustomerTableComponent,
+    BaseDatePickerComponent,
+    ReactiveFormsModule,
   ],
   templateUrl: './customers.view.component.html',
   styleUrl: './customers.view.component.scss',

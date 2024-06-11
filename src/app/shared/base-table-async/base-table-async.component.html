@@ -50,9 +50,22 @@
               ></ng-container>
             </ng-container>
 
-            <!--    default case, display the value in raw   -->
+            <!-- Default case, display the value in raw -->
             <ng-container *ngIf="!cellTemplatesMap[column]">
-              {{ extractNestedProperty(item, column) }}
+              <!-- If data is a acceptable date format, format it -->
+              <ng-container
+                *ngIf="extractNestedProperty(item, column) | isDate"
+              >
+                {{
+                  extractNestedProperty(item, column) | date: 'dd.MM.yyyy HH:mm'
+                }}
+              </ng-container>
+              <!-- If not date, display raw value -->
+              <ng-container
+                *ngIf="!(extractNestedProperty(item, column) | isDate)"
+              >
+                {{ extractNestedProperty(item, column) }}
+              </ng-container>
             </ng-container>
           </td>
         </ng-container>

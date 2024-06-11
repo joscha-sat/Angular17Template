@@ -22,8 +22,8 @@ export class CustomerTableComponent
   customerService = inject(CustomerService);
   dialogService = inject(TuiDialogHelperService);
 
-  headers = signal<string[]>(['Name']);
-  columns = signal<string[]>(['name']);
+  headers = signal<string[]>(['Erstelle am', 'Name']);
+  columns = signal<string[]>(['createdAt', 'name']);
 
   setTableRefreshService(): any {
     return this.customerService;

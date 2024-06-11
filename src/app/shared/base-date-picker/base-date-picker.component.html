@@ -1,0 +1,10 @@
+<tui-input-date
+  [formControlName]="fControlName()"
+  tuiUnfinishedValidator="Finish filling the field"
+>
+  {{ hint() }}
+</tui-input-date>
+<tui-error
+  [error]="[] | tuiFieldError | async"
+  [formControlName]="fControlName()"
+></tui-error>

@@ -24,6 +24,7 @@ import {
 } from 'rxjs';
 import {
   AsyncPipe,
+  DatePipe,
   NgForOf,
   NgIf,
   NgSwitch,
@@ -34,6 +35,7 @@ import {
 import { TUI_DEFAULT_MATCHER, TuiLetModule } from '@taiga-ui/cdk';
 import { TranslateModule } from '@ngx-translate/core';
 import { ResponseWithRecords } from '../../api/base-http.service';
+import { IsDatePipe } from '../../other/pipes/is-date.pipe';
 
 export type FetchDataFunction<T> = (
   pageNumber: number,
@@ -56,6 +58,8 @@ export type FetchDataFunction<T> = (
     NgSwitch,
     NgSwitchDefault,
     TranslateModule,
+    DatePipe,
+    IsDatePipe,
   ],
   templateUrl: './base-table-async.component.html',
   styleUrl: './base-table-async.component.scss',
