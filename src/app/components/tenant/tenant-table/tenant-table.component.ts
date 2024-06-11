@@ -6,12 +6,12 @@ import { BaseTableAsyncComponent } from '../../../shared/base-table-async/base-t
 import { Router } from '@angular/router';
 import { NavRoutes } from '../../../other/enums/nav-routes';
 import { BaseTuiButtonComponent } from '../../../shared/base-tui-button/base-tui-button.component';
-import { DeleteIconComponent } from '../../../shared/delete-icon/delete-icon.component';
 import { TenantService } from '../../../api/tenant.service';
 import { TableRefresherComponent } from '../../../other/abstract-class-components/table-refresher.component';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
 import { TenantDeleteDialogComponent } from '../tenant-delete-dialog/tenant-delete-dialog.component';
 import { Table } from '../../../other/types/Table.type';
+import { DeleteIconComponent } from '../../../shared/base-icons/delete-icon/delete-icon.component';
 
 @Component({
   selector: 'app-tenant-table',
