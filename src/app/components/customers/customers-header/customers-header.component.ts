@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BaseDatePickerComponent } from '../../../shared/base-date-picker/base-date-picker.component';
 import { TuiValueChangesModule } from '@taiga-ui/cdk';
 import { TuiTextfieldControllerModule } from '@taiga-ui/core';
+import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-search-date.component';
 
 @Component({
   selector: 'app-customers-header',
@@ -25,6 +26,7 @@ import { TuiTextfieldControllerModule } from '@taiga-ui/core';
     TuiValueChangesModule,
     ReactiveFormsModule,
     TuiTextfieldControllerModule,
+    BaseSearchDateComponent,
   ],
   templateUrl: './customers-header.component.html',
   styleUrl: './customers-header.component.scss',
@@ -40,9 +42,5 @@ export class CustomersHeaderComponent {
 
   openCreateCustomerDialog() {
     this.dialogService.openDialog(CustomerAddEditDialogComponent);
-  }
-
-  searchInCustomers($event: string) {
-    this.customerService.search$.next($event);
   }
 }

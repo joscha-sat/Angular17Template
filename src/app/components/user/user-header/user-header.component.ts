@@ -31,8 +31,4 @@ export class UserHeaderComponent {
   openCreateUserDialog() {
     this.dialogService.openDialog(UserAddEditDialogComponent);
   }
-
-  searchInUsers($event: string) {
-    this.userService.search$.next($event);
-  }
 }

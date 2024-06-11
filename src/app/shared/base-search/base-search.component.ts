@@ -1,13 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  inject,
-  OnInit,
-  Output,
-  signal,
-} from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { BaseInputComponent } from '../base-input/base-input.component';
-import { debounceTime, Subject } from 'rxjs';
+import { BehaviorSubject, debounceTime, Subject } from 'rxjs';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -20,7 +13,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class BaseSearchComponent implements OnInit {
   enteredSearchTerm = new Subject<string>();
   searchValue = signal('');
-  @Output() backendSearchEvent = new EventEmitter<string>();
+  service = input.required<{ search$: BehaviorSubject<string> }>();
+
   private fb = inject(FormBuilder);
   // Debounce the search input to prevent excessive calls.
   form: FormGroup = this.fb.group({
@@ -33,7 +27,7 @@ export class BaseSearchComponent implements OnInit {
 
   // Trigger the search by emitting an event to the parent component.
   searchInBackend(searchTerm: string) {
-    this.backendSearchEvent.emit(searchTerm);
+    this.service().search$.next(searchTerm);
   }
 
   // Update the searchTerm and searchValue each time the search input changes.

@@ -19,7 +19,7 @@
   <div class="flex-a-center-g1" right>
     <!--    <app-base-table-search [service]="tenantService" />-->
 
-    <app-base-search (backendSearchEvent)="searchInTenants($event)" />
+    <app-base-search [service]="tenantService" />
 
     <!-- new tenant button -->
     <app-base-tui-button (clicked)="openCreateTenantDialog()">

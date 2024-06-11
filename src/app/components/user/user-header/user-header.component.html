@@ -8,7 +8,7 @@
   <div class="flex-a-center-g1" right>
     <!--  table search backend  -->
 
-    <app-base-search (backendSearchEvent)="searchInUsers($event)" />
+    <app-base-search [service]="userService" />
 
     <!--  table search highlight  -->
     <!--    <app-base-table-search [service]="userService" />-->

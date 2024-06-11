@@ -127,26 +127,28 @@ export class TenantTableComponent extends TableRefresherComponent<Tenant> {
 
 ### Frontend table search
 
+This triggers a getAllMethod with a param called search eg: <br />
+/customers?search=max
+
 ````angular2html
 <!-- search component -->
-<app-base-search (backendSearchEvent)="searchInUsers($event)"/>
+<app-base-search [serice]="userService"/>
 
 <!-- table adjustment (example user) -->
-<app-base-table-async
-  [search$]="userService.search$"
->
+<app-base-table-async [search$]="userService.search$">
 ````
 
-````
-  search$ = new BehaviorSubject<string>('');
-  
-  // the search is in the GenericHttpService (base-http.service) 
-  // and automaticall usable in every api service extending the GenericHttpService
-  // example: export class UserService extends GenericHttpService
-  
-  searchInUsers($event: string) {
-    this.userService.search$.next($event);
-  }
+### Frontend table date search
+
+This triggers a getAllMethod with a param called searchDate eg: <br />
+/customers?searchDate=2024-06-12T00:00:00.000Z
+
+````angular2html
+<!-- search component -->
+<app-base-search-date [service]="customerService"/>
+
+<!-- table adjustment (example user) -->
+<app-base-table-async [searchDate$]="customerService.searchDate$"/>
 ````
 
 ### TODO: how to use Dialogs
