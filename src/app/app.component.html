@@ -1,6 +1,9 @@
 <tui-root>
-  <app-navigation />
 
+  @if (isLoggedIn) {
+    <app-navigation />
+  }
+  
   <!--  some custom margin, to prevent overlapping with the navigation -->
   <div style="margin-left: 5.5rem">
     <router-outlet />

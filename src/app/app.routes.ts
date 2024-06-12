@@ -13,46 +13,47 @@ export const routes: Routes = [
   // standard route
   { path: '', redirectTo: NavRoutes.TENANT, pathMatch: 'full' },
 
-  // || TENANT || ----------------------------------------------- // >>
+  // protected routes
   {
-    path: NavRoutes.TENANT,
-    component: TenantViewComponent,
-    canActivate: [authGuard],
-  },
-  {
-    path: NavRoutes.TENANT + '/' + NavRoutes.DASHBOARD + '/:id',
-    component: TenantDashboardViewComponent,
-    canActivate: [authGuard],
+    path: '',
+    canActivate: [authGuard], // authGuard provided at parent level
+    children: [
+      // || TENANT || ----------------------------------------------- // >>
+      {
+        path: NavRoutes.TENANT,
+        component: TenantViewComponent,
+      },
+      // || TENANT DASHBOARD || -------------------------------------- // >>
+      {
+        path: NavRoutes.TENANT + '/' + NavRoutes.DASHBOARD + '/:id',
+        component: TenantDashboardViewComponent,
+      },
+      // || USER || ----------------------------------------------- // >>
+      {
+        path: NavRoutes.USER,
+        component: UserViewComponent,
+      },
+      // || CUSTOMER || ----------------------------------------------- // >>
+      {
+        path: NavRoutes.CUSTOMERS,
+        component: CustomersViewComponent,
+      },
+      // || MAP || ----------------------------------------------- // >>
+      {
+        path: NavRoutes.MAP,
+        component: MapViewComponent,
+      },
+      // || SETTINGS || ----------------------------------------------- // >>
+      {
+        path: NavRoutes.SETTINGS,
+        component: SettingsViewComponent,
+      },
+    ],
   },
 
   // || LOGIN || ----------------------------------------------- // >>
   { path: NavRoutes.LOGIN, component: LoginViewComponent },
 
-  // || USER || ----------------------------------------------- // >>
-  {
-    path: NavRoutes.USER,
-    component: UserViewComponent,
-    canActivate: [authGuard],
-  },
-
-  // || CUSTOMER || ----------------------------------------------- // >>
-  {
-    path: NavRoutes.CUSTOMERS,
-    component: CustomersViewComponent,
-    canActivate: [authGuard],
-  },
-
-  // || MAP || ----------------------------------------------- // >>
-  {
-    path: NavRoutes.MAP,
-    component: MapViewComponent,
-    canActivate: [authGuard],
-  },
-
-  // || SETTINGS || ----------------------------------------------- // >>
-  {
-    path: NavRoutes.SETTINGS,
-    component: SettingsViewComponent,
-    canActivate: [authGuard],
-  },
+  // || WILDCARD || ----------------------------------------------- // >>
+  { path: '**', redirectTo: NavRoutes.ERROR, pathMatch: 'full' },
 ];
