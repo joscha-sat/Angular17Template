@@ -11,6 +11,9 @@
     "title": "Kunde",
     "title-plural": "Kunden"
   },
+  "customers": {
+    "create": "Kunden erstellen"
+  },
   "dashboard": {
     "title": "Übersicht"
   },
@@ -18,20 +21,33 @@
     "active": "Aktiv",
     "back": "Zurück",
     "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "empty": "Keine Einträge vorhanden",
+    "english": "English",
+    "german": "Deutsch",
     "inactive": "Inaktiv",
+    "language": "Sprache",
     "no": "Nein",
     "ok": "Ok",
     "save": "speichern",
     "search": "Suchen",
-    "yes": "Ja",
-    "empty": "Keine Einträge vorhanden",
-    "delete": "Löschen"
+    "title": "Allgemein",
+    "yes": "Ja"
   },
   "hint": {
     "email": "E-Mail eingeben",
     "firstName": "Vorname eingeben",
     "lastName": "Nachname eingeben",
     "phone": "Telefonnummer eingeben"
+  },
+  "http": {
+    "status-400": "Anfrage ungültig oder fehlerhaft!",
+    "status-401": "Nicht authentifiziert!",
+    "status-403": "Authentifizierung fehlgeschlagen oder fehlt.",
+    "status-404": "Die angeforderte Ressource wurde nicht gefunden",
+    "status-406": "Inakzeptable Anfrage an den Server",
+    "status-409": "Konflikt bei der Anfrage an den Server",
+    "status-500": "Ein interner Server-Fehler ist aufgetreten"
   },
   "login": {
     "forgot-password": "Passwort vergessen?",
@@ -41,6 +57,9 @@
   },
   "logout": {
     "title": "Abmelden"
+  },
+  "map": {
+    "title": "Karte"
   },
   "object": {
     "title-plural": "Objekte"
@@ -54,29 +73,14 @@
   },
   "tenant": {
     "create": "Firma erstellen",
-    "select": "Firma auswählen",
-    "title": "Firmen",
     "edit": "Firma bearbeiten",
-    "enter-name": "Firmennamen eingeben"
+    "enter-name": "Firmennamen eingeben",
+    "select": "Firma auswählen",
+    "title": "Firmen"
   },
   "user": {
     "create": "Benutzer erstellen",
     "title": "Benutzer",
     "update": "Benutzer bearbeiten"
-  },
-  "customers": {
-    "create": "Kunden erstellen"
-  },
-  "http": {
-    "status-500": "Ein interner Server-Fehler ist aufgetreten",
-    "status-409": "Konflikt bei der Anfrage an den Server",
-    "status-404": "Die angeforderte Ressource wurde nicht gefunden",
-    "status-403": "Authentifizierung fehlgeschlagen oder fehlt.",
-    "status-401": "Nicht authentifiziert!",
-    "status-400": "Anfrage ungültig oder fehlerhaft!",
-    "status-406": "Inakzeptable Anfrage an den Server"
-  },
-  "map": {
-    "title": "Karte"
   }
 }

@@ -11,6 +11,9 @@
     "title": "Customer",
     "title-plural": "Customers"
   },
+  "customers": {
+    "create": "Create customer"
+  },
   "dashboard": {
     "title": "Dashboard"
   },
@@ -18,20 +21,33 @@
     "active": "Active",
     "back": "Back",
     "cancel": "Cancel",
+    "delete": "Delete",
+    "empty": "No entries available",
+    "english": "English",
+    "german": "German",
     "inactive": "Inactive",
+    "language": "Language",
     "no": "No",
     "ok": "Ok",
     "save": "save",
     "search": "Search",
-    "yes": "Yes",
-    "empty": "No entries available",
-    "delete": "Delete"
+    "title": "General",
+    "yes": "Yes"
   },
   "hint": {
     "email": "Enter email",
     "firstName": "Enter first name",
     "lastName": "Enter last name",
     "phone": "Enter phone number"
+  },
+  "http": {
+    "status-400": "",
+    "status-401": "",
+    "status-403": "",
+    "status-404": "Not found",
+    "status-406": "",
+    "status-409": "Conflict sending a request to the server",
+    "status-500": "Internal server error"
   },
   "login": {
     "forgot-password": "Forgot your password?",
@@ -41,6 +57,9 @@
   },
   "logout": {
     "title": "Logout"
+  },
+  "map": {
+    "title": "Map"
   },
   "object": {
     "title-plural": "Objects"
@@ -54,29 +73,14 @@
   },
   "tenant": {
     "create": "Create tenant",
-    "select": "Select tenant",
-    "title": "Tenant",
     "edit": "Edit tenant",
-    "enter-name": "Enter a tenant name"
+    "enter-name": "Enter a tenant name",
+    "select": "Select tenant",
+    "title": "Tenant"
   },
   "user": {
     "create": "Create user",
     "title": "User",
     "update": "Edit user"
-  },
-  "customers": {
-    "create": "Create customer"
-  },
-  "http": {
-    "status-500": "Internal server error",
-    "status-409": "Conflict sending a request to the server",
-    "status-404": "Not found",
-    "status-403": "",
-    "status-401": "",
-    "status-400": "",
-    "status-406": ""
-  },
-  "map": {
-    "title": "Map"
   }
 }

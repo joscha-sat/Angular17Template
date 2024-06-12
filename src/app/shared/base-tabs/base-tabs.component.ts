@@ -12,7 +12,7 @@ import { TuiSvgModule } from '@taiga-ui/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 // routePath has to be a child route to be loaded correctly into the router-outlet space
-export type tabArray = {
+export type TabArray = {
   name: string;
   routePath?: string;
   iconSrc?: string;
@@ -36,7 +36,7 @@ export class BaseTabsComponent implements OnInit {
   router = inject(Router);
 
   activeItemIndex = signal<number>(0);
-  tabArray = input.required<tabArray[]>();
+  tabArray = input.required<TabArray[]>();
   loadChildView = input<boolean>(true);
 
   onTabIndexChange = output<number>();

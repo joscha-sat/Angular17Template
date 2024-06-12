@@ -4,6 +4,7 @@ import { TuiIslandModule } from '@taiga-ui/kit';
 
 import { SettingsHeaderComponent } from '../../components/settings/settings-header/settings-header.component';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
+import { SettingsTabsComponent } from '../../components/settings/settings-tabs/settings-tabs.component';
 
 @Component({
   selector: 'app-settings.view',
@@ -13,6 +14,7 @@ import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout
     TuiIslandModule,
     ViewLayoutComponent,
     SettingsHeaderComponent,
+    SettingsTabsComponent,
   ],
   templateUrl: './settings.view.component.html',
   styleUrl: './settings.view.component.scss',

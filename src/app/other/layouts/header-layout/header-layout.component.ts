@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { BaseBreadcrumbsComponent } from '../../../shared/base-breadcrumbs/base-breadcrumbs.component';
 
 @Component({
@@ -8,4 +8,6 @@ import { BaseBreadcrumbsComponent } from '../../../shared/base-breadcrumbs/base-
   templateUrl: './header-layout.component.html',
   styleUrl: './header-layout.component.scss',
 })
-export class HeaderLayoutComponent {}
+export class HeaderLayoutComponent {
+  useBreadcrumbs = input<boolean>(true);
+}

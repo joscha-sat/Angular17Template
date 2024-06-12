@@ -13,6 +13,7 @@ export enum NavRoutes {
 
   // settings routes
   SETTINGS = 'settings',
+  GENERAL = 'general',
   PROFILE = 'profile',
   ROLES = 'roles',
   PASSWORD = 'password',

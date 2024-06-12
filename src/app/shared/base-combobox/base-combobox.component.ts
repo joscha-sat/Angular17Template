@@ -48,8 +48,8 @@ import { TuiValueChangesModule } from '@taiga-ui/cdk';
     },
   ],
 })
-export class BaseComboboxComponent implements OnChanges {
-  @Input({ required: true }) dataArray: unknown[] = [];
+export class BaseComboboxComponent<T> implements OnChanges {
+  @Input({ required: true }) dataArray: T[] = [];
   @Input({ required: true }) fControlName = '';
   @Input() hint: string = 'placeholder';
   @Input() size: TuiSizeL | TuiSizeS = 'm';
