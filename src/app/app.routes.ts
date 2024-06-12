@@ -49,13 +49,24 @@ export const routes: Routes = [
         path: NavRoutes.SETTINGS,
         component: SettingsViewComponent,
       },
-    ],
-  },
 
-  // || TEST || ----------------------------------------------- // >>
-  {
-    path: 'test',
-    component: TestViewComponent,
+      // || TEST TODO: REMOVE FOR PRODUCTION!!! || ----------------------------------------------- // >>
+      {
+        path: 'test',
+        component: TestViewComponent,
+        children: [
+          {
+            path: 'settings',
+            component: SettingsViewComponent,
+          },
+
+          {
+            path: 'tenant',
+            component: TenantViewComponent,
+          },
+        ],
+      },
+    ],
   },
 
   // || LOGIN || ----------------------------------------------- // >>

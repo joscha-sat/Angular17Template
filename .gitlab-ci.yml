@@ -40,12 +40,12 @@ tag-latest:
 
 deploy-dev:
   extends: .deploy
-  tags: [ 28dev2 ]
+  tags: [ 28dev4 ]
   before_script:
     - export STACK_SERVICE=${STACK_DEV}_${SERVICE_NAME}
   environment:
     name: $CI_COMMIT_REF_SLUG
-    url: https://angular.template.dev2.28apps-software.de
+    url: https://angular.template.dev.28apps-software.de
   only:
     - template
 

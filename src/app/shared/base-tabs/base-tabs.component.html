@@ -1,21 +1,19 @@
 <tui-tabs [(activeItemIndex)]="activeItemIndex">
-  <button (click)="onClick('Maps')" tuiTab>
-    <tui-svg class="tui-space_right-2" src="tuiIconCreditCard"></tui-svg>
-    Maps
-  </button>
-  <button (click)="onClick('Calls')" disabled tuiTab>
-    <tui-svg class="tui-space_right-2" src="tuiIconPhone"></tui-svg>
-    Calls
-  </button>
-  <button (click)="onClick('Settings')" tuiTab>
-    <tui-svg class="tui-space_right-2" src="tuiIconSettings"></tui-svg>
-    Settings
-  </button>
+  @for (tab of tabArray(); track tab) {
+    <button [routerLink]="tab.routePath" tuiTab (click)="onClick()">
+      <tui-svg class="tui-space_right-2" src="tuiIconCreditCard"></tui-svg>
+      {{ tab.name }}
+    </button>
+  }
 </tui-tabs>
-<tui-input-count
-  [(ngModel)]="activeItemIndex"
-  [max]="2"
-  class="tui-space_top-4"
->
-  activeItemIndex
-</tui-input-count>
+
+
+@if (loadChildView()) {
+  <router-outlet></router-outlet>
+} @else {
+  <ng-content />
+}
+
+
+
+

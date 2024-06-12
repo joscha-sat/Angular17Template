@@ -62,6 +62,13 @@ export class NavigationComponent implements OnInit {
             icon: 'tuiIconSettingsLarge',
             link: NavRoutes.SETTINGS,
           },
+
+          // test TODO: REMOVE FOR PRODUCTION!!!
+          {
+            tooltip: 'Test',
+            icon: 'tuiIconToolLarge',
+            link: 'test',
+          },
         ]);
       });
   }

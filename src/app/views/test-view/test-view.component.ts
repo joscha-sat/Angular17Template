@@ -8,11 +8,17 @@ import {
   FormGroupDirective,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { BaseTabsComponent } from '../../shared/base-tabs/base-tabs.component';
 
 @Component({
   selector: 'app-test-view',
   standalone: true,
-  imports: [ViewLayoutComponent, BaseInputComponent, ReactiveFormsModule],
+  imports: [
+    ViewLayoutComponent,
+    BaseInputComponent,
+    ReactiveFormsModule,
+    BaseTabsComponent,
+  ],
   templateUrl: './test-view.component.html',
   styleUrl: './test-view.component.scss',
   viewProviders: [
