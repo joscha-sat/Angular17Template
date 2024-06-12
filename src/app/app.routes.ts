@@ -8,6 +8,7 @@ import { TenantDashboardViewComponent } from './views/tenant-dashboard.view/tena
 import { CustomersViewComponent } from './views/customers.view/customers.view.component';
 import { authGuard } from './other/guards/auth.guard';
 import { MapViewComponent } from './views/map.view/map.view.component';
+import { TestViewComponent } from './views/test-view/test-view.component';
 
 export const routes: Routes = [
   // standard route
@@ -49,6 +50,12 @@ export const routes: Routes = [
         component: SettingsViewComponent,
       },
     ],
+  },
+
+  // || TEST || ----------------------------------------------- // >>
+  {
+    path: 'test',
+    component: TestViewComponent,
   },
 
   // || LOGIN || ----------------------------------------------- // >>
