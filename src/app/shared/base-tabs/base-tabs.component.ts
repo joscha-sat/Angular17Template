@@ -10,10 +10,11 @@ import { FormsModule } from '@angular/forms';
 import { TuiInputCountModule, TuiTabsModule } from '@taiga-ui/kit';
 import { TuiSvgModule } from '@taiga-ui/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 // routePath has to be a child route to be loaded correctly into the router-outlet space
 export type TabArray = {
-  name: string;
+  i18nTitle: string;
   routePath?: string;
   iconSrc?: string;
 };
@@ -28,6 +29,7 @@ export type TabArray = {
     TuiSvgModule,
     RouterOutlet,
     RouterLink,
+    TranslateModule,
   ],
   templateUrl: './base-tabs.component.html',
   styleUrl: './base-tabs.component.scss',

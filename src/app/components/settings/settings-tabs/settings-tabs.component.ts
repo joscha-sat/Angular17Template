@@ -15,7 +15,7 @@ import { NavRoutes } from '../../../other/enums/nav-routes';
 export class SettingsTabsComponent {
   tabs = signal<TabArray[]>([
     {
-      name: 'Allgemein',
+      i18nTitle: 'general.title',
       routePath: NavRoutes.SETTINGS + '/' + NavRoutes.GENERAL,
     },
   ]);
