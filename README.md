@@ -160,7 +160,7 @@ This triggers a getAllMethod with a param called search eg: <br />
 This triggers a getAllMethod with a param called searchDate eg: <br />
 /customers?searchDate=2024-06-12T00:00:00.000Z
 
-````angular2html
+````angular17html
 <!-- search component -->
 <app-base-search-date [service]="customerService" />
 
