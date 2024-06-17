@@ -18,7 +18,7 @@ import { CustomerService } from '../../../api/customer.service';
 import { AddEdit } from '../../../other/types/AddEdit.type';
 
 @Component({
-  selector: 'app-customer-add-edit-dialog',
+  selector: "app-customer-add-edit-dialog",
   standalone: true,
   imports: [
     BaseInputComponent,
@@ -27,15 +27,14 @@ import { AddEdit } from '../../../other/types/AddEdit.type';
     TranslateModule,
     TwoInputsRowLayoutComponent,
   ],
-  templateUrl: './customer-add-edit-dialog.component.html',
-  styleUrl: './customer-add-edit-dialog.component.scss',
+  templateUrl: "./customer-add-edit-dialog.component.html",
+  styleUrl: "./customer-add-edit-dialog.component.scss",
 })
 export class CustomerAddEditDialogComponent
   extends BaseDialogComponent
-  implements OnInit, AddEdit
-{
+  implements OnInit, AddEdit {
   model?: Customer;
-  createCustomerMode = signal(true);
+  isCreateCustomerMode = signal(true);
   form?: FormGroup;
 
   constructor(
@@ -61,11 +60,11 @@ export class CustomerAddEditDialogComponent
   }
 
   loadModelData() {
-    this.createCustomerMode.set(true);
+    this.isCreateCustomerMode.set(true);
 
     if (!this.context.data) return;
     this.model = this.context.data;
-    this.createCustomerMode.set(false);
+    this.isCreateCustomerMode.set(false);
   }
 
   initForm() {
@@ -75,7 +74,7 @@ export class CustomerAddEditDialogComponent
   }
 
   submit() {
-    if (this.createCustomerMode()) {
+    if (this.isCreateCustomerMode()) {
       this.createCustomer();
     }
     this.updateCustomer();

@@ -1,7 +1,20 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  WritableSignal,
+} from '@angular/core';
 import { FetchDataFunction } from '../../shared/base-table-async/base-table-async.component';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  forkJoin,
+  Observable,
+  Subscription,
+  switchMap,
+} from 'rxjs';
 import { ResponseWithRecords } from '../../api/base-http.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-table-refresher',
@@ -12,10 +25,19 @@ import { ResponseWithRecords } from '../../api/base-http.service';
 })
 export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
   refresh$ = new BehaviorSubject(null);
+  protected translateService = inject(TranslateService);
   private subscription: Subscription | undefined;
 
   ngOnInit(): void {
     this.refreshDataSubscription();
+  }
+
+  translateHeaders(headers: WritableSignal<string[]>): void {
+    forkJoin(headers().map((key) => this.translateService.get(key))).subscribe(
+      (results) => {
+        headers.set(results);
+      },
+    );
   }
 
   // Method must be implemented in each derived component

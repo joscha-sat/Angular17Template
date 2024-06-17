@@ -38,11 +38,11 @@ export class UserTableComponent
   authService = inject(AuthService);
 
   headers = signal<string[]>([
-    'Vorname',
-    'Nachname',
-    'Telefon',
-    'Email',
-    'Aktiv',
+    'general.firstName',
+    'general.lastName',
+    'general.phone-number',
+    'general.email',
+    'general.active',
   ]);
   columns = signal<string[]>([
     'firstName',
@@ -63,18 +63,23 @@ export class UserTableComponent
     }
   }
 
-  setTableRefreshService() {
-    return this.userService;
+  override ngOnInit() {
+    super.ngOnInit();
+    super.translateHeaders(this.headers);
   }
 
-  setTableRefreshMethodName() {
-    return 'getAllUsers';
+  setTableRefreshService() {
+    return this.userService;
   }
 
   // TODO enable to filter by tenantID
   // override getAdditionalParams() {
   //   return { tenantId: this.tenantId };
   // }
+
+  setTableRefreshMethodName() {
+    return 'getAllUsers';
+  }
 
   userClicked($event: User) {
     const user = new User($event);

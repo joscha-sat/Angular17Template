@@ -44,6 +44,23 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 
 - Views / Pages src/app/views --> Views use the component blocks to display the full UI. It is used as a kind of "Layout-Component" for the different component blocks and are use in the routing
 
+### Translate Table header:
+
+example:
+
+````
+
+// enter i18n keys here
+headers = signal<string[]>(['general.createdAt', 'general.name']);
+
+override ngOnInit() {
+  super.ngOnInit();
+  
+  // it translates the header keys in the parent component. Nothing else needed
+  super.translateHeaders(this.headers);
+}
+````
+
 ### Customizable table columns in parent component, example:
 
 TS:
@@ -69,7 +86,7 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
   <!-- customized column, value = current name value, object = full object (tenant) -->
   <ng-template #name let-value let-object="object">
     {{ value }} {{ object }}
-    <app-delete-icon/>
+    <app-delete-icon />
   </ng-template>
 }
 ```
@@ -132,7 +149,7 @@ This triggers a getAllMethod with a param called search eg: <br />
 
 ````angular2html
 <!-- search component -->
-<app-base-search [serice]="userService"/>
+<app-base-search [serice]="userService" />
 
 <!-- table adjustment (example user) -->
 <app-base-table-async [search$]="userService.search$">
@@ -145,10 +162,10 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 
 ````angular2html
 <!-- search component -->
-<app-base-search-date [service]="customerService"/>
+<app-base-search-date [service]="customerService" />
 
 <!-- table adjustment (example user) -->
-<app-base-table-async [searchDate$]="customerService.searchDate$"/>
+<app-base-table-async [searchDate$]="customerService.searchDate$" />
 ````
 
 ### TODO: how to use Dialogs

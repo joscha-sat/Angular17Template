@@ -22,8 +22,13 @@ export class CustomerTableComponent
   customerService = inject(CustomerService);
   dialogService = inject(TuiDialogHelperService);
 
-  headers = signal<string[]>(['Erstelle am', 'Name']);
+  headers = signal<string[]>(['general.createdAt', 'general.name']);
   columns = signal<string[]>(['createdAt', 'name']);
+
+  override ngOnInit() {
+    super.ngOnInit();
+    super.translateHeaders(this.headers);
+  }
 
   setTableRefreshService(): any {
     return this.customerService;

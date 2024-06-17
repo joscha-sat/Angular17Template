@@ -34,8 +34,13 @@ export class TenantTableComponent
   tenantService = inject(TenantService);
   dialogService = inject(TuiDialogHelperService);
 
-  headers = signal<string[]>(['Name', 'Löschen']);
+  headers = signal<string[]>(['general.name', 'general.delete']);
   columns = signal<string[]>(['name', 'delete']);
+
+  override ngOnInit() {
+    super.ngOnInit();
+    super.translateHeaders(this.headers);
+  }
 
   setTableRefreshService() {
     return this.tenantService;
