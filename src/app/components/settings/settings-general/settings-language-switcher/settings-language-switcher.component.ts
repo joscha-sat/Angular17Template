@@ -1,7 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { BaseComboboxComponent } from '../../../../shared/base-combobox/base-combobox.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { Languages } from '../../../../other/enums/languages';
+import { LANGUAGE_FULL, Languages } from '../../../../other/enums/languages';
+import { LanguageService } from '../../../../services/language.service';
 
 @Component({
   selector: 'app-settings-language-switcher',
@@ -12,14 +13,15 @@ import { Languages } from '../../../../other/enums/languages';
 })
 export class SettingsLanguageSwitcherComponent implements OnInit {
   fb = inject(FormBuilder);
+  languageService = inject(LanguageService);
 
   dataArray = signal<any[]>([
     {
-      name: 'Deutsch',
+      name: 'German',
       id: 'de',
     },
     {
-      name: 'Englisch',
+      name: 'English',
       id: 'en',
     },
   ]);
@@ -31,17 +33,17 @@ export class SettingsLanguageSwitcherComponent implements OnInit {
   initLanguageFormValue(): void {
     const language = localStorage.getItem('tuiLanguage');
     switch (language) {
-      case Languages.ENGLISH: {
+      case LANGUAGE_FULL.ENGLISH: {
         this.form.controls.language.setValue({
           id: Languages.ENGLISH,
           label: 'English',
         });
         break;
       }
-      case Languages.GERMAN: {
+      case LANGUAGE_FULL.GERMAN: {
         this.form.controls.language.setValue({
           id: Languages.GERMAN,
-          label: 'Deutsch',
+          label: 'German',
         });
         break;
       }
@@ -50,5 +52,9 @@ export class SettingsLanguageSwitcherComponent implements OnInit {
 
   ngOnInit(): void {
     this.initLanguageFormValue();
+  }
+
+  languageChange(language: any) {
+    this.languageService.setLanguage(language.id);
   }
 }

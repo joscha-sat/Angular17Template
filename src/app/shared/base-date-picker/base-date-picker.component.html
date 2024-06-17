@@ -4,7 +4,7 @@
   [tuiTextfieldCleaner]="true"
   tuiUnfinishedValidator="Finish filling the field"
 >
-  {{ hint() }}
+  {{ hint() | translate }}
 </tui-input-date>
 <tui-error
   [error]="[] | tuiFieldError | async"
