@@ -1,10 +1,8 @@
-# AngularTemplateV2
-
 ## Angular Template Structure (how to work with the template):
 
 questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 
-### Style (Scss): global scss files are in the assets/scss folder :
+## Style (Scss): global scss files are in the assets/scss folder :
 
 - use _mixins.scss for custom global utility classes (directly usable as html class, no imports needed)
 - use _colors.scss for repeating color values -> import them into the styles.scss as css variables
@@ -12,7 +10,7 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 - Used UI Library: TAIGA UI: https://taiga-ui.dev/getting-started
   - to change TAIGA UI colors / variables use the styles.scss (there are examples)
 
-### @media queries and breakpoints src/assets/variables
+## @media queries and breakpoints src/assets/variables
 
 - values for common device breakpoints are located here
 - globally usable @media queries for desktop, laptop, tablet and mobile are predefined and ready to be used
@@ -36,7 +34,7 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 }
 ```
 
-### Components:
+## Components:
 
 - Reusable components: src/app/shared --> Base components that can be reused with different data / style via @Input() / @Output()
 
@@ -44,7 +42,7 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 
 - Views / Pages src/app/views --> Views use the component blocks to display the full UI. It is used as a kind of "Layout-Component" for the different component blocks and are use in the routing
 
-### Translate Table header:
+## Translate Table header:
 
 example:
 
@@ -61,7 +59,7 @@ override ngOnInit() {
 }
 ````
 
-### Customizable table columns in parent component, example:
+## Customizable table columns in parent component, example:
 
 TS:
 
@@ -91,7 +89,7 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
 }
 ```
 
-### Services:
+## Services:
 
 API: src/app/api
 
@@ -101,7 +99,7 @@ Helper services: src/app/services
 
 - the services folder contains all services which are used for centralized and reusable methods + data
 
-### Type definition:
+## Type definition:
 
 Typescript classes >  src/app/other/models
 
@@ -109,7 +107,7 @@ Types (uses type not interfaces, same syntax except "=" before {}) >  src/app/ty
 
 Enums > src/app/other/enums
 
-### Table refresh class: ComponentClass "extends TableRefresherComponent<Model>"
+## Table refresh class: ComponentClass "extends TableRefresherComponent<Model>"
 
 Used to automatically refresh the table data after a http request (POST, PATCH, DELETE)
 
@@ -142,7 +140,7 @@ export class TenantTableComponent extends TableRefresherComponent<Tenant> {
 }
 ````
 
-### Frontend table search
+## Frontend table search
 
 This triggers a getAllMethod with a param called search eg: <br />
 /customers?search=max
@@ -155,7 +153,7 @@ This triggers a getAllMethod with a param called search eg: <br />
 <app-base-table-async [search$]="userService.search$">
 ````
 
-### Frontend table date search
+## Frontend table date search
 
 This triggers a getAllMethod with a param called searchDate eg: <br />
 /customers?searchDate=2024-06-12T00:00:00.000Z
