@@ -164,7 +164,7 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 <!-- search component -->
 <app-base-search-date [service]="customerService" />
 
-<!-- table adjustment (example user) -->
+<!-- table adjustment (example customer) -->
 <app-base-table-async [searchDate$]="customerService.searchDate$" />
 ````
 
