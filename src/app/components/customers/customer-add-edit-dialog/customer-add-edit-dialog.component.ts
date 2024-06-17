@@ -18,7 +18,7 @@ import { CustomerService } from '../../../api/customer.service';
 import { AddEdit } from '../../../other/types/AddEdit.type';
 
 @Component({
-  selector: "app-customer-add-edit-dialog",
+  selector: 'app-customer-add-edit-dialog',
   standalone: true,
   imports: [
     BaseInputComponent,
@@ -27,12 +27,13 @@ import { AddEdit } from '../../../other/types/AddEdit.type';
     TranslateModule,
     TwoInputsRowLayoutComponent,
   ],
-  templateUrl: "./customer-add-edit-dialog.component.html",
-  styleUrl: "./customer-add-edit-dialog.component.scss",
+  templateUrl: './customer-add-edit-dialog.component.html',
+  styleUrl: './customer-add-edit-dialog.component.scss',
 })
 export class CustomerAddEditDialogComponent
   extends BaseDialogComponent
-  implements OnInit, AddEdit {
+  implements OnInit, AddEdit
+{
   model?: Customer;
   isCreateCustomerMode = signal(true);
   form?: FormGroup;
