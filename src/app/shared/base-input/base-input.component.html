@@ -1,7 +1,7 @@
 <!-- input -->
-@switch (type) {
+@switch (type()) {
   @case ('text') {
-    <tui-input [tuiTextfieldSize]="size" [formControlName]="fControlName">
+    <tui-input [tuiTextfieldSize]="size()" [formControlName]="fControlName()">
       {{ label | translate }}
       <input
         (tuiValueChanges)="onValueChange($event)"
@@ -11,15 +11,15 @@
     </tui-input>
   }
   @case ('email') {
-    <tui-input [tuiTextfieldSize]="size" [formControlName]="fControlName">
+    <tui-input [tuiTextfieldSize]="size()" [formControlName]="fControlName()">
       {{ label | translate }}
       <input type="email" tuiTextfield />
     </tui-input>
   }
   @case ('password') {
     <tui-input-password
-      [tuiTextfieldSize]="size"
-      [formControlName]="fControlName"
+      [tuiTextfieldSize]="size()"
+      [formControlName]="fControlName()"
     >
       {{ label | translate }}
       <span class="tui-required"></span>
@@ -27,8 +27,8 @@
   }
   @case ('number') {
     <tui-input-number
-      [tuiTextfieldSize]="size"
-      [formControlName]="fControlName"
+      [tuiTextfieldSize]="size()"
+      [formControlName]="fControlName()"
     >
       {{ label | translate }}
     </tui-input-number>
@@ -38,5 +38,6 @@
 <!-- input invalid, show error -->
 <tui-error
   [error]="[] | tuiFieldError | async"
-  [formControlName]="fControlName"
+  [formControlName]="fControlName()"
 ></tui-error>
+

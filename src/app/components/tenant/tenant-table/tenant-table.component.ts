@@ -40,6 +40,7 @@ export class TenantTableComponent
   override ngOnInit() {
     super.ngOnInit();
     super.translateHeaders(this.headers);
+    console.log(this.sum(5, 10));
   }
 
   setTableRefreshService() {
@@ -64,5 +65,10 @@ export class TenantTableComponent
   trashClicked(event: Tenant) {
     const tenant = new Tenant(event);
     this.dialogService.openDialog(TenantDeleteDialogComponent, tenant.id);
+  }
+
+  sum(x: number, y: number) {
+    debugger;
+    return x + y;
   }
 }

@@ -9,7 +9,7 @@
     <form [formGroup]="form">
       <app-base-combobox
         (valueChange)="onTenantChange($event)"
-        [dataArray]="tenants"
+        [dataArray]="tenants()"
         [hint]="'tenant.select'"
         fControlName="name"
       />
@@ -19,6 +19,8 @@
   <div class="flex-a-center-g1" right>
     <app-base-search [service]="tenantService" />
     <app-base-search-date [service]="tenantService" />
+
+    <app-base-tabs (onTabIndexChange)="tabChange($event)" [tabArray]="tabArray()" />
 
     <!-- new tenant button -->
     <app-base-tui-button (clicked)="openCreateTenantDialog()">

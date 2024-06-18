@@ -1,6 +1,6 @@
 <tui-tabs [(activeItemIndex)]="activeItemIndex">
   @for (tab of tabArray(); track tab) {
-    <button [routerLink]="tab.routePath" tuiTab (click)="onClick()">
+    <button [routerLink]="tab.routePath ?? null" tuiTab (click)="onClick()">
       @if (tab.iconSrc) {
         <tui-svg class="tui-space_right-2" [src]="tab.iconSrc"></tui-svg>
       }

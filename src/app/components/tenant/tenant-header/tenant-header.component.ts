@@ -1,8 +1,9 @@
 import {
   Component,
-  Input,
+  input,
   OnChanges,
   OnInit,
+  signal,
   SimpleChanges,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,6 +21,10 @@ import { TenantAddEditDialogComponent } from '../tenant-add-edit-dialog/tenant-a
 import { BaseTableSearchComponent } from '../../../shared/base-table-search/base-table-search.component';
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-search-date.component';
+import {
+  BaseTabsComponent,
+  TabArray,
+} from '../../../shared/base-tabs/base-tabs.component';
 
 @Component({
   selector: 'app-tenant-header',
@@ -35,13 +40,18 @@ import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-s
     BaseTableSearchComponent,
     BaseSearchComponent,
     BaseSearchDateComponent,
+    BaseTabsComponent,
   ],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',
 })
 export class TenantHeaderComponent implements OnInit, OnChanges {
-  @Input({ required: true }) tenants: Tenant[] = [];
+  tenants = input.required<Tenant[]>();
   form: FormGroup = new FormGroup({});
+  tabArray = signal<TabArray[]>([
+    { i18nTitle: 'general.active' },
+    { i18nTitle: 'general.inactive' },
+  ]);
 
   constructor(
     private fb: FormBuilder,
@@ -70,13 +80,17 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
       this.form.controls['name']
     ) {
       this.form.controls['name'].setValue({
-        id: this.tenants[0].id,
-        label: this.tenants[0].name,
+        id: this.tenants()[0].id,
+        label: this.tenants()[0].name,
       });
     }
   }
 
   openCreateTenantDialog() {
     this.dialogService.openDialog(TenantAddEditDialogComponent);
+  }
+
+  tabChange(tabIndex: number) {
+    // TODO
   }
 }

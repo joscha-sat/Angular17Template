@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Input, Output } from '@angular/core';
 import {
   TuiFieldErrorPipeModule,
   TuiInputModule,
@@ -49,9 +49,10 @@ type InputTypes = 'text' | 'number' | 'password' | 'email';
   ],
 })
 export class BaseInputComponent {
-  @Input({ required: true }) type: InputTypes = 'text';
-  @Input({ required: true }) fControlName: string = '';
-  @Input() size: TuiSizeL | TuiSizeS = 'm';
+  type = input<InputTypes>('text');
+  fControlName = input.required<string>();
+  size = input<TuiSizeL | TuiSizeS>('m');
+
   @Output() valueChange = new EventEmitter();
 
   // workaround to use the input type as default label value
