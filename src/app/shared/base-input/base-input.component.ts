@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Input, Output } from '@angular/core';
+import { Component, input, Input, output } from '@angular/core';
 import {
   TuiFieldErrorPipeModule,
   TuiInputModule,
@@ -53,7 +53,7 @@ export class BaseInputComponent {
   fControlName = input.required<string>();
   size = input<TuiSizeL | TuiSizeS>('m');
 
-  @Output() valueChange = new EventEmitter();
+  valueChange = output<string>();
 
   // workaround to use the input type as default label value
   private _label?: string;

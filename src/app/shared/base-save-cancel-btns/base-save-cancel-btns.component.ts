@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, EventEmitter, input, output, Output } from '@angular/core';
 import { TuiButtonModule } from '@taiga-ui/core';
 import { NgIf } from '@angular/common';
 import {
@@ -28,9 +28,11 @@ export class BaseSaveCancelBtnsComponent {
   showDeleteBtn = input<boolean>(false);
   dialogContext = input<any>();
 
-  @Output() submitEvent = new EventEmitter();
+  submitEvent = output<MouseEvent>();
+  delete = output();
+
+  // TODO
   @Output() cancel = new EventEmitter();
-  @Output() delete = new EventEmitter();
 
   constructor(private dialogService: TuiDialogHelperService) {}
 

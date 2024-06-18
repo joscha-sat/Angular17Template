@@ -1,9 +1,8 @@
 import {
   Component,
-  EventEmitter,
   input,
   OnChanges,
-  Output,
+  output,
   SimpleChanges,
 } from '@angular/core';
 import {
@@ -61,7 +60,7 @@ export class BaseComboboxComponent<T> implements OnChanges {
   //default: item.name for the label in createDropdownItems //
   labelKey = input<string>('name');
 
-  @Output() valueChange = new EventEmitter();
+  valueChange = output<any>();
 
   dropDownItems: DropDownItem[] = [];
 

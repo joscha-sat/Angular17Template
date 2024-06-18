@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  TemplateRef,
-} from '@angular/core';
+import { Component, Input, OnInit, output, TemplateRef } from '@angular/core';
 import {
   TuiTableModule,
   TuiTablePagination,
@@ -57,7 +50,7 @@ export class BaseTableComponent implements OnInit {
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
   @Input() search: string = '';
 
-  @Output() rowClickEvent = new EventEmitter();
+  rowClickEvent = output<any>();
 
   total = 0;
   page: number = 0;

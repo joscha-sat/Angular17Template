@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { TuiButtonModule } from '@taiga-ui/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgStyle } from '@angular/common';
@@ -26,8 +26,8 @@ export class TwoButtonsComponent {
   leftBtnColor = input<string>();
   rightBtnColor = input<string>();
 
-  @Output() leftBtnClick = new EventEmitter();
-  @Output() rightBtnClick = new EventEmitter();
+  leftBtnClick = output();
+  rightBtnClick = output();
 
   constructor(private translateService: TranslateService) {}
 

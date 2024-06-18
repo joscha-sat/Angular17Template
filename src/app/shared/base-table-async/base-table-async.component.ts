@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  TemplateRef,
-} from '@angular/core';
+import { Component, Input, OnInit, output, TemplateRef } from '@angular/core';
 import {
   TuiTableModule,
   TuiTablePagination,
@@ -72,7 +65,7 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   @Input() searchDate$ = new BehaviorSubject<string>('');
   @Input({ required: true }) fetchData!: FetchDataFunction<T>;
 
-  @Output() rowClickEvent = new EventEmitter();
+  rowClickEvent = output<any>();
 
   sortedColumn = this.columns[0];
   direction = 'asc';
