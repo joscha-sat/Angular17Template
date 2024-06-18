@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiRadioLabeledModule } from '@taiga-ui/kit';
@@ -24,5 +24,5 @@ export type RadioItem = {
   styleUrl: './base-radio-group.component.scss',
 })
 export class BaseRadioGroupComponent {
-  @Input({ required: true }) radioItem: RadioItem | undefined;
+  radioItem = input.required<RadioItem>();
 }

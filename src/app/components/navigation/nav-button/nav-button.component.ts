@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { NavItem } from '../../../other/enums/nav-items';
 import { TuiButtonModule, TuiHintModule, TuiSvgModule } from '@taiga-ui/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -17,11 +17,11 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './nav-button.component.scss',
 })
 export class NavButtonComponent {
-  @Input() navItem: NavItem | undefined;
+  navItem = input.required<NavItem>();
 
   constructor(private router: Router) {}
 
   onClick() {
-    this.router.navigate([this.navItem!.link]).then();
+    this.router.navigate([this.navItem().link]).then();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiButtonModule, TuiButtonOptions } from '@taiga-ui/core';
 
@@ -10,8 +10,8 @@ import { TuiButtonModule, TuiButtonOptions } from '@taiga-ui/core';
   styleUrl: './base-tui-button.component.scss',
 })
 export class BaseTuiButtonComponent {
-  @Input() size: 'm' | 'l' | 'xl' | 's' | 'xs' = 'm';
-  @Input() appearance: TuiButtonOptions['appearance'] = 'primary';
+  size = input<'m' | 'l' | 'xl' | 's' | 'xs'>('m');
+  appearance = input<TuiButtonOptions['appearance']>('primary');
 
   @Output() clicked = new EventEmitter();
 

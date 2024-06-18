@@ -1,7 +1,7 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  input,
   OnChanges,
   Output,
   SimpleChanges,
@@ -49,14 +49,17 @@ import { TuiValueChangesModule } from '@taiga-ui/cdk';
   ],
 })
 export class BaseComboboxComponent<T> implements OnChanges {
-  @Input({ required: true }) dataArray: T[] = [];
-  @Input({ required: true }) fControlName = '';
-  @Input() hint: string = 'placeholder';
-  @Input() size: TuiSizeL | TuiSizeS = 'm';
+  dataArray = input.required<T[]>();
+  fControlName = input.required<string>();
+  hint = input<string>('placeholder');
+  size = input<TuiSizeL | TuiSizeS>('m');
 
   // these are the property keys which are converted into the dropdown
-  @Input() idKey = 'id'; //default: item.id for the id in createDropdownItems
-  @Input() labelKey = 'name'; //default: item.name for the label in createDropdownItems //
+  //default: item.id for the id in createDropdownItems
+  idKey = input<string>('id');
+
+  //default: item.name for the label in createDropdownItems //
+  labelKey = input<string>('name');
 
   @Output() valueChange = new EventEmitter();
 
@@ -67,10 +70,10 @@ export class BaseComboboxComponent<T> implements OnChanges {
 
   // creates the dropdown Array depending on the @Input. as default item.name = label and item.id = id
   createDropdownItems(): DropDownItem[] {
-    return this.dataArray.map((item: any) => {
+    return this.dataArray().map((item: any) => {
       return {
-        id: item[this.idKey],
-        label: item[this.labelKey],
+        id: item[this.idKey()],
+        label: item[this.labelKey()],
       };
     });
   }

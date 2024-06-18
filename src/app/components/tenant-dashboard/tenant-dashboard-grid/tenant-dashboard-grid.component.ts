@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { TuiIslandModule } from '@taiga-ui/kit';
 import { TranslateModule } from '@ngx-translate/core';
 import { count } from 'rxjs';
@@ -11,7 +11,7 @@ import { count } from 'rxjs';
   styleUrl: './tenant-dashboard-grid.component.scss',
 })
 export class TenantDashboardGridComponent {
-  @Input() gridDataArray = signal([
+  gridDataArray = input<{ count: number; ngxString: string }[]>([
     { count: 5, ngxString: 'user.title' },
     { count: 2, ngxString: 'customer.title-plural' },
     { count: 490, ngxString: 'order.title-plural' },

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 import { TuiButtonModule } from '@taiga-ui/core';
 import { NgIf } from '@angular/common';
 import {
@@ -23,10 +23,10 @@ import { TuiDialogHelperService } from '../../services/tui-dialog-helper.service
   ],
 })
 export class BaseSaveCancelBtnsComponent {
-  @Input({ required: true }) form!: FormGroup;
-  @Input() customValidatorBoolean: boolean = false;
-  @Input() showDeleteBtn: boolean = false;
-  @Input() dialogContext: any;
+  form = input.required<FormGroup>();
+  customValidatorBoolean = input<boolean>(false);
+  showDeleteBtn = input<boolean>(false);
+  dialogContext = input<any>();
 
   @Output() submitEvent = new EventEmitter();
   @Output() cancel = new EventEmitter();
@@ -45,13 +45,13 @@ export class BaseSaveCancelBtnsComponent {
   }
 
   defaultCancelBehavior() {
-    if (this.dialogContext) {
-      this.dialogService.close(this.dialogContext);
+    if (this.dialogContext()) {
+      this.dialogService.close(this.dialogContext());
     }
   }
 
   onSubmit($event: MouseEvent) {
-    if (this.customValidatorBoolean) return;
+    if (this.customValidatorBoolean()) return;
     this.submitEvent.emit($event);
   }
 }

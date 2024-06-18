@@ -1,13 +1,13 @@
-@if (navItem) {
+@if (navItem()) {
   <!-- tooltip -->
   <ng-template #tooltip>
-    <div>{{ navItem.tooltip }}</div>
+    <div>{{ navItem().tooltip }}</div>
   </ng-template>
   <!-- nav button -->
   <button
     tuiIconButton
     type="button"
-    [routerLink]="[navItem.link]"
+    [routerLink]="[navItem().link]"
     appearance="{{ rla.isActive ? 'primary' : 'secondary' }}"
     routerLinkActive
     #rla="routerLinkActive"
@@ -16,6 +16,8 @@
     tuiHintAppearance="onDark"
     (click)="onClick()"
   >
-    <tui-svg src="{{ navItem.icon }}"></tui-svg>
+    <tui-svg src="{{ navItem().icon }}"></tui-svg>
   </button>
 }
+
+

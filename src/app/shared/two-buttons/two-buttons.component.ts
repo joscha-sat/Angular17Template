@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 import { TuiButtonModule } from '@taiga-ui/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgStyle } from '@angular/common';
@@ -15,17 +15,16 @@ import { NgStyle } from '@angular/common';
   styleUrl: './two-buttons.component.scss',
 })
 export class TwoButtonsComponent {
-  @Input() size: 'm' | 'l' | 'xl' | 's' | 'xs' = 'm';
+  size = input<'m' | 'l' | 'xl' | 's' | 'xs'>('m');
 
-  @Input() leftBtnTxt: string = this.translateService.instant('general.save');
-  @Input() rightBtnTxt: string =
-    this.translateService.instant('general.cancel');
+  leftBtnTxt = input<string>(this.translateService.instant('general.save'));
+  rightBtnTxt = input<string>(this.translateService.instant('general.cancel'));
 
-  @Input() leftBtnBg: string | undefined;
-  @Input() rightBtnBg: string | undefined;
+  leftBtnBg = input<string>();
+  rightBtnBg = input<string>();
 
-  @Input() leftBtnColor: string | undefined;
-  @Input() rightBtnColor: string | undefined;
+  leftBtnColor = input<string>();
+  rightBtnColor = input<string>();
 
   @Output() leftBtnClick = new EventEmitter();
   @Output() rightBtnClick = new EventEmitter();

@@ -1,11 +1,11 @@
 <tui-combo-box
-  [formControlName]="fControlName"
-  [stringify]="stringify"
-  [tuiTextfieldSize]="size"
-  class="dropdown"
   (tuiValueChanges)="onChange($event)"
+  [formControlName]="fControlName()"
+  [stringify]="stringify"
+  [tuiTextfieldSize]="size()"
+  class="dropdown"
 >
-  {{ hint | translate }}
+  {{ hint() | translate }}
   <tui-data-list-wrapper
     *tuiDataList
     [itemContent]="stringify | tuiStringifyContent"
