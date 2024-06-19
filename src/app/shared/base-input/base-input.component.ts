@@ -59,7 +59,7 @@ export class BaseInputComponent {
   private _label?: string;
 
   get label(): string {
-    return this._label ?? `enter a ${this.type}`;
+    return this._label ?? `enter a ${this.type()}`;
   }
 
   @Input()

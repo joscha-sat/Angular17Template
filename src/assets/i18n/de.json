@@ -51,7 +51,7 @@
   "http": {
     "status-400": "Anfrage ungültig oder fehlerhaft!",
     "status-401": "Nicht authentifiziert!",
-    "status-403": "Authentifizierung fehlgeschlagen oder fehlt.",
+    "status-403": "Die benötigten Berechtigungen fehlen",
     "status-404": "Die angeforderte Ressource wurde nicht gefunden",
     "status-406": "Inakzeptable Anfrage an den Server",
     "status-409": "Konflikt bei der Anfrage an den Server",

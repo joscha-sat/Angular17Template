@@ -11,6 +11,7 @@ import { TuiInputCountModule, TuiTabsModule } from '@taiga-ui/kit';
 import { TuiSvgModule } from '@taiga-ui/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { TuiMobileTabsModule } from '@taiga-ui/addon-mobile';
 
 // routePath has to be a child route to be loaded correctly into the router-outlet space
 export type TabArray = {
@@ -30,6 +31,7 @@ export type TabArray = {
     RouterOutlet,
     RouterLink,
     TranslateModule,
+    TuiMobileTabsModule,
   ],
   templateUrl: './base-tabs.component.html',
   styleUrl: './base-tabs.component.scss',
