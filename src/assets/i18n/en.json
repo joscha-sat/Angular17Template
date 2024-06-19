@@ -40,7 +40,8 @@
     "search": "Search",
     "select-date": "Select a date",
     "title": "General",
-    "yes": "Yes"
+    "yes": "Yes",
+    "all": "All"
   },
   "hint": {
     "email": "Enter email",

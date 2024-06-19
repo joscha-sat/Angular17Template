@@ -34,6 +34,7 @@ export type FetchDataFunction<T> = (
   pageSize: number,
   search?: string,
   searchDate?: string,
+  tabValueActive?: boolean,
 ) => Observable<ResponseWithRecords<T>>;
 
 @Component({
@@ -63,6 +64,9 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
   @Input() search$ = new BehaviorSubject<string>('');
   @Input() searchDate$ = new BehaviorSubject<string>('');
+  @Input() tabValueActive$ = new BehaviorSubject<boolean | undefined>(
+    undefined,
+  );
   @Input({ required: true }) fetchData!: FetchDataFunction<T>;
 
   rowClickEvent = output<any>();
@@ -86,12 +90,19 @@ export class BaseTableAsyncComponent<T> implements OnInit {
       this.size$,
       this.search$,
       this.searchDate$,
+      this.tabValueActive$,
     ]).pipe(
-      switchMap(([page, size, search, searchDate]) => {
+      switchMap(([page, size, search, searchDate, tabValueActive]) => {
         console.log(
-          `Calling fetchData with page=${page}, size=${size}, search=${search}, searchDate=${searchDate}`,
+          `Calling fetchData with page=${page}, size=${size}, search=${search}, searchDate=${searchDate}, tabValueActive=${tabValueActive}`,
         );
-        return this.fetchData(page, size, search, searchDate).pipe(
+        return this.fetchData(
+          page,
+          size,
+          search,
+          searchDate,
+          tabValueActive,
+        ).pipe(
           tap((response) => {
             this.total$.next(response.total);
             this.hasData.next(response.records && response.records.length > 0);

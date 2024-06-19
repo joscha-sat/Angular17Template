@@ -6,11 +6,13 @@ import { environment } from '../other/environment/environment';
 
 export type idTypes = string | number | (string | number)[];
 export type ResponseWithRecords<T> = { total: number; records: T[] };
+
 export type BaseQueryParams = {
   skip?: number;
   limit?: number;
   search?: string;
   sort?: string;
+  tabValueActive?: boolean;
 };
 
 @Injectable({ providedIn: 'root' })
@@ -20,6 +22,7 @@ export class GenericHttpService {
   refreshObservable$ = this._refreshObservable.asObservable();
   search$ = new BehaviorSubject<string>('');
   searchDate$ = new BehaviorSubject<string>('');
+  tabValueActive$ = new BehaviorSubject<boolean | undefined>(undefined);
 
   constructor(
     private readonly http: HttpClient,

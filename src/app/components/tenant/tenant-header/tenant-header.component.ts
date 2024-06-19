@@ -1,5 +1,6 @@
 import {
   Component,
+  inject,
   input,
   OnChanges,
   OnInit,
@@ -46,18 +47,17 @@ import {
   styleUrl: './tenant-header.component.scss',
 })
 export class TenantHeaderComponent implements OnInit, OnChanges {
-  tenants = input.required<Tenant[]>();
+  fb = inject(FormBuilder);
+  tenantService = inject(TenantService);
+  dialogService = inject(TuiDialogHelperService);
+
   form: FormGroup = new FormGroup({});
+  tenants = input.required<Tenant[]>();
   tabArray = signal<TabArray[]>([
+    { i18nTitle: 'general.all' },
     { i18nTitle: 'general.active' },
     { i18nTitle: 'general.inactive' },
   ]);
-
-  constructor(
-    private fb: FormBuilder,
-    public tenantService: TenantService,
-    private dialogService: TuiDialogHelperService,
-  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -90,7 +90,5 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     this.dialogService.openDialog(TenantAddEditDialogComponent);
   }
 
-  tabChange(tabIndex: number) {
-    // TODO
-  }
+  tabChange(tabIndex: number) {}
 }

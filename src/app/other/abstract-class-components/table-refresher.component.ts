@@ -56,6 +56,7 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
     size: number,
     search?: string,
     searchDate?: string,
+    tabValueActive?: boolean,
   ) => {
     const additionalParams = this.setAdditionalParams();
 
@@ -67,6 +68,7 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
             skip: page * size,
             search,
             searchDate,
+            tabValueActive,
             ...additionalParams,
           }) as Observable<ResponseWithRecords<T>>,
       ),
