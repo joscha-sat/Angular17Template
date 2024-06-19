@@ -12,6 +12,7 @@ import { TuiSvgModule } from '@taiga-ui/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiMobileTabsModule } from '@taiga-ui/addon-mobile';
+import { BehaviorSubject } from 'rxjs';
 
 // routePath has to be a child route to be loaded correctly into the router-outlet space
 export type TabArray = {
@@ -42,6 +43,8 @@ export class BaseTabsComponent implements OnInit {
   activeItemIndex = signal<number>(0);
   tabArray = input.required<TabArray[]>();
   loadChildView = input<boolean>(true);
+  isActiveTab = input(false);
+  service = input<{ tabValueActive$: BehaviorSubject<boolean | undefined> }>();
 
   onTabIndexChange = output<number>();
 
@@ -49,7 +52,29 @@ export class BaseTabsComponent implements OnInit {
     // set timeout needed because otherwise the click event is emitted before the indexChange happened
     setTimeout(() => {
       this.onTabIndexChange.emit(this.activeItemIndex());
+      if (!this.isActiveTab()) return;
+      this.setActiveTabDependingOnTabIndex();
     }, 0);
+  }
+
+  setActiveTabDependingOnTabIndex() {
+    switch (this.activeItemIndex()) {
+      case 0: {
+        this.service()?.tabValueActive$.next(undefined);
+        console.log('triggered 0');
+        break;
+      }
+      case 1: {
+        this.service()?.tabValueActive$.next(true);
+        console.log('triggered 1');
+        break;
+      }
+      case 2: {
+        this.service()?.tabValueActive$.next(false);
+        console.log('triggered 2');
+        break;
+      }
+    }
   }
 
   ngOnInit(): void {

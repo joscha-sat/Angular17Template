@@ -29,12 +29,16 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ResponseWithRecords } from '../../api/base-http.service';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
 
+export type BaseFetchParams = {
+  pageNumber: number;
+  pageSize: number;
+  search?: string;
+  searchDate?: string;
+  tabValueActive?: boolean;
+};
+
 export type FetchDataFunction<T> = (
-  pageNumber: number,
-  pageSize: number,
-  search?: string,
-  searchDate?: string,
-  tabValueActive?: boolean,
+  params: BaseFetchParams,
 ) => Observable<ResponseWithRecords<T>>;
 
 @Component({
@@ -92,27 +96,28 @@ export class BaseTableAsyncComponent<T> implements OnInit {
       this.searchDate$,
       this.tabValueActive$,
     ]).pipe(
-      switchMap(([page, size, search, searchDate, tabValueActive]) => {
-        console.log(
-          `Calling fetchData with page=${page}, size=${size}, search=${search}, searchDate=${searchDate}, tabValueActive=${tabValueActive}`,
-        );
-        return this.fetchData(
-          page,
-          size,
+      switchMap(([page, size, search, searchDate, tabValueActive]) =>
+        this.fetchWithParams({
+          pageNumber: page,
+          pageSize: size,
           search,
           searchDate,
           tabValueActive,
-        ).pipe(
-          tap((response) => {
-            this.total$.next(response.total);
-            this.hasData.next(response.records && response.records.length > 0);
-          }),
-          map((response) => response.records),
-          catchError(() => {
-            this.hasData.next(false);
-            return of([]);
-          }),
-        );
+        }),
+      ),
+    );
+  }
+
+  fetchWithParams(queryParam: BaseFetchParams) {
+    return this.fetchData(queryParam).pipe(
+      tap((response) => {
+        this.total$.next(response.total);
+        this.hasData.next(response.records && response.records.length > 0);
+      }),
+      map((response) => response.records),
+      catchError(() => {
+        this.hasData.next(false);
+        return of([]);
       }),
     );
   }
@@ -131,6 +136,20 @@ export class BaseTableAsyncComponent<T> implements OnInit {
     // this.tableData$ = this.tableData$.pipe(
     //   map(data => this.sortData(data, this.sortedColumn, this.direction)),
     // );
+  }
+
+  extractNestedProperty(item: any, key: string): any {
+    const keys = key.split('.');
+    let value = item;
+
+    for (const k of keys) {
+      if (value && Object.hasOwn(value, k)) {
+        value = value[k];
+      } else {
+        return null;
+      }
+    }
+    return value;
   }
 
   // sortData(data: any[], column: any, direction: any): any[] {
@@ -152,18 +171,4 @@ export class BaseTableAsyncComponent<T> implements OnInit {
   //     return 0;
   //   });
   // }
-
-  extractNestedProperty(item: any, key: string): any {
-    const keys = key.split('.');
-    let value = item;
-
-    for (const k of keys) {
-      if (value && Object.hasOwn(value, k)) {
-        value = value[k];
-      } else {
-        return null;
-      }
-    }
-    return value;
-  }
 }

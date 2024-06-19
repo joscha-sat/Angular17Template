@@ -5,7 +5,10 @@ import {
   OnInit,
   WritableSignal,
 } from '@angular/core';
-import { FetchDataFunction } from '../../shared/base-table-async/base-table-async.component';
+import {
+  BaseFetchParams,
+  FetchDataFunction,
+} from '../../shared/base-table-async/base-table-async.component';
 import {
   BehaviorSubject,
   forkJoin,
@@ -51,26 +54,30 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
     return null;
   }
 
-  fetchDataFn: FetchDataFunction<T> = (
-    page: number,
-    size: number,
-    search?: string,
-    searchDate?: string,
-    tabValueActive?: boolean,
-  ) => {
+  buildParams(baseParams: BaseFetchParams): any {
+    const active =
+      baseParams.tabValueActive !== undefined
+        ? String(baseParams.tabValueActive)
+        : undefined;
     const additionalParams = this.setAdditionalParams();
+    return {
+      limit: baseParams.pageSize,
+      skip: baseParams.pageNumber * baseParams.pageSize,
+      search: baseParams.search,
+      searchDate: baseParams.searchDate,
+      active,
+      ...additionalParams,
+    };
+  }
+
+  fetchDataFn: FetchDataFunction<T> = (baseParams: BaseFetchParams) => {
+    const params = this.buildParams(baseParams);
+    const service = this.setTableRefreshService();
+    const methodName = this.setTableRefreshMethodName();
 
     return this.refresh$.pipe(
       switchMap(
-        () =>
-          this.setTableRefreshService()[this.setTableRefreshMethodName()]({
-            limit: size,
-            skip: page * size,
-            search,
-            searchDate,
-            tabValueActive,
-            ...additionalParams,
-          }) as Observable<ResponseWithRecords<T>>,
+        () => service[methodName](params) as Observable<ResponseWithRecords<T>>,
       ),
     );
   };

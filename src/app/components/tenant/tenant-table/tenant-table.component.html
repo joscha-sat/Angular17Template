@@ -6,6 +6,7 @@
   [headers]="headers()"
   [search$]="tenantService.search$"
   [searchDate$]="tenantService.searchDate$"
+  [tabValueActive$]="tenantService.tabValueActive$"
 >
   <ng-template #deleteCell let-object="object">
     <app-delete-icon (click)="trashClicked(object); $event.stopPropagation()" />

@@ -22,6 +22,8 @@
 
     <app-base-tabs
       (onTabIndexChange)="tabChange($event)"
+      [isActiveTab]="true"
+      [service]="tenantService"
       [tabArray]="tabArray()"
     />
 
