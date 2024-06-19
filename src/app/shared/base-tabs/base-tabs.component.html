@@ -10,7 +10,7 @@
   }
 </tui-tabs>
 
-@if (loadChildView()) {
+@if (loadChildView() && hasOneOrMoreUrls()) {
   <div class="pt-2">
     <router-outlet></router-outlet>
   </div>
