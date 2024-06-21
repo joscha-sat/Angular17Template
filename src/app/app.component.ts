@@ -9,7 +9,6 @@ import { BaseSearchComponent } from './shared/base-search/base-search.component'
 import { AuthService } from './api/auth.service';
 import { LanguageService } from './services/language.service';
 
-// test comment
 @Component({
   selector: 'app-root',
   standalone: true,
