@@ -20,13 +20,6 @@
     <app-base-search [service]="tenantService" />
     <app-base-search-date [service]="tenantService" />
 
-    <app-base-tabs
-      (onTabIndexChange)="tabChange($event)"
-      [isActiveTab]="true"
-      [service]="tenantService"
-      [tabArray]="tabArray()"
-    />
-
     <!-- new tenant button -->
     <app-base-tui-button (clicked)="openCreateTenantDialog()">
       {{ 'tenant.create' | translate }}

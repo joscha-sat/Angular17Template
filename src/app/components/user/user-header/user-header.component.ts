@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { BaseTuiButtonComponent } from '../../../shared/base-tui-button/base-tui-button.component';
 
@@ -10,6 +10,10 @@ import { UserService } from '../../../api/user.service';
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 import { EditIconComponent } from '../../../shared/base-icons/edit-icon/edit-icon.component';
 import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-search-date.component';
+import {
+  BaseTabsComponent,
+  TabArray,
+} from '../../../shared/base-tabs/base-tabs.component';
 
 @Component({
   selector: 'app-user-header',
@@ -22,6 +26,7 @@ import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-s
     BaseTableSearchComponent,
     BaseSearchComponent,
     BaseSearchDateComponent,
+    BaseTabsComponent,
   ],
   templateUrl: './user-header.component.html',
   styleUrl: './user-header.component.scss',
@@ -29,6 +34,11 @@ import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-s
 export class UserHeaderComponent {
   dialogService = inject(TuiDialogHelperService);
   userService = inject(UserService);
+  tabArray = signal<TabArray[]>([
+    { i18nTitle: 'general.all' },
+    { i18nTitle: 'general.active' },
+    { i18nTitle: 'general.inactive' },
+  ]);
 
   openCreateUserDialog() {
     this.dialogService.openDialog(UserAddEditDialogComponent);

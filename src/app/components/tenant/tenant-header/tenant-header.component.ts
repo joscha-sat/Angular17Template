@@ -4,7 +4,6 @@ import {
   input,
   OnChanges,
   OnInit,
-  signal,
   SimpleChanges,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,10 +21,7 @@ import { TenantAddEditDialogComponent } from '../tenant-add-edit-dialog/tenant-a
 import { BaseTableSearchComponent } from '../../../shared/base-table-search/base-table-search.component';
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-search-date.component';
-import {
-  BaseTabsComponent,
-  TabArray,
-} from '../../../shared/base-tabs/base-tabs.component';
+import { BaseTabsComponent } from '../../../shared/base-tabs/base-tabs.component';
 
 @Component({
   selector: 'app-tenant-header',
@@ -53,11 +49,6 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
 
   form: FormGroup = new FormGroup({});
   tenants = input.required<Tenant[]>();
-  tabArray = signal<TabArray[]>([
-    { i18nTitle: 'general.all' },
-    { i18nTitle: 'general.active' },
-    { i18nTitle: 'general.inactive' },
-  ]);
 
   ngOnInit(): void {
     this.initForm();
@@ -89,6 +80,4 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
   openCreateTenantDialog() {
     this.dialogService.openDialog(TenantAddEditDialogComponent);
   }
-
-  tabChange(tabIndex: number) {}
 }
