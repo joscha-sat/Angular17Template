@@ -7,7 +7,7 @@
     tuiTable
   >
     <!-- HEAD / HEADERS -->
-    <thead>
+    <thead tuiThead>
       <tr tuiThGroup>
         <th
           (click)="onSortChange(columns()[i])"
@@ -25,7 +25,7 @@
       <tr
         (click)="rowClickEvent.emit(item)"
         *ngFor="let item of data"
-        class="pointer"
+        class="pointer rowHovered"
         tuiTr
       >
         <!-- loop over the column names displaying the corresponding data -->
