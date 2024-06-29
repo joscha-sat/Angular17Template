@@ -141,6 +141,8 @@ export class TenantTableComponent extends TableRefresherComponent<Tenant> {
 
 ### Table search
 
+#### "service".search() is accessible through GenericHttp in all api services by default
+
 This triggers a getAllMethod with a param called search eg: <br />
 /customers?search=max
 
