@@ -37,8 +37,7 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 ## Components:
 
 - Reusable components: src/app/shared --> Base components that can be reused with different data / style via @Input() / @Output()
-
-- Components: src/app/components --> A view is split into different component blocks, here are the different component blocks for the view (uses reusable components)
+  ifferent component blocks, here are the different component blocks for the view (uses reusable components)
 
 - Views / Pages src/app/views --> Views use the component blocks to display the full UI. It is used as a kind of "Layout-Component" for the different component blocks and are use in the routing
 
@@ -64,8 +63,7 @@ override ngOnInit() {
 TS:
 
 ```
-  @Input({ required: true }) tenants$: Observable<Tenant[]> | undefined;
-  headers = signal<string[]>(['Name']);
+  headers = signal<string[]>(['general.name']);
   columns = signal<string[]>(['name']);
 ```
 
@@ -81,9 +79,9 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
   [cellTemplatesMap]="{ name }"
 />
 
-<!-- customized column, value = current name value, object = full object (tenant) -->
-<ng-template #name let-value let-object="object">
-  {{ value }} {{ object }}
+<!-- customized column, value = current name value, tenant(any name can be given) = full object (tenant) -->
+<ng-template #name let-value let-tenant="object">
+  {{ value }} {{ tenant }}
   <app-delete-icon/>
 </ng-template>
 ```
@@ -93,6 +91,7 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
 API: src/app/api
 
 - the api-folder contains api-services responsible for any http request
+- every api service should extend the GenericHttpService
 
 Helper services: src/app/services
 
@@ -149,7 +148,7 @@ This triggers a getAllMethod with a param called search eg: <br />
 <app-base-search [serice]="userService"/>
 
 <!-- table adjustment (example user) -->
-<app-base-table [search$]="userService.search$">
+<app-base-table [search]="userService.search()">
 ````
 
 ## Frontend table date search
@@ -162,10 +161,10 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 <app-base-search-date [service]="customerService"/>
 
 <!-- table adjustment (example customer) -->
-<app-base-table [searchDate$]="customerService.searchDate$"/>
+<app-base-table [searchDate]="customerService.searchDate()"/>
 ````
 
-## How to use base-delete-dialog component
+## How to use base-delete-dialog component: example User
 
 1. create a data object for the base-delete-dialog with all needed values
 2. call the openDialog with the BaseDeleteDialogComponent and the created data object
@@ -193,7 +192,7 @@ function openDeleteDialog(user: User) {
 
 that's it, deleting + updating (table) is now fully functional
 
-### TODO: how to use general Dialogs: example User
+### TODO: how to use general Dialogs
 
 ## Development server
 
