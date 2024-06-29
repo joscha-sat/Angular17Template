@@ -38,9 +38,33 @@
 /* -------------------------------------------------------------------- */
 /*  || CUSTOM TAIGA UI Appearances, usable with tuiAppearance="error" ||
 /* -------------------------------------------------------------------- */
+
+// ERROR
 [tuiAppearance][data-appearance='error'] {
   color: var(--error-txt);
   background: var(--error-bg);
+}
+
+[tuiAppearance][data-appearance='error-bg'] {
+  background: var(--error-bg);
+}
+
+[tuiAppearance][data-appearance='error-color'] {
+  color: var(--error-txt);
+}
+
+// WARN
+[tuiAppearance][data-appearance='warn'] {
+  color: var(--warn-bg);
+  background: var(--warn-txt);
+}
+
+[tuiAppearance][data-appearance='warn-bg'] {
+  background: var(--warn-txt);
+}
+
+[tuiAppearance][data-appearance='warn-color'] {
+  color: var(--warn-bg);
 }
 
 // #########################################################################################################||
