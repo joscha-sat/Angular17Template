@@ -2,7 +2,7 @@
 
 questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 
-## Style (Scss): global scss files are in the assets/scss folder :
+# Style (Scss): global scss files are in the assets/scss folder :
 
 - use _mixins.scss for custom global utility classes (directly usable as html class, no imports needed)
 - use _colors.scss for repeating color values -> import them into the styles.scss as css variables
@@ -34,12 +34,33 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 }
 ```
 
-## Components:
+# Components:
 
 - Reusable components: src/app/shared --> Base components that can be reused with different data / style via @Input() / @Output()
   ifferent component blocks, here are the different component blocks for the view (uses reusable components)
 
 - Views / Pages src/app/views --> Views use the component blocks to display the full UI. It is used as a kind of "Layout-Component" for the different component blocks and are use in the routing
+
+# Services:
+
+API: src/app/api
+
+- the api-folder contains api-services responsible for any http request
+- every api service should extend the GenericHttpService
+
+Helper services: src/app/services
+
+- the services folder contains all services which are used for centralized and reusable methods + data
+
+# Type definition:
+
+Typescript classes >  src/app/other/models
+
+Types (uses type not interfaces, same syntax except "=" before {}) >  src/app/types
+
+Enums > src/app/other/enums
+
+# Tables
 
 ## Translate Table header:
 
@@ -85,25 +106,6 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
 </ng-template>
 ```
 
-## Services:
-
-API: src/app/api
-
-- the api-folder contains api-services responsible for any http request
-- every api service should extend the GenericHttpService
-
-Helper services: src/app/services
-
-- the services folder contains all services which are used for centralized and reusable methods + data
-
-## Type definition:
-
-Typescript classes >  src/app/other/models
-
-Types (uses type not interfaces, same syntax except "=" before {}) >  src/app/types
-
-Enums > src/app/other/enums
-
 ## Table refresh class: ComponentClass "extends TableRefresherComponent<Model>"
 
 Used to automatically refresh the table data after a http request (POST, PATCH, DELETE)
@@ -137,7 +139,7 @@ export class TenantTableComponent extends TableRefresherComponent<Tenant> {
 }
 ````
 
-## Frontend table search
+## Table search
 
 This triggers a getAllMethod with a param called search eg: <br />
 /customers?search=max
@@ -150,7 +152,7 @@ This triggers a getAllMethod with a param called search eg: <br />
 <app-base-table [search]="userService.search()">
 ````
 
-## Frontend table date search
+## Table date search
 
 This triggers a getAllMethod with a param called searchDate eg: <br />
 /customers?searchDate=2024-06-12T00:00:00.000Z
@@ -162,6 +164,8 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 <!-- table adjustment (example customer) -->
 <app-base-table [searchDate]="customerService.searchDate()"/>
 ````
+
+# Dialogs
 
 ## How to use base-delete-dialog component: example User
 
