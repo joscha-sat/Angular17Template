@@ -25,6 +25,7 @@ import {
   BaseRadioBlockComponent,
   RadioItem,
 } from '../../../shared/base-radio-block/base-radio-block.component';
+import { RoleDropdownComponent } from './role-dropdown/role-dropdown.component';
 
 @Component({
   selector: 'app-user-add-edit-dialog',
@@ -40,6 +41,7 @@ import {
     BaseRadioGroupComponent,
     BaseComboboxComponent,
     BaseRadioBlockComponent,
+    RoleDropdownComponent,
   ],
   templateUrl: './user-add-edit-dialog.component.html',
   styleUrl: './user-add-edit-dialog.component.scss',
@@ -101,19 +103,12 @@ export class UserAddEditDialogComponent
       phone: [this.model?.phone ?? null],
       active: [this.getActiveStatus(), Validators.required],
       email: [this.model?.email ?? null, Validators.email],
-      role: [
-        {
-          id: this.model?.role?.id ?? 'a0b10022-ff43-455b-8126-2df604fd9384',
-          label: this.model?.role?.name ?? 'Rolle',
-        },
-      ],
+      role: '',
     });
   }
 
   submit() {
     this.convertStringStatusToBoolean();
-
-    console.log(this.userFromFormData);
 
     if (this.createUserMode()) {
       this.createUser();
@@ -122,12 +117,18 @@ export class UserAddEditDialogComponent
   }
 
   createUser() {
-    this.userService.createOneUser(this.userFromFormData).subscribe();
+    this.userService.createOneUser(this.userFromFormData).subscribe(() => {
+      this.closeDialog();
+    });
   }
 
   updateUser() {
     if (!this.model) return;
-    this.userService.updateUserById(this.model?.id, this.userFromFormData);
+    this.userService
+      .updateUserById(this.model?.id, this.userFromFormData)
+      .subscribe(() => {
+        this.closeDialog();
+      });
   }
 
   getActiveStatus = () => {

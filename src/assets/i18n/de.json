@@ -49,7 +49,7 @@
     "lastName": "Nachname eingeben",
     "phone": "Telefonnummer eingeben"
   },
-  "http": {
+  "generic-http-error": {
     "status-400": "Anfrage ungültig oder fehlerhaft!",
     "status-401": "Nicht authentifiziert!",
     "status-403": "Die benötigten Berechtigungen fehlen",
@@ -57,6 +57,11 @@
     "status-406": "Inakzeptable Anfrage an den Server",
     "status-409": "Konflikt bei der Anfrage an den Server",
     "status-500": "Ein interner Server-Fehler ist aufgetreten"
+  },
+  "http-error": {
+    "user": {
+      "patch_invite_not_accepted": "Der Benutzer hat die Einladung noch nicht angenommen und kann daher nicht bearbeitet werden"
+    }
   },
   "login": {
     "forgot-password": "Passwort vergessen?",

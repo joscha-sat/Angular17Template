@@ -61,17 +61,14 @@ export class BaseTabsComponent implements OnInit {
     switch (this.activeItemIndex()) {
       case 0: {
         this.service()?.tabValueActive$.next(undefined);
-        console.log('triggered 0');
         break;
       }
       case 1: {
         this.service()?.tabValueActive$.next(true);
-        console.log('triggered 1');
         break;
       }
       case 2: {
         this.service()?.tabValueActive$.next(false);
-        console.log('triggered 2');
         break;
       }
     }
