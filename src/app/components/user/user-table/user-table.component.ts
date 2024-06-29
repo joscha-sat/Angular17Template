@@ -13,6 +13,7 @@ import { AuthService } from '../../../api/auth.service';
 import { BaseBadgeComponent } from '../../../shared/base-badge/base-badge.component';
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 import { Table } from '../../../other/types/Table.type';
+import { DeleteIconComponent } from '../../../shared/base-icons/delete-icon/delete-icon.component';
 
 @Component({
   selector: 'app-user-table',
@@ -23,6 +24,7 @@ import { Table } from '../../../other/types/Table.type';
     BaseTableComponent,
     BaseBadgeComponent,
     BaseSearchComponent,
+    DeleteIconComponent,
   ],
   templateUrl: './user-table.component.html',
   styleUrl: './user-table.component.scss',
@@ -43,6 +45,7 @@ export class UserTableComponent
     'general.phone-number',
     'general.email',
     'general.active',
+    'general.delete',
   ]);
   columns = signal<string[]>([
     'firstName',
@@ -50,6 +53,7 @@ export class UserTableComponent
     'phone',
     'email',
     'active',
+    'delete',
   ]);
 
   get tenantId(): string {
@@ -84,5 +88,10 @@ export class UserTableComponent
   userClicked($event: User) {
     const user = new User($event);
     this.dialogService.openDialog(UserAddEditDialogComponent, user);
+  }
+
+  trashClicked(event: User) {
+    const user = new User(event);
+    // this.dialogService.openDialog(user.id);
   }
 }

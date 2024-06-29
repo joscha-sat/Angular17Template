@@ -1,6 +1,6 @@
 <app-base-table-async
   (rowClickEvent)="userClicked($event)"
-  [cellTemplatesMap]="{ active }"
+  [cellTemplatesMap]="{ active, delete: deleteCell }"
   [columns]="columns()"
   [fetchData]="fetchDataFn"
   [headers]="headers()"
@@ -13,5 +13,9 @@
       [status]="value ? 'success' : 'error'"
       [value]="value ? 'general.active' : 'general.inactive'"
     />
+  </ng-template>
+
+  <ng-template #deleteCell let-user="object">
+    <app-delete-icon (click)="trashClicked(user); $event.stopPropagation()" />
   </ng-template>
 </app-base-table-async>

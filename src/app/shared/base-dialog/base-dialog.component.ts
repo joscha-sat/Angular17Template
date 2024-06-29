@@ -12,7 +12,7 @@ import { TuiDialogHelperService } from '../../services/tui-dialog-helper.service
 })
 export class BaseDialogComponent {
   constructor(
-    @Inject(POLYMORPHEUS_CONTEXT) readonly context: TuiDialogContext<any>,
+    @Inject(POLYMORPHEUS_CONTEXT) readonly context: TuiDialogContext<any, any>,
     protected dialogService: TuiDialogHelperService,
   ) {}
 

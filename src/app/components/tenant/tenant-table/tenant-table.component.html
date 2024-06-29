@@ -8,7 +8,7 @@
   [searchDate$]="tenantService.searchDate$"
   [tabValueActive$]="tenantService.tabValueActive$"
 >
-  <ng-template #deleteCell let-object="object">
-    <app-delete-icon (click)="trashClicked(object); $event.stopPropagation()" />
+  <ng-template #deleteCell let-tenant="object">
+    <app-delete-icon (click)="trashClicked(tenant); $event.stopPropagation()" />
   </ng-template>
 </app-base-table-async>

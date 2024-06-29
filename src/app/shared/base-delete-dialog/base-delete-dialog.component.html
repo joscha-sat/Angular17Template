@@ -1,0 +1,32 @@
+<h1>
+  {{ 'common.delete-title' | translate }}
+</h1>
+
+<div class="hint-container">
+  <tui-svg [src]="tuiIconAlertOctagonLarge"></tui-svg>
+  <p>{{ 'common.delete-hint' | translate }}</p>
+</div>
+<hr />
+<div class="button-wrapper">
+  <button
+    (click)="deleteEvent()"
+    appearance="''"
+    class="delBtn"
+    size="m"
+    tuiButton
+    type="button"
+  >
+    {{ 'common.button-delete' | translate }}
+  </button>
+
+  <button
+    (click)="cancelEvent()"
+    appearance="secondary"
+    size="m"
+    style="flex-grow: 1"
+    tuiButton
+    type="button"
+  >
+    {{ 'common.button-cancel' | translate }}
+  </button>
+</div>
