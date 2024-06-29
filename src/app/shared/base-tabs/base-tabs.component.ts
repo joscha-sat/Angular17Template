@@ -5,6 +5,7 @@ import {
   OnInit,
   output,
   signal,
+  WritableSignal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiInputCountModule, TuiTabsModule } from '@taiga-ui/kit';
@@ -12,7 +13,6 @@ import { TuiSvgModule } from '@taiga-ui/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiMobileTabsModule } from '@taiga-ui/addon-mobile';
-import { BehaviorSubject } from 'rxjs';
 
 // routePath has to be a child route to be loaded correctly into the router-outlet space
 export type TabArray = {
@@ -44,7 +44,7 @@ export class BaseTabsComponent implements OnInit {
   tabArray = input.required<TabArray[]>();
   loadChildView = input<boolean>(true);
   isActiveTab = input(false);
-  service = input<{ tabValueActive$: BehaviorSubject<boolean | undefined> }>();
+  service = input<{ tabValueActive$: WritableSignal<boolean | undefined> }>();
 
   onTabIndexChange = output<number>();
 
@@ -60,15 +60,15 @@ export class BaseTabsComponent implements OnInit {
   setActiveTabDependingOnTabIndex() {
     switch (this.activeItemIndex()) {
       case 0: {
-        this.service()?.tabValueActive$.next(undefined);
+        this.service()?.tabValueActive$.set(undefined);
         break;
       }
       case 1: {
-        this.service()?.tabValueActive$.next(true);
+        this.service()?.tabValueActive$.set(true);
         break;
       }
       case 2: {
-        this.service()?.tabValueActive$.next(false);
+        this.service()?.tabValueActive$.set(false);
         break;
       }
     }

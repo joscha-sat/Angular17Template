@@ -168,6 +168,9 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 
 ## How to use base-delete-dialog component
 
+1. create a data object for the base-delete-dialog with all needed values
+2. call the openDialog with the BaseDeleteDialogComponent and the created data object
+
 ````ts
 
 // TYPE
@@ -188,6 +191,8 @@ function openDeleteDialog(user: User) {
   this.dialogService.openDialog(BaseDeleteDialogComponent, deleteContextData);
 }
 ````
+
+that's it, deleting + updating (table) is now fully functional
 
 ### TODO: how to use general Dialogs: example User
 

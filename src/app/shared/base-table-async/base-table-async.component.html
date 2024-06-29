@@ -1,7 +1,7 @@
 <!-- TODO: check sorting logic -->
-<ng-container *ngIf="sizedData$ | async as data">
+<ng-container *ngIf="sizedData$() as data">
   <table
-    *ngIf="hasData | async; else empty"
+    *ngIf="hasData$(); else empty"
     [columns]="columns"
     class="table"
     tuiTable
@@ -78,9 +78,9 @@
         <td [colSpan]="columns.length">
           <tui-table-pagination
             (paginationChange)="onChangePagination($event)"
-            [page]="(page$ | async) || 0"
-            [size]="(size$ | async) || 0"
-            [total]="(total$ | async) || 0"
+            [page]="page$() || 0"
+            [size]="size$() || 0"
+            [total]="total$() || 0"
             class="tui-space_top-2"
           ></tui-table-pagination>
         </td>

@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, WritableSignal } from '@angular/core';
 import {
   ControlContainer,
   FormGroupDirective,
@@ -9,7 +9,6 @@ import { TuiErrorModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { AsyncPipe } from '@angular/common';
 import { TuiValueChangesModule } from '@taiga-ui/cdk';
 import { DateConverterService } from '../../services/date-converter.service';
-import { BehaviorSubject } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -40,16 +39,16 @@ export class BaseDatePickerComponent {
 
   hint = input<string>('general.select-date');
   fControlName = input.required<string>();
-  service = input.required<{ searchDate$: BehaviorSubject<string> }>();
+  service = input.required<{ searchDate$: WritableSignal<string> }>();
 
   dateChangeEvent(tuiDay: any) {
     if (!tuiDay) {
-      this.service().searchDate$.next('');
+      this.service().searchDate$.set('');
       return;
     }
 
     // searches in the backend via searchDate param
     const isoDate = this.dateConverter.formatTaigaDateToIsoDate([tuiDay]);
-    this.service().searchDate$.next(isoDate);
+    this.service().searchDate$.set(isoDate);
   }
 }

@@ -1,8 +1,7 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BaseDatePickerComponent } from '../base-date-picker/base-date-picker.component';
 import { TuiTextfieldControllerModule } from '@taiga-ui/core';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-base-search-date',
@@ -22,5 +21,5 @@ export class BaseSearchDateComponent {
     date: null,
   });
 
-  service = input.required<{ searchDate$: BehaviorSubject<string> }>();
+  service = input.required<{ searchDate$: WritableSignal<string> }>();
 }
