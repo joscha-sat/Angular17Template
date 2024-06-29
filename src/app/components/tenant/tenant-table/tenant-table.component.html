@@ -1,4 +1,4 @@
-<app-base-table-async
+<app-base-table
   (rowClickEvent)="rowClicked($event)"
   [cellTemplatesMap]="{ delete: deleteCell }"
   [columns]="columns()"
@@ -11,4 +11,4 @@
   <ng-template #deleteCell let-tenant="object">
     <app-delete-icon (click)="trashClicked(tenant); $event.stopPropagation()" />
   </ng-template>
-</app-base-table-async>
+</app-base-table>

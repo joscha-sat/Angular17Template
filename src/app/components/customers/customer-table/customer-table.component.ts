@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { BaseTableAsyncComponent } from '../../../shared/base-table-async/base-table-async.component';
+import { BaseTableComponent } from '../../../shared/base-table/base-table.component';
 import { CustomerService } from '../../../api/customer.service';
 import { Customer } from '../../../other/models/Customer';
 import { TableRefresherComponent } from '../../../other/abstract-class-components/table-refresher.component';
@@ -11,7 +11,7 @@ import { Table } from '../../../other/types/Table.type';
 @Component({
   selector: 'app-customer-table',
   standalone: true,
-  imports: [BaseTableAsyncComponent, TranslateModule],
+  imports: [BaseTableComponent, TranslateModule],
   templateUrl: './customer-table.component.html',
   styleUrl: './customer-table.component.scss',
 })

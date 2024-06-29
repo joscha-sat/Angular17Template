@@ -2,7 +2,6 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { BaseTableComponent } from '../../../shared/base-table/base-table.component';
 import { Tenant } from '../../../other/models/Tenant';
 import { AsyncPipe } from '@angular/common';
-import { BaseTableAsyncComponent } from '../../../shared/base-table-async/base-table-async.component';
 import { Router } from '@angular/router';
 import { NavRoutes } from '../../../other/enums/nav-routes';
 import { BaseTuiButtonComponent } from '../../../shared/base-tui-button/base-tui-button.component';
@@ -22,7 +21,7 @@ import {
   imports: [
     BaseTableComponent,
     AsyncPipe,
-    BaseTableAsyncComponent,
+    BaseTableComponent,
     BaseTuiButtonComponent,
     DeleteIconComponent,
   ],
