@@ -3,6 +3,7 @@ import {
   effect,
   input,
   Input,
+  OnInit,
   output,
   signal,
   TemplateRef,
@@ -61,21 +62,21 @@ export type FetchDataFunction<T> = (
   templateUrl: './base-table-async.component.html',
   styleUrls: ['./base-table-async.component.scss'],
 })
-export class BaseTableAsyncComponent<T> {
+export class BaseTableAsyncComponent<T> implements OnInit {
   @Input({ required: true }) fetchData!: FetchDataFunction<T>;
-  @Input({ required: true }) headers: string[] = [];
-  @Input({ required: true }) columns: string[] = [];
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
 
   // signal Inputs
+  headers = input.required<string[]>();
+  columns = input.required<string[]>();
   search = input<string>('');
   searchDate = input<string>('');
   tabValueActive = input<boolean | undefined>(undefined);
 
   rowClickEvent = output<any>();
 
-  sortedColumn = this.columns[0];
-  direction = 'asc';
+  sortedColumn = signal('');
+  direction = signal('asc');
   sizedData = signal<any[]>([]);
   size = signal<number>(10);
   page = signal<number>(0);
@@ -86,24 +87,24 @@ export class BaseTableAsyncComponent<T> {
   constructor() {
     effect(
       () => {
-        const page = this.page();
-        const size = this.size();
-        const search = this.search();
-        const searchDate = this.searchDate();
-        const tabValueActive = this.tabValueActive();
+        const params = {
+          pageNumber: this.page(),
+          pageSize: this.size(),
+          search: this.search(),
+          searchDate: this.searchDate(),
+          tabValueActive: this.tabValueActive(),
+        };
 
-        this.fetchWithParams({
-          pageNumber: page,
-          pageSize: size,
-          search,
-          searchDate,
-          tabValueActive,
-        }).subscribe((data) => {
+        this.fetchWithParams(params).subscribe((data) => {
           this.sizedData.set(data);
         });
       },
       { allowSignalWrites: true },
     );
+  }
+
+  ngOnInit(): void {
+    this.sortedColumn.set(this.columns()[0]);
   }
 
   isMatch(value: unknown): boolean {
@@ -130,8 +131,8 @@ export class BaseTableAsyncComponent<T> {
   }
 
   onSortChange(column: string) {
-    this.sortedColumn = column;
-    this.direction = this.direction === 'asc' ? 'desc' : 'asc';
+    this.sortedColumn.set(column);
+    this.direction.set(this.direction() === 'asc' ? 'desc' : 'asc');
   }
 
   extractNestedProperty(item: any, key: string): any {
@@ -147,4 +148,24 @@ export class BaseTableAsyncComponent<T> {
     }
     return value;
   }
+
+  // sortData(data: any[], column: any, direction: any): any[] {
+  //   return data.sort((a: any, b: any) => {
+  //     let aColValue = a[column];
+  //     let bColValue = b[column];
+  //
+  //     if (!isNaN(Number(aColValue)) && !isNaN(Number(bColValue))) {
+  //       aColValue = Number(aColValue);
+  //       bColValue = Number(bColValue);
+  //     }
+  //
+  //     if (aColValue < bColValue) {
+  //       return direction === 'asc' ? -1 : 1;
+  //     } else if (aColValue > bColValue) {
+  //       return direction === 'asc' ? 1 : -1;
+  //     }
+  //
+  //     return 0;
+  //   });
+  // }
 }

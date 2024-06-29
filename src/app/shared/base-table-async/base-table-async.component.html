@@ -2,7 +2,7 @@
 <ng-container *ngIf="sizedData() as data">
   <table
     *ngIf="hasData(); else empty"
-    [columns]="columns"
+    [columns]="columns()"
     class="table"
     tuiTable
   >
@@ -10,8 +10,8 @@
     <thead>
       <tr tuiThGroup>
         <th
-          (click)="onSortChange(columns[i])"
-          *ngFor="let header of headers; let i = index"
+          (click)="onSortChange(columns()[i])"
+          *ngFor="let header of headers(); let i = index"
           [resizable]="true"
           tuiTh
         >
@@ -29,7 +29,7 @@
         tuiTr
       >
         <!-- loop over the column names displaying the corresponding data -->
-        <ng-container *ngFor="let column of columns">
+        <ng-container *ngFor="let column of columns()">
           <td *tuiCell="column" [class.match]="isMatch(item[column])" tuiTd>
             <!--    case: has a matched cellTemplatesMap name   -->
             <ng-container *ngIf="cellTemplatesMap[column] as template">
@@ -69,7 +69,7 @@
     <!--  footer with pagination-->
     <tfoot>
       <tr>
-        <td [colSpan]="columns.length">
+        <td [colSpan]="columns().length">
           <tui-table-pagination
             (paginationChange)="onChangePagination($event)"
             [page]="page() || 0"
