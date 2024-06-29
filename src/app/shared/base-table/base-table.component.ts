@@ -73,6 +73,7 @@ export class BaseTableComponent<T> implements OnInit {
   searchDate = input<string>('');
   tabValueActive = input<boolean | undefined>(undefined);
 
+  // Output events
   rowClickEvent = output<any>();
 
   sortedColumn = signal('');
@@ -82,7 +83,6 @@ export class BaseTableComponent<T> implements OnInit {
   page = signal<number>(0);
   total = signal<number>(0);
   public hasData = signal<boolean>(false);
-  private searchText?: string;
 
   constructor() {
     effect(
@@ -108,7 +108,7 @@ export class BaseTableComponent<T> implements OnInit {
   }
 
   isMatch(value: unknown): boolean {
-    return !!this.searchText && TUI_DEFAULT_MATCHER(value, this.searchText);
+    return !!this.search() && TUI_DEFAULT_MATCHER(value, this.search());
   }
 
   fetchWithParams(queryParam: BaseFetchParams) {
