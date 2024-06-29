@@ -39,16 +39,16 @@ export class BaseDatePickerComponent {
 
   hint = input<string>('general.select-date');
   fControlName = input.required<string>();
-  service = input.required<{ searchDate$: WritableSignal<string> }>();
+  service = input.required<{ searchDate: WritableSignal<string> }>();
 
   dateChangeEvent(tuiDay: any) {
     if (!tuiDay) {
-      this.service().searchDate$.set('');
+      this.service().searchDate.set('');
       return;
     }
 
     // searches in the backend via searchDate param
     const isoDate = this.dateConverter.formatTaigaDateToIsoDate([tuiDay]);
-    this.service().searchDate$.set(isoDate);
+    this.service().searchDate.set(isoDate);
   }
 }

@@ -20,7 +20,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 export class BaseSearchComponent implements OnInit {
   enteredSearchTerm = new Subject<string>();
   searchValue = signal('');
-  service = input.required<{ search$: WritableSignal<string> }>();
+  service = input.required<{ search: WritableSignal<string> }>();
 
   private fb = inject(FormBuilder);
   // Debounce the search input to prevent excessive calls.
@@ -34,7 +34,7 @@ export class BaseSearchComponent implements OnInit {
 
   // Trigger the search by emitting an event to the parent component.
   searchInBackend(searchTerm: string) {
-    this.service().search$.set(searchTerm);
+    this.service().search.set(searchTerm);
   }
 
   // Update the searchTerm and searchValue each time the search input changes.

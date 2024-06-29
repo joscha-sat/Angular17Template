@@ -20,9 +20,9 @@ export class GenericHttpService {
   baseUrl = environment.baseUrl;
   _refreshObservable = new Subject<void>();
   refreshObservable$ = this._refreshObservable.asObservable();
-  search$ = signal<string>('');
-  searchDate$ = signal('');
-  tabValueActive$ = signal<boolean | undefined>(undefined);
+  search = signal<string>('');
+  searchDate = signal('');
+  tabValueActive = signal<boolean | undefined>(undefined);
 
   constructor(
     private readonly http: HttpClient,

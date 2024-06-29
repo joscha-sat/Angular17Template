@@ -44,7 +44,7 @@ export class BaseTabsComponent implements OnInit {
   tabArray = input.required<TabArray[]>();
   loadChildView = input<boolean>(true);
   isActiveTab = input(false);
-  service = input<{ tabValueActive$: WritableSignal<boolean | undefined> }>();
+  service = input<{ tabValueActive: WritableSignal<boolean | undefined> }>();
 
   onTabIndexChange = output<number>();
 
@@ -60,15 +60,15 @@ export class BaseTabsComponent implements OnInit {
   setActiveTabDependingOnTabIndex() {
     switch (this.activeItemIndex()) {
       case 0: {
-        this.service()?.tabValueActive$.set(undefined);
+        this.service()?.tabValueActive.set(undefined);
         break;
       }
       case 1: {
-        this.service()?.tabValueActive$.set(true);
+        this.service()?.tabValueActive.set(true);
         break;
       }
       case 2: {
-        this.service()?.tabValueActive$.set(false);
+        this.service()?.tabValueActive.set(false);
         break;
       }
     }

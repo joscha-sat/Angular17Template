@@ -21,5 +21,5 @@ export class BaseSearchDateComponent {
     date: null,
   });
 
-  service = input.required<{ searchDate$: WritableSignal<string> }>();
+  service = input.required<{ searchDate: WritableSignal<string> }>();
 }

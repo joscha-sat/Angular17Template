@@ -72,21 +72,20 @@ TS:
 HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-template #name"
 
 ```angular17html
-@if (tenants$ | async) {
-  <app-base-table-async
-    [tableData$]="tenants$!"
-    (rowClickEvent)="rowClicked($event)"
-    [headers]="headers()"
-    [columns]="columns()"
-    [cellTemplatesMap]="{name}"
-  />
 
-  <!-- customized column, value = current name value, object = full object (tenant) -->
-  <ng-template #name let-value let-object="object">
-    {{ value }} {{ object }}
-    <app-delete-icon/>
-  </ng-template>
-}
+<app-base-table
+  (rowClickEvent)="rowClicked($event)"
+  [fetchData]="fetchDataFn"
+  [headers]="headers()"
+  [columns]="columns()"
+  [cellTemplatesMap]="{ name }"
+/>
+
+<!-- customized column, value = current name value, object = full object (tenant) -->
+<ng-template #name let-value let-object="object">
+  {{ value }} {{ object }}
+  <app-delete-icon/>
+</ng-template>
 ```
 
 ## Services:
@@ -150,7 +149,7 @@ This triggers a getAllMethod with a param called search eg: <br />
 <app-base-search [serice]="userService"/>
 
 <!-- table adjustment (example user) -->
-<app-base-table-async [search$]="userService.search$">
+<app-base-table [search$]="userService.search$">
 ````
 
 ## Frontend table date search
@@ -163,7 +162,7 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 <app-base-search-date [service]="customerService"/>
 
 <!-- table adjustment (example customer) -->
-<app-base-table-async [searchDate$]="customerService.searchDate$"/>
+<app-base-table [searchDate$]="customerService.searchDate$"/>
 ````
 
 ## How to use base-delete-dialog component

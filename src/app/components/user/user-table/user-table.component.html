@@ -4,9 +4,9 @@
   [columns]="columns()"
   [fetchData]="fetchDataFn"
   [headers]="headers()"
-  [searchDate]="userService.searchDate$()"
-  [search]="userService.search$()"
-  [tabValueActive]="userService.tabValueActive$()"
+  [searchDate]="userService.searchDate()"
+  [search]="userService.search()"
+  [tabValueActive]="userService.tabValueActive()"
 >
   <ng-template #active let-value>
     <app-base-badge
