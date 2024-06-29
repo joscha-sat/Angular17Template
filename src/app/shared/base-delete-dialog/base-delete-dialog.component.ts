@@ -10,6 +10,7 @@ import {
 import { TuiDialogHelperService } from '../../services/tui-dialog-helper.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { tuiIconAlertOctagonLarge } from '@taiga-ui/icons';
+import { TuiAppearanceModule } from '@taiga-ui/experimental';
 
 export type DeleteContextData = {
   model: any;
@@ -20,7 +21,12 @@ export type DeleteContextData = {
 @Component({
   selector: 'app-base-delete-dialog',
   standalone: true,
-  imports: [TuiSvgModule, TranslateModule, TuiButtonModule],
+  imports: [
+    TuiSvgModule,
+    TranslateModule,
+    TuiButtonModule,
+    TuiAppearanceModule,
+  ],
   templateUrl: './base-delete-dialog.component.html',
   styleUrl: './base-delete-dialog.component.scss',
 })
