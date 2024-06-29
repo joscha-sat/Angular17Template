@@ -1,0 +1,38 @@
+<!-- title -->
+<div class="view-title pb-1">
+  {{ 'general.delete-title' | translate }}
+</div>
+
+<div class="flex-a-center-g1 pb-1">
+  <tui-svg
+    [src]="tuiIconAlertOctagonLarge"
+    tuiAppearance="warn-color"
+  ></tui-svg>
+  <p>{{ 'general.delete-hint' | translate }}</p>
+</div>
+
+<hr />
+
+<div class="button-wrapper pt-1">
+  <button
+    (click)="deleteEvent()"
+    appearance="''"
+    size="m"
+    tuiAppearance="error"
+    tuiButton
+    type="button"
+  >
+    {{ 'general.delete' | translate }}
+  </button>
+
+  <button
+    (click)="cancelEvent()"
+    appearance="secondary"
+    size="m"
+    style="flex-grow: 1"
+    tuiButton
+    type="button"
+  >
+    {{ 'general.cancel' | translate }}
+  </button>
+</div>

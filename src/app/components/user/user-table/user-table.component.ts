@@ -1,7 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
-import { BaseTableAsyncComponent } from '../../../shared/base-table-async/base-table-async.component';
-import { AsyncPipe } from '@angular/common';
 import { BaseTableComponent } from '../../../shared/base-table/base-table.component';
+import { AsyncPipe } from '@angular/common';
 import { User } from '../../../other/models/User';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
 import { UserAddEditDialogComponent } from '../user-add-edit-dialog/user-add-edit-dialog.component';
@@ -13,16 +12,22 @@ import { AuthService } from '../../../api/auth.service';
 import { BaseBadgeComponent } from '../../../shared/base-badge/base-badge.component';
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 import { Table } from '../../../other/types/Table.type';
+import { DeleteIconComponent } from '../../../shared/base-icons/delete-icon/delete-icon.component';
+import {
+  BaseDeleteDialogComponent,
+  DeleteContextData,
+} from '../../../shared/base-delete-dialog/base-delete-dialog.component';
 
 @Component({
   selector: 'app-user-table',
   standalone: true,
   imports: [
-    BaseTableAsyncComponent,
+    BaseTableComponent,
     AsyncPipe,
     BaseTableComponent,
     BaseBadgeComponent,
     BaseSearchComponent,
+    DeleteIconComponent,
   ],
   templateUrl: './user-table.component.html',
   styleUrl: './user-table.component.scss',
@@ -44,6 +49,7 @@ export class UserTableComponent
     'general.phone-number',
     'general.email',
     'general.active',
+    'general.delete',
   ]);
   columns = signal<string[]>([
     'createdAt',
@@ -52,6 +58,7 @@ export class UserTableComponent
     'phone',
     'email',
     'active',
+    'delete',
   ]);
 
   get tenantId(): string {
@@ -86,5 +93,15 @@ export class UserTableComponent
   userClicked($event: User) {
     const user = new User($event);
     this.dialogService.openDialog(UserAddEditDialogComponent, user);
+  }
+
+  trashClicked(user: User) {
+    const deleteContextData: DeleteContextData = {
+      deleteMethod: 'deleteUserById',
+      model: user,
+      service: this.userService,
+    };
+
+    this.dialogService.openDialog(BaseDeleteDialogComponent, deleteContextData);
   }
 }

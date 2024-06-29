@@ -8,7 +8,7 @@ import {
 import {
   BaseFetchParams,
   FetchDataFunction,
-} from '../../shared/base-table-async/base-table-async.component';
+} from '../../shared/base-table/base-table.component';
 import {
   BehaviorSubject,
   forkJoin,

@@ -8,7 +8,7 @@ export type RadioItem = {
   fControlName: string;
   ngxTitle: string;
   item: any;
-  size?: TuiSizeL | undefined;
+  size?: TuiSizeL;
 };
 
 @Component({

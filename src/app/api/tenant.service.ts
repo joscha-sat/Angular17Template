@@ -1,63 +1,72 @@
 import { Injectable, signal } from '@angular/core';
+
 import { Observable } from 'rxjs';
-import { Tenant } from '../other/models/Tenant';
 import {
   BaseQueryParams,
   GenericHttpService,
   idTypes,
   ResponseWithRecords,
 } from './base-http.service';
+import { Tenant } from '../other/models/Tenant';
 
-type QueryParams = BaseQueryParams & {
-  name: string;
-};
+export type TenantQueryParams = BaseQueryParams & {};
 
 @Injectable({
   providedIn: 'root',
 })
-/**
- * Service Class for the getting or manipulating tenant data
- */
 export class TenantService extends GenericHttpService {
   selectedTenantId = signal('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
-  search = signal('');
-  endpoint = 'tenant';
-  element = 'Eine Firma';
 
+  endpoint = 'tenant';
+  element = 'Eine Firma'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
+
+  // GET ALL
   getAllTenants(
-    queryParams?: QueryParams,
+    queryParams?: TenantQueryParams,
   ): Observable<ResponseWithRecords<Tenant>> {
     return this.getAll<Tenant>(this.endpoint, queryParams);
   }
 
-  getOneTenant(id: string | number) {
+  // GET ONE Tenant
+  getTenantById(id: string | number): Observable<Tenant> {
     return this.getOne<Tenant>(this.endpoint, id);
   }
 
+  // CREATE ONE Tenant
   createOneTenant(tenant: Tenant): Observable<Tenant> {
     return this.createOne<Tenant>(this.endpoint, tenant, this.element);
   }
 
-  createMultipleTenants(tenants: Tenant[]) {
-    return this.createMultiple<Tenant>(this.endpoint, tenants, this.element);
+  // CREATE MULTIPLE Tenants
+  createMultipleTenant(tenant: Tenant[]): Observable<Tenant[]> {
+    return this.createMultiple<Tenant>(this.endpoint, tenant, this.element);
   }
 
-  updateOneTenantById(tenant: Tenant, id: idTypes): Observable<Tenant> {
+  // UPDATE ONE Tenant
+  updateTenantById(id: idTypes, tenant: Tenant): Observable<Tenant> {
     return this.updateOne<Tenant>(this.endpoint, tenant, id, this.element);
   }
 
-  updateMultipleTenantsById(
+  // UPDATE MULTIPLE Tenants
+  updateMultipleTenantById(
     id: idTypes[],
-    tenant: Tenant[],
+    tenants: Tenant[],
   ): Observable<Tenant[]> {
-    return this.updateMultiple<Tenant>(this.endpoint, tenant, id, this.element);
+    return this.updateMultiple<Tenant>(
+      this.endpoint,
+      tenants,
+      id,
+      this.element,
+    );
   }
 
-  deleteOneTenant(id: idTypes): Observable<unknown> {
+  // DELETE ONE Tenant
+  deleteTenantById(id: idTypes): Observable<unknown> {
     return this.deleteOne(this.endpoint, id, this.element);
   }
 
+  // DELETE ALL Tenants
   deleteAllTenants(): Observable<unknown> {
-    return this.deleteAll<Tenant>(this.endpoint);
+    return this.deleteAll<unknown>(this.endpoint);
   }
 }

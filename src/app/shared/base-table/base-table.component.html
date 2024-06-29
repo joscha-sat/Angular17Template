@@ -1,31 +1,35 @@
-@if (tableData.length > 0) {
-  <table [columns]="columns" class="table" tuiTable>
+<!-- TODO: check sorting logic -->
+<ng-container *ngIf="sizedData() as data">
+  <table
+    *ngIf="hasData(); else empty"
+    [columns]="columns()"
+    class="table"
+    tuiTable
+  >
     <!-- HEAD / HEADERS -->
-    <thead>
+    <thead tuiThead>
       <tr tuiThGroup>
-        @for (header of headers; track header) {
-          <th
-            *tuiHead="columns[$index]"
-            [resizable]="true"
-            (click)="onSortChange(columns[$index])"
-            tuiTh
-          >
-            {{ header }}
-          </th>
-        }
+        <th
+          (click)="onSortChange(columns()[i])"
+          *ngFor="let header of headers(); let i = index"
+          [resizable]="true"
+          tuiTh
+        >
+          {{ header }}
+        </th>
       </tr>
     </thead>
 
     <!-- BODY / DATA -->
-    <tbody [data]="tableData" tuiTbody>
+    <tbody tuiTbody>
       <tr
         (click)="rowClickEvent.emit(item)"
-        *ngFor="let item of sizedData"
-        class="pointer"
+        *ngFor="let item of data"
+        class="pointer rowHovered"
         tuiTr
       >
         <!-- loop over the column names displaying the corresponding data -->
-        <ng-container *ngFor="let column of columns">
+        <ng-container *ngFor="let column of columns()">
           <td *tuiCell="column" [class.match]="isMatch(item[column])" tuiTd>
             <!--    case: has a matched cellTemplatesMap name   -->
             <ng-container *ngIf="cellTemplatesMap[column] as template">
@@ -40,9 +44,22 @@
               ></ng-container>
             </ng-container>
 
-            <!--    default case, display the value in raw   -->
+            <!-- Default case, display the value in raw -->
             <ng-container *ngIf="!cellTemplatesMap[column]">
-              {{ extractNestedProperty(item, column) }}
+              <!-- If data is a acceptable date format, format it -->
+              <ng-container
+                *ngIf="extractNestedProperty(item, column) | isDate"
+              >
+                {{
+                  extractNestedProperty(item, column) | date: 'dd.MM.yyyy HH:mm'
+                }}
+              </ng-container>
+              <!-- If not date, display raw value -->
+              <ng-container
+                *ngIf="!(extractNestedProperty(item, column) | isDate)"
+              >
+                {{ extractNestedProperty(item, column) }}
+              </ng-container>
             </ng-container>
           </td>
         </ng-container>
@@ -52,18 +69,22 @@
     <!--  footer with pagination-->
     <tfoot>
       <tr>
-        <td [colSpan]="columns.length">
+        <td [colSpan]="columns().length">
           <tui-table-pagination
-            (paginationChange)="onPage($event)"
-            [page]="page"
-            [size]="size"
-            [total]="total || 0"
+            (paginationChange)="onChangePagination($event)"
+            [page]="page() || 0"
+            [size]="size() || 0"
+            [total]="total() || 0"
             class="tui-space_top-2"
           ></tui-table-pagination>
         </td>
       </tr>
     </tfoot>
   </table>
-} @else {
-  {{ 'general.empty' | translate }}
-}
+</ng-container>
+
+<ng-template #empty>
+  <div>
+    {{ 'general.empty' | translate }}
+  </div>
+</ng-template>

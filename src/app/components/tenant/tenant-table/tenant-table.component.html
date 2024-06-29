@@ -1,14 +1,14 @@
-<app-base-table-async
+<app-base-table
   (rowClickEvent)="rowClicked($event)"
   [cellTemplatesMap]="{ delete: deleteCell }"
   [columns]="columns()"
   [fetchData]="fetchDataFn!"
   [headers]="headers()"
-  [search$]="tenantService.search$"
-  [searchDate$]="tenantService.searchDate$"
-  [tabValueActive$]="tenantService.tabValueActive$"
+  [searchDate]="tenantService.searchDate()"
+  [search]="tenantService.search()"
+  [tabValueActive]="tenantService.tabValueActive()"
 >
-  <ng-template #deleteCell let-object="object">
-    <app-delete-icon (click)="trashClicked(object); $event.stopPropagation()" />
+  <ng-template #deleteCell let-tenant="object">
+    <app-delete-icon (click)="trashClicked(tenant); $event.stopPropagation()" />
   </ng-template>
-</app-base-table-async>
+</app-base-table>

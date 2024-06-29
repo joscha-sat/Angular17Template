@@ -11,9 +11,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((err) => {
       let errorMessage: string;
-
       try {
-        errorMessage = statusTranslationService.getStatusErrorMessage(err);
+        errorMessage = statusTranslationService.getStatusErrorMessage(
+          err,
+          req.method,
+        );
       } catch (error) {
         errorMessage = err.error.message ?? 'unbekannt';
       }

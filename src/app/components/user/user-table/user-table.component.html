@@ -1,12 +1,12 @@
-<app-base-table-async
+<app-base-table
   (rowClickEvent)="userClicked($event)"
-  [cellTemplatesMap]="{ active }"
+  [cellTemplatesMap]="{ active, delete: deleteCell }"
   [columns]="columns()"
   [fetchData]="fetchDataFn"
   [headers]="headers()"
-  [search$]="userService.search$"
-  [searchDate$]="userService.searchDate$"
-  [tabValueActive$]="userService.tabValueActive$"
+  [searchDate]="userService.searchDate()"
+  [search]="userService.search()"
+  [tabValueActive]="userService.tabValueActive()"
 >
   <ng-template #active let-value>
     <app-base-badge
@@ -14,4 +14,8 @@
       [value]="value ? 'general.active' : 'general.inactive'"
     />
   </ng-template>
-</app-base-table-async>
+
+  <ng-template #deleteCell let-user="object">
+    <app-delete-icon (click)="trashClicked(user); $event.stopPropagation()" />
+  </ng-template>
+</app-base-table>

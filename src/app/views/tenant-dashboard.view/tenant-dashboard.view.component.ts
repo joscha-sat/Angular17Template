@@ -43,7 +43,7 @@ export class TenantDashboardViewComponent implements OnInit {
   }
 
   getSelectedTenantById(id: string) {
-    this.tenantService.getOneTenant(id).subscribe((tenant: Tenant) => {
+    this.tenantService.getTenantById(id).subscribe((tenant: Tenant) => {
       this.tenant.set(tenant);
     });
   }

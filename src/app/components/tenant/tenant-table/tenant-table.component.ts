@@ -2,16 +2,18 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { BaseTableComponent } from '../../../shared/base-table/base-table.component';
 import { Tenant } from '../../../other/models/Tenant';
 import { AsyncPipe } from '@angular/common';
-import { BaseTableAsyncComponent } from '../../../shared/base-table-async/base-table-async.component';
 import { Router } from '@angular/router';
 import { NavRoutes } from '../../../other/enums/nav-routes';
 import { BaseTuiButtonComponent } from '../../../shared/base-tui-button/base-tui-button.component';
 import { TenantService } from '../../../api/tenant.service';
 import { TableRefresherComponent } from '../../../other/abstract-class-components/table-refresher.component';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
-import { TenantDeleteDialogComponent } from '../tenant-delete-dialog/tenant-delete-dialog.component';
 import { Table } from '../../../other/types/Table.type';
 import { DeleteIconComponent } from '../../../shared/base-icons/delete-icon/delete-icon.component';
+import {
+  BaseDeleteDialogComponent,
+  DeleteContextData,
+} from '../../../shared/base-delete-dialog/base-delete-dialog.component';
 
 @Component({
   selector: 'app-tenant-table',
@@ -19,7 +21,7 @@ import { DeleteIconComponent } from '../../../shared/base-icons/delete-icon/dele
   imports: [
     BaseTableComponent,
     AsyncPipe,
-    BaseTableAsyncComponent,
+    BaseTableComponent,
     BaseTuiButtonComponent,
     DeleteIconComponent,
   ],
@@ -65,8 +67,13 @@ export class TenantTableComponent
     this.router.navigate([url]).then();
   }
 
-  trashClicked(event: Tenant) {
-    const tenant = new Tenant(event);
-    this.dialogService.openDialog(TenantDeleteDialogComponent, tenant.id);
+  trashClicked(tenant: Tenant) {
+    const deleteContextData: DeleteContextData = {
+      deleteMethod: 'deleteTenantById',
+      model: tenant,
+      service: this.tenantService,
+    };
+
+    this.dialogService.openDialog(BaseDeleteDialogComponent, deleteContextData);
   }
 }

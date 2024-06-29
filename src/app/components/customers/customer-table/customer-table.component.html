@@ -1,8 +1,8 @@
-<app-base-table-async
+<app-base-table
   (rowClickEvent)="openEditCustomerDialog($event)"
   [columns]="columns()"
   [fetchData]="fetchDataFn"
   [headers]="headers()"
-  [search$]="customerService.search$"
-  [searchDate$]="customerService.searchDate$"
+  [searchDate]="customerService.searchDate()"
+  [search]="customerService.search()"
 />

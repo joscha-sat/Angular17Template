@@ -32,12 +32,13 @@
 
       <!--  phone -->
       <app-base-input label="hint.phone" fControlName="phone" type="text" />
-    </app-two-inputs-row-layout>
 
-    <!--    <app-base-combobox-->
-    <!--      [dataArray]=""-->
-    <!--      fControlName="role"-->
-    <!--    />-->
+      <!-- role -->
+      <app-role-dropdown />
+
+      <!--  active / inactive  -->
+      <app-base-radio-block fControlName="active" [radioItems]="radioItems()" />
+    </app-two-inputs-row-layout>
 
     <!--  actions  -->
     <app-base-save-cancel-btns (cancel)="closeDialog()" [form]="form" />

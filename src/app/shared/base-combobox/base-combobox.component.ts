@@ -16,7 +16,6 @@ import {
   FormGroupDirective,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { DropDownItem } from '../../other/types/DropDownItem';
 import {
   TuiSizeL,
   TuiSizeS,
@@ -24,6 +23,7 @@ import {
 } from '@taiga-ui/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiValueChangesModule } from '@taiga-ui/cdk';
+import { DropDownItem } from '../../other/types/DropDownItem.type';
 
 @Component({
   selector: 'app-base-combobox',
