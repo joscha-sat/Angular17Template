@@ -166,9 +166,7 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 <app-base-table-async [searchDate$]="customerService.searchDate$"/>
 ````
 
-## How to use base-dialog-component
-
-### TODO: how to use general Dialogs: example User
+## How to use base-delete-dialog component
 
 ````ts
 
@@ -190,6 +188,8 @@ function openDeleteDialog(user: User) {
   this.dialogService.openDialog(BaseDeleteDialogComponent, deleteContextData);
 }
 ````
+
+### TODO: how to use general Dialogs: example User
 
 ## Development server
 
