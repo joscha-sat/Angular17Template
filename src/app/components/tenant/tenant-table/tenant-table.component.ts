@@ -9,9 +9,12 @@ import { BaseTuiButtonComponent } from '../../../shared/base-tui-button/base-tui
 import { TenantService } from '../../../api/tenant.service';
 import { TableRefresherComponent } from '../../../other/abstract-class-components/table-refresher.component';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
-import { TenantDeleteDialogComponent } from '../tenant-delete-dialog/tenant-delete-dialog.component';
 import { Table } from '../../../other/types/Table.type';
 import { DeleteIconComponent } from '../../../shared/base-icons/delete-icon/delete-icon.component';
+import {
+  BaseDeleteDialogComponent,
+  DeleteContextData,
+} from '../../../shared/base-delete-dialog/base-delete-dialog.component';
 
 @Component({
   selector: 'app-tenant-table',
@@ -63,6 +66,13 @@ export class TenantTableComponent
 
   trashClicked(event: Tenant) {
     const tenant = new Tenant(event);
-    this.dialogService.openDialog(TenantDeleteDialogComponent, tenant.id);
+
+    const deleteContextData: DeleteContextData = {
+      deleteMethod: 'deleteTenantById',
+      modelData: tenant,
+      service: this.tenantService,
+    };
+
+    this.dialogService.openDialog(BaseDeleteDialogComponent, deleteContextData);
   }
 }

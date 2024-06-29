@@ -14,6 +14,10 @@ import { BaseBadgeComponent } from '../../../shared/base-badge/base-badge.compon
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 import { Table } from '../../../other/types/Table.type';
 import { DeleteIconComponent } from '../../../shared/base-icons/delete-icon/delete-icon.component';
+import {
+  BaseDeleteDialogComponent,
+  DeleteContextData,
+} from '../../../shared/base-delete-dialog/base-delete-dialog.component';
 
 @Component({
   selector: 'app-user-table',
@@ -92,6 +96,13 @@ export class UserTableComponent
 
   trashClicked(event: User) {
     const user = new User(event);
-    // this.dialogService.openDialog(user.id);
+
+    const deleteContextData: DeleteContextData = {
+      deleteMethod: 'deleteUserById',
+      modelData: user,
+      service: this.userService,
+    };
+
+    this.dialogService.openDialog(BaseDeleteDialogComponent, deleteContextData);
   }
 }

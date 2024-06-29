@@ -41,7 +41,9 @@
     "select-date": "Datum auswählen",
     "title": "Allgemein",
     "yes": "Ja",
-    "all": "Alle"
+    "all": "Alle",
+    "delete-title": "Element löschen?",
+    "delete-hint": "Das Löschen kann anschließend nicht rückgängig gemacht werden!"
   },
   "hint": {
     "email": "E-Mail eingeben",

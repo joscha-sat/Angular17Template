@@ -41,22 +41,15 @@
     "select-date": "Select a date",
     "title": "General",
     "yes": "Yes",
-    "all": "All"
+    "all": "All",
+    "delete-title": "Delete element?",
+    "delete-hint": "The deletion can not be redone afterwards!"
   },
   "hint": {
     "email": "Enter email",
     "firstName": "Enter first name",
     "lastName": "Enter last name",
     "phone": "Enter phone number"
-  },
-  "http": {
-    "status-400": "Request invalid or incorrect!",
-    "status-401": "Not authenticated!",
-    "status-403": "Missing Permissions",
-    "status-404": "The requested resource was not found",
-    "status-406": "Unacceptable request to the server",
-    "status-409": "Conflict in request to the server",
-    "status-500": "An internal server error has occurred"
   },
   "login": {
     "forgot-password": "Forgot your password?",
@@ -91,5 +84,14 @@
     "create": "Create user",
     "title": "User",
     "update": "Edit user"
+  },
+  "http": {
+    "status-400": "Request invalid or incorrect!",
+    "status-401": "Not authenticated!",
+    "status-403": "Missing Permissions",
+    "status-404": "The requested resource was not found",
+    "status-406": "Unacceptable request to the server",
+    "status-409": "Conflict in request to the server",
+    "status-500": "An internal server error has occurred"
   }
 }

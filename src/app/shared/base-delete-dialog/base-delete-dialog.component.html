@@ -1,13 +1,16 @@
-<h1>
-  {{ 'common.delete-title' | translate }}
-</h1>
-
-<div class="hint-container">
-  <tui-svg [src]="tuiIconAlertOctagonLarge"></tui-svg>
-  <p>{{ 'common.delete-hint' | translate }}</p>
+<!-- title -->
+<div class="view-title pb-1">
+  {{ 'general.delete-title' | translate }}
 </div>
+
+<div class="flex-a-center-g1 pb-1">
+  <tui-svg [src]="tuiIconAlertOctagonLarge" class="warn-icon"></tui-svg>
+  <p>{{ 'general.delete-hint' | translate }}</p>
+</div>
+
 <hr />
-<div class="button-wrapper">
+
+<div class="button-wrapper pt-1">
   <button
     (click)="deleteEvent()"
     appearance="''"
@@ -16,7 +19,7 @@
     tuiButton
     type="button"
   >
-    {{ 'common.button-delete' | translate }}
+    {{ 'general.delete' | translate }}
   </button>
 
   <button
@@ -27,6 +30,6 @@
     tuiButton
     type="button"
   >
-    {{ 'common.button-cancel' | translate }}
+    {{ 'general.cancel' | translate }}
   </button>
 </div>

@@ -1,39 +1,17 @@
-
 .button-wrapper {
   display: flex;
-  flex-direction: row;
-  margin-top: 1.8rem;
-  gap: 0.5rem;
+  gap: 1rem;
 
-  .delBtn {
+  > * {
     flex-grow: 1;
-    background-color: var(--tui-error-bg);
-    color: var(--tui-error-txt);
   }
 }
 
-.hint-container {
-  max-width: 35rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 1.2rem;
-  color: var(--tui-text-03);
-  margin-bottom: 0.5rem;
-
-  tui-svg {
-    color: var(--tui-error-fill);
-  }
+.delBtn {
+  background-color: var(--error-bg);
+  color: var(--error-txt);
 }
 
-tui-dialog {
-  padding-bottom: 0 !important;
-}
-
-
-h1 {
-  color: black;
-  font-size: 28px;
-  margin-top: 0;
+.warn-icon {
+  color: var(--warn-bg);
 }
