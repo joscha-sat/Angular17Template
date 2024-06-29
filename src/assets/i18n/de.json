@@ -60,7 +60,30 @@
   },
   "http-error": {
     "user": {
-      "patch_invite_not_accepted": "Der Benutzer hat die Einladung noch nicht angenommen und kann daher nicht bearbeitet werden"
+      "create_unique": "Es gibt bereits einen Benutzer mit dieser E-Mail",
+      "create_relation_permission": "Der anfragende Benutzer hat keine Berechtigung zum zugehörigen Datensatz.",
+      "create_obsolete_tenant": "Dieser Benutzer kann keine Firma haben",
+      "patch_unique": "Es gibt bereits einen Benutzer mit dieser E-Mail",
+      "patch_invite_not_accepted": "Dieser Benutzer hat die Einladung nicht akzeptiert. Sie können ihn nicht aktualisieren",
+      "patch_admin_email": "Die E-Mail des Super-Admins kann nicht aktualisiert werden",
+      "delete_last_super_admin": "Der letzte Benutzer der Super Admin Rolle kann nicht gelöscht werden"
+    },
+    "tenant": {
+      "create_unique": "Es gibt bereits eine Firma mit diesem Namen",
+      "patch_unique": "Es gibt bereits eine Firma mit diesem Namen"
+    },
+    "role": {
+      "create_bad_request": "Falsche Parameter. Das kann nicht gemacht werden",
+      "create_unique": "Es gibt bereits eine Rolle mit diesem Namen und Firma",
+      "create_super_admin_exists": "Es gibt bereits eine SuperAdmin-Rolle",
+      "create_tenant_admin_exists": "Es gibt bereits eine Tenant-Admin-Rolle",
+      "create_no_global_permission": "Sie dürfen keine globale Rolle erstellen",
+      "create_draft_has_be_global": "Eine Draft-Rolle muss global sein!",
+      "create_not_enough_power": "Sie dürfen eine solche Rolle nicht erstellen",
+      "patch_unique": "Es gibt bereits eine Rolle mit diesem Namen und Firma",
+      "delete_super_admin": "Die SuperAdmin-Rolle kann nicht entfernt werden",
+      "delete_tenant_admin": "Die Tenant-Admin-Rolle kann nicht entfernt werden",
+      "delete_has_users": "Diese Rolle hat Benutzer, daher kann sie nicht gelöscht werden"
     }
   },
   "login": {
