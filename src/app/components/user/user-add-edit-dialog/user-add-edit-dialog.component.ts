@@ -110,22 +110,6 @@ export class UserAddEditDialogComponent
     });
   }
 
-  getActiveStatus = () => {
-    if (this.model?.active === null || this.model?.active === undefined) {
-      return 'Aktiv';
-    } else {
-      return this.model?.active ? 'Aktiv' : 'Inaktiv';
-    }
-  };
-
-  convertStringStatusToBoolean() {
-    if (this.form?.controls['active'].value === 'Aktiv') {
-      this.form.controls['active'].patchValue(true);
-    } else {
-      this.form?.controls['active'].patchValue(false);
-    }
-  }
-
   submit() {
     this.convertStringStatusToBoolean();
 
@@ -144,5 +128,21 @@ export class UserAddEditDialogComponent
   updateUser() {
     if (!this.model) return;
     this.userService.updateUserById(this.model?.id, this.userFromFormData);
+  }
+
+  getActiveStatus = () => {
+    if (this.model?.active === null || this.model?.active === undefined) {
+      return 'Aktiv';
+    } else {
+      return this.model?.active ? 'Aktiv' : 'Inaktiv';
+    }
+  };
+
+  convertStringStatusToBoolean() {
+    if (this.form?.controls['active'].value === 'Aktiv') {
+      this.form.controls['active'].patchValue(true);
+    } else {
+      this.form?.controls['active'].patchValue(false);
+    }
   }
 }
