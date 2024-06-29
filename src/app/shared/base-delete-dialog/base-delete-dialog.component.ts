@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { tuiIconAlertOctagonLarge } from '@taiga-ui/icons';
 
 export type DeleteContextData = {
-  modelData: any;
+  model: any;
   service: any;
   deleteMethod: string;
 };
@@ -28,7 +28,7 @@ export class BaseDeleteDialogComponent
   extends BaseDialogComponent
   implements OnInit, OnDestroy
 {
-  modelData?: any;
+  model?: any;
   service?: { [key: string]: (id: string) => Observable<any> };
   deleteMethod?: string;
   protected readonly tuiIconAlertOctagonLarge = tuiIconAlertOctagonLarge;
@@ -43,8 +43,8 @@ export class BaseDeleteDialogComponent
   }
 
   ngOnInit(): void {
-    if (this.context.data?.modelData) {
-      this.modelData = this.context.data.modelData;
+    if (this.context.data?.model) {
+      this.model = this.context.data.model;
     }
 
     if (this.context.data?.service) {
@@ -65,7 +65,7 @@ export class BaseDeleteDialogComponent
       return;
 
     this.subscription = this.service[this.deleteMethod](
-      this.modelData.id,
+      this.model.id,
     ).subscribe({
       next: () => {
         // Handle successful response here

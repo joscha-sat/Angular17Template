@@ -84,7 +84,7 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
   <!-- customized column, value = current name value, object = full object (tenant) -->
   <ng-template #name let-value let-object="object">
     {{ value }} {{ object }}
-    <app-delete-icon />
+    <app-delete-icon/>
   </ng-template>
 }
 ```
@@ -147,7 +147,7 @@ This triggers a getAllMethod with a param called search eg: <br />
 
 ````angular2html
 <!-- search component -->
-<app-base-search [serice]="userService" />
+<app-base-search [serice]="userService"/>
 
 <!-- table adjustment (example user) -->
 <app-base-table-async [search$]="userService.search$">
@@ -160,13 +160,36 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 
 ````angular17html
 <!-- search component -->
-<app-base-search-date [service]="customerService" />
+<app-base-search-date [service]="customerService"/>
 
 <!-- table adjustment (example customer) -->
-<app-base-table-async [searchDate$]="customerService.searchDate$" />
+<app-base-table-async [searchDate$]="customerService.searchDate$"/>
 ````
 
-### TODO: how to use Dialogs
+## How to use base-dialog-component
+
+### TODO: how to use general Dialogs: example User
+
+````ts
+
+// TYPE
+export type DeleteContextData = {
+  model: any; // e.g. user 
+  service: any; // e.g. userService
+  deleteMethod: string; // e.g. deleteUserById
+};
+
+// How to in user.component.ts
+function openDeleteDialog(user: User) {
+  const deleteContextData: DeleteContextData = {
+    deleteMethod: 'deleteUserById',
+    model: user,
+    service: this.userService,
+  };
+
+  this.dialogService.openDialog(BaseDeleteDialogComponent, deleteContextData);
+}
+````
 
 ## Development server
 

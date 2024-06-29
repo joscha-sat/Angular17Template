@@ -94,12 +94,10 @@ export class UserTableComponent
     this.dialogService.openDialog(UserAddEditDialogComponent, user);
   }
 
-  trashClicked(event: User) {
-    const user = new User(event);
-
+  trashClicked(user: User) {
     const deleteContextData: DeleteContextData = {
       deleteMethod: 'deleteUserById',
-      modelData: user,
+      model: user,
       service: this.userService,
     };
 

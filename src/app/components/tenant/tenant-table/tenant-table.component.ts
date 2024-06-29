@@ -64,12 +64,10 @@ export class TenantTableComponent
     this.router.navigate([url]).then();
   }
 
-  trashClicked(event: Tenant) {
-    const tenant = new Tenant(event);
-
+  trashClicked(tenant: Tenant) {
     const deleteContextData: DeleteContextData = {
       deleteMethod: 'deleteTenantById',
-      modelData: tenant,
+      model: tenant,
       service: this.tenantService,
     };
 
