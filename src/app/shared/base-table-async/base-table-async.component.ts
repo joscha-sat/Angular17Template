@@ -76,18 +76,18 @@ export class BaseTableAsyncComponent<T> {
 
   sortedColumn = this.columns[0];
   direction = 'asc';
-  sizedData$ = signal<any[]>([]);
-  size$ = signal<number>(10);
-  page$ = signal<number>(0);
-  total$ = signal<number>(0);
-  public hasData$ = signal<boolean>(false);
+  sizedData = signal<any[]>([]);
+  size = signal<number>(10);
+  page = signal<number>(0);
+  total = signal<number>(0);
+  public hasData = signal<boolean>(false);
   private searchText?: string;
 
   constructor() {
     effect(
       () => {
-        const page = this.page$();
-        const size = this.size$();
+        const page = this.page();
+        const size = this.size();
         const search = this.search();
         const searchDate = this.searchDate();
         const tabValueActive = this.tabValueActive();
@@ -99,7 +99,7 @@ export class BaseTableAsyncComponent<T> {
           searchDate,
           tabValueActive,
         }).subscribe((data) => {
-          this.sizedData$.set(data);
+          this.sizedData.set(data);
         });
       },
       { allowSignalWrites: true },
@@ -113,20 +113,20 @@ export class BaseTableAsyncComponent<T> {
   fetchWithParams(queryParam: BaseFetchParams) {
     return this.fetchData(queryParam).pipe(
       tap((response) => {
-        this.total$.set(response.total);
-        this.hasData$.set(response.records && response.records.length > 0);
+        this.total.set(response.total);
+        this.hasData.set(response.records && response.records.length > 0);
       }),
       map((response) => response.records),
       catchError(() => {
-        this.hasData$.set(false);
+        this.hasData.set(false);
         return of([]);
       }),
     );
   }
 
   onChangePagination(event: TuiTablePagination) {
-    this.page$.set(event.page);
-    this.size$.set(event.size);
+    this.page.set(event.page);
+    this.size.set(event.size);
   }
 
   onSortChange(column: string) {

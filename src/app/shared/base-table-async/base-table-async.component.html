@@ -1,7 +1,7 @@
 <!-- TODO: check sorting logic -->
-<ng-container *ngIf="sizedData$() as data">
+<ng-container *ngIf="sizedData() as data">
   <table
-    *ngIf="hasData$(); else empty"
+    *ngIf="hasData(); else empty"
     [columns]="columns"
     class="table"
     tuiTable
@@ -9,28 +9,22 @@
     <!-- HEAD / HEADERS -->
     <thead>
       <tr tuiThGroup>
-        @for (header of headers; track header) {
-          <th
-            *tuiHead="columns[$index]"
-            (click)="onSortChange(columns[$index])"
-            [resizable]="true"
-            tuiTh
-          >
-            {{ header }}
-          </th>
-        }
+        <th
+          (click)="onSortChange(columns[i])"
+          *ngFor="let header of headers; let i = index"
+          [resizable]="true"
+          tuiTh
+        >
+          {{ header }}
+        </th>
       </tr>
     </thead>
 
     <!-- BODY / DATA -->
-    <tbody
-      *tuiLet="data | tuiTableSort as sortedData"
-      [data]="sortedData"
-      tuiTbody
-    >
+    <tbody tuiTbody>
       <tr
         (click)="rowClickEvent.emit(item)"
-        *ngFor="let item of sortedData"
+        *ngFor="let item of data"
         class="pointer"
         tuiTr
       >
@@ -78,9 +72,9 @@
         <td [colSpan]="columns.length">
           <tui-table-pagination
             (paginationChange)="onChangePagination($event)"
-            [page]="page$() || 0"
-            [size]="size$() || 0"
-            [total]="total$() || 0"
+            [page]="page() || 0"
+            [size]="size() || 0"
+            [total]="total() || 0"
             class="tui-space_top-2"
           ></tui-table-pagination>
         </td>
