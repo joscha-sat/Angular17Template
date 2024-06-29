@@ -56,7 +56,7 @@ Helper services: src/app/services
 
 Typescript classes >  src/app/other/models
 
-Types (uses type not interfaces, same syntax except "=" before {}) >  src/app/types
+Types (uses type not interfaces, same syntax except "=" before {}) >  src/app/other/types
 
 Enums > src/app/other/enums
 
