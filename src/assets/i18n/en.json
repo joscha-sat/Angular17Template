@@ -85,6 +85,10 @@
     "title": "User",
     "update": "Edit user"
   },
+  "role": {
+    "title": "Role",
+    "title-plural": "Roles"
+  },
   "http": {
     "status-400": "Request invalid or incorrect!",
     "status-401": "Not authenticated!",

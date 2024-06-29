@@ -121,5 +121,9 @@
     "create": "Benutzer erstellen",
     "title": "Benutzer",
     "update": "Benutzer bearbeiten"
+  },
+  "role": {
+    "title": "Rolle",
+    "title-plural": "Rollen"
   }
 }
