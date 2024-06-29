@@ -46,7 +46,6 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 example:
 
 ````
-
 // enter i18n keys here
 headers = signal<string[]>(['general.createdAt', 'general.name']);
 
@@ -170,7 +169,6 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 2. call the openDialog with the BaseDeleteDialogComponent and the created data object
 
 ````ts
-
 // TYPE
 export type DeleteContextData = {
   model: any; // e.g. user 
