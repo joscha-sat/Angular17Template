@@ -1,4 +1,4 @@
-## Angular Template Structure (how to work with the template):
+# Angular Template (how to work with the template):
 
 questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 
@@ -10,7 +10,7 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 - Used UI Library: TAIGA UI: https://taiga-ui.dev/getting-started
   - to change TAIGA UI colors / variables use the styles.scss (there are examples)
 
-## @media queries and breakpoints src/assets/variables
+### @media queries and breakpoints src/assets/variables
 
 - values for common device breakpoints are located here
 - globally usable @media queries for desktop, laptop, tablet and mobile are predefined and ready to be used
@@ -62,7 +62,7 @@ Enums > src/app/other/enums
 
 # Tables
 
-## Translate Table header:
+### Translate Table header:
 
 example:
 
@@ -78,7 +78,7 @@ override ngOnInit() {
 }
 ````
 
-## Customizable table columns in parent component, example:
+### Customizable table columns in parent component, example:
 
 TS:
 
@@ -106,7 +106,7 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
 </ng-template>
 ```
 
-## Table refresh class: ComponentClass "extends TableRefresherComponent<Model>"
+### Table refresh class: ComponentClass "extends TableRefresherComponent<Model>"
 
 Used to automatically refresh the table data after a http request (POST, PATCH, DELETE)
 
@@ -139,7 +139,7 @@ export class TenantTableComponent extends TableRefresherComponent<Tenant> {
 }
 ````
 
-## Table search
+### Table search
 
 This triggers a getAllMethod with a param called search eg: <br />
 /customers?search=max
@@ -152,7 +152,7 @@ This triggers a getAllMethod with a param called search eg: <br />
 <app-base-table [search]="userService.search()">
 ````
 
-## Table date search
+### Table date search
 
 This triggers a getAllMethod with a param called searchDate eg: <br />
 /customers?searchDate=2024-06-12T00:00:00.000Z
@@ -167,7 +167,7 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 
 # Dialogs
 
-## How to use base-delete-dialog component: example User
+### How to use base-delete-dialog component: example User
 
 1. create a data object for the base-delete-dialog with all needed values
 2. call the openDialog with the BaseDeleteDialogComponent and the created data object
