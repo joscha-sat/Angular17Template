@@ -46,10 +46,13 @@
     "delete-hint": "The deletion can not be redone afterwards!"
   },
   "hint": {
-    "email": "Enter email",
-    "firstName": "Enter first name",
-    "lastName": "Enter last name",
-    "phone": "Enter phone number"
+    "email": "Enter a email",
+    "firstName": "Enter a first name",
+    "lastName": "Enter a last name",
+    "phone": "Enter a phone number",
+    "password": "Enter a password",
+    "number": "Enter a number",
+    "text": "Enter a text"
   },
   "login": {
     "forgot-password": "Forgot your password?",
