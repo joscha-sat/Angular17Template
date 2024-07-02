@@ -23,7 +23,10 @@ export class CustomerTableComponent
   dialogService = inject(TuiDialogHelperService);
 
   headers = signal<string[]>(['general.createdAt', 'general.name']);
-  columns = signal<string[]>(['createdAt', 'name']);
+  columns = signal<(keyof Customer | 'delete' | 'edit')[]>([
+    'createdAt',
+    'name',
+  ]);
 
   override ngOnInit() {
     super.ngOnInit();

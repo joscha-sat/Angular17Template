@@ -43,7 +43,9 @@
     "yes": "Yes",
     "all": "All",
     "delete-title": "Delete element?",
-    "delete-hint": "The deletion can not be redone afterwards!"
+    "delete-hint": "The deletion can not be redone afterwards!",
+    "description": "Description",
+    "edit": "Edit"
   },
   "hint": {
     "email": "Enter a email",

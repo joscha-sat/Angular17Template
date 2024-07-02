@@ -43,7 +43,9 @@
     "yes": "Ja",
     "all": "Alle",
     "delete-title": "Element löschen?",
-    "delete-hint": "Das Löschen kann anschließend nicht rückgängig gemacht werden!"
+    "delete-hint": "Das Löschen kann anschließend nicht rückgängig gemacht werden!",
+    "description": "Beschreibung",
+    "edit": "Bearbeiten"
   },
   "hint": {
     "email": "E-Mail eingeben",

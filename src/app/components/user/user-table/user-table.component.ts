@@ -50,7 +50,7 @@ export class UserTableComponent
     'general.active',
     'general.delete',
   ]);
-  columns = signal<string[]>([
+  columns = signal<(keyof User | 'delete' | 'edit')[]>([
     'firstName',
     'lastName',
     'phone',
