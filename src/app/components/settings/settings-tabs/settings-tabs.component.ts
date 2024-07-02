@@ -16,7 +16,11 @@ export class SettingsTabsComponent {
   tabs = signal<TabArray[]>([
     {
       i18nTitle: 'general.title',
-      routePath: NavRoutes.SETTINGS + '/' + NavRoutes.GENERAL,
+      routePath: NavRoutes.GENERAL,
+    },
+    {
+      i18nTitle: 'role.title-plural',
+      routePath: NavRoutes.ROLES,
     },
   ]);
 }

@@ -10,6 +10,7 @@ import { authGuard } from './other/guards/auth.guard';
 import { MapViewComponent } from './views/map.view/map.view.component';
 import { TestViewComponent } from './views/test-view/test-view.component';
 import { SettingsGeneralViewComponent } from './views/settings.view/settings-general.view/settings-general.view.component';
+import { SettingsRolesComponent } from './components/settings/settings-tabs/settings-roles/settings-roles.component';
 
 export const routes: Routes = [
   // standard route
@@ -53,6 +54,10 @@ export const routes: Routes = [
           {
             path: NavRoutes.GENERAL,
             component: SettingsGeneralViewComponent,
+          },
+          {
+            path: NavRoutes.ROLES,
+            component: SettingsRolesComponent,
           },
         ],
       },
