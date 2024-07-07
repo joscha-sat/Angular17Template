@@ -2,6 +2,14 @@
 
 questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 
+# Table of content
+
+1. [Project structure](#project-structure)
+2. [Everything about table](#tables)
+3. [Dialogs](#dialogs)
+
+# Project Structure
+
 # Style (Scss): global scss files are in the assets/scss folder :
 
 - use _mixins.scss for custom global utility classes (directly usable as html class, no imports needed)
