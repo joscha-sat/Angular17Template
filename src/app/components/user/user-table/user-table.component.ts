@@ -43,6 +43,7 @@ export class UserTableComponent
   authService = inject(AuthService);
 
   headers = signal<string[]>([
+    'general.createdAt',
     'general.firstName',
     'general.lastName',
     'general.phone-number',
@@ -51,6 +52,7 @@ export class UserTableComponent
     'general.delete',
   ]);
   columns = signal<(keyof User | 'delete' | 'edit')[]>([
+    'createdAt',
     'firstName',
     'lastName',
     'phone',
