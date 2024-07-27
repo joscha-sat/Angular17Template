@@ -1,4 +1,4 @@
-import { Component, input, Input, output } from '@angular/core';
+import { Component, inject, input, Input, output } from '@angular/core';
 import {
   TuiFieldErrorPipeModule,
   TuiInputModule,
@@ -18,7 +18,7 @@ import {
 } from '@taiga-ui/core';
 import { AsyncPipe } from '@angular/common';
 import { TuiCurrencyPipeModule } from '@taiga-ui/addon-commerce';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiValueChangesModule } from '@taiga-ui/cdk';
 
 type InputTypes = 'text' | 'number' | 'password' | 'email';
@@ -49,6 +49,7 @@ type InputTypes = 'text' | 'number' | 'password' | 'email';
   ],
 })
 export class BaseInputComponent {
+  translateService = inject(TranslateService);
   type = input<InputTypes>('text');
   fControlName = input.required<string>();
   size = input<TuiSizeL | TuiSizeS>('m');
@@ -59,7 +60,7 @@ export class BaseInputComponent {
   private _label?: string;
 
   get label(): string {
-    return this._label ?? `enter a ${this.type()}`;
+    return this._label ?? this.translateService.instant(`hint.${this.type()}`);
   }
 
   @Input()

@@ -43,13 +43,18 @@
     "yes": "Ja",
     "all": "Alle",
     "delete-title": "Element löschen?",
-    "delete-hint": "Das Löschen kann anschließend nicht rückgängig gemacht werden!"
+    "delete-hint": "Das Löschen kann anschließend nicht rückgängig gemacht werden!",
+    "description": "Beschreibung",
+    "edit": "Bearbeiten"
   },
   "hint": {
     "email": "E-Mail eingeben",
     "firstName": "Vorname eingeben",
     "lastName": "Nachname eingeben",
-    "phone": "Telefonnummer eingeben"
+    "phone": "Telefonnummer eingeben",
+    "password": "Passwort eingeben",
+    "number": "Nummer eingeben",
+    "text": "Text eingeben"
   },
   "generic-http-error": {
     "status-400": "Anfrage ungültig oder fehlerhaft!",

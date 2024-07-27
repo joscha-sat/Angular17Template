@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SettingsLanguageSwitcherComponent } from '../../../components/settings/settings-general/settings-language-switcher/settings-language-switcher.component';
+import { SettingsLanguageSwitcherComponent } from '../../../components/settings/settings-tabs/settings-general/settings-language-switcher/settings-language-switcher.component';
 
 @Component({
   selector: 'app-settings-general.view',

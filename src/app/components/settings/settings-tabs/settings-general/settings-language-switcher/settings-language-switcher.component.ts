@@ -1,8 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { BaseComboboxComponent } from '../../../../shared/base-combobox/base-combobox.component';
+import { BaseComboboxComponent } from '../../../../../shared/base-combobox/base-combobox.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { LANGUAGE_FULL, Languages } from '../../../../other/enums/languages';
-import { LanguageService } from '../../../../services/language.service';
+import { LANGUAGE_FULL, Languages } from '../../../../../other/enums/languages';
+import { LanguageService } from '../../../../../services/language.service';
 
 @Component({
   selector: 'app-settings-language-switcher',

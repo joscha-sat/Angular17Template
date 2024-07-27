@@ -36,12 +36,8 @@ export class TenantTableComponent
   tenantService = inject(TenantService);
   dialogService = inject(TuiDialogHelperService);
 
-  headers = signal<string[]>([
-    'general.createdAt',
-    'general.name',
-    'general.delete',
-  ]);
-  columns = signal<string[]>(['createdAt', 'name', 'delete']);
+  headers = signal<string[]>(['general.name', 'general.delete']);
+  columns = signal<(keyof Tenant | 'delete' | 'edit')[]>(['name', 'delete']);
 
   override ngOnInit() {
     super.ngOnInit();

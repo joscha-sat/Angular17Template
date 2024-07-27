@@ -10,7 +10,12 @@ import {
 import { FormsModule } from '@angular/forms';
 import { TuiInputCountModule, TuiTabsModule } from '@taiga-ui/kit';
 import { TuiSvgModule } from '@taiga-ui/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterOutlet,
+} from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiMobileTabsModule } from '@taiga-ui/addon-mobile';
 
@@ -39,6 +44,7 @@ export type TabArray = {
 })
 export class BaseTabsComponent implements OnInit {
   router = inject(Router);
+  route = inject(ActivatedRoute);
 
   activeItemIndex = signal<number>(0);
   tabArray = input.required<TabArray[]>();
@@ -101,7 +107,9 @@ export class BaseTabsComponent implements OnInit {
     if (!firstTabWithRoutePath || firstTabWithRoutePathIndex === -1) return;
 
     // If a tab was found, navigate to the corresponding route
-    this.router.navigate([firstTabWithRoutePath.routePath]).then();
+    this.router
+      .navigate([firstTabWithRoutePath.routePath], { relativeTo: this.route })
+      .then(); // updated line
 
     // Update the activeItemIndex with the index of the tab with a route
     this.activeItemIndex.set(firstTabWithRoutePathIndex);
