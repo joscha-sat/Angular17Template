@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
-import { TuiLanguageSwitcher } from '@taiga-ui/i18n';
+import { tuiLanguageSwitcher } from '@taiga-ui/i18n';
 import { Languages } from '../other/enums/languages';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class LanguageService {
 
   constructor(
     private translate: TranslateService,
-    @Inject(TuiLanguageSwitcher) readonly switcher: TuiLanguageSwitcher,
+    @Inject(tuiLanguageSwitcher) readonly switcher: any,
   ) {}
 
   /**
