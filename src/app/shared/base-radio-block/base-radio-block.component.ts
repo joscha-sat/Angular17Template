@@ -9,7 +9,7 @@ import {
   TuiGroup,
   TuiHorizontalDirection,
   TuiSizeL,
-  TuiSizeXS,
+  TuiSizeS,
 } from '@taiga-ui/core';
 
 export type RadioItem = {
@@ -33,6 +33,6 @@ export type RadioItem = {
 export class BaseRadioBlockComponent {
   radioItems = input.required<RadioItem[]>();
   fControlName = input.required<string>();
-  size = input<TuiSizeL | TuiSizeXS>('m');
+  size = input<TuiSizeL | TuiSizeS>('m');
   contentAlign = input<TuiHorizontalDirection>('right');
 }
