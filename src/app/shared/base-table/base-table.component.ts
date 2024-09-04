@@ -8,7 +8,11 @@ import {
   signal,
   TemplateRef,
 } from '@angular/core';
-import { TuiTable, TuiTablePagination } from '@taiga-ui/addon-table';
+import {
+  TuiTable,
+  TuiTablePagination,
+  TuiTablePaginationEvent,
+} from '@taiga-ui/addon-table';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import {
   AsyncPipe,
@@ -121,7 +125,7 @@ export class BaseTableComponent<T> implements OnInit {
     );
   }
 
-  onChangePagination(event: uiTablePaginationEvent) {
+  onChangePagination(event: TuiTablePaginationEvent) {
     this.page.set(event.page);
     this.size.set(event.size);
   }
