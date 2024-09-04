@@ -1,25 +1,26 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
-import { tuiLanguageSwitcher } from '@taiga-ui/i18n';
 import { Languages } from '../other/enums/languages';
+import { TuiLanguageSwitcherService } from '@taiga-ui/i18n/utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LanguageService {
+  protected readonly switcher = inject(TuiLanguageSwitcherService);
   // BehaviorSubject is used to subscribe to language changes for Taiga UI and FullCalendar Library
   private selectedLanguage$ = new BehaviorSubject<string>(Languages.GERMAN);
 
-  constructor(
-    private translate: TranslateService,
-    @Inject(tuiLanguageSwitcher) readonly switcher: any,
-  ) {}
+  constructor(private translate: TranslateService) {}
 
   /**
    * Initialize translate service for i18n support by ngx-translate.
    */
   initLanguage() {
+    console.log(typeof this.switcher);
+    console.log(this.switcher);
+
     this.translate.addLangs([Languages.GERMAN, Languages.ENGLISH]);
     this.translate.setDefaultLang(Languages.GERMAN);
     this.switcher.setLanguage('german');
