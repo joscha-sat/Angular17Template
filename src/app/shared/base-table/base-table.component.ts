@@ -121,7 +121,7 @@ export class BaseTableComponent<T> implements OnInit {
     );
   }
 
-  onChangePagination(event: TuiTablePagination) {
+  onChangePagination(event: uiTablePaginationEvent) {
     this.page.set(event.page);
     this.size.set(event.size);
   }
