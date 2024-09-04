@@ -1,4 +1,4 @@
-<div 
+<div
   (tuiDropdownOpenChange)="isOpen.set($event)"
   [tuiDropdown]="dropdown"
   [tuiDropdownOpen]="isOpen()"
@@ -28,7 +28,7 @@
       @for (option of options(); track option) {
         <!--   settings   -->
         <button (click)="onOptionsClick(option)" class="dropdown-btn" tuiOption>
-          <tui-icon  [icon]="option.icon"></tui-icon>
+          <tui-icon [icon]="option.icon"></tui-icon>
           {{ option.ngxTitle | translate }}
         </button>
       }

@@ -1,10 +1,13 @@
 @if (radioItem()) {
- <label tuiLabel> <input tuiRadio type="radio"
-    [formControlName]="radioItem().fControlName"
-    [value]="radioItem().item"
-    [size]="radioItem().size || 'm'"
-    class="tui-space_bottom-3"
-  >
+  <label tuiLabel>
+    <input
+      tuiRadio
+      type="radio"
+      [formControlName]="radioItem().fControlName"
+      [value]="radioItem().item"
+      [size]="radioItem().size || 'm'"
+      class="tui-space_bottom-3"
+    />
     {{ radioItem().ngxTitle | translate }}
   </label>
 }

@@ -1,12 +1,13 @@
 <div class="group" style="display: flex; gap: 1rem">
   @for (radioItem of radioItems(); track radioItem) {
-   <label tuiBlock="size()"> <input tuiRadio type="radio"
-      
-      [formControlName]="fControlName()"
-      [value]="radioItem.name"
-      
-      style="flex-grow: 1"
-    >
+    <label tuiBlock="size()">
+      <input
+        tuiRadio
+        type="radio"
+        [formControlName]="fControlName()"
+        [value]="radioItem.name"
+        style="flex-grow: 1"
+      />
       {{ radioItem.name }}
     </label>
   }
