@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { TuiBadge, TuiStatus } from '@taiga-ui/kit';
+import { TuiBadge } from '@taiga-ui/kit';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -10,6 +10,6 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './base-badge.component.scss',
 })
 export class BaseBadgeComponent {
-  status = input.required<TuiStatus>();
+  status = input.required<string>();
   value = input.required<string>();
 }
