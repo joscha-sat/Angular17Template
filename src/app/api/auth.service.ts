@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpStatusCode } from '@angular/common/http';
-import { ApiRoutes } from '../other/enums/api-routes';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { NavRoutes } from '../other/enums/nav-routes';
 import { environment } from '../other/environment/environment';
 import { User } from '../other/models/User';
 import { SuperAdminService } from './super-admin.service';
+import { ApiRoutes } from '../other/enums/api-routes';
+import { NavRoutes } from '../other/enums/nav-routes';
 
-const STORAGE_ACCESS_TOKEN_KEY = 'access_token';
-const STORAGE_REFRESH_TOKEN_KEY = 'refresh_token';
-const STORAGE_USER_KEY = 'user';
+const StorageKeys = {
+  ACCESS_TOKEN: 'access_token',
+  REFRESH_TOKEN: 'refresh_token',
+  USER: 'user',
+};
 
 export type LoginBody = {
   username: string;
@@ -32,138 +34,99 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return (
-      this.getFromLocalStorage(STORAGE_ACCESS_TOKEN_KEY) !== null &&
-      this.getFromLocalStorage(STORAGE_REFRESH_TOKEN_KEY) !== null
+      this.getFromLocalStorage(StorageKeys.ACCESS_TOKEN) !== null &&
+      this.getFromLocalStorage(StorageKeys.REFRESH_TOKEN) !== null
     );
   }
 
   login(loginBody: LoginBody): Observable<boolean> {
-    return this.http
-      .post<any>(
-        this.baseUrl + NavRoutes.AUTH + '/' + NavRoutes.LOGIN,
-        loginBody,
-        { observe: 'response' },
-      )
-      .pipe(
-        map((response) => {
-          if (response.status === HttpStatusCode.Created) {
-            this.setTokens(
-              response.body?.access_token,
-              response.body?.refresh_token,
-            );
-            this.setLoggedInUser(response.body?.user);
-            return true;
-          }
-          return false;
-        }),
-        catchError(() => {
-          return of(false);
-        }),
-      );
+    const url = `${this.baseUrl}/${NavRoutes.AUTH}/${NavRoutes.LOGIN}`;
+    return this.http.post<any>(url, loginBody, { observe: 'response' }).pipe(
+      map((response) => {
+        if (response.status === HttpStatusCode.Created) {
+          this.setTokens(
+            response.body?.access_token,
+            response.body?.refresh_token,
+          );
+          this.setLoggedInUser(response.body?.user);
+          return true;
+        }
+        return false;
+      }),
+      catchError(() => of(false)),
+    );
   }
 
   sendResetPasswordMail(email: string): Observable<boolean> {
-    return this.http
-      .post<any>(
-        this.buildUrl(ApiRoutes.AUTH, 'resetPassword'),
-        { email: email },
-        {
-          observe: 'response',
-        },
-      )
-      .pipe(
-        map((response) => {
-          return response.status === HttpStatusCode.Created;
-        }),
-        catchError(() => {
-          return of(false);
-        }),
-      );
+    const url = this.buildUrl(ApiRoutes.AUTH, 'resetPassword');
+    return this.http.post<any>(url, { email }, { observe: 'response' }).pipe(
+      map((response) => response.status === HttpStatusCode.Created),
+      catchError(() => of(false)),
+    );
   }
 
   validateResetPasswordHash(hash: string): Observable<boolean> {
+    const url = this.buildUrl(ApiRoutes.AUTH, 'validate', hash);
     return this.http
-      .get<any>(this.buildUrl(ApiRoutes.AUTH, 'validate', hash), {
-        observe: 'response',
-      })
-      .pipe(
-        map((response) => {
-          return response.status === HttpStatusCode.Ok;
-        }),
-      );
+      .get<any>(url, { observe: 'response' })
+      .pipe(map((response) => response.status === HttpStatusCode.Ok));
   }
 
   setPassword(passwordBody: string, hash: string): Observable<boolean> {
-    return this.http
-      .post<any>(
-        this.buildUrl(ApiRoutes.AUTH, 'setPassword', hash),
-        passwordBody,
-        {
-          observe: 'response',
-        },
-      )
-      .pipe(
-        map((response) => {
-          return response.status === HttpStatusCode.Created;
-        }),
-        catchError(() => {
-          return of(false);
-        }),
-      );
+    const url = this.buildUrl(ApiRoutes.AUTH, 'setPassword', hash);
+    return this.http.post<any>(url, passwordBody, { observe: 'response' }).pipe(
+      map((response) => response.status === HttpStatusCode.Created),
+      catchError(() => of(false)),
+    );
   }
 
   resendInviteMail(userId: string) {
-    const userBody = { userId: userId };
-    return this.http.post(this.buildUrl('auth', 'resendInviteMail'), userBody);
+    const url = this.buildUrl('auth', 'resendInviteMail');
+    return this.http.post(url, { userId });
   }
 
   logout() {
     this.loggedInUser = null;
-    this.removeFromLocalStorage(STORAGE_USER_KEY);
-    this.removeFromLocalStorage(STORAGE_ACCESS_TOKEN_KEY);
-    this.removeFromLocalStorage(STORAGE_REFRESH_TOKEN_KEY);
+    this.clearUserSession();
     this.router.navigateByUrl(NavRoutes.LOGIN).then();
   }
 
   sendRefreshToken(): Observable<any> {
-    return this.http.post<any>(this.buildUrl(ApiRoutes.AUTH, 'refreshToken'), {
-      refreshToken: this.getFromLocalStorage(STORAGE_REFRESH_TOKEN_KEY),
+    const url = this.buildUrl(ApiRoutes.AUTH, 'refreshToken');
+    return this.http.post<any>(url, {
+      refreshToken: this.getFromLocalStorage(StorageKeys.REFRESH_TOKEN),
     });
   }
 
   getRefreshToken(): string | null {
-    return this.getFromLocalStorage(STORAGE_REFRESH_TOKEN_KEY);
+    return this.getFromLocalStorage(StorageKeys.REFRESH_TOKEN);
   }
 
   getAccessToken(): string | null {
-    return this.getFromLocalStorage(STORAGE_ACCESS_TOKEN_KEY);
+    return this.getFromLocalStorage(StorageKeys.ACCESS_TOKEN);
   }
 
-  setTokens(access_token: string, refresh_token: string) {
-    this.setToLocalStorage(STORAGE_ACCESS_TOKEN_KEY, access_token);
-    this.setToLocalStorage(STORAGE_REFRESH_TOKEN_KEY, refresh_token);
+  setTokens(accessToken: string, refreshToken: string) {
+    this.setToLocalStorage(StorageKeys.ACCESS_TOKEN, accessToken);
+    this.setToLocalStorage(StorageKeys.REFRESH_TOKEN, refreshToken);
   }
 
   setLoggedInUser(user: User) {
     this.loggedInUser = user;
-    this.setToLocalStorage(STORAGE_USER_KEY, JSON.stringify(user));
+    this.setToLocalStorage(StorageKeys.USER, JSON.stringify(user));
   }
 
   getLoggedInUser(): User | null {
-    if (this.loggedInUser) {
-      return this.loggedInUser;
-    }
-    const userJSON = this.getFromLocalStorage(STORAGE_USER_KEY);
-    const parsedUser = JSON.parse(userJSON ?? '{}');
-    return new User(parsedUser);
+    if (this.loggedInUser) return this.loggedInUser;
+
+    const userJSON = this.getFromLocalStorage(StorageKeys.USER);
+    return userJSON ? new User(JSON.parse(userJSON)) : null;
   }
 
   getTenantId() {
-    if (this.superAdminService.isSuperAdmin()) {
-      return this.superAdminService.getSelectedTenantIdStream().value;
-    } else {
-      return this.getLoggedInUser()?.tenantId;
-    }
+    return this.superAdminService.isSuperAdmin()
+      ? this.superAdminService.getSelectedTenantIdStream().value
+      : this.getLoggedInUser()?.tenantId;
   }
 
   private buildUrl(...parts: string[]): string {
@@ -176,6 +139,12 @@ export class AuthService {
 
   private getFromLocalStorage(key: string): string | null {
     return localStorage.getItem(key);
+  }
+
+  private clearUserSession() {
+    Object.values(StorageKeys).forEach((key) =>
+      this.removeFromLocalStorage(key),
+    );
   }
 
   private removeFromLocalStorage(key: string): void {

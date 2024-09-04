@@ -25,6 +25,7 @@
       <tr
         (click)="rowClickEvent.emit(item)"
         *ngFor="let item of data"
+        [@fade]
         class="pointer rowHovered"
         tuiTr
       >
