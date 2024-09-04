@@ -10,7 +10,6 @@ import {
 } from '@taiga-ui/core';
 import { TuiDialogHelperService } from '../../services/tui-dialog-helper.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { tuiIconAlertOctagonLarge } from '@taiga-ui/icons';
 
 export type DeleteContextData = {
   model: any;
@@ -32,7 +31,6 @@ export class BaseDeleteDialogComponent
   model?: any;
   service?: { [key: string]: (id: string) => Observable<any> };
   deleteMethod?: string;
-  protected readonly tuiIconAlertOctagonLarge = tuiIconAlertOctagonLarge;
   private subscription?: Subscription;
 
   constructor(
