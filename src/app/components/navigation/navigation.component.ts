@@ -66,7 +66,7 @@ export class NavigationComponent implements OnInit {
           // test TODO: REMOVE FOR PRODUCTION!!!
           {
             tooltip: 'Test',
-            icon: '@tui.tool',
+            icon: '@tui.wrench',
             link: 'test',
           },
         ]);

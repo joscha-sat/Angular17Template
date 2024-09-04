@@ -18,9 +18,6 @@ export class LanguageService {
    * Initialize translate service for i18n support by ngx-translate.
    */
   initLanguage() {
-    console.log(typeof this.switcher);
-    console.log(this.switcher);
-
     this.translate.addLangs([Languages.GERMAN, Languages.ENGLISH]);
     this.translate.setDefaultLang(Languages.GERMAN);
     this.switcher.setLanguage('german');
