@@ -1,12 +1,12 @@
+import { TuiLoader } from '@taiga-ui/core';
 import { Component, inject } from '@angular/core';
-import { TuiLoaderModule } from '@taiga-ui/core';
 import { LoadingService } from '../../services/loading.service';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-loading-spinner',
   standalone: true,
-  imports: [TuiLoaderModule, AsyncPipe],
+  imports: [TuiLoader, AsyncPipe],
   templateUrl: './loading-spinner.component.html',
   styleUrl: './loading-spinner.component.scss',
 })

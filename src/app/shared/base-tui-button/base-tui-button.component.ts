@@ -1,11 +1,11 @@
 import { Component, input, output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { TuiButtonModule, TuiButtonOptions } from '@taiga-ui/core';
+import { TuiButton, TuiButtonOptions } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-base-tui-button',
   standalone: true,
-  imports: [TranslateModule, TuiButtonModule],
+  imports: [TranslateModule, TuiButton],
   templateUrl: './base-tui-button.component.html',
   styleUrl: './base-tui-button.component.scss',
 })

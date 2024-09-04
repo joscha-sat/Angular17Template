@@ -1,4 +1,9 @@
 import {
+  TuiComboBoxModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/legacy';
+import { TuiValueChanges } from '@taiga-ui/cdk';
+import {
   Component,
   input,
   OnChanges,
@@ -6,23 +11,17 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {
-  TuiComboBoxModule,
-  TuiDataListWrapperModule,
-  TuiFilterByInputPipeModule,
-  TuiStringifyContentPipeModule,
+  TuiDataListWrapper,
+  TuiFilterByInputPipe,
+  TuiStringifyContentPipe,
 } from '@taiga-ui/kit';
 import {
   ControlContainer,
   FormGroupDirective,
   ReactiveFormsModule,
 } from '@angular/forms';
-import {
-  TuiSizeL,
-  TuiSizeS,
-  TuiTextfieldControllerModule,
-} from '@taiga-ui/core';
+import { TuiSizeL, TuiSizeS } from '@taiga-ui/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { TuiValueChangesModule } from '@taiga-ui/cdk';
 import { DropDownItem } from '../../other/types/DropDownItem.type';
 
 @Component({
@@ -31,12 +30,12 @@ import { DropDownItem } from '../../other/types/DropDownItem.type';
   imports: [
     TuiComboBoxModule,
     ReactiveFormsModule,
-    TuiDataListWrapperModule,
-    TuiStringifyContentPipeModule,
-    TuiFilterByInputPipeModule,
+    TuiDataListWrapper,
+    TuiStringifyContentPipe,
+    TuiFilterByInputPipe,
     TuiTextfieldControllerModule,
     TranslateModule,
-    TuiValueChangesModule,
+    TuiValueChanges,
   ],
   templateUrl: './base-combobox.component.html',
   styleUrl: './base-combobox.component.scss',

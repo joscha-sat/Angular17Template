@@ -1,5 +1,5 @@
+import { TuiButton } from '@taiga-ui/core';
 import { Component, input, output } from '@angular/core';
-import { TuiButtonModule } from '@taiga-ui/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NgStyle } from '@angular/common';
 
@@ -10,7 +10,7 @@ import { NgStyle } from '@angular/common';
 @Component({
   selector: 'app-two-buttons',
   standalone: true,
-  imports: [TuiButtonModule, NgStyle, TranslateModule],
+  imports: [TuiButton, NgStyle, TranslateModule],
   templateUrl: './two-buttons.component.html',
   styleUrl: './two-buttons.component.scss',
 })

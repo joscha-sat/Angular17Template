@@ -1,10 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import {
-  TuiButtonModule,
-  TuiDataListModule,
-  TuiHostedDropdownModule,
-  TuiSvgModule,
-} from '@taiga-ui/core';
+import { TuiButton, TuiDataList, TuiDropdown, TuiIcon } from '@taiga-ui/core';
 import { Router, RouterLink } from '@angular/router';
 import { NavRoutes } from '../../../other/enums/nav-routes';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,12 +16,12 @@ export type Option = {
   selector: 'app-account',
   standalone: true,
   imports: [
-    TuiDataListModule,
+    TuiDataList,
     RouterLink,
     TranslateModule,
-    TuiSvgModule,
-    TuiHostedDropdownModule,
-    TuiButtonModule,
+    TuiIcon,
+    TuiDropdown,
+    TuiButton,
   ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.scss',
@@ -36,12 +31,12 @@ export class AccountComponent implements OnInit {
   isOpen = signal<boolean>(false);
   options = signal<Option[]>([
     {
-      icon: 'tuiIconSettings',
+      icon: '@tui.settings',
       ngxTitle: 'settings.title',
       link: NavRoutes.SETTINGS,
     },
     {
-      icon: 'tuiIconLogOut',
+      icon: '@tui.log-out',
       ngxTitle: 'logout.title',
     },
   ]);

@@ -8,11 +8,7 @@ import {
   signal,
   TemplateRef,
 } from '@angular/core';
-import {
-  TuiTableModule,
-  TuiTablePagination,
-  TuiTablePaginationModule,
-} from '@taiga-ui/addon-table';
+import { TuiTable, TuiTablePagination } from '@taiga-ui/addon-table';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import {
   AsyncPipe,
@@ -24,7 +20,7 @@ import {
   NgSwitchDefault,
   NgTemplateOutlet,
 } from '@angular/common';
-import { TUI_DEFAULT_MATCHER, TuiLetModule } from '@taiga-ui/cdk';
+import { TUI_DEFAULT_MATCHER, TuiLet } from '@taiga-ui/cdk';
 import { TranslateModule } from '@ngx-translate/core';
 import { ResponseWithRecords } from '../../api/base-http.service';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
@@ -47,10 +43,10 @@ export type FetchDataFunction<T> = (
   imports: [
     NgIf,
     AsyncPipe,
-    TuiTableModule,
+    TuiTable,
     NgForOf,
-    TuiTablePaginationModule,
-    TuiLetModule,
+    TuiTablePagination,
+    TuiLet,
     NgSwitchCase,
     NgTemplateOutlet,
     NgSwitch,

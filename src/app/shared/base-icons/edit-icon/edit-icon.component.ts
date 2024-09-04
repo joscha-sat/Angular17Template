@@ -1,10 +1,10 @@
+import { TuiIcon } from '@taiga-ui/core';
 import { Component } from '@angular/core';
-import { TuiSvgModule } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-edit-icon',
   standalone: true,
-  imports: [TuiSvgModule],
+  imports: [TuiIcon],
   templateUrl: './edit-icon.component.html',
   styleUrl: './edit-icon.component.scss',
 })

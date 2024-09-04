@@ -1,10 +1,10 @@
+import { TuiIcon } from '@taiga-ui/core';
 import { Component } from '@angular/core';
-import { TuiSvgModule } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-plus-icon',
   standalone: true,
-  imports: [TuiSvgModule],
+  imports: [TuiIcon],
   templateUrl: './plus-icon.component.html',
   styleUrl: './plus-icon.component.scss',
 })

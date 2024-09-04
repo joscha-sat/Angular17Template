@@ -1,11 +1,11 @@
 import { Component, input } from '@angular/core';
-import { TuiBadgeModule, TuiStatus } from '@taiga-ui/kit';
+import { TuiBadge, TuiStatus } from '@taiga-ui/kit';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-base-badge',
   standalone: true,
-  imports: [TuiBadgeModule, TranslateModule],
+  imports: [TuiBadge, TranslateModule],
   templateUrl: './base-badge.component.html',
   styleUrl: './base-badge.component.scss',
 })

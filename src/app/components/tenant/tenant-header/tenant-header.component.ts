@@ -1,3 +1,4 @@
+import { TuiButton } from '@taiga-ui/core';
 import {
   Component,
   inject,
@@ -7,7 +8,6 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { TuiButtonModule } from '@taiga-ui/core';
 import { Tenant } from '../../../other/models/Tenant';
 import { BaseComboboxComponent } from '../../../shared/base-combobox/base-combobox.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -28,7 +28,7 @@ import { BaseTabsComponent } from '../../../shared/base-tabs/base-tabs.component
   standalone: true,
   imports: [
     TranslateModule,
-    TuiButtonModule,
+    TuiButton,
     BaseComboboxComponent,
     ReactiveFormsModule,
     BaseTuiButtonComponent,

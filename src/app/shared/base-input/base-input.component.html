@@ -6,14 +6,14 @@
       <input
         (tuiValueChanges)="onValueChange($event)"
         type="text"
-        tuiTextfield
+        tuiTextfieldLegacy
       />
     </tui-input>
   }
   @case ('email') {
     <tui-input [tuiTextfieldSize]="size()" [formControlName]="fControlName()">
       {{ label | translate }}
-      <input type="email" tuiTextfield />
+      <input type="email" tuiTextfieldLegacy />
     </tui-input>
   }
   @case ('password') {

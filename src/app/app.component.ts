@@ -1,5 +1,6 @@
-import { NgDompurifySanitizer } from '@tinkoff/ng-dompurify';
-import { TUI_SANITIZER, TuiRootModule } from '@taiga-ui/core';
+import { TUI_SANITIZER } from '@taiga-ui/legacy';
+import { NgDompurifySanitizer } from '@taiga-ui/dompurify';
+import { TuiRoot } from '@taiga-ui/core';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -14,7 +15,7 @@ import { LanguageService } from './services/language.service';
   standalone: true,
   imports: [
     RouterOutlet,
-    TuiRootModule,
+    TuiRoot,
     TranslateModule,
     NavigationComponent,
     LoadingSpinnerComponent,

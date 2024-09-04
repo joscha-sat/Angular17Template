@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TuiAlertModule, TuiButtonModule, TuiLinkModule } from '@taiga-ui/core';
+import { TuiAlert, TuiButton, TuiLink } from '@taiga-ui/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, LoginBody } from '../../../api/auth.service';
 import { Router } from '@angular/router';
@@ -20,10 +20,10 @@ import { NavRoutes } from '../../../other/enums/nav-routes';
     BaseInputComponent,
     FormsModule,
     ReactiveFormsModule,
-    TuiButtonModule,
+    TuiButton,
     TranslateModule,
-    TuiLinkModule,
-    TuiAlertModule,
+    TuiLink,
+    TuiAlert,
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',

@@ -23,16 +23,16 @@
   /*  || TAIGA UI COLOR ADJUSTMENTS --> exact tui variable names needed!||
   /* -------------------------------------------------------------------- */
 
-  --tui-primary: hsl(180, 35%, 45%);
-  --tui-primary-hover: hsl(180, 35%, 40%);
-  --tui-primary-active: hsl(180, 35%, 35%);
+  --tui-background-accent-1: hsl(180, 35%, 45%);
+  --tui-background-accent-1-hover: hsl(180, 35%, 40%);
+  --tui-background-accent-1-pressed: hsl(180, 35%, 35%);
 
-  --tui-secondary: hsl(180, 35%, 88%);
-  --tui-secondary-hover: hsl(180, 35%, 85%);
+  --tui-background-neutral-1: hsl(180, 35%, 88%);
+  --tui-background-neutral-1-hover: hsl(180, 35%, 85%);
 
-  --tui-error-bg-hover: #{$error-bg-hover};
+  --tui-status-negative-pale-hover: #{$error-bg-hover};
 
-  --tui-link: hsl(180, 35%, 30%);
+  --tui-text-action: hsl(180, 35%, 30%);
 }
 
 /* -------------------------------------------------------------------- */

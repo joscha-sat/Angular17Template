@@ -1,13 +1,17 @@
+import {
+  TuiInputDateModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/legacy';
+import { TuiValueChanges } from '@taiga-ui/cdk';
 import { Component, inject, input, WritableSignal } from '@angular/core';
 import {
   ControlContainer,
   FormGroupDirective,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { TuiFieldErrorPipeModule, TuiInputDateModule } from '@taiga-ui/kit';
-import { TuiErrorModule, TuiTextfieldControllerModule } from '@taiga-ui/core';
+import { TuiFieldErrorPipe } from '@taiga-ui/kit';
+import { TuiError } from '@taiga-ui/core';
 import { AsyncPipe } from '@angular/common';
-import { TuiValueChangesModule } from '@taiga-ui/cdk';
 import { DateConverterService } from '../../services/date-converter.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -16,12 +20,12 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
   standalone: true,
   imports: [
     TuiInputDateModule,
-    TuiErrorModule,
+    TuiError,
     ReactiveFormsModule,
-    TuiFieldErrorPipeModule,
+    TuiFieldErrorPipe,
     AsyncPipe,
     TuiTextfieldControllerModule,
-    TuiValueChangesModule,
+    TuiValueChanges,
     TranslateModule,
   ],
   templateUrl: './base-date-picker.component.html',

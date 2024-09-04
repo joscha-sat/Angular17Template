@@ -1,11 +1,12 @@
+import { TuiLink } from '@taiga-ui/core';
+import { TuiItem } from '@taiga-ui/cdk';
+import { TuiBreadcrumbs } from '@taiga-ui/kit';
 import { Component, OnInit } from '@angular/core';
-import { TuiBreadcrumbsModule } from '@taiga-ui/kit';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
   RouterLink,
 } from '@angular/router';
-import { TuiLinkModule } from '@taiga-ui/core';
 import { NgForOf, NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -18,9 +19,10 @@ export type BreadcrumbItem = {
   selector: 'app-base-breadcrumbs',
   standalone: true,
   imports: [
-    TuiBreadcrumbsModule,
+    TuiBreadcrumbs,
+    TuiItem,
     RouterLink,
-    TuiLinkModule,
+    TuiLink,
     NgIf,
     NgForOf,
     TranslateModule,

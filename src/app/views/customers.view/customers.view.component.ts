@@ -1,3 +1,4 @@
+import { TuiValueChanges } from '@taiga-ui/cdk';
 import { Component } from '@angular/core';
 import { UserHeaderComponent } from '../../components/user/user-header/user-header.component';
 import { UserTableComponent } from '../../components/user/user-table/user-table.component';
@@ -6,7 +7,6 @@ import { CustomersHeaderComponent } from '../../components/customers/customers-h
 import { CustomerTableComponent } from '../../components/customers/customer-table/customer-table.component';
 import { BaseDatePickerComponent } from '../../shared/base-date-picker/base-date-picker.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TuiValueChangesModule } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-customers.view',
@@ -19,7 +19,7 @@ import { TuiValueChangesModule } from '@taiga-ui/cdk';
     CustomerTableComponent,
     BaseDatePickerComponent,
     ReactiveFormsModule,
-    TuiValueChangesModule,
+    TuiValueChanges,
   ],
   templateUrl: './customers.view.component.html',
   styleUrl: './customers.view.component.scss',

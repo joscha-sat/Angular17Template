@@ -1,5 +1,6 @@
+import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { TuiAlertModule, TuiDialogModule, TuiRootModule } from '@taiga-ui/core';
+import { TuiAlert, TuiDialog } from '@taiga-ui/core';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
@@ -29,7 +30,7 @@ export const appConfig: ApplicationConfig = {
       ]),
     ),
     provideRouter(routes),
-    importProvidersFrom(TuiRootModule, TuiAlertModule, TuiDialogModule),
+    importProvidersFrom(TuiAlert, TuiDialog),
     TranslateModule.forRoot({
       defaultLanguage: 'de',
       loader: {
@@ -38,5 +39,6 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpClient],
       },
     }).providers!,
+    NG_EVENT_PLUGINS,
   ],
 };

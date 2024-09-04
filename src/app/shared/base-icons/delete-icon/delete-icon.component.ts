@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { TuiButtonModule, TuiSvgModule } from '@taiga-ui/core';
-import { TuiAppearanceModule } from '@taiga-ui/experimental';
+import { TuiAppearance, TuiButton, TuiIcon } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-delete-icon',
   standalone: true,
-  imports: [TuiSvgModule, TuiButtonModule, TuiAppearanceModule],
+  imports: [TuiIcon, TuiButton, TuiAppearance],
   templateUrl: './delete-icon.component.html',
   styleUrl: './delete-icon.component.scss',
 })

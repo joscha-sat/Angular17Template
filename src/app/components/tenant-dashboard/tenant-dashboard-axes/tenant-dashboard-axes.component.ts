@@ -1,10 +1,12 @@
+import { TuiContext } from '@taiga-ui/cdk';
 import { Component, OnInit } from '@angular/core';
 import {
-  TuiAxesModule,
-  TuiLineChartModule,
-  TuiLineDaysChartModule,
+  TuiAxes,
+  TuiLineChart,
+  TuiLineChartHint,
+  TuiLineDaysChart,
+  TuiLineDaysChartHint,
 } from '@taiga-ui/addon-charts';
-import { TuiContextWithImplicit } from '@taiga-ui/cdk';
 import { TuiPoint } from '@taiga-ui/core';
 import { Months } from '../../../other/enums/months';
 
@@ -13,7 +15,13 @@ import { Months } from '../../../other/enums/months';
 @Component({
   selector: 'app-tenant-dashboard-axes',
   standalone: true,
-  imports: [TuiAxesModule, TuiLineDaysChartModule, TuiLineChartModule],
+  imports: [
+    TuiAxes,
+    TuiLineDaysChart,
+    TuiLineDaysChartHint,
+    TuiLineChart,
+    TuiLineChartHint,
+  ],
   templateUrl: './tenant-dashboard-axes.component.html',
   styleUrl: './tenant-dashboard-axes.component.scss',
 })
@@ -37,7 +45,7 @@ export class TenantDashboardAxesComponent implements OnInit {
 
   readonly hintContent = ({
     $implicit,
-  }: TuiContextWithImplicit<readonly TuiPoint[]>): number => $implicit[0][1];
+  }: TuiContext<readonly TuiPoint[]>): number => $implicit[0][1];
 
   readonly stringifyMonths = (t: number) => {
     return `${this.months[t]}`;

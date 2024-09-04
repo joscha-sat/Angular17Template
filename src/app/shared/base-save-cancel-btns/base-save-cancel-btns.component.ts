@@ -1,5 +1,5 @@
+import { TuiButton } from '@taiga-ui/core';
 import { Component, EventEmitter, input, output, Output } from '@angular/core';
-import { TuiButtonModule } from '@taiga-ui/core';
 import { NgIf } from '@angular/common';
 import {
   ControlContainer,
@@ -12,7 +12,7 @@ import { TuiDialogHelperService } from '../../services/tui-dialog-helper.service
 @Component({
   selector: 'app-base-save-cancel-btns',
   standalone: true,
-  imports: [TuiButtonModule, NgIf, TranslateModule],
+  imports: [TuiButton, NgIf, TranslateModule],
   templateUrl: './base-save-cancel-btns.component.html',
   styleUrl: './base-save-cancel-btns.component.scss',
   viewProviders: [

@@ -1,10 +1,10 @@
 @if (radioItem()) {
-  <tui-radio-labeled
+ <label tuiLabel> <input tuiRadio type="radio"
     [formControlName]="radioItem().fControlName"
-    [item]="radioItem().item"
+    [value]="radioItem().item"
     [size]="radioItem().size || 'm'"
     class="tui-space_bottom-3"
   >
     {{ radioItem().ngxTitle | translate }}
-  </tui-radio-labeled>
+  </label>
 }

@@ -1,3 +1,5 @@
+import { TuiInputNumberModule } from '@taiga-ui/legacy';
+import { TuiIcon } from '@taiga-ui/core';
 import {
   Component,
   inject,
@@ -8,8 +10,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TuiInputCountModule, TuiTabsModule } from '@taiga-ui/kit';
-import { TuiSvgModule } from '@taiga-ui/core';
+import { TuiTabs } from '@taiga-ui/kit';
 import {
   ActivatedRoute,
   Router,
@@ -17,8 +18,6 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { TuiMobileTabsModule } from '@taiga-ui/addon-mobile';
-
 // routePath has to be a child route to be loaded correctly into the router-outlet space
 export type TabArray = {
   i18nTitle: string;
@@ -31,13 +30,12 @@ export type TabArray = {
   standalone: true,
   imports: [
     FormsModule,
-    TuiInputCountModule,
-    TuiTabsModule,
-    TuiSvgModule,
+    TuiInputNumberModule,
+    TuiTabs,
+    TuiIcon,
     RouterOutlet,
     RouterLink,
     TranslateModule,
-    TuiMobileTabsModule,
   ],
   templateUrl: './base-tabs.component.html',
   styleUrl: './base-tabs.component.scss',

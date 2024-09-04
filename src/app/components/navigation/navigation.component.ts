@@ -35,38 +35,38 @@ export class NavigationComponent implements OnInit {
           // tenant
           {
             tooltip: translations['tenant.title'],
-            icon: 'tuiIconHomeLarge',
+            icon: '@tui.home',
             link: NavRoutes.TENANT,
           },
           // user
           {
             tooltip: translations['user.title'],
-            icon: 'tuiIconUserLarge',
+            icon: '@tui.user',
             link: NavRoutes.USER,
           },
           // customer
           {
             tooltip: translations['customer.title-plural'],
-            icon: 'tuiIconBriefcaseLarge',
+            icon: '@tui.briefcase',
             link: NavRoutes.CUSTOMERS,
           },
           // map
           {
             tooltip: translations['map.title'],
-            icon: 'tuiIconMapPinLarge',
+            icon: '@tui.map-pin',
             link: NavRoutes.MAP,
           },
           // settings
           {
             tooltip: translations['settings.title'],
-            icon: 'tuiIconSettingsLarge',
+            icon: '@tui.settings',
             link: NavRoutes.SETTINGS,
           },
 
           // test TODO: REMOVE FOR PRODUCTION!!!
           {
             tooltip: 'Test',
-            icon: 'tuiIconToolLarge',
+            icon: '@tui.tool',
             link: 'test',
           },
         ]);

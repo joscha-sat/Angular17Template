@@ -24,7 +24,6 @@ import {
   imports: [
     BaseTableComponent,
     AsyncPipe,
-    BaseTableComponent,
     BaseBadgeComponent,
     BaseSearchComponent,
     DeleteIconComponent,

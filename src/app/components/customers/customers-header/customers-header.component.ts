@@ -1,3 +1,5 @@
+import { TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+import { TuiValueChanges } from '@taiga-ui/cdk';
 import { Component, inject } from '@angular/core';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -9,8 +11,6 @@ import { CustomerService } from '../../../api/customer.service';
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BaseDatePickerComponent } from '../../../shared/base-date-picker/base-date-picker.component';
-import { TuiValueChangesModule } from '@taiga-ui/cdk';
-import { TuiTextfieldControllerModule } from '@taiga-ui/core';
 import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-search-date.component';
 
 @Component({
@@ -23,7 +23,7 @@ import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-s
     BaseTableSearchComponent,
     BaseSearchComponent,
     BaseDatePickerComponent,
-    TuiValueChangesModule,
+    TuiValueChanges,
     ReactiveFormsModule,
     TuiTextfieldControllerModule,
     BaseSearchDateComponent,

@@ -21,7 +21,6 @@ import {
   imports: [
     BaseTableComponent,
     AsyncPipe,
-    BaseTableComponent,
     BaseTuiButtonComponent,
     DeleteIconComponent,
   ],

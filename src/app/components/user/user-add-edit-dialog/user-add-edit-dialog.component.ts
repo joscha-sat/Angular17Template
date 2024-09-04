@@ -12,11 +12,9 @@ import { TwoButtonsComponent } from '../../../shared/two-buttons/two-buttons.com
 import { BaseSaveCancelBtnsComponent } from '../../../shared/base-save-cancel-btns/base-save-cancel-btns.component';
 import { UserService } from '../../../api/user.service';
 import { BaseDialogComponent } from '../../../shared/base-dialog/base-dialog.component';
-import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
-import { TuiDialogContext } from '@taiga-ui/core';
+import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
+import { TuiDialogContext, TuiLabel } from '@taiga-ui/core';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
-
-import { TuiRadioLabeledModule } from '@taiga-ui/kit';
 import { BaseRadioGroupComponent } from '../../../shared/base-radio-group/base-radio-group.component';
 import { BaseComboboxComponent } from '../../../shared/base-combobox/base-combobox.component';
 import { TwoInputsRowLayoutComponent } from '../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout.component';
@@ -37,7 +35,7 @@ import { RoleDropdownComponent } from './role-dropdown/role-dropdown.component';
     TwoButtonsComponent,
     BaseSaveCancelBtnsComponent,
     TwoInputsRowLayoutComponent,
-    TuiRadioLabeledModule,
+    TuiLabel,
     BaseRadioGroupComponent,
     BaseComboboxComponent,
     BaseRadioBlockComponent,

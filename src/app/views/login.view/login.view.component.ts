@@ -1,19 +1,19 @@
+import { TuiButton } from '@taiga-ui/core';
+import { TuiIslandDirective } from '@taiga-ui/legacy';
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { TuiIslandModule } from '@taiga-ui/kit';
 import { LoginHeaderComponent } from '../../components/login/login-header/login-header.component';
 import { LoginFormComponent } from '../../components/login/login-form/login-form.component';
-import { TuiButtonModule } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-login.view',
   standalone: true,
   imports: [
     TranslateModule,
-    TuiIslandModule,
+    TuiIslandDirective,
     LoginHeaderComponent,
     LoginFormComponent,
-    TuiButtonModule,
+    TuiButton,
   ],
   templateUrl: './login.view.component.html',
   styleUrl: './login.view.component.scss',

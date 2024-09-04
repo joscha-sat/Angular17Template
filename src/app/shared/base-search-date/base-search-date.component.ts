@@ -1,7 +1,7 @@
+import { TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { Component, inject, input, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BaseDatePickerComponent } from '../base-date-picker/base-date-picker.component';
-import { TuiTextfieldControllerModule } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-base-search-date',

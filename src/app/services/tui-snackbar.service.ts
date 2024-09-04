@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { TuiAlertService, TuiNotificationT } from '@taiga-ui/core';
+import { TuiAlertService } from '@taiga-ui/core';
 import { take } from 'rxjs';
 
 @Injectable({
@@ -10,13 +10,13 @@ export class TuiSnackbarService {
     @Inject(TuiAlertService) private readonly alerts: TuiAlertService,
   ) {}
 
-  openSnackbar(type: TuiNotificationT, header: string, text?: string): void {
+  openSnackbar(type: string, header: string, text?: string): void {
     this.alerts
       .open(text ?? '', {
         label: header,
-        autoClose: true,
-        hasCloseButton: true,
-        status: type,
+        autoClose: 3_000,
+        closeable: true,
+        appearance: type,
       })
       .pipe(take(1))
       .subscribe();

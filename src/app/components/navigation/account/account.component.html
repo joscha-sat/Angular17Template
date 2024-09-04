@@ -1,21 +1,21 @@
-<tui-hosted-dropdown
-  (openChange)="isOpen.set($event)"
-  [content]="dropdown"
-  [open]="isOpen()"
-  [sided]="true"
+<div 
+  (tuiDropdownOpenChange)="isOpen.set($event)"
+  [tuiDropdown]="dropdown"
+  [tuiDropdownOpen]="isOpen()"
+  [tuiDropdownSided]="true"
   tuiDropdownAlign="right"
 >
   <button
-    [pseudoActive]="isOpen() || null"
+    [tuiAppearanceState]="isOpen() || null ? 'active' : null"
     appearance="flat"
-    iconRight="tuiIconUserLarge"
+    iconEnd="@tui.user"
     size="m"
     tuiIconButton
     type="button"
   >
     account
   </button>
-</tui-hosted-dropdown>
+</div>
 
 <!-- Drop up content on the bottom for settings and logout -->
 <ng-template #dropdown let-close="close">
@@ -28,7 +28,7 @@
       @for (option of options(); track option) {
         <!--   settings   -->
         <button (click)="onOptionsClick(option)" class="dropdown-btn" tuiOption>
-          <tui-svg [src]="option.icon"></tui-svg>
+          <tui-icon  [icon]="option.icon"></tui-icon>
           {{ option.ngxTitle | translate }}
         </button>
       }
