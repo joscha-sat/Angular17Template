@@ -8,6 +8,7 @@ import {
 import {
   TuiGroup,
   TuiHorizontalDirection,
+  TuiLabel,
   TuiSizeL,
   TuiSizeS,
 } from '@taiga-ui/core';
@@ -19,7 +20,7 @@ export type RadioItem = {
 @Component({
   selector: 'app-base-radio-block',
   standalone: true,
-  imports: [TuiBlock, TuiRadio, ReactiveFormsModule, TuiGroup],
+  imports: [TuiBlock, TuiRadio, ReactiveFormsModule, TuiGroup, TuiLabel],
   templateUrl: './base-radio-block.component.html',
   styleUrl: './base-radio-block.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
