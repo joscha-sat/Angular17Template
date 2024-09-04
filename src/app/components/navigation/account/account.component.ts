@@ -3,7 +3,6 @@ import { TuiButton, TuiDataList, TuiDropdown, TuiIcon } from '@taiga-ui/core';
 import { Router, RouterLink } from '@angular/router';
 import { NavRoutes } from '../../../other/enums/nav-routes';
 import { TranslateModule } from '@ngx-translate/core';
-import { tuiIconLogOut, tuiIconSettings } from '@taiga-ui/icons';
 import { AuthService } from '../../../api/auth.service';
 
 export type Option = {
@@ -42,8 +41,6 @@ export class AccountComponent implements OnInit {
   ]);
 
   protected readonly NavRoutes = NavRoutes;
-  protected readonly tuiIconLogOut = tuiIconLogOut;
-  protected readonly tuiIconSettings = tuiIconSettings;
 
   constructor(
     private authService: AuthService,
