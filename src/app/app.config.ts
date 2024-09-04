@@ -14,6 +14,8 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { authTokenInterceptor } from './other/interceptors/auth-token.interceptor';
 import { isLoadingInterceptor } from './other/interceptors/is-loading.interceptor';
 import { errorInterceptor } from './other/interceptors/error.interceptor';
+import { tuiLanguageSwitcher } from '@taiga-ui/i18n';
+import { TuiDocLanguageSwitcher } from '@taiga-ui/addon-doc';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -31,6 +33,10 @@ export const appConfig: ApplicationConfig = {
     ),
     provideRouter(routes),
     importProvidersFrom(TuiAlert, TuiDialog),
+    {
+      provide: tuiLanguageSwitcher,
+      useClass: TuiDocLanguageSwitcher,
+    },
     TranslateModule.forRoot({
       defaultLanguage: 'de',
       loader: {
