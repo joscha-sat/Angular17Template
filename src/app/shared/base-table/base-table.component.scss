@@ -25,29 +25,26 @@ td {
 /* Top left and right rounded corners */
 .table thead tr:first-child th:first-child {
   border-top-left-radius: 1rem;
-
 }
 
 .table thead tr:first-child th:last-child {
   border-top-right-radius: 1rem;
 }
 
-.rowHovered:hover {
+/* Enhanced hover effect specificity */
+.table tbody tr.pointer.rowHovered:hover {
   background-color: hsl(180, 35%, 96%);
-
 }
 
 // table data bg = transparent, else it would override tr hover
-[_nghost-ng-c2547322422] {
+td[_nghost-ng-c4079261847]:not(:focus-within) {
   background-color: transparent;
 }
 
-
-///* Bottom left and right rounded corners */
-//.table tr:last-child td:first-child {
-//  border-bottom-left-radius: 1rem;
-//}
-//
-//.table tr:last-child td:last-child {
-//  border-bottom-right-radius: 1rem;
-//}
+// Bottom left and right rounded corners
+// .table tr:last-child td:first-child {
+//   border-bottom-left-radius: 1rem;
+// }
+// .table tr:last-child td:last-child {
+//   border-bottom-right-radius: 1rem;
+// }
