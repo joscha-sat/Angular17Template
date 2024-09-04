@@ -2,13 +2,13 @@ import { TuiRadio } from '@taiga-ui/kit';
 import { Component, input } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { TuiLabel, TuiSizeL } from '@taiga-ui/core';
+import { TuiLabel, TuiSizeS } from '@taiga-ui/core';
 
 export type RadioItem = {
   fControlName: string;
   ngxTitle: string;
   item: any;
-  size?: TuiSizeL;
+  size?: TuiSizeS;
 };
 
 @Component({
