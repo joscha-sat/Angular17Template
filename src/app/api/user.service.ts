@@ -5,7 +5,7 @@ import {
   GenericHttpService,
   idTypes,
   ResponseWithRecords,
-} from './base-http.service';
+} from './base-http-service/base-http.service';
 import { User } from '../other/models/User';
 
 type QueryParams = BaseQueryParams;

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpStatusCode } from '@angular/common/http';
-import { catchError, map, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../other/environment/environment';
 import { User } from '../other/models/User';
-import { SuperAdminService } from './super-admin.service';
 import { ApiRoutes } from '../other/enums/api-routes';
 import { NavRoutes } from '../other/enums/nav-routes';
 
@@ -19,74 +18,40 @@ export type LoginBody = {
   password: string;
 };
 
+export type LoginResponse = {
+  access_token: string;
+  refresh_token: string;
+  user: User;
+};
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private readonly baseUrl = environment.baseUrl;
-  private loggedInUser!: User | null;
+  private loggedInUser?: User;
 
   constructor(
     private http: HttpClient,
     private router: Router,
-    private superAdminService: SuperAdminService,
   ) {}
 
   isLoggedIn(): boolean {
-    return (
-      this.getFromLocalStorage(StorageKeys.ACCESS_TOKEN) !== null &&
-      this.getFromLocalStorage(StorageKeys.REFRESH_TOKEN) !== null
-    );
+    return this.loggedInUser !== undefined;
   }
 
-  login(loginBody: LoginBody): Observable<boolean> {
-    const url = `${this.baseUrl}/${NavRoutes.AUTH}/${NavRoutes.LOGIN}`;
-    return this.http.post<any>(url, loginBody, { observe: 'response' }).pipe(
-      map((response) => {
-        if (response.status === HttpStatusCode.Created) {
-          this.setTokens(
-            response.body?.access_token,
-            response.body?.refresh_token,
-          );
-          this.setLoggedInUser(response.body?.user);
-          return true;
-        }
-        return false;
+  login(loginBody: LoginBody) {
+    const url = `${this.baseUrl}${NavRoutes.AUTH}/${NavRoutes.LOGIN}`;
+    return this.http.post<any>(url, loginBody).pipe(
+      map((response: LoginResponse) => {
+        this.setTokens(response.access_token, response.refresh_token);
+        this.setLoggedInUser(response?.user);
       }),
-      catchError(() => of(false)),
     );
-  }
-
-  sendResetPasswordMail(email: string): Observable<boolean> {
-    const url = this.buildUrl(ApiRoutes.AUTH, 'resetPassword');
-    return this.http.post<any>(url, { email }, { observe: 'response' }).pipe(
-      map((response) => response.status === HttpStatusCode.Created),
-      catchError(() => of(false)),
-    );
-  }
-
-  validateResetPasswordHash(hash: string): Observable<boolean> {
-    const url = this.buildUrl(ApiRoutes.AUTH, 'validate', hash);
-    return this.http
-      .get<any>(url, { observe: 'response' })
-      .pipe(map((response) => response.status === HttpStatusCode.Ok));
-  }
-
-  setPassword(passwordBody: string, hash: string): Observable<boolean> {
-    const url = this.buildUrl(ApiRoutes.AUTH, 'setPassword', hash);
-    return this.http.post<any>(url, passwordBody, { observe: 'response' }).pipe(
-      map((response) => response.status === HttpStatusCode.Created),
-      catchError(() => of(false)),
-    );
-  }
-
-  resendInviteMail(userId: string) {
-    const url = this.buildUrl('auth', 'resendInviteMail');
-    return this.http.post(url, { userId });
   }
 
   logout() {
-    this.loggedInUser = null;
+    this.loggedInUser = undefined;
     this.clearUserSession();
     this.router.navigateByUrl(NavRoutes.LOGIN).then();
   }
@@ -123,12 +88,6 @@ export class AuthService {
     return userJSON ? new User(JSON.parse(userJSON)) : null;
   }
 
-  getTenantId() {
-    return this.superAdminService.isSuperAdmin()
-      ? this.superAdminService.getSelectedTenantIdStream().value
-      : this.getLoggedInUser()?.tenantId;
-  }
-
   private buildUrl(...parts: string[]): string {
     return [this.baseUrl, ...parts].join('/');
   }
@@ -151,3 +110,32 @@ export class AuthService {
     localStorage.removeItem(key);
   }
 }
+
+// todo: might need cleanup
+// sendResetPasswordMail(email: string): Observable<boolean> {
+//   const url = this.buildUrl(ApiRoutes.AUTH, 'resetPassword');
+//   return this.http.post<any>(url, { email }, { observe: 'response' }).pipe(
+//     map((response) => response.status === HttpStatusCode.Created),
+//     catchError(() => of(false)),
+//   );
+// }
+//
+// validateResetPasswordHash(hash: string): Observable<boolean> {
+//   const url = this.buildUrl(ApiRoutes.AUTH, 'validate', hash);
+//   return this.http
+//     .get<any>(url, { observe: 'response' })
+//     .pipe(map((response) => response.status === HttpStatusCode.Ok));
+// }
+//
+// setPassword(passwordBody: string, hash: string): Observable<boolean> {
+//   const url = this.buildUrl(ApiRoutes.AUTH, 'setPassword', hash);
+//   return this.http.post<any>(url, passwordBody, { observe: 'response' }).pipe(
+//     map((response) => response.status === HttpStatusCode.Created),
+//     catchError(() => of(false)),
+//   );
+// }
+//
+// resendInviteMail(userId: string) {
+//   const url = this.buildUrl('auth', 'resendInviteMail');
+//   return this.http.post(url, { userId });
+// }

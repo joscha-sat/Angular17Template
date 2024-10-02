@@ -18,7 +18,7 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error) => {
       if (error.status !== HttpStatusCode.Unauthorized) {
-        return throwError(error);
+        return throwError(() => error);
       }
 
       if (authService.getRefreshToken()) {
@@ -39,16 +39,16 @@ export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
               return next(req);
             } else {
               authService.logout();
-              return throwError(response);
+              return throwError(() => response);
             }
           }),
           catchError((error) => {
             authService.logout();
-            return throwError(error);
+            return throwError(() => error);
           }),
         );
       } else {
-        return throwError(error);
+        return throwError(() => error);
       }
     }),
   );

@@ -16,7 +16,7 @@ import {
   Subscription,
   switchMap,
 } from 'rxjs';
-import { ResponseWithRecords } from '../../api/base-http.service';
+import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

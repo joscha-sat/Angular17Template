@@ -26,7 +26,7 @@ import {
 } from '@angular/common';
 import { TUI_DEFAULT_MATCHER, TuiLet } from '@taiga-ui/cdk';
 import { TranslateModule } from '@ngx-translate/core';
-import { ResponseWithRecords } from '../../api/base-http.service';
+import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
 import { animate, style, transition, trigger } from '@angular/animations';
 

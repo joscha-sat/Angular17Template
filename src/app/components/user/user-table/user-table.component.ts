@@ -6,7 +6,6 @@ import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.serv
 import { UserAddEditDialogComponent } from '../user-add-edit-dialog/user-add-edit-dialog.component';
 import { UserService } from '../../../api/user.service';
 import { TableRefresherComponent } from '../../../other/abstract-class-components/table-refresher.component';
-import { SuperAdminService } from '../../../api/super-admin.service';
 import { TenantService } from '../../../api/tenant.service';
 import { AuthService } from '../../../api/auth.service';
 import { BaseBadgeComponent } from '../../../shared/base-badge/base-badge.component';
@@ -17,6 +16,7 @@ import {
   BaseDeleteDialogComponent,
   DeleteContextData,
 } from '../../../shared/base-delete-dialog/base-delete-dialog.component';
+import { RoleService } from '../../../api/role.service';
 
 @Component({
   selector: 'app-user-table',
@@ -37,7 +37,7 @@ export class UserTableComponent
 {
   dialogService = inject(TuiDialogHelperService<User>);
   userService = inject(UserService);
-  superAdminService = inject(SuperAdminService);
+  roleService = inject(RoleService);
   tenantService = inject(TenantService);
   authService = inject(AuthService);
 
@@ -62,7 +62,7 @@ export class UserTableComponent
 
   get tenantId(): string {
     // case super admin
-    if (this.superAdminService.isSuperAdmin()) {
+    if (this.roleService.isSuperAdmin) {
       return this.tenantService.selectedTenantId();
     }
     // case logged in tenant

@@ -6,7 +6,7 @@ import {
   GenericHttpService,
   idTypes,
   ResponseWithRecords,
-} from './base-http.service';
+} from './base-http-service/base-http.service';
 import { Tenant } from '../other/models/Tenant';
 
 export type TenantQueryParams = BaseQueryParams & {};

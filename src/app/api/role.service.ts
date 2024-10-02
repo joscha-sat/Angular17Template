@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
   BaseQueryParams,
   GenericHttpService,
   idTypes,
   ResponseWithRecords,
-} from './base-http.service';
+} from './base-http-service/base-http.service';
 import { Role } from '../other/models/Role';
+import { AuthService } from './auth.service';
 
 export type RoleQueryParams = BaseQueryParams & {};
 
@@ -14,8 +15,20 @@ export type RoleQueryParams = BaseQueryParams & {};
   providedIn: 'root',
 })
 export class RoleService extends GenericHttpService {
+  authService = inject(AuthService);
+
   endpoint = 'role';
   element = 'Eine Rolle'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
+
+  //  UTILITY METHODS
+  get isSuperAdmin(): boolean {
+    const user = this.authService.getLoggedInUser();
+
+    if (!user?.role) {
+      return false;
+    }
+    return user.role.superAdmin;
+  }
 
   // GET ALL
   getAllRoles(

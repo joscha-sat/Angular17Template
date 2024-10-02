@@ -2,7 +2,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { catchError } from 'rxjs';
 import { inject } from '@angular/core';
 import { TuiSnackbarService } from '../../services/tui-snackbar.service';
-import { HttpStatusMsgService } from './http-status-msg.service';
+import { HttpStatusMsgService } from '../../api/error-messages/http-status-msg.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const snackbarService = inject(TuiSnackbarService);

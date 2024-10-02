@@ -2,6 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
+// A mapping of HTTP status codes to translation keys
 const STATUS_CODES: { [key: number]: string } = {
   400: 'generic-http-error.status-400',
   401: 'generic-http-error.status-401',
@@ -18,58 +19,69 @@ const STATUS_CODES: { [key: number]: string } = {
 export class HttpStatusMsgService {
   constructor(private injector: Injector) {}
 
+  // Lazy retrieves the TranslateService instance
   private get translateService(): TranslateService {
     return this.injector.get(TranslateService);
   }
 
-  // Method to get the appropriate error message for a given HTTP error status
+  /**
+   * Method to get the appropriate error message for a given HTTP error status
+   * @param err - The HttpErrorResponse object
+   * @param method - Optional: The HTTP method (e.g., "GET", "POST")
+   * @param endpoint - Optional: Specific endpoint (e.g., "user")
+   * @returns The translated error message
+   */
   getStatusErrorMessage = (
     err: HttpErrorResponse,
-    method?: string, // Method string (e.g. "GET", "POST")
-    endpoint?: string, // e.g. user
+    method?: string,
+    endpoint?: string,
   ) => {
-    // Extracting the endpoint from error if any
+    // Extract the endpoint from error if available
     const endpointFromError = this.getEndpointFromError(err);
     if (endpointFromError) {
       endpoint = endpointFromError;
     }
 
-    // Creating the translation key and genericTranslationKey using the error details
+    // Creating translation keys
     const errorKey = err.error?.key?.toLowerCase() || '';
     const translationKey = `http-error.${endpoint}.${method?.toLowerCase()}_${errorKey}`;
     const genericTranslationKey = `http-error.${errorKey}`;
 
-    // Translating the key to the actual error message
+    // Attempt to translate the specific error message
     let translated = this.translateService.instant(translationKey);
     if (translated === translationKey) {
       translated = this.translateService.instant(genericTranslationKey);
     }
 
+    // Fallback to error message from the response if translation is not found
     let message =
       translated !== genericTranslationKey ? translated : err.error.message;
 
-    // If there is no message in the error, we fetch the message from the status code
+    // If no message is found, get the message from the status code
     if (!message) {
       const statusKey = STATUS_CODES[err.status];
       let statusMessage = statusKey
         ? this.translateService.instant(statusKey)
         : '';
-      message =
-        statusMessage ?? `Unbekannter Fehler, Statuscode ${err.status}.`;
+      message = statusMessage ?? `Unknown error, status code ${err.status}.`;
     }
 
     return message;
   };
 
-  // Method to extract the endpoint from error
-  getEndpointFromError(err: HttpErrorResponse) {
+  /**
+   * Method to extract the endpoint from the error URL
+   * @param err - The HttpErrorResponse object
+   * @returns The extracted endpoint as a string
+   */
+  getEndpointFromError(err: HttpErrorResponse): string | undefined {
     if (!err.url) return;
 
     // Extracting the endpoint segments from the URL
     let url = new URL(err.url);
     let segments = url.pathname.split('/').filter((segment) => segment !== '');
 
-    // Parsing the last segment of the endpoint to check if it follows a specific pattern
+    // Check if the last segment matches a UUID pattern
     let lastSegmentPattern =
       /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
     return lastSegmentPattern.test(segments[segments.length - 1])
