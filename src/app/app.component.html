@@ -1,4 +1,4 @@
-<tui-root>
+<tui-root [attr.tuiTheme]="darkMode() ? 'dark' : null">
   @if (isLoggedIn) {
     <app-navigation />
   }

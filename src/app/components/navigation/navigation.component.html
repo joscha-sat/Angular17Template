@@ -5,6 +5,18 @@
       <!--  logo   -->
       <div class="logo-wrapper"></div>
 
+      <button
+        (click)="darkMode.set(!darkMode())"
+        [tuiHint]="tooltip"
+        appearance="secondary"
+        style="margin-bottom: 1rem"
+        tuiHintDirection="right"
+        tuiIconButton
+        type="button"
+      >
+        <tui-icon [icon]="darkMode() ? 'sun' : 'moon'"></tui-icon>
+      </button>
+
       <!--  loop over navItems   -->
       <div class="nav-items-wrapper">
         @for (navItem of navItems(); track navItem) {

@@ -1,6 +1,6 @@
 import { TUI_SANITIZER } from '@taiga-ui/legacy';
 import { NgDompurifySanitizer } from '@taiga-ui/dompurify';
-import { TuiRoot } from '@taiga-ui/core';
+import { TUI_DARK_MODE, TuiButton, TuiRoot } from '@taiga-ui/core';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,6 +20,7 @@ import { LanguageService } from './services/language.service';
     NavigationComponent,
     LoadingSpinnerComponent,
     BaseSearchComponent,
+    TuiButton,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -27,6 +28,7 @@ import { LanguageService } from './services/language.service';
 })
 export class AppComponent implements OnInit {
   title = 'Angular-Template-V2';
+  protected readonly darkMode = inject(TUI_DARK_MODE);
   private authService = inject(AuthService);
   private languageService = inject(LanguageService);
 
