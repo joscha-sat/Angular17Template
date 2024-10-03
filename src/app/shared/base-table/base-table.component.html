@@ -29,7 +29,6 @@
       <tr
         (click)="rowClickEvent.emit(item)"
         *ngFor="let item of data"
-        [@fade]
         [class.row-hovered-dark]="darkMode()"
         [class.row-hovered-light]="!darkMode()"
         class="pointer"

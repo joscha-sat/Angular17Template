@@ -17,13 +17,15 @@
     </tui-input>
   }
   @case ('password') {
-    <tui-input-password
-      [tuiTextfieldSize]="size()"
-      [formControlName]="fControlName()"
-    >
-      {{ label | translate }}
-      <span class="tui-required"></span>
-    </tui-input-password>
+    <tui-textfield>
+      <input
+        [formControlName]="fControlName()"
+        [placeholder]="label | translate"
+        tuiTextfield
+        type="password"
+      />
+      <tui-icon tuiPassword />
+    </tui-textfield>
   }
   @case ('number') {
     <tui-input-number

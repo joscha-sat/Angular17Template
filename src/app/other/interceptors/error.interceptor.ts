@@ -25,6 +25,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         'Fehler: ' + err.status,
         errorMessage,
       );
+
+      // snackbarService.openSnackbar(
+      //   'error',
+      //   'Fehler: ' + err.status,
+      //   errorMessage,
+      // );
       throw err;
     }),
   );

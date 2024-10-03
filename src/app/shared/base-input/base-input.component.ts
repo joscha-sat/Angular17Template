@@ -2,18 +2,25 @@ import { TuiCurrencyPipe } from '@taiga-ui/addon-commerce';
 import {
   TuiInputModule,
   TuiInputNumberModule,
-  TuiInputPasswordModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { TuiValueChanges } from '@taiga-ui/cdk';
 import { Component, inject, input, Input, output } from '@angular/core';
-import { TuiFieldErrorPipe } from '@taiga-ui/kit';
+import { TuiFieldErrorPipe, TuiPassword } from '@taiga-ui/kit';
 import {
   ControlContainer,
   FormGroupDirective,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { TuiError, TuiSizeL, TuiSizeS } from '@taiga-ui/core';
+import {
+  TuiError,
+  TuiIcon,
+  TuiLabel,
+  TuiSizeL,
+  TuiSizeS,
+  TuiTextfieldComponent,
+  TuiTextfieldDirective,
+} from '@taiga-ui/core';
 import { AsyncPipe } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -28,12 +35,16 @@ type InputTypes = 'text' | 'number' | 'password' | 'email';
     TuiError,
     TuiFieldErrorPipe,
     AsyncPipe,
-    TuiInputPasswordModule,
     TuiInputNumberModule,
     TuiTextfieldControllerModule,
     TuiCurrencyPipe,
     TranslateModule,
     TuiValueChanges,
+    TuiTextfieldComponent,
+    TuiLabel,
+    TuiTextfieldDirective,
+    TuiPassword,
+    TuiIcon,
   ],
   templateUrl: './base-input.component.html',
   styleUrl: './base-input.component.scss',

@@ -1,12 +1,13 @@
 <!-- title -->
-<div class="view-title pb-1">
+<div class="view-title pb-1 flex-a-center-g1">
   {{ 'general.delete-title' | translate }}
+  <tui-icon
+    [icon]="'@tui.octagon-alert'"
+    style="color: var(--warn-txt); transform: scale(1.1)"
+  ></tui-icon>
 </div>
 
-<div class="flex-a-center-g1 pb-1">
-  <tui-icon [icon]="'@tui.alert-octagon'"></tui-icon>
-  <p>{{ 'general.delete-hint' | translate }}</p>
-</div>
+<p>{{ 'general.delete-hint' | translate }}</p>
 
 <hr />
 

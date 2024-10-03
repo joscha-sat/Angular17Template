@@ -63,6 +63,7 @@
     "@angular/compiler-cli": "^18.2.7",
     "@types/dompurify": "3.0.5",
     "@types/jasmine": "~5.1.4",
+    "@types/luxon": "^3.4.2",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
     "@typescript-eslint/parser": "8.8.0",
     "eslint": "^9.11.1",
