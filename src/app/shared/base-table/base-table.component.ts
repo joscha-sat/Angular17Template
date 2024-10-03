@@ -1,6 +1,7 @@
 import {
   Component,
   effect,
+  inject,
   input,
   Input,
   OnInit,
@@ -29,6 +30,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { TUI_DARK_MODE } from '@taiga-ui/core';
 
 export type BaseFetchParams = {
   pageNumber: number;
@@ -106,6 +108,8 @@ export class BaseTableComponent<T> implements OnInit {
   page = signal<number>(0);
   total = signal<number>(0);
   public hasData = signal<boolean>(false);
+
+  darkMode = inject(TUI_DARK_MODE);
 
   constructor() {
     effect(

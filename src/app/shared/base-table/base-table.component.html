@@ -8,7 +8,11 @@
   >
     <!-- HEAD / HEADERS -->
     <thead tuiThead>
-      <tr tuiThGroup>
+      <tr
+        [class.header-row-dark]="darkMode()"
+        [class.header-row-light]="!darkMode()"
+        tuiThGroup
+      >
         <th
           (click)="onSortChange(columns()[i])"
           *ngFor="let header of headers(); let i = index"
@@ -26,7 +30,9 @@
         (click)="rowClickEvent.emit(item)"
         *ngFor="let item of data"
         [@fade]
-        class="pointer rowHovered"
+        [class.row-hovered-dark]="darkMode()"
+        [class.row-hovered-light]="!darkMode()"
+        class="pointer"
         tuiTr
       >
         <!-- loop over the column names displaying the corresponding data -->

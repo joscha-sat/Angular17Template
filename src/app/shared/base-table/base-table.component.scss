@@ -2,6 +2,8 @@
   width: 100%;
   border: 1px solid #e3e3e5;
   border-radius: 1rem;
+
+  --tui-background-base: transparent;
 }
 
 [_nghost-ng-c2145402617] {
@@ -9,18 +11,37 @@
 }
 
 th {
-  background-color: #f3f3f5;
   border: none;
 }
+
+.header-row-light {
+  background-color: #f3f3f5;
+}
+
+.header-row-dark {
+  background-color: #454545;
+}
+
+.match {
+  background: var(--tui-background-neutral-1);
+}
+
 
 td {
   border-left: none;
   border-right: none;
 }
 
-.match {
-  background: var(--tui-background-neutral-1);
+
+/* Enhanced hover effect specificity */
+.row-hovered-light:hover {
+  background-color: hsl(180, 35%, 96%);
 }
+
+.row-hovered-dark:hover {
+  background-color: #454545;
+}
+
 
 /* Top left and right rounded corners */
 .table thead tr:first-child th:first-child {
@@ -31,20 +52,4 @@ td {
   border-top-right-radius: 1rem;
 }
 
-/* Enhanced hover effect specificity */
-.table tbody tr.pointer.rowHovered:hover {
-  background-color: hsl(180, 35%, 96%);
-}
 
-// table data bg = transparent, else it would override tr hover
-td[_nghost-ng-c4079261847]:not(:focus-within) {
-  background-color: transparent;
-}
-
-// Bottom left and right rounded corners
-// .table tr:last-child td:first-child {
-//   border-bottom-left-radius: 1rem;
-// }
-// .table tr:last-child td:last-child {
-//   border-bottom-right-radius: 1rem;
-// }

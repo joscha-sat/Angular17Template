@@ -37,7 +37,10 @@ export class AuthService {
   ) {}
 
   isLoggedIn(): boolean {
-    return this.loggedInUser !== undefined;
+    return (
+      this.getFromLocalStorage(StorageKeys.ACCESS_TOKEN) !== null &&
+      this.getFromLocalStorage(StorageKeys.REFRESH_TOKEN) !== null
+    );
   }
 
   login(loginBody: LoginBody) {
