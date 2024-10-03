@@ -30,7 +30,7 @@ export class TuiSnackbarService {
 
     this.alerts
       .open(safeHtml ?? '', {
-        autoClose: 10000000,
+        autoClose: 3000,
         closeable: true,
         appearance: type,
       })
