@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { BaseTableComponent } from '../../../shared/base-table/base-table.component';
 import { CustomerService } from '../../../api/customer.service';
 import { Customer } from '../../../other/models/Customer';
@@ -17,7 +17,7 @@ import { Table } from '../../../other/types/Table.type';
 })
 export class CustomerTableComponent
   extends TableRefresherComponent<Customer>
-  implements Table<Customer>
+  implements Table<Customer>, OnInit
 {
   customerService = inject(CustomerService);
   dialogService = inject(TuiDialogHelperService);

@@ -16,6 +16,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           err,
           req.method,
         );
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         errorMessage = err.error.message ?? 'unbekannt';
       }

@@ -60,7 +60,7 @@ export class HttpStatusMsgService {
     // If no message is found, get the message from the status code
     if (!message) {
       const statusKey = STATUS_CODES[err.status];
-      let statusMessage = statusKey
+      const statusMessage = statusKey
         ? this.translateService.instant(statusKey)
         : '';
       message = statusMessage ?? `Unknown error, status code ${err.status}.`;
@@ -78,11 +78,13 @@ export class HttpStatusMsgService {
     if (!err.url) return;
 
     // Extracting the endpoint segments from the URL
-    let url = new URL(err.url);
-    let segments = url.pathname.split('/').filter((segment) => segment !== '');
+    const url = new URL(err.url);
+    const segments = url.pathname
+      .split('/')
+      .filter((segment) => segment !== '');
 
     // Check if the last segment matches a UUID pattern
-    let lastSegmentPattern =
+    const lastSegmentPattern =
       /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
     return lastSegmentPattern.test(segments[segments.length - 1])
       ? segments[segments.length - 2]

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { BaseTableComponent } from '../../../../../shared/base-table/base-table.component';
 import { TableRefresherComponent } from '../../../../../other/abstract-class-components/table-refresher.component';
 import { Role } from '../../../../../other/models/Role';
@@ -14,7 +14,7 @@ import { RoleService } from '../../../../../api/role.service';
 })
 export class RolesTableComponent
   extends TableRefresherComponent<Role>
-  implements Table<Role>
+  implements Table<Role>, OnInit
 {
   roleService = inject(RoleService);
 

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { BaseTableComponent } from '../../../shared/base-table/base-table.component';
 import { AsyncPipe } from '@angular/common';
 import { User } from '../../../other/models/User';
@@ -33,7 +33,7 @@ import { RoleService } from '../../../api/role.service';
 })
 export class UserTableComponent
   extends TableRefresherComponent<User>
-  implements Table<User>
+  implements Table<User>, OnInit
 {
   dialogService = inject(TuiDialogHelperService<User>);
   userService = inject(UserService);
