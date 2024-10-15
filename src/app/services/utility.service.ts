@@ -1,5 +1,5 @@
 import { Injectable, WritableSignal } from '@angular/core';
-import { DropDownItem } from '../other/types/DropDownItem';
+import { DropDownItem } from '../other/types/DropDownItem.type';
 
 @Injectable({
   providedIn: 'root',
