@@ -70,21 +70,54 @@ Enums > src/app/other/enums
 
 # Tables
 
-### Translate Table header:
+### Most basic example possible (using User object)
 
-example:
+````angular181html
 
+<app-base-table [columns]="columns()" [fetchData]="fetchDataFn" [headers]="headers()" />
 ````
-// enter i18n keys here
-headers = signal<string[]>(['general.createdAt', 'general.name']);
 
-override ngOnInit() {
-  super.ngOnInit();
-  
-  // it translates the header keys in the parent component. Nothing else needed
-  super.translateHeaders(this.headers);
+**very helpful to not miss anything + have type security - use this in the component.ts**
+
+- `extends TableRefresherComponent<ClassModel>`
+- `implements Table<ClassModel>`
+
+````ts
+export class TestViewComponent
+  extends TableRefresherComponent<User>
+  implements Table<User>, OnInit {
+
+  // inject the service responsible for the api call (get all)
+  userService = inject(UserService);
+
+  // data columns with the name from the object, where the actual value is stored in
+  columns: WritableSignal<(keyof User | 'delete' | 'edit')[]> = signal(['firstName',]);
+
+  // translated header, just enter the i18n key (and dont forget ngOnInit implementation)
+  headers: WritableSignal<string[]> = signal(['general.firstName']);
+
+  // method name which calls the GET All endpoint in th service (needed for the parent fetchData call)
+  setTableRefreshMethodName(): string {
+    return 'getAllUsers';
+  }
+
+  // service responsible for the api call (needed for the parent fetchData call)
+  setTableRefreshService() {
+    return this.userService;
+  }
+
+  // ngOnInit using the translateHeaders method, for automatic transation
+  override ngOnInit() {
+    super.ngOnInit();
+    super.translateHeaders(this.headers);
+  }
 }
 ````
+
+### Possible events
+
+- (rowClickEvent)="rowClicked($event)"
+  - emits the full object of the clicked row eg. User
 
 ### Customizable table columns in parent component, example:
 
@@ -100,7 +133,6 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
 ```angular17html
 
 <app-base-table
-  (rowClickEvent)="rowClicked($event)"
   [fetchData]="fetchDataFn"
   [headers]="headers()"
   [columns]="columns()"
@@ -110,7 +142,7 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
 <!-- customized column, value = current name value, tenant(any name can be given) = full object (tenant) -->
 <ng-template #name let-value let-tenant="object">
   {{ value }} {{ tenant }}
-  <app-delete-icon/>
+  <app-delete-icon />
 </ng-template>
 ```
 
@@ -131,6 +163,9 @@ located at: src/app/shared/table-refresher
   setAdditionalParams(): any {
     return null;
   }
+  
+  // Optional param to override whether or not the getAll should have no params at all
+  protected noParams: boolean = false;
 ````
 
 Example usage in a table component:
@@ -144,6 +179,14 @@ export class TenantTableComponent extends TableRefresherComponent<Tenant> {
   setTableRefreshMethodName() {
     return 'getAllTenants';
   }
+
+  // adds &name=John to the default query params
+  override setAdditionalParams(): any {
+    return { name: 'John' };
+  }
+
+  // aremoves every param from the getAll request, so it is just a blank request without a payload
+  override noParams = true;
 }
 ````
 
@@ -156,7 +199,7 @@ This triggers a getAllMethod with a param called search eg: <br />
 
 ````angular2html
 <!-- search component -->
-<app-base-search [serice]="userService"/>
+<app-base-search [serice]="userService" />
 
 <!-- table adjustment (example user) -->
 <app-base-table [search]="userService.search()">
@@ -169,10 +212,10 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 
 ````angular17html
 <!-- search component -->
-<app-base-search-date [service]="customerService"/>
+<app-base-search-date [service]="customerService" />
 
 <!-- table adjustment (example customer) -->
-<app-base-table [searchDate]="customerService.searchDate()"/>
+<app-base-table [searchDate]="customerService.searchDate()" />
 ````
 
 # Dialogs

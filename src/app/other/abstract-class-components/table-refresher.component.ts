@@ -29,6 +29,8 @@ import { TranslateService } from '@ngx-translate/core';
 export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
   refresh$ = new BehaviorSubject(null);
   protected translateService = inject(TranslateService);
+  // Property to control whether to send parameters or not
+  protected noParams: boolean = false;
   private subscription: Subscription | undefined;
 
   ngOnInit(): void {
@@ -55,6 +57,10 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
   }
 
   buildParams(baseParams: BaseFetchParams): any {
+    if (this.noParams) {
+      return {}; // Return an empty object if noParams is true
+    }
+
     const active =
       baseParams.tabValueActive !== undefined
         ? String(baseParams.tabValueActive)
