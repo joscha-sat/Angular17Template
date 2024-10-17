@@ -130,7 +130,7 @@ TS:
 
 HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-template #name"
 
-```angular17html
+```angular181html
 
 <app-base-table
   [fetchData]="fetchDataFn"
@@ -197,7 +197,7 @@ export class TenantTableComponent extends TableRefresherComponent<Tenant> {
 This triggers a getAllMethod with a param called search eg: <br />
 /customers?search=max
 
-````angular2html
+````angular181html
 <!-- search component -->
 <app-base-search [serice]="userService" />
 
@@ -210,7 +210,7 @@ This triggers a getAllMethod with a param called search eg: <br />
 This triggers a getAllMethod with a param called searchDate eg: <br />
 /customers?searchDate=2024-06-12T00:00:00.000Z
 
-````angular17html
+````angular181html
 <!-- search component -->
 <app-base-search-date [service]="customerService" />
 
