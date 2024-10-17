@@ -236,9 +236,9 @@ export type DeleteContextData = {
 // How to in user.component.ts
 function openDeleteDialog(user: User) {
   const deleteContextData: DeleteContextData = {
-    deleteMethod: 'deleteUserById',
     model: user,
     service: this.userService,
+    deleteMethod: 'deleteUserById'
   };
 
   this.dialogService.openDialog(BaseDeleteDialogComponent, deleteContextData);
