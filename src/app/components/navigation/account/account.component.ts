@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { TuiButton, TuiDataList, TuiDropdown, TuiIcon } from '@taiga-ui/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { NavRoutes } from '../../../other/enums/nav-routes';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '../../../api/auth.service';
@@ -13,15 +13,7 @@ export type Option = {
 
 @Component({
   selector: 'app-account',
-  standalone: true,
-  imports: [
-    TuiDataList,
-    RouterLink,
-    TranslateModule,
-    TuiIcon,
-    TuiDropdown,
-    TuiButton,
-  ],
+  imports: [TuiDataList, TranslateModule, TuiIcon, TuiDropdown, TuiButton],
   templateUrl: './account.component.html',
   styleUrl: './account.component.scss',
 })

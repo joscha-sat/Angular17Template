@@ -17,7 +17,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-base-date-picker',
-  standalone: true,
   imports: [
     TuiInputDateModule,
     TuiError,

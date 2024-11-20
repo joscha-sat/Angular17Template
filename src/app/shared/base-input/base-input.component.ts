@@ -1,4 +1,3 @@
-import { TuiCurrencyPipe } from '@taiga-ui/addon-commerce';
 import {
   TuiInputModule,
   TuiInputNumberModule,
@@ -15,7 +14,6 @@ import {
 import {
   TuiError,
   TuiIcon,
-  TuiLabel,
   TuiSizeL,
   TuiSizeS,
   TuiTextfieldComponent,
@@ -28,7 +26,6 @@ type InputTypes = 'text' | 'number' | 'password' | 'email';
 
 @Component({
   selector: 'app-base-input',
-  standalone: true,
   imports: [
     TuiInputModule,
     ReactiveFormsModule,
@@ -37,11 +34,9 @@ type InputTypes = 'text' | 'number' | 'password' | 'email';
     AsyncPipe,
     TuiInputNumberModule,
     TuiTextfieldControllerModule,
-    TuiCurrencyPipe,
     TranslateModule,
     TuiValueChanges,
     TuiTextfieldComponent,
-    TuiLabel,
     TuiTextfieldDirective,
     TuiPassword,
     TuiIcon,

@@ -8,7 +8,6 @@ export type MapLocation = {
 
 @Component({
   selector: 'app-google-map',
-  standalone: true,
   imports: [GoogleMap, MapTrafficLayer],
   templateUrl: './google-map.component.html',
   styleUrl: './google-map.component.scss',

@@ -12,7 +12,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-base-search',
-  standalone: true,
   imports: [BaseInputComponent, ReactiveFormsModule],
   templateUrl: './base-search.component.html',
   styleUrl: './base-search.component.scss',

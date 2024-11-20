@@ -10,7 +10,6 @@ import { Table } from '../../../other/types/Table.type';
 
 @Component({
   selector: 'app-customer-table',
-  standalone: true,
   imports: [BaseTableComponent, TranslateModule],
   templateUrl: './customer-table.component.html',
   styleUrl: './customer-table.component.scss',

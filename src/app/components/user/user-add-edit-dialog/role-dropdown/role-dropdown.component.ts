@@ -6,7 +6,6 @@ import { ControlContainer, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'app-role-dropdown',
-  standalone: true,
   imports: [BaseComboboxComponent],
   templateUrl: './role-dropdown.component.html',
   styleUrl: './role-dropdown.component.scss',

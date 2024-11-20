@@ -4,7 +4,6 @@ import { NavRoutes } from '../../other/enums/nav-routes';
 import { NavButtonComponent } from './nav-button/nav-button.component';
 import { AccountComponent } from './account/account.component';
 import { TranslateService } from '@ngx-translate/core';
-import { RouterLinkActive } from '@angular/router';
 import {
   TUI_DARK_MODE,
   TuiButton,
@@ -14,11 +13,9 @@ import {
 
 @Component({
   selector: 'app-navigation',
-  standalone: true,
   imports: [
     NavButtonComponent,
     AccountComponent,
-    RouterLinkActive,
     TuiButton,
     TuiIcon,
     TuiHintDirective,

@@ -7,7 +7,6 @@ import { RoleService } from '../../../../../api/role.service';
 
 @Component({
   selector: 'app-roles-table',
-  standalone: true,
   imports: [BaseTableComponent],
   templateUrl: './roles-table.component.html',
   styleUrl: './roles-table.component.scss',

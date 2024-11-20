@@ -15,17 +15,8 @@ import {
   TuiTablePaginationEvent,
 } from '@taiga-ui/addon-table';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import {
-  AsyncPipe,
-  DatePipe,
-  NgForOf,
-  NgIf,
-  NgSwitch,
-  NgSwitchCase,
-  NgSwitchDefault,
-  NgTemplateOutlet,
-} from '@angular/common';
-import { TUI_DEFAULT_MATCHER, TuiLet } from '@taiga-ui/cdk';
+import { DatePipe, NgForOf, NgIf, NgTemplateOutlet } from '@angular/common';
+import { TUI_DEFAULT_MATCHER } from '@taiga-ui/cdk';
 import { TranslateModule } from '@ngx-translate/core';
 import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
@@ -45,46 +36,18 @@ export type FetchDataFunction<T> = (
 
 @Component({
   selector: 'app-base-table',
-  standalone: true,
   imports: [
     NgIf,
-    AsyncPipe,
     TuiTable,
     NgForOf,
     TuiTablePagination,
-    TuiLet,
-    NgSwitchCase,
     NgTemplateOutlet,
-    NgSwitch,
-    NgSwitchDefault,
     TranslateModule,
     DatePipe,
     IsDatePipe,
   ],
   templateUrl: './base-table.component.html',
   styleUrls: ['./base-table.component.scss'],
-  // animations: [
-  //   trigger('fade', [
-  //     transition(':enter', [
-  //       // Initial state of the element before entering
-  //       style({ opacity: 0, transform: 'translateY(20px)' }),
-  //       // Final state of the element after entering
-  //       animate(
-  //         '300ms ease-out',
-  //         style({ opacity: 1, transform: 'translateY(0)' }),
-  //       ),
-  //     ]),
-  //     transition(':leave', [
-  //       // Initial state of the element before leaving
-  //       style({ opacity: 1, transform: 'translateY(0)' }),
-  //       // Final state of the element after leaving
-  //       animate(
-  //         '300ms ease-in',
-  //         style({ opacity: 0, transform: 'translateY(20px)' }),
-  //       ),
-  //     ]),
-  //   ]),
-  // ],
 })
 export class BaseTableComponent<T> implements OnInit {
   @Input({ required: true }) fetchData!: FetchDataFunction<T>;

@@ -5,7 +5,6 @@ import { count } from 'rxjs';
 
 @Component({
   selector: 'app-tenant-dashboard-grid',
-  standalone: true,
   imports: [TuiIslandDirective, TranslateModule],
   templateUrl: './tenant-dashboard-grid.component.html',
   styleUrl: './tenant-dashboard-grid.component.scss',

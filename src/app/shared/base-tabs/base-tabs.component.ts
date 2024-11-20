@@ -27,7 +27,6 @@ export type TabArray = {
 
 @Component({
   selector: 'app-base-tabs',
-  standalone: true,
   imports: [
     FormsModule,
     TuiInputNumberModule,

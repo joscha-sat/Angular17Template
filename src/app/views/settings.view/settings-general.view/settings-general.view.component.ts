@@ -3,7 +3,6 @@ import { SettingsLanguageSwitcherComponent } from '../../../components/settings/
 
 @Component({
   selector: 'app-settings-general.view',
-  standalone: true,
   imports: [SettingsLanguageSwitcherComponent],
   templateUrl: './settings-general.view.component.html',
   styleUrl: './settings-general.view.component.scss',

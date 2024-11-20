@@ -6,7 +6,6 @@ import { LanguageService } from '../../../../../services/language.service';
 
 @Component({
   selector: 'app-settings-language-switcher',
-  standalone: true,
   imports: [BaseComboboxComponent, ReactiveFormsModule],
   templateUrl: './settings-language-switcher.component.html',
   styleUrl: './settings-language-switcher.component.scss',

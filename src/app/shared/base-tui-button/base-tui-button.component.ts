@@ -4,7 +4,6 @@ import { TuiButton, TuiButtonOptions } from '@taiga-ui/core';
 
 @Component({
   selector: 'app-base-tui-button',
-  standalone: true,
   imports: [TranslateModule, TuiButton],
   templateUrl: './base-tui-button.component.html',
   styleUrl: './base-tui-button.component.scss',

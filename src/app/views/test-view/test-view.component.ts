@@ -13,7 +13,6 @@ import { UserService } from '../../api/user.service';
 
 @Component({
   selector: 'app-test-view',
-  standalone: true,
   imports: [BaseTableComponent],
   templateUrl: './test-view.component.html',
   styleUrl: './test-view.component.scss',

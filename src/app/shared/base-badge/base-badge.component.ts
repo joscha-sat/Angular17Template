@@ -4,7 +4,6 @@ import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-base-badge',
-  standalone: true,
   imports: [TuiBadge, TranslateModule, TuiStatus],
   templateUrl: './base-badge.component.html',
   styleUrl: './base-badge.component.scss',

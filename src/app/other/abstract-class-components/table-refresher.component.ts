@@ -23,7 +23,6 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'app-table-refresher',
   template: '',
   styles: '',
-  standalone: true,
   imports: [],
 })
 export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {

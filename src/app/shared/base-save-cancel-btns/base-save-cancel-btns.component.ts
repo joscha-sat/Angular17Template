@@ -11,7 +11,6 @@ import { TuiDialogHelperService } from '../../services/tui-dialog-helper.service
 
 @Component({
   selector: 'app-base-save-cancel-btns',
-  standalone: true,
   imports: [TuiButton, NgIf, TranslateModule],
   templateUrl: './base-save-cancel-btns.component.html',
   styleUrl: './base-save-cancel-btns.component.scss',

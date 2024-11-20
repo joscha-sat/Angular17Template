@@ -4,7 +4,6 @@ import { BaseInputComponent } from '../base-input/base-input.component';
 
 @Component({
   selector: 'app-base-table-search',
-  standalone: true,
   imports: [ReactiveFormsModule, BaseInputComponent],
   templateUrl: './base-table-search.component.html',
   styleUrl: './base-table-search.component.scss',

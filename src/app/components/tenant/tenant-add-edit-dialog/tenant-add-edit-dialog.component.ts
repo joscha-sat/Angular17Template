@@ -16,7 +16,6 @@ import { AddEdit } from '../../../other/types/AddEdit.type';
 
 @Component({
   selector: 'app-tenant-add-edit-dialog',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     TranslateModule,

@@ -7,7 +7,6 @@ import { NavRoutes } from '../../../other/enums/nav-routes';
 
 @Component({
   selector: 'app-settings-tabs',
-  standalone: true,
   imports: [BaseTabsComponent],
   templateUrl: './settings-tabs.component.html',
   styleUrl: './settings-tabs.component.scss',

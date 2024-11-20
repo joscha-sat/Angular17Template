@@ -4,7 +4,6 @@ import {
   TuiAxes,
   TuiLineChart,
   TuiLineChartHint,
-  TuiLineDaysChart,
   TuiLineDaysChartHint,
 } from '@taiga-ui/addon-charts';
 import { TuiPoint } from '@taiga-ui/core';
@@ -14,14 +13,7 @@ import { Months } from '../../../other/enums/months';
 
 @Component({
   selector: 'app-tenant-dashboard-axes',
-  standalone: true,
-  imports: [
-    TuiAxes,
-    TuiLineDaysChart,
-    TuiLineDaysChartHint,
-    TuiLineChart,
-    TuiLineChartHint,
-  ],
+  imports: [TuiAxes, TuiLineDaysChartHint, TuiLineChart, TuiLineChartHint],
   templateUrl: './tenant-dashboard-axes.component.html',
   styleUrl: './tenant-dashboard-axes.component.scss',
 })

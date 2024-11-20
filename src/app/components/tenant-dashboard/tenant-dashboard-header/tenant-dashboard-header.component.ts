@@ -5,7 +5,6 @@ import { Tenant } from '../../../other/models/Tenant';
 
 @Component({
   selector: 'app-tenant-dashboard-header',
-  standalone: true,
   imports: [TranslateModule, HeaderLayoutComponent],
   templateUrl: './tenant-dashboard-header.component.html',
   styleUrl: './tenant-dashboard-header.component.scss',

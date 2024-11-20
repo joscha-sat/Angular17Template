@@ -1,10 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { BaseTableComponent } from '../../../shared/base-table/base-table.component';
 import { Tenant } from '../../../other/models/Tenant';
-import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { NavRoutes } from '../../../other/enums/nav-routes';
-import { BaseTuiButtonComponent } from '../../../shared/base-tui-button/base-tui-button.component';
 import { TenantService } from '../../../api/tenant.service';
 import { TableRefresherComponent } from '../../../other/abstract-class-components/table-refresher.component';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
@@ -17,13 +15,7 @@ import {
 
 @Component({
   selector: 'app-tenant-table',
-  standalone: true,
-  imports: [
-    BaseTableComponent,
-    AsyncPipe,
-    BaseTuiButtonComponent,
-    DeleteIconComponent,
-  ],
+  imports: [BaseTableComponent, DeleteIconComponent],
   templateUrl: './tenant-table.component.html',
   styleUrl: './tenant-table.component.scss',
 })

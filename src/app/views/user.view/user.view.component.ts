@@ -5,7 +5,6 @@ import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout
 
 @Component({
   selector: 'app-user.view',
-  standalone: true,
   imports: [UserHeaderComponent, UserTableComponent, ViewLayoutComponent],
   templateUrl: './user.view.component.html',
   styleUrl: './user.view.component.scss',

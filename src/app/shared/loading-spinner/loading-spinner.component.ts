@@ -5,7 +5,6 @@ import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-loading-spinner',
-  standalone: true,
   imports: [TuiLoader, AsyncPipe],
   templateUrl: './loading-spinner.component.html',
   styleUrl: './loading-spinner.component.scss',

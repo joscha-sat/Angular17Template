@@ -26,7 +26,6 @@ import { DropDownItem } from '../../other/types/DropDownItem.type';
 
 @Component({
   selector: 'app-base-combobox',
-  standalone: true,
   imports: [
     TuiComboBoxModule,
     ReactiveFormsModule,

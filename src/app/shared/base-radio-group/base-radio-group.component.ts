@@ -13,7 +13,6 @@ export type RadioItem = {
 
 @Component({
   selector: 'app-base-radio-group',
-  standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,

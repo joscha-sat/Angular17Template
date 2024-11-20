@@ -5,7 +5,6 @@ import { BaseDatePickerComponent } from '../base-date-picker/base-date-picker.co
 
 @Component({
   selector: 'app-base-search-date',
-  standalone: true,
   imports: [
     ReactiveFormsModule,
     BaseDatePickerComponent,

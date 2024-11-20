@@ -3,20 +3,11 @@ import { TenantHeaderComponent } from '../../components/tenant/tenant-header/ten
 import { TenantTableComponent } from '../../components/tenant/tenant-table/tenant-table.component';
 import { TenantService } from '../../api/tenant.service';
 import { Tenant } from '../../other/models/Tenant';
-import { AsyncPipe } from '@angular/common';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
-import { BaseSearchComponent } from '../../shared/base-search/base-search.component';
 
 @Component({
   selector: 'app-tenant.view',
-  standalone: true,
-  imports: [
-    TenantHeaderComponent,
-    TenantTableComponent,
-    AsyncPipe,
-    ViewLayoutComponent,
-    BaseSearchComponent,
-  ],
+  imports: [TenantHeaderComponent, TenantTableComponent, ViewLayoutComponent],
   templateUrl: './tenant.view.component.html',
   styleUrl: './tenant.view.component.scss',
 })

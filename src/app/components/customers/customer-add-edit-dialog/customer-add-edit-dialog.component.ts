@@ -13,19 +13,16 @@ import { Customer } from '../../../other/models/Customer';
 import { BaseInputComponent } from '../../../shared/base-input/base-input.component';
 import { BaseSaveCancelBtnsComponent } from '../../../shared/base-save-cancel-btns/base-save-cancel-btns.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { TwoInputsRowLayoutComponent } from '../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout.component';
 import { CustomerService } from '../../../api/customer.service';
 import { AddEdit } from '../../../other/types/AddEdit.type';
 
 @Component({
   selector: 'app-customer-add-edit-dialog',
-  standalone: true,
   imports: [
     BaseInputComponent,
     BaseSaveCancelBtnsComponent,
     ReactiveFormsModule,
     TranslateModule,
-    TwoInputsRowLayoutComponent,
   ],
   templateUrl: './customer-add-edit-dialog.component.html',
   styleUrl: './customer-add-edit-dialog.component.scss',

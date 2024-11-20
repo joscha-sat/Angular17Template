@@ -4,7 +4,6 @@ import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/head
 
 @Component({
   selector: 'app-settings-header',
-  standalone: true,
   imports: [HeaderLayoutComponent, TranslateModule],
   templateUrl: './settings-header.component.html',
   styleUrl: './settings-header.component.scss',

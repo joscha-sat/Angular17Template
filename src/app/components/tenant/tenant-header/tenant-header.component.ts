@@ -24,23 +24,22 @@ import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-s
 import { BaseTabsComponent } from '../../../shared/base-tabs/base-tabs.component';
 
 @Component({
-  selector: 'app-tenant-header',
-  standalone: true,
-  imports: [
-    TranslateModule,
-    TuiButton,
-    BaseComboboxComponent,
-    ReactiveFormsModule,
-    BaseTuiButtonComponent,
-    HeaderLayoutComponent,
-    BaseInputComponent,
-    BaseTableSearchComponent,
-    BaseSearchComponent,
-    BaseSearchDateComponent,
-    BaseTabsComponent,
-  ],
-  templateUrl: './tenant-header.component.html',
-  styleUrl: './tenant-header.component.scss',
+    selector: 'app-tenant-header',
+    imports: [
+        TranslateModule,
+        TuiButton,
+        BaseComboboxComponent,
+        ReactiveFormsModule,
+        BaseTuiButtonComponent,
+        HeaderLayoutComponent,
+        BaseInputComponent,
+        BaseTableSearchComponent,
+        BaseSearchComponent,
+        BaseSearchDateComponent,
+        BaseTabsComponent,
+    ],
+    templateUrl: './tenant-header.component.html',
+    styleUrl: './tenant-header.component.scss'
 })
 export class TenantHeaderComponent implements OnInit, OnChanges {
   fb = inject(FormBuilder);

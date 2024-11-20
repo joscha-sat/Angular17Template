@@ -1,26 +1,22 @@
 import { TUI_SANITIZER } from '@taiga-ui/legacy';
 import { NgDompurifySanitizer } from '@taiga-ui/dompurify';
-import { TUI_DARK_MODE, TuiButton, TuiRoot } from '@taiga-ui/core';
+import { TUI_DARK_MODE, TuiRoot } from '@taiga-ui/core';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { BaseSearchComponent } from './shared/base-search/base-search.component';
 import { AuthService } from './api/auth.service';
 import { LanguageService } from './services/language.service';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [
     RouterOutlet,
     TuiRoot,
     TranslateModule,
     NavigationComponent,
     LoadingSpinnerComponent,
-    BaseSearchComponent,
-    TuiButton,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

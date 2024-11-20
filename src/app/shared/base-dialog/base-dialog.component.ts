@@ -5,7 +5,6 @@ import { TuiDialogHelperService } from '../../services/tui-dialog-helper.service
 
 @Component({
   selector: 'app-base-dialog',
-  standalone: true,
   imports: [],
   templateUrl: './base-dialog.component.html',
   styleUrl: './base-dialog.component.scss',

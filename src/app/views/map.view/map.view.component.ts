@@ -5,7 +5,6 @@ import { GoogleMapComponent } from '../../components/map/google-map/google-map.c
 
 @Component({
   selector: 'app-map.view',
-  standalone: true,
   imports: [ViewLayoutComponent, GoogleMapComponent, MapHeaderComponent],
   templateUrl: './map.view.component.html',
   styleUrl: './map.view.component.scss',

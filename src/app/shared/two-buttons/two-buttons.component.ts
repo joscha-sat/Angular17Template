@@ -1,7 +1,6 @@
 import { TuiButton } from '@taiga-ui/core';
 import { Component, input, output } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { NgStyle } from '@angular/common';
 
 // two buttons that stretch evenly to the full parent width including a gap of 1 rem
 // the buttons are customizable via @inputs in terms of text, background-color and font color
@@ -9,8 +8,7 @@ import { NgStyle } from '@angular/common';
 
 @Component({
   selector: 'app-two-buttons',
-  standalone: true,
-  imports: [TuiButton, NgStyle, TranslateModule],
+  imports: [TuiButton, TranslateModule],
   templateUrl: './two-buttons.component.html',
   styleUrl: './two-buttons.component.scss',
 })

@@ -1,4 +1,4 @@
-import { TuiBlock, TuiRadio } from '@taiga-ui/kit';
+import { TuiRadio } from '@taiga-ui/kit';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import {
   ControlContainer,
@@ -6,7 +6,6 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import {
-  TuiGroup,
   TuiHorizontalDirection,
   TuiLabel,
   TuiSizeL,
@@ -19,8 +18,7 @@ export type RadioItem = {
 
 @Component({
   selector: 'app-base-radio-block',
-  standalone: true,
-  imports: [TuiBlock, TuiRadio, ReactiveFormsModule, TuiGroup, TuiLabel],
+  imports: [TuiRadio, ReactiveFormsModule, TuiLabel],
   templateUrl: './base-radio-block.component.html',
   styleUrl: './base-radio-block.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

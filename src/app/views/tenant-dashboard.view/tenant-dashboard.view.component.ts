@@ -1,6 +1,4 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { BaseTableComponent } from '../../shared/base-table/base-table.component';
-import { BaseBreadcrumbsComponent } from '../../shared/base-breadcrumbs/base-breadcrumbs.component';
 import { TenantDashboardGridComponent } from '../../components/tenant-dashboard/tenant-dashboard-grid/tenant-dashboard-grid.component';
 import { TenantDashboardAxesComponent } from '../../components/tenant-dashboard/tenant-dashboard-axes/tenant-dashboard-axes.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -12,10 +10,7 @@ import { Tenant } from '../../other/models/Tenant';
 
 @Component({
   selector: 'app-tenant-dashboard.view',
-  standalone: true,
   imports: [
-    BaseTableComponent,
-    BaseBreadcrumbsComponent,
     TenantDashboardGridComponent,
     TenantDashboardAxesComponent,
     TranslateModule,

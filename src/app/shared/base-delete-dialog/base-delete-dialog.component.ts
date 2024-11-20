@@ -2,12 +2,7 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { BaseDialogComponent } from '../base-dialog/base-dialog.component';
 import { Observable, Subscription } from 'rxjs';
 import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
-import {
-  TuiAppearance,
-  TuiButton,
-  TuiDialogContext,
-  TuiIcon,
-} from '@taiga-ui/core';
+import { TuiButton, TuiDialogContext, TuiIcon } from '@taiga-ui/core';
 import { TuiDialogHelperService } from '../../services/tui-dialog-helper.service';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -19,8 +14,7 @@ export type DeleteContextData = {
 
 @Component({
   selector: 'app-base-delete-dialog',
-  standalone: true,
-  imports: [TuiIcon, TranslateModule, TuiButton, TuiAppearance],
+  imports: [TuiIcon, TranslateModule, TuiButton],
   templateUrl: './base-delete-dialog.component.html',
   styleUrl: './base-delete-dialog.component.scss',
 })

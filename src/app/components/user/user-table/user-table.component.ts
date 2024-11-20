@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { BaseTableComponent } from '../../../shared/base-table/base-table.component';
-import { AsyncPipe } from '@angular/common';
 import { User } from '../../../other/models/User';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
 import { UserAddEditDialogComponent } from '../user-add-edit-dialog/user-add-edit-dialog.component';
@@ -9,7 +8,6 @@ import { TableRefresherComponent } from '../../../other/abstract-class-component
 import { TenantService } from '../../../api/tenant.service';
 import { AuthService } from '../../../api/auth.service';
 import { BaseBadgeComponent } from '../../../shared/base-badge/base-badge.component';
-import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 import { Table } from '../../../other/types/Table.type';
 import { DeleteIconComponent } from '../../../shared/base-icons/delete-icon/delete-icon.component';
 import {
@@ -20,14 +18,7 @@ import { RoleService } from '../../../api/role.service';
 
 @Component({
   selector: 'app-user-table',
-  standalone: true,
-  imports: [
-    BaseTableComponent,
-    AsyncPipe,
-    BaseBadgeComponent,
-    BaseSearchComponent,
-    DeleteIconComponent,
-  ],
+  imports: [BaseTableComponent, BaseBadgeComponent, DeleteIconComponent],
   templateUrl: './user-table.component.html',
   styleUrl: './user-table.component.scss',
 })

@@ -5,7 +5,6 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-nav-button',
-  standalone: true,
   imports: [TuiButton, TuiHint, TuiIcon, RouterLinkActive, RouterLink],
   templateUrl: './nav-button.component.html',
   styleUrl: './nav-button.component.scss',

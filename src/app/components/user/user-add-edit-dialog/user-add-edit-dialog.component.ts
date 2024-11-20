@@ -8,15 +8,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { BaseInputComponent } from '../../../shared/base-input/base-input.component';
-import { TwoButtonsComponent } from '../../../shared/two-buttons/two-buttons.component';
 import { BaseSaveCancelBtnsComponent } from '../../../shared/base-save-cancel-btns/base-save-cancel-btns.component';
 import { UserService } from '../../../api/user.service';
 import { BaseDialogComponent } from '../../../shared/base-dialog/base-dialog.component';
 import { POLYMORPHEUS_CONTEXT } from '@taiga-ui/polymorpheus';
-import { TuiDialogContext, TuiLabel } from '@taiga-ui/core';
+import { TuiDialogContext } from '@taiga-ui/core';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
-import { BaseRadioGroupComponent } from '../../../shared/base-radio-group/base-radio-group.component';
-import { BaseComboboxComponent } from '../../../shared/base-combobox/base-combobox.component';
 import { TwoInputsRowLayoutComponent } from '../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout.component';
 import { AddEdit } from '../../../other/types/AddEdit.type';
 import {
@@ -27,17 +24,12 @@ import { RoleDropdownComponent } from './role-dropdown/role-dropdown.component';
 
 @Component({
   selector: 'app-user-add-edit-dialog',
-  standalone: true,
   imports: [
     TranslateModule,
     ReactiveFormsModule,
     BaseInputComponent,
-    TwoButtonsComponent,
     BaseSaveCancelBtnsComponent,
     TwoInputsRowLayoutComponent,
-    TuiLabel,
-    BaseRadioGroupComponent,
-    BaseComboboxComponent,
     BaseRadioBlockComponent,
     RoleDropdownComponent,
   ],
