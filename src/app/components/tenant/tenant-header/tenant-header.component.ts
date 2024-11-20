@@ -1,4 +1,3 @@
-import { TuiButton } from '@taiga-ui/core';
 import {
   Component,
   inject,
@@ -13,33 +12,25 @@ import { BaseComboboxComponent } from '../../../shared/base-combobox/base-combob
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { BaseTuiButtonComponent } from '../../../shared/base-tui-button/base-tui-button.component';
-
-import { BaseInputComponent } from '../../../shared/base-input/base-input.component';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
 import { TenantAddEditDialogComponent } from '../tenant-add-edit-dialog/tenant-add-edit-dialog.component';
-import { BaseTableSearchComponent } from '../../../shared/base-table-search/base-table-search.component';
 import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
 import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-search-date.component';
-import { BaseTabsComponent } from '../../../shared/base-tabs/base-tabs.component';
 
 @Component({
-    selector: 'app-tenant-header',
-    imports: [
-        TranslateModule,
-        TuiButton,
-        BaseComboboxComponent,
-        ReactiveFormsModule,
-        BaseTuiButtonComponent,
-        HeaderLayoutComponent,
-        BaseInputComponent,
-        BaseTableSearchComponent,
-        BaseSearchComponent,
-        BaseSearchDateComponent,
-        BaseTabsComponent,
-    ],
-    templateUrl: './tenant-header.component.html',
-    styleUrl: './tenant-header.component.scss'
+  selector: 'app-tenant-header',
+  imports: [
+    TranslateModule,
+    BaseComboboxComponent,
+    ReactiveFormsModule,
+    BaseTuiButtonComponent,
+    HeaderLayoutComponent,
+    BaseSearchComponent,
+    BaseSearchDateComponent,
+  ],
+  templateUrl: './tenant-header.component.html',
+  styleUrl: './tenant-header.component.scss',
 })
 export class TenantHeaderComponent implements OnInit, OnChanges {
   fb = inject(FormBuilder);
