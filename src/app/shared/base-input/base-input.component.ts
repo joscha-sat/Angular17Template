@@ -8,12 +8,12 @@ import { Component, inject, input, Input, output } from '@angular/core';
 import { TuiFieldErrorPipe, TuiPassword } from '@taiga-ui/kit';
 import {
   ControlContainer,
+  FormGroup,
   FormGroupDirective,
   ReactiveFormsModule,
 } from '@angular/forms';
 import {
   TuiError,
-  TuiIcon,
   TuiSizeL,
   TuiSizeS,
   TuiTextfieldComponent,
@@ -39,7 +39,6 @@ type InputTypes = 'text' | 'number' | 'password' | 'email';
     TuiTextfieldComponent,
     TuiTextfieldDirective,
     TuiPassword,
-    TuiIcon,
   ],
   templateUrl: './base-input.component.html',
   styleUrl: './base-input.component.scss',
@@ -55,7 +54,7 @@ export class BaseInputComponent {
   type = input<InputTypes>('text');
   fControlName = input.required<string>();
   size = input<TuiSizeL | TuiSizeS>('m');
-
+  fGroup = input<FormGroup>();
   valueChange = output<string>();
 
   // workaround to use the input type as default label value

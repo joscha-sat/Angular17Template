@@ -4,7 +4,7 @@ import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../other/environment/environment';
 import { User } from '../other/models/User';
-import { ApiRoutes } from '../other/enums/api-routes';
+import { ApiRoutes } from '../other/enums/api_routes';
 import { NavRoutes } from '../other/enums/nav-routes';
 
 const StorageKeys = {

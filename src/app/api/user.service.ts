@@ -7,6 +7,7 @@ import {
   ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import { User } from '../other/models/User';
+import { ApiRoutes } from '../other/enums/api_routes';
 
 type QueryParams = BaseQueryParams;
 
@@ -14,7 +15,7 @@ type QueryParams = BaseQueryParams;
   providedIn: 'root',
 })
 export class UserService extends GenericHttpService {
-  endpoint = 'user';
+  endpoint = ApiRoutes.USER;
   element = 'Ein Nutzer'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
 
   // GET ALL

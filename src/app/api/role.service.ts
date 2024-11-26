@@ -8,6 +8,7 @@ import {
 } from './base-http-service/base-http.service';
 import { Role } from '../other/models/Role';
 import { AuthService } from './auth.service';
+import { ApiRoutes } from '../other/enums/api_routes';
 
 export type RoleQueryParams = BaseQueryParams & {};
 
@@ -17,7 +18,7 @@ export type RoleQueryParams = BaseQueryParams & {};
 export class RoleService extends GenericHttpService {
   authService = inject(AuthService);
 
-  endpoint = 'role';
+  endpoint = ApiRoutes.ROLE;
   element = 'Eine Rolle'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
 
   //  UTILITY METHODS
