@@ -1,6 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ApiRoutes } from '../../other/enums/api_routes';
 
 // A mapping of HTTP status codes to translation keys
 const STATUS_CODES: { [key: number]: string } = {
@@ -34,7 +35,7 @@ export class HttpStatusMsgService {
   getStatusErrorMessage = (
     err: HttpErrorResponse,
     method?: string,
-    endpoint?: string,
+    endpoint?: ApiRoutes | string,
   ) => {
     // Extract the endpoint from error if available
     const endpointFromError = this.getEndpointFromError(err);

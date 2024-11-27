@@ -1,39 +1,80 @@
-<!-- input -->
-@switch (type()) {
-  @case ('text') {
-    <tui-input [tuiTextfieldSize]="size()" [formControlName]="fControlName()">
-      {{ label | translate }}
-      <input
-        (tuiValueChanges)="onValueChange($event)"
-        type="text"
-        tuiTextfieldLegacy
-      />
-    </tui-input>
-  }
-  @case ('email') {
-    <tui-input [tuiTextfieldSize]="size()" [formControlName]="fControlName()">
-      {{ label | translate }}
-      <input type="email" tuiTextfieldLegacy />
-    </tui-input>
-  }
-  @case ('password') {
-    <tui-textfield>
-      <input
+@if (fGroup()) {
+  <!-- input -->
+  @switch (type()) {
+    @case ('text') {
+      <tui-input [tuiTextfieldSize]="size()" [formControlName]="fControlName()">
+        {{ label | translate }}
+        <input
+          (tuiValueChanges)="onValueChange($event)"
+          type="text"
+          tuiTextfieldLegacy
+        />
+      </tui-input>
+    }
+    @case ('email') {
+      <tui-input [tuiTextfieldSize]="size()" [formControlName]="fControlName()">
+        {{ label | translate }}
+        <input type="email" tuiTextfieldLegacy />
+      </tui-input>
+    }
+    @case ('password') {
+      <tui-textfield>
+        <input
+          [formControlName]="fControlName()"
+          [placeholder]="label | translate"
+          tuiTextfield
+          type="password"
+        />
+        <tui-icon tuiPassword />
+      </tui-textfield>
+    }
+    @case ('number') {
+      <tui-input-number
+        [tuiTextfieldSize]="size()"
         [formControlName]="fControlName()"
-        [placeholder]="label | translate"
-        tuiTextfield
-        type="password"
-      />
-      <tui-icon tuiPassword />
-    </tui-textfield>
+      >
+        {{ label | translate }}
+      </tui-input-number>
+    }
   }
-  @case ('number') {
-    <tui-input-number
-      [tuiTextfieldSize]="size()"
-      [formControlName]="fControlName()"
-    >
-      {{ label | translate }}
-    </tui-input-number>
+} @else {
+  <!-- input -->
+  @switch (type()) {
+    @case ('text') {
+      <tui-input [tuiTextfieldSize]="size()" [formControlName]="fControlName()">
+        {{ label | translate }}
+        <input
+          (tuiValueChanges)="onValueChange($event)"
+          type="text"
+          tuiTextfieldLegacy
+        />
+      </tui-input>
+    }
+    @case ('email') {
+      <tui-input [tuiTextfieldSize]="size()" [formControlName]="fControlName()">
+        {{ label | translate }}
+        <input type="email" tuiTextfieldLegacy />
+      </tui-input>
+    }
+    @case ('password') {
+      <tui-textfield>
+        <input
+          [formControlName]="fControlName()"
+          [placeholder]="label | translate"
+          tuiTextfield
+          type="password"
+        />
+        <tui-icon tuiPassword />
+      </tui-textfield>
+    }
+    @case ('number') {
+      <tui-input-number
+        [tuiTextfieldSize]="size()"
+        [formControlName]="fControlName()"
+      >
+        {{ label | translate }}
+      </tui-input-number>
+    }
   }
 }
 

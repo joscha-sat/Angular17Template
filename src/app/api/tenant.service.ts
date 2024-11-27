@@ -8,6 +8,7 @@ import {
   ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import { Tenant } from '../other/models/Tenant';
+import { ApiRoutes } from '../other/enums/api_routes';
 
 export type TenantQueryParams = BaseQueryParams & {};
 
@@ -17,7 +18,7 @@ export type TenantQueryParams = BaseQueryParams & {};
 export class TenantService extends GenericHttpService {
   selectedTenantId = signal('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
 
-  endpoint = 'tenant';
+  endpoint = ApiRoutes.TENANT;
   element = 'Eine Firma'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
 
   // GET ALL

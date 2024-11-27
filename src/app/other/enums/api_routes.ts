@@ -7,5 +7,6 @@ export enum ApiRoutes {
   ROLE = 'role',
   TENANT = 'tenant',
   AUTH = 'auth',
+  CUSTOMERS = 'customers',
   VERSION = 'version',
 }
