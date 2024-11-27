@@ -13,7 +13,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import {
-  TuiError, TuiIcon,
+  TuiError,
+  TuiIcon,
   TuiSizeL,
   TuiSizeS,
   TuiTextfieldComponent,
