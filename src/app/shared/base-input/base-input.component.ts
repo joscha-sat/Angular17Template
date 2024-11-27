@@ -13,7 +13,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import {
-  TuiError,
+  TuiError, TuiIcon,
   TuiSizeL,
   TuiSizeS,
   TuiTextfieldComponent,
@@ -38,6 +38,7 @@ type InputTypes = 'text' | 'number' | 'password' | 'email';
     TuiValueChanges,
     TuiTextfieldComponent,
     TuiTextfieldDirective,
+    TuiIcon,
     TuiPassword,
   ],
   templateUrl: './base-input.component.html',
