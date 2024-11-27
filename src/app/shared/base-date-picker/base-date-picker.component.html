@@ -1,6 +1,7 @@
 <tui-input-date
   (tuiValueChanges)="dateChangeEvent($event)"
   [formControlName]="fControlName()"
+  [readOnly]="readOnly()"
   [tuiTextfieldCleaner]="true"
   tuiUnfinishedValidator="Finish filling the field"
 >
