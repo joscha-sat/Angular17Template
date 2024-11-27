@@ -11,7 +11,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { TuiFieldErrorPipe } from '@taiga-ui/kit';
-import { TuiError } from '@taiga-ui/core';
+import { TuiError, TuiSizeL, TuiSizeS } from '@taiga-ui/core';
 import { AsyncPipe } from '@angular/common';
 import { DateConverterService } from '../../services/date-converter.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -45,6 +45,7 @@ export class BaseDatePickerComponent {
   fControlName = input.required<string>();
   service = input<{ searchDate: WritableSignal<string> }>();
   readOnly = input<boolean>(false);
+  size = input<TuiSizeL | TuiSizeS>('m');
 
   dateChangeEvent(tuiDay: any) {
     if (!tuiDay) {
