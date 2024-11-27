@@ -11,6 +11,7 @@ import { TuiButton, TuiButtonOptions } from '@taiga-ui/core';
 export class BaseTuiButtonComponent {
   size = input<'m' | 'l' | 'xl' | 's' | 'xs'>('m');
   appearance = input<TuiButtonOptions['appearance']>('primary');
+  disabled = input<boolean>(false);
 
   clicked = output();
 
