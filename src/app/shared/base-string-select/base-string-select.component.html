@@ -1,5 +1,16 @@
 <tui-select [formControlName]="fControlName()" [tuiTextfieldSize]="size()">
   {{ label() | translate }}
   <input tuiTextfieldLegacy />
-  <tui-data-list-wrapper *tuiDataList [items]="selectItemArray()" />
+  <ng-template tuiDataList>
+    <tui-data-list *ngIf="selectItemArray()">
+      <button
+        *ngFor="let item of selectItemArray()"
+        [value]="item"
+        tuiOption
+        type="button"
+      >
+        {{ item | translate }}
+      </button>
+    </tui-data-list>
+  </ng-template>
 </tui-select>

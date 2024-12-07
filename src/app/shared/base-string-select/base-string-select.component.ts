@@ -14,6 +14,7 @@ import {
   TuiTextfieldOptionsDirective,
 } from '@taiga-ui/core';
 import { TranslatePipe } from '@ngx-translate/core';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-base-string-select',
@@ -23,6 +24,8 @@ import { TranslatePipe } from '@ngx-translate/core';
     TuiTextfieldOptionsDirective,
     TranslatePipe,
     TuiTextfieldControllerModule,
+    NgIf,
+    NgForOf,
   ],
   templateUrl: './base-string-select.component.html',
   styleUrl: './base-string-select.component.scss',
