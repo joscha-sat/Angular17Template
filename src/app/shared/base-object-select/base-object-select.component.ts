@@ -11,7 +11,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
-import { TuiLoader } from '@taiga-ui/core';
+import { TuiLoader, TuiSizeL, TuiSizeS } from '@taiga-ui/core';
 import { Observable } from 'rxjs';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -44,6 +44,7 @@ export class BaseObjectSelectComponent {
   displayKey = input<string>('name');
   itemValue = input<string>('id');
   label = input<string>('default label');
+  size = input<TuiSizeL | TuiSizeS>('m');
 
   @tuiPure
   protected stringify(items: any[]): TuiStringHandler<TuiContext<number>> {

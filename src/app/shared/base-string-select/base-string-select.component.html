@@ -1,4 +1,4 @@
-<tui-select [formControlName]="fControlName()" tuiTextfieldSize="m">
+<tui-select [formControlName]="fControlName()" [tuiTextfieldSize]="size()">
   {{ label() | translate }}
   <input tuiTextfieldLegacy />
   <tui-data-list-wrapper *tuiDataList [items]="selectItemArray()" />

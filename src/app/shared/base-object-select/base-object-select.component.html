@@ -1,6 +1,7 @@
 <tui-select
   *tuiLet="items$() | async as items"
   [formControlName]="fControlName()"
+  [tuiTextfieldSize]="size()"
   [valueContent]="items ? stringify(items) : loading"
 >
   {{ label() | translate }}

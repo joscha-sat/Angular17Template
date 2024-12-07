@@ -1,11 +1,18 @@
 import { Component, input } from '@angular/core';
-import { TuiSelectModule } from '@taiga-ui/legacy';
+import {
+  TuiSelectModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/legacy';
 import {
   ControlContainer,
   FormGroupDirective,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { TuiTextfieldOptionsDirective } from '@taiga-ui/core';
+import {
+  TuiSizeL,
+  TuiSizeS,
+  TuiTextfieldOptionsDirective,
+} from '@taiga-ui/core';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -15,6 +22,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     ReactiveFormsModule,
     TuiTextfieldOptionsDirective,
     TranslatePipe,
+    TuiTextfieldControllerModule,
   ],
   templateUrl: './base-string-select.component.html',
   styleUrl: './base-string-select.component.scss',
@@ -29,4 +37,5 @@ export class BaseStringSelectComponent {
   label = input.required<string>();
   selectItemArray = input.required<any[]>();
   fControlName = input.required<string>();
+  size = input<TuiSizeL | TuiSizeS>('m');
 }
