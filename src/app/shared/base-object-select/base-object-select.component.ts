@@ -13,6 +13,7 @@ import {
 import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { TuiLoader } from '@taiga-ui/core';
 import { Observable } from 'rxjs';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-base-object-select',
@@ -26,6 +27,7 @@ import { Observable } from 'rxjs';
     ReactiveFormsModule,
     AsyncPipe,
     TuiLet,
+    TranslatePipe,
   ],
   templateUrl: './base-object-select.component.html',
   styleUrl: './base-object-select.component.scss',
@@ -41,6 +43,7 @@ export class BaseObjectSelectComponent {
   fControlName = input.required<string>();
   displayKey = input<string>('name');
   itemValue = input<string>('id');
+  label = input<string>('default label');
 
   @tuiPure
   protected stringify(items: any[]): TuiStringHandler<TuiContext<number>> {
