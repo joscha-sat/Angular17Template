@@ -1,5 +1,9 @@
 <label *ngIf="!control.value" tuiInputFiles>
   <input [formControl]="control" tuiInputFiles />
+
+  <ng-template #base>
+    <ng-content />
+  </ng-template>
 </label>
 
 <tui-files class="tui-space_top-1">
