@@ -1,43 +1,40 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
-import { BaseTableComponent } from '../../shared/base-table/base-table.component';
-import { Table } from '../../other/types/Table.type';
-import { User } from '../../other/models/User';
-import { TableRefresherComponent } from '../../other/abstract-class-components/table-refresher.component';
-import { UserService } from '../../api/user.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { BaseObjectSelectComponent } from '../../shared/base-object-select/base-object-select.component';
+import { delay, of } from 'rxjs';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+
+interface Python {
+  readonly id: number;
+  readonly name: string;
+}
+
+const ITEMS: Python[] = [
+  { id: 42, name: 'John Cleese' },
+  { id: 237, name: 'Eric Idle' },
+  { id: 666, name: 'Michael Palin' },
+  { id: 123, name: 'Terry Gilliam' },
+  { id: 777, name: 'Terry Jones' },
+  { id: 999, name: 'Graham Chapman' },
+];
 
 @Component({
   selector: 'app-test-view',
-  imports: [BaseTableComponent],
+  imports: [BaseObjectSelectComponent, ReactiveFormsModule],
   templateUrl: './test-view.component.html',
   styleUrl: './test-view.component.scss',
 })
-export class TestViewComponent
-  extends TableRefresherComponent<User>
-  implements Table<User>, OnInit
-{
-  userService = inject(UserService);
+export class TestViewComponent implements OnInit {
+  items$ = of(ITEMS).pipe(delay(3000));
 
-  columns: WritableSignal<(keyof User | 'delete' | 'edit')[]> = signal([
-    'firstName',
-  ]);
-  headers: WritableSignal<string[]> = signal(['general.firstName']);
+  private fb = inject(FormBuilder);
+  form = this.fb.group({
+    name: [''],
+  });
 
-  setTableRefreshMethodName(): string {
-    return 'getAllUsers';
-  }
-
-  setTableRefreshService() {
-    return this.userService;
-  }
-
-  override ngOnInit() {
-    super.ngOnInit();
-    super.translateHeaders(this.headers);
+  ngOnInit() {
+    this.form.get('name')!.valueChanges.subscribe((selectedValue) => {
+      console.log('Selected Value:', selectedValue);
+      // Fügen Sie hier die Logik hinzu, die ausgeführt werden soll, wenn sich der Wert ändert
+    });
   }
 }

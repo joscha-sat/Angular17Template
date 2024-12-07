@@ -1,0 +1,22 @@
+<tui-select
+  *tuiLet="items$() | async as items"
+  [formControlName]="fControlName()"
+  [tuiTextfieldLabelOutside]="true"
+  [valueContent]="items ? stringify(items) : loading"
+>
+  <ng-template tuiDataList>
+    <tui-data-list *ngIf="items; else loading">
+      <button
+        *ngFor="let item of items"
+        [value]="item[itemValue()] ?? item"
+        tuiOption
+        type="button"
+      >
+        {{ item[displayKey()] ?? 'unbekannt' }}
+      </button>
+    </tui-data-list>
+  </ng-template>
+  <ng-template #loading>
+    <tui-loader class="tui-space_vertical-3 loader" />
+  </ng-template>
+</tui-select>

@@ -1,5 +1,3 @@
-<app-base-table
-  [columns]="columns()"
-  [fetchData]="fetchDataFn"
-  [headers]="headers()"
-/>
+<form [formGroup]="form">
+  <app-base-object-select [items$]="items$" fControlName="name" />
+</form>
