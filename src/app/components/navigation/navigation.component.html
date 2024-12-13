@@ -1,0 +1,31 @@
+<!-- TODO: responsive -->
+<div class="sidebar-wrapper">
+  <div class="container">
+    <div class="logo-and-nav-items">
+      <!--  logo   -->
+      <div class="logo-wrapper">Logo</div>
+
+      <!--  loop over navItems   -->
+      <div class="nav-items-wrapper">
+        @for (navItem of navItems(); track navItem) {
+          <!-- tooltip -->
+          <ng-template #tooltip>
+            <div>{{ navItem().tooltip }}</div>
+          </ng-template>
+          <!-- nav button -->
+          <button
+            mat-flat-button
+            type="button"
+            [routerLink]="[navItem().link]"
+            [color]="rla.isActive ? 'primary' : 'secondary'"
+            routerLinkActive
+            #rla="routerLinkActive"
+            (click)="onClick()"
+          >
+            <mat-icon>{{ navItem().icon }}</mat-icon>
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+</div>
