@@ -5,6 +5,10 @@
   class="flex-col-gap1"
 >
   <!--   email input   -->
+  <mat-form-field class="example-full-width">
+    <mat-label>Favorite food</mat-label>
+    <input matInput placeholder="Ex. Pizza" value="Sushi" />
+  </mat-form-field>
 
   <!--   password input   -->
 
@@ -14,7 +18,7 @@
   </button>
 
   <!-- login button -->
-  <button [disabled]="!form || form.invalid" size="m" tuiButton>
+  <button [disabled]="!form || form.invalid">
     {{ 'login.login-btn' | translate }}
   </button>
 </form>

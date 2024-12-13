@@ -18,53 +18,6 @@
   // Error
   --error-bg: #{$error-bg};
   --error-txt: #{$error-txt};
-
-  /* -------------------------------------------------------------------- */
-  /*  || TAIGA UI COLOR ADJUSTMENTS --> exact tui variable names needed!||
-  /* -------------------------------------------------------------------- */
-
-  --tui-background-accent-1: hsl(180, 35%, 45%);
-  --tui-background-accent-1-hover: hsl(180, 35%, 40%);
-  --tui-background-accent-1-pressed: hsl(180, 35%, 35%);
-
-  --tui-background-neutral-1: hsl(180, 35%, 88%);
-  --tui-background-neutral-1-hover: hsl(180, 35%, 85%);
-
-  --tui-status-negative-pale-hover: #{$error-bg-hover};
-
-  --tui-text-action: hsl(180, 35%, 30%);
-}
-
-/* -------------------------------------------------------------------- */
-/*  || CUSTOM TAIGA UI Appearances, usable with tuiAppearance="error" ||
-/* -------------------------------------------------------------------- */
-
-// ERROR
-[tuiAppearance][data-appearance='error'] {
-  color: var(--error-txt);
-  background: var(--error-bg);
-}
-
-[tuiAppearance][data-appearance='error-bg'] {
-  background: var(--error-bg);
-}
-
-[tuiAppearance][data-appearance='error-color'] {
-  color: var(--error-txt);
-}
-
-// WARN
-[tuiAppearance][data-appearance='warn'] {
-  color: var(--warn-bg);
-  background: var(--warn-txt);
-}
-
-[tuiAppearance][data-appearance='warn-bg'] {
-  background: var(--warn-txt);
-}
-
-[tuiAppearance][data-appearance='warn-color'] {
-  color: var(--warn-bg);
 }
 
 // #########################################################################################################||
@@ -91,7 +44,7 @@
 /* dark mode user-agent-styles */
 
 html {
-  color-scheme: dark light;
+  //color-scheme: light dark;
 }
 
 /* min body height */
@@ -110,3 +63,6 @@ img {
   background-size: cover;
   shape-margin: 0.75rem;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
