@@ -1,7 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
-  FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
@@ -11,6 +10,7 @@ import { AuthService, LoginBody } from '../../../api/auth.service';
 import { Router } from '@angular/router';
 import { NavRoutes } from '../../../other/enums/nav-routes';
 import { TemplateInputComponent } from '../../../common/template-input/template-input.component';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-login-form',
@@ -19,28 +19,22 @@ import { TemplateInputComponent } from '../../../common/template-input/template-
     ReactiveFormsModule,
     TranslateModule,
     TemplateInputComponent,
+    MatButton,
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })
 export class LoginFormComponent {
-  form: FormGroup | undefined;
-  isOpen = signal<boolean>(false);
   roter = inject(Router);
   authService = inject(AuthService);
-
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      username: [null, Validators.required],
-      password: [null, Validators.required],
-    });
-  }
+  private fb: FormBuilder = inject(FormBuilder);
+  form = this.fb.group({
+    username: ['', { validators: Validators.required, nonNullable: true }],
+    password: ['', { validators: Validators.required, nonNullable: true }],
+  });
 
   get loginBody(): LoginBody {
-    return {
-      username: this.form?.controls['username'].value,
-      password: this.form?.controls['password'].value,
-    };
+    return <LoginBody>this.form.value;
   }
 
   submit() {

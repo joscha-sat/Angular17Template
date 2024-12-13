@@ -184,6 +184,10 @@
   font-weight: 700;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .form-title {
   font-size: var(--f-size, 1.25rem);
   padding-bottom: var(--pb, 1rem);
@@ -225,3 +229,7 @@
     );
 }
 
+// width mixins
+.w-100 {
+  width: 100%;
+}

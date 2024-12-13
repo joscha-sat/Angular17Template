@@ -1,10 +1,8 @@
-@if (isLoggedIn) {
-  <app-navigation />
-}
-
 <!--  some custom margin, to prevent overlapping with the navigation -->
 <div style="margin-left: 5.5rem">
   <router-outlet />
 </div>
+
+<button (click)="changeTheme()" color="primary" mat-flat-button>theme</button>
 
 <!-- globally used http loading spinner  -->

@@ -1,6 +1,7 @@
 @use "index" as *;
 @use '@angular/material' as mat;
 
+
 // || CSS VARIABLES || #########################################################################################################||
 :root {
 
@@ -23,13 +24,25 @@
 
 
 /* ----------------------------------------------------------------- */
-/*  ||Angular Material  adjustments ||
+/*  ||Angular Material adjustments ||
 /* ----------------------------------------------------------------- */
+
+
 html {
+  color-scheme: light;
   @include mat.theme((
+    color: mat.$azure-palette,
     typography: Roboto,
-    density: -3,
+    density: -2
   ));
+}
+
+html.dark-mode {
+  color-scheme: dark;
+}
+
+.mat-mdc-card-header {
+  padding-bottom: 1rem !important;
 }
 
 /* ---------------------------------- */
@@ -51,16 +64,13 @@ html {
   font: inherit;
 }
 
-/* dark mode user-agent-styles */
-
-html {
-  //color-scheme: light dark;
-}
-
 /* min body height */
 
 body {
   min-height: 100vh;
+
+  //background: var(--mat-sys-surface);
+  //color: var(--mat-sys-on-surface);
 }
 
 /* responsive images */

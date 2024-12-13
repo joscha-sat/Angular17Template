@@ -1,4 +1,8 @@
-<mat-form-field [appearance]="appearance()">
+<mat-form-field
+  [appearance]="appearance()"
+  [subscriptSizing]="subscriptSizing()"
+  class="w-100"
+>
   <mat-label>{{ label() | translate }}</mat-label>
   <input [formControlName]="fControlName()" [type]="type()" matInput />
 </mat-form-field>

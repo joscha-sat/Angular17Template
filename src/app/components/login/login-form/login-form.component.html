@@ -1,6 +1,6 @@
 <!--  form  -->
 <form
-  (ngSubmit)="form?.valid && submit()"
+  (ngSubmit)="form.valid && submit()"
   [formGroup]="form!"
   class="flex-col-gap1"
 >
@@ -15,12 +15,12 @@
   />
 
   <!-- forgot password, TODO: add forgot passwort dialog / logic -->
-  <button (click)="isOpen.set(true)" class="forgot-pw-button" type="button">
+  <span class="forgot-pw-button text-center pointer">
     {{ 'login.forgot-password' | translate }}
-  </button>
+  </span>
 
   <!-- login button -->
-  <button [disabled]="!form || form.invalid">
+  <button [disabled]="!form || form.invalid" mat-flat-button>
     {{ 'login.login-btn' | translate }}
   </button>
 </form>
