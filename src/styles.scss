@@ -1,4 +1,5 @@
 @use "index" as *;
+@use '@angular/material' as mat;
 
 // || CSS VARIABLES || #########################################################################################################||
 :root {
@@ -20,7 +21,16 @@
   --error-txt: #{$error-txt};
 }
 
-// #########################################################################################################||
+
+/* ----------------------------------------------------------------- */
+/*  ||Angular Material  adjustments ||
+/* ----------------------------------------------------------------- */
+html {
+  @include mat.theme((
+    typography: Roboto,
+    density: -3,
+  ));
+}
 
 /* ---------------------------------- */
 /*  || CSS RESET ||  -----------------*/
@@ -64,5 +74,13 @@ img {
   shape-margin: 0.75rem;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+

@@ -10,7 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, LoginBody } from '../../../api/auth.service';
 import { Router } from '@angular/router';
 import { NavRoutes } from '../../../other/enums/nav-routes';
-import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { TemplateInputComponent } from '../../../common/template-input/template-input.component';
 
 @Component({
   selector: 'app-login-form',
@@ -18,9 +18,7 @@ import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    MatInput,
-    MatFormField,
-    MatLabel,
+    TemplateInputComponent,
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',

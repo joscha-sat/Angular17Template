@@ -19,10 +19,15 @@
   },
   "general": {
     "active": "Active",
+    "all": "All",
     "back": "Back",
     "cancel": "Cancel",
     "createdAt": "Created at",
     "delete": "Delete",
+    "delete-hint": "The deletion can not be redone afterwards!",
+    "delete-title": "Delete element?",
+    "description": "Description",
+    "edit": "Edit",
     "email": "Email",
     "empty": "No entries available",
     "english": "English",
@@ -34,27 +39,32 @@
     "name": "Name",
     "no": "No",
     "ok": "Ok",
+    "password": "Enter a password",
     "phone": "Phone",
     "phone-number": "Phone number",
     "save": "save",
     "search": "Search",
     "select-date": "Select a date",
     "title": "General",
-    "yes": "Yes",
-    "all": "All",
-    "delete-title": "Delete element?",
-    "delete-hint": "The deletion can not be redone afterwards!",
-    "description": "Description",
-    "edit": "Edit"
+    "username": "Username",
+    "yes": "Yes"
   },
   "hint": {
     "email": "Enter a email",
     "firstName": "Enter a first name",
     "lastName": "Enter a last name",
-    "phone": "Enter a phone number",
-    "password": "Enter a password",
     "number": "Enter a number",
+    "phone": "Enter a phone number",
     "text": "Enter a text"
+  },
+  "http": {
+    "status-400": "Request invalid or incorrect!",
+    "status-401": "Not authenticated!",
+    "status-403": "Missing Permissions",
+    "status-404": "The requested resource was not found",
+    "status-406": "Unacceptable request to the server",
+    "status-409": "Conflict in request to the server",
+    "status-500": "An internal server error has occurred"
   },
   "login": {
     "forgot-password": "Forgot your password?",
@@ -75,6 +85,10 @@
     "title": "Order",
     "title-plural": "Orders"
   },
+  "role": {
+    "title": "Role",
+    "title-plural": "Roles"
+  },
   "settings": {
     "title": "Settings"
   },
@@ -89,18 +103,5 @@
     "create": "Create user",
     "title": "User",
     "update": "Edit user"
-  },
-  "role": {
-    "title": "Role",
-    "title-plural": "Roles"
-  },
-  "http": {
-    "status-400": "Request invalid or incorrect!",
-    "status-401": "Not authenticated!",
-    "status-403": "Missing Permissions",
-    "status-404": "The requested resource was not found",
-    "status-406": "Unacceptable request to the server",
-    "status-409": "Conflict in request to the server",
-    "status-500": "An internal server error has occurred"
   }
 }
