@@ -10,19 +10,18 @@
         @for (navItem of navItems(); track navItem) {
           <!-- tooltip -->
           <ng-template #tooltip>
-            <div>{{ navItem().tooltip }}</div>
+            <div>{{ navItem.tooltip }}</div>
           </ng-template>
           <!-- nav button -->
           <button
-            mat-flat-button
+            mat-mini-fab
             type="button"
-            [routerLink]="[navItem().link]"
-            [color]="rla.isActive ? 'primary' : 'secondary'"
+            [routerLink]="[navItem.link]"
+            [class.active-btn]="rla.isActive"
             routerLinkActive
             #rla="routerLinkActive"
-            (click)="onClick()"
           >
-            <mat-icon>{{ navItem().icon }}</mat-icon>
+            <mat-icon>{{ navItem.icon }}</mat-icon>
           </button>
         }
       </div>

@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from './api/auth.service';
-import { MatButton } from '@angular/material/button';
 import { ThemingService } from './services/theming.service';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TranslateModule, MatButton],
+  imports: [RouterOutlet, TranslateModule, NavigationComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
