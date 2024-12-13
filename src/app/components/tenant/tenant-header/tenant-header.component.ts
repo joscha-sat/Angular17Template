@@ -11,10 +11,16 @@ import { Tenant } from '../../../other/models/Tenant';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-tenant-header',
-  imports: [TranslateModule, ReactiveFormsModule, HeaderLayoutComponent],
+  imports: [
+    TranslateModule,
+    ReactiveFormsModule,
+    HeaderLayoutComponent,
+    MatButton,
+  ],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',
 })
