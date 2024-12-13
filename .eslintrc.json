@@ -18,9 +18,7 @@
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
-        "plugin:@angular-eslint/template/process-inline-templates",
-        "plugin:rxjs/recommended"
-        // Hinzugefügt
+        "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
         "@angular-eslint/directive-selector": [
@@ -39,9 +37,7 @@
             "style": "kebab-case"
           }
         ],
-        "@typescript-eslint/no-explicit-any": "off",
-        "rxjs/no-implicit-any-catch": "off"
-        // Deaktiviert die spezifische Regel vorübergehend
+        "@typescript-eslint/no-explicit-any": "off"
       }
     },
     {
