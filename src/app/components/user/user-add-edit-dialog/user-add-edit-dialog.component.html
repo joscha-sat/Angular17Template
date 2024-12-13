@@ -14,33 +14,19 @@
   >
     <app-two-inputs-row-layout>
       <!--  first name -->
-      <app-base-input
-        label="hint.firstName"
-        fControlName="firstName"
-        type="text"
-      />
 
       <!--  last name -->
-      <app-base-input
-        label="hint.lastName"
-        fControlName="lastName"
-        type="text"
-      />
 
       <!--  email -->
-      <app-base-input label="hint.email" fControlName="email" type="email" />
 
       <!--  phone -->
-      <app-base-input label="hint.phone" fControlName="phone" type="text" />
 
       <!-- role -->
       <app-role-dropdown />
 
       <!--  active / inactive  -->
-      <app-base-radio-block fControlName="active" [radioItems]="radioItems()" />
     </app-two-inputs-row-layout>
 
     <!--  actions  -->
-    <app-base-save-cancel-btns (cancel)="closeDialog()" [form]="form" />
   </form>
 }

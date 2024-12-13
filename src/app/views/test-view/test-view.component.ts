@@ -1,8 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { BaseObjectSelectComponent } from '../../shared/base-object-select/base-object-select.component';
 import { delay, of } from 'rxjs';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { BaseFileUploadComponent } from '../../shared/base-file-upload/base-file-upload.component';
 
 interface Python {
   readonly id: number;
@@ -20,11 +18,7 @@ const ITEMS: Python[] = [
 
 @Component({
   selector: 'app-test-view',
-  imports: [
-    BaseObjectSelectComponent,
-    ReactiveFormsModule,
-    BaseFileUploadComponent,
-  ],
+  imports: [ReactiveFormsModule],
   templateUrl: './test-view.component.html',
   styleUrl: './test-view.component.scss',
 })

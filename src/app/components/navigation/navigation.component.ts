@@ -1,32 +1,19 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { NavItem } from '../../other/enums/nav-items';
 import { NavRoutes } from '../../other/enums/nav-routes';
 import { NavButtonComponent } from './nav-button/nav-button.component';
 import { AccountComponent } from './account/account.component';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  TUI_DARK_MODE,
-  TuiButton,
-  TuiHintDirective,
-  TuiIcon,
-} from '@taiga-ui/core';
 
 @Component({
   selector: 'app-navigation',
-  imports: [
-    NavButtonComponent,
-    AccountComponent,
-    TuiButton,
-    TuiIcon,
-    TuiHintDirective,
-  ],
+  imports: [NavButtonComponent, AccountComponent],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
 })
 export class NavigationComponent implements OnInit {
   navItems = signal<NavItem[]>([]);
   tooltip = 'Theme';
-  darkMode = inject(TUI_DARK_MODE);
 
   constructor(private translateService: TranslateService) {}
 

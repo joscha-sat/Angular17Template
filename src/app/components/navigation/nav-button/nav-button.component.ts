@@ -1,11 +1,10 @@
 import { Component, input } from '@angular/core';
 import { NavItem } from '../../../other/enums/nav-items';
-import { TuiButton, TuiHint, TuiIcon } from '@taiga-ui/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-nav-button',
-  imports: [TuiButton, TuiHint, TuiIcon, RouterLinkActive, RouterLink],
+  imports: [RouterLinkActive, RouterLink],
   templateUrl: './nav-button.component.html',
   styleUrl: './nav-button.component.scss',
 })

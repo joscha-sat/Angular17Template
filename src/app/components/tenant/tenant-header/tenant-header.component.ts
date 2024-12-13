@@ -8,34 +8,19 @@ import {
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Tenant } from '../../../other/models/Tenant';
-import { BaseComboboxComponent } from '../../../shared/base-combobox/base-combobox.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
-import { BaseTuiButtonComponent } from '../../../shared/base-tui-button/base-tui-button.component';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
-import { TuiDialogHelperService } from '../../../services/tui-dialog-helper.service';
-import { TenantAddEditDialogComponent } from '../tenant-add-edit-dialog/tenant-add-edit-dialog.component';
-import { BaseSearchComponent } from '../../../shared/base-search/base-search.component';
-import { BaseSearchDateComponent } from '../../../shared/base-search-date/base-search-date.component';
 
 @Component({
   selector: 'app-tenant-header',
-  imports: [
-    TranslateModule,
-    BaseComboboxComponent,
-    ReactiveFormsModule,
-    BaseTuiButtonComponent,
-    HeaderLayoutComponent,
-    BaseSearchComponent,
-    BaseSearchDateComponent,
-  ],
+  imports: [TranslateModule, ReactiveFormsModule, HeaderLayoutComponent],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',
 })
 export class TenantHeaderComponent implements OnInit, OnChanges {
   fb = inject(FormBuilder);
   tenantService = inject(TenantService);
-  dialogService = inject(TuiDialogHelperService);
 
   form: FormGroup = new FormGroup({});
   tenants = input.required<Tenant[]>();
@@ -67,7 +52,5 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     }
   }
 
-  openCreateTenantDialog() {
-    this.dialogService.openDialog(TenantAddEditDialogComponent);
-  }
+  openCreateTenantDialog() {}
 }

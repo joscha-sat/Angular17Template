@@ -1,11 +1,9 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { catchError } from 'rxjs';
 import { inject } from '@angular/core';
-import { TuiSnackbarService } from '../../services/tui-snackbar.service';
 import { HttpStatusMsgService } from '../../api/error-messages/http-status-msg.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-  const snackbarService = inject(TuiSnackbarService);
   const statusTranslationService = inject(HttpStatusMsgService);
 
   return next(req).pipe(
@@ -21,11 +19,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         errorMessage = err.error.message ?? 'unbekannt';
       }
 
-      snackbarService.openSnackbar(
-        'error',
-        'Fehler: ' + err.status,
-        errorMessage,
-      );
+      // snackbarService.openSnackbar(
+      //   'error',
+      //   'Fehler: ' + err.status,
+      //   errorMessage,
+      // );
 
       // snackbarService.openSnackbar(
       //   'error',

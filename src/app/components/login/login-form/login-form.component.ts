@@ -1,5 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { BaseInputComponent } from '../../../shared/base-input/base-input.component';
 import {
   FormBuilder,
   FormGroup,
@@ -7,7 +6,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TuiButton, TuiLink } from '@taiga-ui/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, LoginBody } from '../../../api/auth.service';
 import { Router } from '@angular/router';
@@ -15,14 +13,7 @@ import { NavRoutes } from '../../../other/enums/nav-routes';
 
 @Component({
   selector: 'app-login-form',
-  imports: [
-    BaseInputComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    TuiButton,
-    TranslateModule,
-    TuiLink,
-  ],
+  imports: [FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })

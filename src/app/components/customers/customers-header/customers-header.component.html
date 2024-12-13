@@ -5,13 +5,5 @@
     </div>
   </ng-container>
 
-  <div class="flex-a-center-g1" right>
-    <app-base-search [service]="customerService" />
-
-    <app-base-search-date [service]="customerService" />
-
-    <app-base-tui-button (clicked)="openCreateCustomerDialog()">
-      {{ 'customers.create' | translate }}
-    </app-base-tui-button>
-  </div>
+  <div class="flex-a-center-g1" right></div>
 </app-header-layout>

@@ -1,20 +1,15 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { BaseTableComponent } from '../../../../../shared/base-table/base-table.component';
-import { TableRefresherComponent } from '../../../../../other/abstract-class-components/table-refresher.component';
 import { Role } from '../../../../../other/models/Role';
 import { Table } from '../../../../../other/types/Table.type';
 import { RoleService } from '../../../../../api/role.service';
 
 @Component({
   selector: 'app-roles-table',
-  imports: [BaseTableComponent],
+  imports: [],
   templateUrl: './roles-table.component.html',
   styleUrl: './roles-table.component.scss',
 })
-export class RolesTableComponent
-  extends TableRefresherComponent<Role>
-  implements Table<Role>, OnInit
-{
+export class RolesTableComponent implements Table<Role>, OnInit {
   roleService = inject(RoleService);
 
   // enter i18n keys here
@@ -31,11 +26,7 @@ export class RolesTableComponent
     'delete',
   ]);
 
-  override ngOnInit() {
-    super.ngOnInit();
-    // it translates the header keys in the parent component. Nothing else needed
-    super.translateHeaders(this.headers);
-  }
+  ngOnInit() {}
 
   setTableRefreshMethodName(): string {
     return 'getAllRoles';

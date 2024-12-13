@@ -7,18 +7,7 @@
 
   <div class="flex-a-center-g1" right>
     <!--  table search backend  -->
-    <app-base-search [service]="userService" />
-    <app-base-search-date [service]="userService" />
-
-    <app-base-tabs
-      [isActiveTab]="true"
-      [service]="userService"
-      [tabArray]="tabArray()"
-    />
 
     <!--    add  -->
-    <app-base-tui-button (clicked)="openCreateUserDialog()">
-      {{ 'user.create' | translate }}
-    </app-base-tui-button>
   </div>
 </app-header-layout>

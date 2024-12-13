@@ -1,7 +1,5 @@
-import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { TuiAlert, TuiDialog } from '@taiga-ui/core';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import {
@@ -14,8 +12,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { authTokenInterceptor } from './other/interceptors/auth-token.interceptor';
 import { isLoadingInterceptor } from './other/interceptors/is-loading.interceptor';
 import { errorInterceptor } from './other/interceptors/error.interceptor';
-import { tuiLanguageSwitcher } from '@taiga-ui/i18n';
-import { TuiDocLanguageSwitcher } from '@taiga-ui/addon-doc';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -32,11 +28,6 @@ export const appConfig: ApplicationConfig = {
       ]),
     ),
     provideRouter(routes),
-    importProvidersFrom(TuiAlert, TuiDialog),
-    {
-      provide: tuiLanguageSwitcher,
-      useClass: TuiDocLanguageSwitcher,
-    },
     TranslateModule.forRoot({
       defaultLanguage: 'de',
       loader: {
@@ -45,6 +36,5 @@ export const appConfig: ApplicationConfig = {
         deps: [HttpClient],
       },
     }).providers!,
-    NG_EVENT_PLUGINS,
   ],
 };

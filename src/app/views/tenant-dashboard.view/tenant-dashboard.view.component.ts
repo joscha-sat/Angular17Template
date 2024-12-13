@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { TenantDashboardGridComponent } from '../../components/tenant-dashboard/tenant-dashboard-grid/tenant-dashboard-grid.component';
-import { TenantDashboardAxesComponent } from '../../components/tenant-dashboard/tenant-dashboard-axes/tenant-dashboard-axes.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TenantDashboardHeaderComponent } from '../../components/tenant-dashboard/tenant-dashboard-header/tenant-dashboard-header.component';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
@@ -12,7 +11,6 @@ import { Tenant } from '../../other/models/Tenant';
   selector: 'app-tenant-dashboard.view',
   imports: [
     TenantDashboardGridComponent,
-    TenantDashboardAxesComponent,
     TranslateModule,
     TenantDashboardHeaderComponent,
     ViewLayoutComponent,

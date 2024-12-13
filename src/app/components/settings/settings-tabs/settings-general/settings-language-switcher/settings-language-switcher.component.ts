@@ -1,18 +1,15 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { BaseComboboxComponent } from '../../../../../shared/base-combobox/base-combobox.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { LANGUAGE_FULL, Languages } from '../../../../../other/enums/languages';
-import { LanguageService } from '../../../../../services/language.service';
 
 @Component({
   selector: 'app-settings-language-switcher',
-  imports: [BaseComboboxComponent, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './settings-language-switcher.component.html',
   styleUrl: './settings-language-switcher.component.scss',
 })
 export class SettingsLanguageSwitcherComponent implements OnInit {
   fb = inject(FormBuilder);
-  languageService = inject(LanguageService);
 
   dataArray = signal<any[]>([
     {
@@ -51,9 +48,5 @@ export class SettingsLanguageSwitcherComponent implements OnInit {
 
   ngOnInit(): void {
     this.initLanguageFormValue();
-  }
-
-  languageChange(language: any) {
-    this.languageService.setLanguage(language.id);
   }
 }

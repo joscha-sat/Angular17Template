@@ -5,17 +5,10 @@
   </ng-template>
   <!-- nav button -->
   <button
-    tuiIconButton
     type="button"
     [routerLink]="[navItem().link]"
-    appearance="{{ rla.isActive ? 'primary' : 'secondary' }}"
     routerLinkActive
     #rla="routerLinkActive"
-    [tuiHint]="tooltip"
-    tuiHintDirection="right"
-    tuiHintAppearance="onDark"
     (click)="onClick()"
-  >
-    <tui-icon icon="{{ navItem().icon }}"></tui-icon>
-  </button>
+  ></button>
 }

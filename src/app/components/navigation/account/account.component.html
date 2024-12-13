@@ -1,37 +1,6 @@
-<div
-  (tuiDropdownOpenChange)="isOpen.set($event)"
-  [tuiDropdown]="dropdown"
-  [tuiDropdownOpen]="isOpen()"
-  [tuiDropdownSided]="true"
-  tuiDropdownAlign="right"
->
-  <button
-    [tuiAppearanceState]="isOpen() || null ? 'active' : null"
-    appearance="flat"
-    iconEnd="@tui.user"
-    size="m"
-    tuiIconButton
-    type="button"
-  >
-    account
-  </button>
+<div>
+  <button type="button">account</button>
 </div>
 
 <!-- Drop up content on the bottom for settings and logout -->
-<ng-template #dropdown let-close="close">
-  <tui-data-list>
-    <tui-opt-group class="user-name">
-      {{ userName() }}
-    </tui-opt-group>
-
-    <tui-opt-group>
-      @for (option of options(); track option) {
-        <!--   settings   -->
-        <button (click)="onOptionsClick(option)" class="dropdown-btn" tuiOption>
-          <tui-icon [icon]="option.icon"></tui-icon>
-          {{ option.ngxTitle | translate }}
-        </button>
-      }
-    </tui-opt-group>
-  </tui-data-list>
-</ng-template>
+<ng-template #dropdown let-close="close"> </ng-template>

@@ -6,23 +6,10 @@
     </div>
 
     <!--  tenant  dropdown  -->
-    <form [formGroup]="form">
-      <app-base-combobox
-        (valueChange)="onTenantChange($event)"
-        [dataArray]="tenants()"
-        [hint]="'tenant.select'"
-        fControlName="name"
-      />
-    </form>
+    <form [formGroup]="form"></form>
   </div>
 
   <div class="flex-a-center-g1" right>
-    <app-base-search [service]="tenantService" />
-    <app-base-search-date [service]="tenantService" />
-
     <!-- new tenant button -->
-    <app-base-tui-button (clicked)="openCreateTenantDialog()">
-      {{ 'tenant.create' | translate }}
-    </app-base-tui-button>
   </div>
 </app-header-layout>

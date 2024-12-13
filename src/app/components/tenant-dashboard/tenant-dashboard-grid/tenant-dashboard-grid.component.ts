@@ -1,11 +1,10 @@
-import { TuiIslandDirective } from '@taiga-ui/legacy';
 import { Component, input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { count } from 'rxjs';
 
 @Component({
   selector: 'app-tenant-dashboard-grid',
-  imports: [TuiIslandDirective, TranslateModule],
+  imports: [TranslateModule],
   templateUrl: './tenant-dashboard-grid.component.html',
   styleUrl: './tenant-dashboard-grid.component.scss',
 })

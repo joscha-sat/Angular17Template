@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { forkJoin, Observable, Subject, tap } from 'rxjs';
-import { TuiSnackbarService } from '../../services/tui-snackbar.service';
 import { environment } from '../../other/environment/environment';
 
 // Type definitions
@@ -24,10 +23,7 @@ export class GenericHttpService {
   searchDate = signal('');
   tabValueActive = signal<boolean | undefined>(undefined);
 
-  constructor(
-    private readonly http: HttpClient,
-    private _snackBar: TuiSnackbarService,
-  ) {}
+  constructor(private readonly http: HttpClient) {}
 
   /**
    * Constructs a full URL based on a given endpoint and optional ID.
@@ -242,10 +238,10 @@ export class GenericHttpService {
    * @param pushText - Optional: The text for the notification
    */
   private handleHttpSuccess(pushTitle?: string, pushText?: string) {
-    this._snackBar.openSnackbar(
-      'success',
-      pushTitle ?? 'Success!',
-      pushText ?? '',
-    );
+    // this._snackBar.openSnackbar(
+    //   'success',
+    //   pushTitle ?? 'Success!',
+    //   pushText ?? '',
+    // );
   }
 }

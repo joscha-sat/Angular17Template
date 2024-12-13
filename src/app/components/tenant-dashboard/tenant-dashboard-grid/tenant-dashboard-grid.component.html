@@ -1,13 +1,11 @@
 <div class="grid-with-custom-settings">
   @for (item of gridDataArray(); track item) {
-    <tui-island class="flex-col-gap1 place-center card">
-      <div class="view-title">
-        {{ item.count }}
-      </div>
+    <div class="view-title">
+      {{ item.count }}
+    </div>
 
-      <div>
-        {{ item.ngxString | translate }}
-      </div>
-    </tui-island>
+    <div>
+      {{ item.ngxString | translate }}
+    </div>
   }
 </div>
