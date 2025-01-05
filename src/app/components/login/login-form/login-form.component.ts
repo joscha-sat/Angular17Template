@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, LoginBody } from '../../../api/auth.service';
 import { Router } from '@angular/router';
 import { NavRoutes } from '../../../other/enums/nav-routes';
-import { TemplateInputComponent } from '../../../common/template-input/template-input.component';
+import { TemplateInputComponent } from '../../../shared/template-input/template-input.component';
 import { MatButton } from '@angular/material/button';
 
 @Component({
