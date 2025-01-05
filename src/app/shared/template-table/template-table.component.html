@@ -1,0 +1,17 @@
+<table [dataSource]="tableData()" class="mat-elevation-z8" mat-table>
+  @for (column of displayedColumns(); track column) {
+    <ng-container [matColumnDef]="column">
+      <!-- Displays the title of the header for each column -->
+      <th mat-header-cell *matHeaderCellDef>{{ headers()[$index] }}</th>
+
+      <!-- Displays the corresponding data for each cell in the column -->
+      <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+    </ng-container>
+  }
+
+  <!-- Renders the header row based on the displayedColumns array -->
+  <tr *matHeaderRowDef="displayedColumns(); sticky: true" mat-header-row></tr>
+
+  <!-- Renders the data rows based on the displayedColumns array -->
+  <tr *matRowDef="let row; columns: displayedColumns()" mat-row></tr>
+</table>

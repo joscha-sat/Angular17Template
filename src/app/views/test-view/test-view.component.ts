@@ -1,39 +1,21 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { delay, of } from 'rxjs';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-
-interface Python {
-  readonly id: number;
-  readonly name: string;
-}
-
-const ITEMS: Python[] = [
-  { id: 42, name: 'John Cleese' },
-  { id: 237, name: 'Eric Idle' },
-  { id: 666, name: 'Michael Palin' },
-  { id: 123, name: 'Terry Gilliam' },
-  { id: 777, name: 'Terry Jones' },
-  { id: 999, name: 'Graham Chapman' },
-];
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TemplateTableComponent } from '../../shared/template-table/template-table.component';
+import { CustomersStore } from '../../stores/customer.store';
 
 @Component({
   selector: 'app-test-view',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, TemplateTableComponent],
   templateUrl: './test-view.component.html',
   styleUrl: './test-view.component.scss',
 })
 export class TestViewComponent implements OnInit {
-  items$ = of(ITEMS).pipe(delay(3000));
+  customerStore = inject(CustomersStore);
 
-  private fb = inject(FormBuilder);
-  form = this.fb.group({
-    name: [''],
-  });
+  displayedColumns = signal(['name', 'createdAt', 'updatedAt']);
+  header = signal(['Name', 'Erstellt am', 'Aktualisiert am']);
 
-  ngOnInit() {
-    this.form.get('name')!.valueChanges.subscribe((selectedValue) => {
-      console.log('Selected Value:', selectedValue);
-      // Fügen Sie hier die Logik hinzu, die ausgeführt werden soll, wenn sich der Wert ändert
-    });
+  async ngOnInit() {
+    await this.customerStore.getAllCustomersPromise();
   }
 }

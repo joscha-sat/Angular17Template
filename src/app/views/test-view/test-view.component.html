@@ -1,1 +1,5 @@
-<form [formGroup]="form"></form>
+<app-template-table
+  [displayedColumns]="displayedColumns()"
+  [headers]="header()"
+  [tableData]="customerStore.customers()"
+/>
