@@ -29,6 +29,7 @@
     "@angular/router": "^19.0.5",
     "@ng-web-apis/common": "^4.11.1",
     "@ngrx/operators": "^19.0.0",
+    "@ngrx/signals": "^19.0.0",
     "@ngx-translate/core": "^16.0.4",
     "@ngx-translate/http-loader": "^16.0.1",
     "luxon": "^3.5.0",
