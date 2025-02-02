@@ -1,7 +1,9 @@
 <app-view-layout>
   <app-template-table
+    (paginationChange)="onPaginationChange($event)"
     [displayedColumns]="displayedColumns()"
     [headers]="header()"
     [tableData]="customerStore.customers()"
+    [totalItems]="totalItems()"
   />
 </app-view-layout>

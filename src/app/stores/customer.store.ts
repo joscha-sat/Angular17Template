@@ -9,7 +9,10 @@ import { inject } from '@angular/core';
 import { lastValueFrom, Observable } from 'rxjs';
 import { CustomerService } from '../api/customer.service';
 import { Customer } from '../other/models/Customer';
-import { ResponseWithRecords } from '../api/base-http-service/base-http.service';
+import {
+  BaseQueryParams,
+  ResponseWithRecords,
+} from '../api/base-http-service/base-http.service';
 
 type CustomersState = {
   customers: Customer[];
@@ -38,7 +41,7 @@ export const CustomersStore = signalStore(
   withMethods((store, customerService = inject(CustomerService)) => ({
     // GET ALL Customer
     async getAllCustomersPromise(
-      queryParams?: any,
+      queryParams?: BaseQueryParams,
     ): Promise<ResponseWithRecords<Customer>> {
       return apiRequestAndPatchStoreData(
         customerService.getAllCustomers(queryParams),
