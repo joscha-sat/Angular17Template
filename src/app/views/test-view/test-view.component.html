@@ -1,5 +1,7 @@
-<app-template-table
-  [displayedColumns]="displayedColumns()"
-  [headers]="header()"
-  [tableData]="customerStore.customers()"
-/>
+<app-view-layout>
+  <app-template-table
+    [displayedColumns]="displayedColumns()"
+    [headers]="header()"
+    [tableData]="customerStore.customers()"
+  />
+</app-view-layout>
