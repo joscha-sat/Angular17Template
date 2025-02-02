@@ -1,6 +1,8 @@
 import {
   AfterViewInit,
   Component,
+  DestroyRef,
+  inject,
   input,
   output,
   ViewChild,
@@ -8,6 +10,7 @@ import {
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-template-table',
@@ -20,7 +23,7 @@ export class TemplateTableComponent<T> implements AfterViewInit {
   headers = input.required<string[]>();
   displayedColumns = input.required<string[]>();
   tableData = input.required<T[]>();
-  pageSizes = input<number[]>([5, 10, 25, 100]);
+  pageSizes = input<number[]>([10, 25, 100]);
   totalItems = input<number>();
 
   paginationChange = output<{ skip: number; limit: number }>();
@@ -30,20 +33,37 @@ export class TemplateTableComponent<T> implements AfterViewInit {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
 
-  emitSkipLimitOnPaginatorChange() {
-    this.paginator?.page.subscribe((event) => {
-      const skip = event.pageIndex * event.pageSize;
-      const limit = event.pageSize;
-      this.paginationChange.emit({ skip, limit });
-    });
+  private destroyRef = inject(DestroyRef);
+
+  // hooks --------------------------------------------------- ||
+
+  ngAfterViewInit() {
+    this.setupDataSourcePaginator();
+    this.setupDataSourceSort();
   }
 
-  // Modify ngAfterViewInit
-  ngAfterViewInit() {
+  // methods --------------------------------------------------- ||
+
+  emitSkipLimitOnPaginatorChange() {
+    if (!this.paginator) return;
+
+    this.paginator.page
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event) => {
+        const skip = event.pageIndex * event.pageSize;
+        const limit = event.pageSize;
+        this.paginationChange.emit({ skip, limit });
+      });
+  }
+
+  setupDataSourcePaginator() {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
       this.emitSkipLimitOnPaginatorChange();
     }
+  }
+
+  setupDataSourceSort() {
     if (this.sort) {
       this.dataSource.sort = this.sort;
     }

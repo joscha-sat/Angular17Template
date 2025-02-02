@@ -16,12 +16,14 @@ import {
 
 type CustomersState = {
   customers: Customer[];
+  totalCustomersCount: number;
   customer?: Customer;
   filter: { queryParams: any; order: 'asc' | 'desc' };
 };
 
 const initialState = signalState<CustomersState>({
   customers: [],
+  totalCustomersCount: 0,
   customer: undefined,
   filter: { queryParams: {}, order: 'asc' },
 });
@@ -46,7 +48,10 @@ export const CustomersStore = signalStore(
       return apiRequestAndPatchStoreData(
         customerService.getAllCustomers(queryParams),
         (getAllResponse) =>
-          patchState(store, { customers: getAllResponse.records }),
+          patchState(store, {
+            customers: getAllResponse.records,
+            totalCustomersCount: getAllResponse.total,
+          }),
       );
     },
 

@@ -1,0 +1,7 @@
+<app-template-table
+  (paginationChange)="onPaginationChange($event)"
+  [displayedColumns]="displayedColumns()"
+  [headers]="header()"
+  [tableData]="customerStore.customers()"
+  [totalItems]="totalItems()"
+/>
