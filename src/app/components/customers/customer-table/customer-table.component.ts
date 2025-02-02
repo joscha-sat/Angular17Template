@@ -8,7 +8,7 @@ import {
 import { Customer } from '../../../other/models/Customer';
 import { DeleteIconComponent } from '../../../shared/icons/delete-icon/delete-icon.component';
 import { EditIconComponent } from '../../../shared/icons/edit-icon/edit-icon.component';
-import { UtilityService } from '../../../services/utility.service';
+import { BaseTableComponent } from '../../../other/abstract-class/BaseTableComponent';
 
 const DEFAULT_PAGINATION = { skip: 0, limit: 10 };
 const COLUMN_CONFIG = {
@@ -22,26 +22,17 @@ const COLUMN_CONFIG = {
   templateUrl: './customer-table.component.html',
   styleUrl: './customer-table.component.scss',
 })
-export class CustomerTableComponent implements OnInit {
+export class CustomerTableComponent
+  extends BaseTableComponent
+  implements OnInit
+{
   displayedColumns = signal(COLUMN_CONFIG.displayedColumns);
   header = signal(COLUMN_CONFIG.headers);
   totalItems = signal(0);
   customerStore = inject(CustomersStore);
-  utilityService = inject(UtilityService);
 
   skip = signal(DEFAULT_PAGINATION.skip);
   limit = signal(DEFAULT_PAGINATION.limit);
-
-  async ngOnInit(): Promise<void> {
-    await this.loadCustomers();
-    this.setupRefreshSub();
-  }
-
-  setupRefreshSub() {
-    this.utilityService.tableDataRefreshSubject.subscribe(async () => {
-      await this.loadCustomers();
-    });
-  }
 
   async onPaginationChange(event: BaseQueryParams): Promise<void> {
     this.skip.set(event.skip ?? 0);
@@ -61,6 +52,10 @@ export class CustomerTableComponent implements OnInit {
 
   editCustomer(customer: any) {
     console.log('edit');
+  }
+
+  protected getLoadDataMethod(): () => Promise<void> {
+    return this.loadCustomers.bind(this);
   }
 
   private async loadCustomers(): Promise<void> {
