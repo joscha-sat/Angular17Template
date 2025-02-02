@@ -11,12 +11,7 @@
 <!-- customized column, value = current name value, tenant(any name can be given) = full object (tenant) -->
 <ng-template #actions let-customer="object">
   <div class="flex-a-center-g1">
-    <mat-icon
-      (click)="deleteCustomer(customer.id)"
-      class="pointer"
-      style="color: var(--error-txt)"
-    >
-      delete
-    </mat-icon>
+    <app-delete-icon (clickEvent)="deleteCustomer(customer.id)" />
+    <app-edit-icon (clickEvent)="editCustomer(customer)" />
   </div>
 </ng-template>

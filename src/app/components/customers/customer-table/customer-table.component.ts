@@ -6,7 +6,8 @@ import {
   ResponseWithRecords,
 } from '../../../api/base-http-service/base-http.service';
 import { Customer } from '../../../other/models/Customer';
-import { MatIcon } from '@angular/material/icon';
+import { DeleteIconComponent } from '../../../shared/icons/delete-icon/delete-icon.component';
+import { EditIconComponent } from '../../../shared/icons/edit-icon/edit-icon.component';
 
 const DEFAULT_PAGINATION = { skip: 0, limit: 10 };
 const COLUMN_CONFIG = {
@@ -16,7 +17,7 @@ const COLUMN_CONFIG = {
 
 @Component({
   selector: 'app-customer-table',
-  imports: [TemplateTableComponent, MatIcon],
+  imports: [TemplateTableComponent, DeleteIconComponent, EditIconComponent],
   templateUrl: './customer-table.component.html',
   styleUrl: './customer-table.component.scss',
 })
@@ -47,6 +48,10 @@ export class CustomerTableComponent implements OnInit {
     } catch (error) {
       console.error(`Failed to delete customer with ID ${id}:`, error);
     }
+  }
+
+  editCustomer(customer: any) {
+    console.log('edit');
   }
 
   private async loadCustomers(): Promise<void> {
