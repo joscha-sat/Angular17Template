@@ -95,11 +95,6 @@
   @extend .flex, .align-center, .gap-1, .wrap;
 }
 
-.flex-center {
-  @extend .flex, .align-center;
-  gap: var(--gap, 1rem);
-}
-
 .wrap {
   flex-wrap: wrap;
 }

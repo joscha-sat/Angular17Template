@@ -1,0 +1,9 @@
+.cancelBtn {
+  background-color: var(--primary-lighter);
+  color: var(--primary);
+
+  &:hover {
+    background-color: var(--primary);
+    color: var(--primary-lighter);
+  }
+}

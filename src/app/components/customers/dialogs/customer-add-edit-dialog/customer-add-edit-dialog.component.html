@@ -1,0 +1,29 @@
+<!-- title -->
+<h2 mat-dialog-title>
+  {{
+    isCreateCustomerMode()
+      ? ('customer.create' | translate)
+      : ('customer.edit' | translate)
+  }}
+</h2>
+
+<!-- customer form -->
+@if (form) {
+  <mat-dialog-content>
+    <form
+      (ngSubmit)="form.valid && submit()"
+      [formGroup]="form"
+      class="flex-col-gap1 pt-05 pb-05"
+    >
+      <!--  name -->
+      <app-template-input fControlName="name" label="general.name" />
+
+      <!--  actions  -->
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions [align]="'start'" class="flex-a-center-g1">
+    <app-save-btn />
+    <app-cancel-btn mat-dialog-close />
+  </mat-dialog-actions>
+}

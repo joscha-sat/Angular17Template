@@ -1,0 +1,9 @@
+.saveBtn {
+  background-color: var(--success-bg);
+  color: var(--success-txt);
+
+  &:hover {
+    background-color: var(--success-txt);
+    color: var(--success-bg);
+  }
+}

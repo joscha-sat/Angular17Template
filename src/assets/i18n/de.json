@@ -8,11 +8,10 @@
     "warn": "Warnung"
   },
   "customer": {
+    "create": "Kunden erstellen",
+    "edit": "Kunden bearbeiten",
     "title": "Kunde",
     "title-plural": "Kunden"
-  },
-  "customers": {
-    "create": "Kunden erstellen"
   },
   "dashboard": {
     "title": "Übersicht"
@@ -42,7 +41,7 @@
     "password": "Passwort eingeben",
     "phone": "Telefon",
     "phone-number": "Telefonnummer",
-    "save": "speichern",
+    "save": "Speichern",
     "search": "Suchen",
     "select-date": "Datum auswählen",
     "title": "Allgemein",
@@ -129,7 +128,7 @@
   },
   "user": {
     "create": "Benutzer erstellen",
-    "title": "Benutzer",
-    "update": "Benutzer bearbeiten"
+    "edit": "Benutzer bearbeiten",
+    "title": "Benutzer"
   }
 }

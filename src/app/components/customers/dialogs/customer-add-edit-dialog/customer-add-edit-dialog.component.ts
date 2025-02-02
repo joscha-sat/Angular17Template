@@ -5,21 +5,41 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Customer } from '../../../other/models/Customer';
+import { Customer } from '../../../../other/models/Customer';
 import { TranslateModule } from '@ngx-translate/core';
-import { CustomerService } from '../../../api/customer.service';
-import { AddEdit } from '../../../other/types/AddEdit.type';
+import { CustomerService } from '../../../../api/customer.service';
+import { AddEdit } from '../../../../other/types/AddEdit.type';
+import {
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { TemplateInputComponent } from '../../../../shared/template-input/template-input.component';
+import { SaveBtnComponent } from '../../../../shared/buttons/save-btn/save-btn.component';
+import { CancelBtnComponent } from '../../../../shared/buttons/cancel-btn/cancel-btn.component';
 
 @Component({
   selector: 'app-customer-add-edit-dialog',
-  imports: [ReactiveFormsModule, TranslateModule],
+  imports: [
+    ReactiveFormsModule,
+    TranslateModule,
+    MatDialogTitle,
+    MatDialogContent,
+    TemplateInputComponent,
+    MatDialogActions,
+    MatDialogClose,
+    SaveBtnComponent,
+    CancelBtnComponent,
+  ],
   templateUrl: './customer-add-edit-dialog.component.html',
   styleUrl: './customer-add-edit-dialog.component.scss',
 })
 export class CustomerAddEditDialogComponent implements OnInit, AddEdit {
   model?: Customer;
-  isCreateCustomerMode = signal(true);
   form?: FormGroup;
+
+  isCreateCustomerMode = signal(true);
 
   constructor(
     private fb: FormBuilder,

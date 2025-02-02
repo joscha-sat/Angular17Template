@@ -5,5 +5,10 @@
     </div>
   </ng-container>
 
-  <div class="flex-a-center-g1" right></div>
+  <div class="flex-a-center-g1" right>
+    <!-- new customer button -->
+    <button (click)="openCreateCustomerDialog()" mat-flat-button>
+      {{ 'customer.create' | translate }}
+    </button>
+  </div>
 </app-header-layout>
