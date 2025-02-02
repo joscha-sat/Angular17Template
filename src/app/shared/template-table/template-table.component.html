@@ -6,7 +6,43 @@
         <th mat-header-cell *matHeaderCellDef>{{ headers()[$index] }}</th>
 
         <!-- Displays the corresponding data for each cell in the column -->
-        <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+        <td mat-cell *matCellDef="let element">
+          <!-- If a custom template exists for this column, render it -->
+          <ng-container
+            *ngIf="cellTemplatesMap[column] as template; else defaultCell"
+          >
+            <ng-container
+              *ngTemplateOutlet="
+                template;
+                context: {
+                  $implicit: extractNestedProperty(element, column),
+                  object: element,
+                }
+              "
+            ></ng-container>
+          </ng-container>
+
+          <!-- Default rendering -->
+          <ng-template #defaultCell>
+            <!-- dates -->
+            <ng-container
+              *ngIf="
+                extractNestedProperty(element, column) | isDate;
+                else rawValue
+              "
+            >
+              {{
+                extractNestedProperty(element, column)
+                  | date: 'dd.MM.yyyy HH:mm'
+              }}
+            </ng-container>
+
+            <!-- raw value -->
+            <ng-template #rawValue>
+              {{ extractNestedProperty(element, column) }}
+            </ng-template>
+          </ng-template>
+        </td>
       </ng-container>
     }
 
@@ -20,5 +56,6 @@
   <mat-paginator
     [length]="totalItems()"
     [pageSizeOptions]="pageSizes()"
+    [pageSize]="initialPageSize()"
   ></mat-paginator>
 </div>

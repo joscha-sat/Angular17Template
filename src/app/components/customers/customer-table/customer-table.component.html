@@ -1,7 +1,22 @@
 <app-template-table
   (paginationChange)="onPaginationChange($event)"
+  [cellTemplatesMap]="{ actions }"
   [displayedColumns]="displayedColumns()"
   [headers]="header()"
+  [initialPageSize]="limit()"
   [tableData]="customerStore.customers()"
   [totalItems]="totalItems()"
 />
+
+<!-- customized column, value = current name value, tenant(any name can be given) = full object (tenant) -->
+<ng-template #actions let-customer="object">
+  <div class="flex-a-center-g1">
+    <mat-icon
+      (click)="deleteCustomer(customer.id)"
+      class="pointer"
+      style="color: var(--error-txt)"
+    >
+      delete
+    </mat-icon>
+  </div>
+</ng-template>
