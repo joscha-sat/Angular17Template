@@ -1,20 +1,37 @@
-import { inject, OnInit } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { isObservable, lastValueFrom, Observable } from 'rxjs';
 import { UtilityService } from '../../services/utility.service';
 
-export abstract class BaseTableComponent implements OnInit {
+@Injectable()
+export abstract class BaseTableComponent {
   utilityService = inject(UtilityService);
-
-  async ngOnInit(): Promise<void> {
-    this.setupRefreshSub();
-    await this.getLoadDataMethod()();
-  }
 
   setupRefreshSub(): void {
     this.utilityService.tableDataRefreshSubject.subscribe(async () => {
-      await this.getLoadDataMethod()();
+      await this.loadData();
     });
   }
 
-  // Child components must provide the name or function to call
-  protected abstract getLoadDataMethod(): () => Promise<void>;
+  // Each component must provide data loader, which can return either a Promise or Observable
+  protected abstract getLoadDataMethod(): () => Promise<any> | Observable<any>;
+
+  private async loadData(): Promise<void> {
+    const loadDataMethod = this.getLoadDataMethod();
+
+    try {
+      await this.resolveData(loadDataMethod());
+    } catch (error) {
+      console.error('Failed to load data:', error);
+    }
+  }
+
+  private async resolveData(
+    dataLoader: Promise<any> | Observable<any>,
+  ): Promise<any> {
+    if (isObservable(dataLoader)) {
+      // Convert Observable to Promise for consistency
+      return lastValueFrom(dataLoader);
+    }
+    return dataLoader; // Already a Promise
+  }
 }

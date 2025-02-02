@@ -50,8 +50,13 @@ export class CustomerTableComponent
     }
   }
 
-  editCustomer(customer: any) {
-    console.log('edit');
+  editCustomer(customer: Customer) {
+    console.log('edit', customer);
+  }
+
+  async ngOnInit() {
+    this.setupRefreshSub();
+    await this.loadCustomers();
   }
 
   protected getLoadDataMethod(): () => Promise<void> {
