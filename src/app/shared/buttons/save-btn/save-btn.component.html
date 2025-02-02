@@ -1,3 +1,8 @@
-<button (click)="save()" class="saveBtn" mat-flat-button>
+<button
+  (click)="save()"
+  [disabled]="disabled()"
+  color="primary"
+  mat-flat-button
+>
   {{ 'general.save' | translate }}
 </button>

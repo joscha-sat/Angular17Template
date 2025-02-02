@@ -13,17 +13,16 @@
     <form
       (ngSubmit)="form.valid && submit()"
       [formGroup]="form"
-      class="flex-col-gap1 pt-05 pb-05"
+      class="pt-05 pb-05"
     >
       <!--  name -->
       <app-template-input fControlName="name" label="general.name" />
-
-      <!--  actions  -->
     </form>
   </mat-dialog-content>
 
+  <!--  actions  -->
   <mat-dialog-actions [align]="'start'" class="flex-a-center-g1">
-    <app-save-btn />
+    <app-save-btn (clickEvent)="submit()" [disabled]="form.invalid" />
     <app-cancel-btn mat-dialog-close />
   </mat-dialog-actions>
 }

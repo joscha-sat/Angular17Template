@@ -8,6 +8,7 @@ import {
 import { Customer } from '../../../other/models/Customer';
 import { DeleteIconComponent } from '../../../shared/icons/delete-icon/delete-icon.component';
 import { EditIconComponent } from '../../../shared/icons/edit-icon/edit-icon.component';
+import { UtilityService } from '../../../services/utility.service';
 
 const DEFAULT_PAGINATION = { skip: 0, limit: 10 };
 const COLUMN_CONFIG = {
@@ -26,12 +27,20 @@ export class CustomerTableComponent implements OnInit {
   header = signal(COLUMN_CONFIG.headers);
   totalItems = signal(0);
   customerStore = inject(CustomersStore);
+  utilityService = inject(UtilityService);
 
   skip = signal(DEFAULT_PAGINATION.skip);
   limit = signal(DEFAULT_PAGINATION.limit);
 
   async ngOnInit(): Promise<void> {
     await this.loadCustomers();
+    this.setupRefreshSub();
+  }
+
+  setupRefreshSub() {
+    this.utilityService.tableDataRefreshSubject.subscribe(async () => {
+      await this.loadCustomers();
+    });
   }
 
   async onPaginationChange(event: BaseQueryParams): Promise<void> {

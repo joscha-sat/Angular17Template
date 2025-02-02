@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,8 +8,8 @@ import {
 import { Customer } from '../../../../other/models/Customer';
 import { TranslateModule } from '@ngx-translate/core';
 import { CustomerService } from '../../../../api/customer.service';
-import { AddEdit } from '../../../../other/types/AddEdit.type';
 import {
+  MatDialog,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -18,6 +18,7 @@ import {
 import { TemplateInputComponent } from '../../../../shared/template-input/template-input.component';
 import { SaveBtnComponent } from '../../../../shared/buttons/save-btn/save-btn.component';
 import { CancelBtnComponent } from '../../../../shared/buttons/cancel-btn/cancel-btn.component';
+import { UtilityService } from '../../../../services/utility.service';
 
 @Component({
   selector: 'app-customer-add-edit-dialog',
@@ -35,7 +36,9 @@ import { CancelBtnComponent } from '../../../../shared/buttons/cancel-btn/cancel
   templateUrl: './customer-add-edit-dialog.component.html',
   styleUrl: './customer-add-edit-dialog.component.scss',
 })
-export class CustomerAddEditDialogComponent implements OnInit, AddEdit {
+export class CustomerAddEditDialogComponent implements OnInit {
+  utilityService = inject(UtilityService);
+  readonly dialog = inject(MatDialog);
   model?: Customer;
   form?: FormGroup;
 
@@ -55,14 +58,15 @@ export class CustomerAddEditDialogComponent implements OnInit, AddEdit {
   }
 
   ngOnInit(): void {
-    this.loadModelData();
+    // this.loadModelData();
     this.initForm();
   }
 
-  loadModelData() {
-    this.isCreateCustomerMode.set(true);
-    this.isCreateCustomerMode.set(false);
-  }
+  // Todo
+  // loadModelData() {
+  //   this.isCreateCustomerMode.set(true);
+  //   this.isCreateCustomerMode.set(false);
+  // }
 
   initForm() {
     this.form = this.fb.group({
@@ -80,7 +84,10 @@ export class CustomerAddEditDialogComponent implements OnInit, AddEdit {
   createCustomer() {
     this.customerService
       .createOneCustomer(this.customerFromFormData)
-      .subscribe();
+      .subscribe(() => {
+        this.dialog.closeAll();
+        this.utilityService.tableDataRefreshSubject.next();
+      });
   }
 
   updateCustomer() {
