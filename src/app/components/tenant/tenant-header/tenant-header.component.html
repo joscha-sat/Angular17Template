@@ -11,7 +11,11 @@
 
   <div class="flex-a-center-g1" right>
     <!-- new tenant button -->
-    <button (click)="openCreateTenantDialog()" mat-flat-button>
+    <button
+      (click)="openCreateTenantDialog()"
+      color="secondary"
+      mat-flat-button
+    >
       {{ 'tenant.create' | translate }}
     </button>
   </div>

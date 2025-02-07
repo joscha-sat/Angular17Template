@@ -14,9 +14,9 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           err,
           req.method,
         );
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (error) {
+      } catch {
         errorMessage = err.error.message ?? 'unbekannt';
+        console.log(errorMessage);
       }
 
       // snackbarService.openSnackbar(

@@ -12,6 +12,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { MatButton } from '@angular/material/button';
+import { MatSnackbarService } from '../../../services/mat-snackbar.service';
+import { ApiSuccessSnackbarComponent } from '../../../shared/api-success-snackbar/api-success-snackbar.component';
 
 @Component({
   selector: 'app-tenant-header',
@@ -27,6 +29,7 @@ import { MatButton } from '@angular/material/button';
 export class TenantHeaderComponent implements OnInit, OnChanges {
   fb = inject(FormBuilder);
   tenantService = inject(TenantService);
+  snackbarService = inject(MatSnackbarService);
 
   form: FormGroup = new FormGroup({});
   tenants = input.required<Tenant[]>();
@@ -58,5 +61,11 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     }
   }
 
-  openCreateTenantDialog() {}
+  openCreateTenantDialog() {
+    this.snackbarService.openSnackBar(
+      ApiSuccessSnackbarComponent,
+      'success',
+      this.tenants(),
+    );
+  }
 }

@@ -4,7 +4,7 @@
   top: 0;
   height: 100dvh;
 
-  background-color: #e2e2e2;
+  background-color: var(--mat-sys-primary);
 
   width: 4rem;
   z-index: 9999;
@@ -38,7 +38,7 @@
   height: 3.5rem;
   border-radius: 100%;
   margin-bottom: 1rem;
-  background-color: var(--primary);
+  background-color: var(--mat-sys-inverse-primary);
 
   display: flex;
   justify-content: center;
@@ -46,5 +46,5 @@
 }
 
 .active-btn {
-  background-color: var(--primary-hover);
+  background-color: var(--mat-sys-on-primary);
 }

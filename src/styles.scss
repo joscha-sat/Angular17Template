@@ -1,50 +1,19 @@
 @use "index" as *;
-@use '@angular/material' as mat;
-
+@import "assets/theme/theme.css";
 
 // || CSS VARIABLES || #########################################################################################################||
 :root {
-
-  --primary: hsl(210.48, 100%, 36.67%);
-  --primary-light: hsl(210.48, 100%, 56.67%);
-  --primary-lighter: hsl(210.48, 100%, 95%);
-
-  --primary-hover: hsl(222, 100%, 82.16%);
-
   /* ----------------------------------------------------------------- */
   /*  ||CUSTOM CSS VARIABLES --> use scss files in assets/scss ||
   /* ----------------------------------------------------------------- */
 
-  // Success
-  --success-bg: #{$success-bg};
-  --success-txt: #{$success-txt};
 
-  // Warn
-  --warn-bg: #{$warn-bg};
-  --warn-txt: #{$warn-txt};
-
-  // Error
-  --error-bg: #{$error-bg};
-  --error-txt: #{$error-txt};
-
-  --delete-bg: #{$delete-bg};
 }
 
 
 /* ----------------------------------------------------------------- */
 /*  ||Angular Material adjustments ||
 /* ----------------------------------------------------------------- */
-
-
-html {
-  color-scheme: light;
-  @include mat.theme((
-    color: mat.$azure-palette,
-    typography: Roboto,
-    density: -2
-  ));
-}
-
 
 html.dark-mode {
   color-scheme: dark;
@@ -70,14 +39,12 @@ html.dark-mode {
 * {
   margin: 0;
   padding: 0;
-  font: inherit;
 }
 
 /* min body height */
 
 body {
   min-height: 100vh;
-
   //background: var(--mat-sys-surface);
   //color: var(--mat-sys-on-surface);
 }
@@ -103,3 +70,33 @@ body {
 }
 
 
+//mat-snackbar
+.custom-snackbar {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+}
+
+.custom-snackbar-error {
+  background-color: #f44336; /* Red background */
+  color: white; /* White text */
+}
+
+// Snackbar colors
+
+.snackbar-info {
+  --mdc-snackbar-container-color: var(--info-container);
+  --mdc-snackbar-supporting-text-color: var(--info-container-txt);
+  --mat-sys-inverse-on-surface: var(--info-container-txt)
+}
+
+.snackbar-success {
+  --mdc-snackbar-container-color: var(--success-bg);
+  --mdc-snackbar-supporting-text-color: var(--success-txt);
+  --mat-sys-inverse-on-surface: var(--success-txt)
+}
+
+.snackbar-error {
+  --mdc-snackbar-container-color: var(--mat-sys-error-container);
+  --mdc-snackbar-supporting-text-color: var(--mat-sys-on-error-container);
+  --mat-sys-inverse-on-surface: var(--mat-sys-on-error-container)
+}

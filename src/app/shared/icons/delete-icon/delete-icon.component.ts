@@ -8,7 +8,7 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './delete-icon.component.scss',
 })
 export class DeleteIconComponent {
-  color = input('var(--delete-bg)');
+  color = input('var(--mat-sys-error)');
 
   clickEvent = output();
 

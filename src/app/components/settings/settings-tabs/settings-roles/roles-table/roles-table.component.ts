@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Role } from '../../../../../other/models/Role';
 import { Table } from '../../../../../other/types/Table.type';
 import { RoleService } from '../../../../../api/role.service';
@@ -9,7 +9,7 @@ import { RoleService } from '../../../../../api/role.service';
   templateUrl: './roles-table.component.html',
   styleUrl: './roles-table.component.scss',
 })
-export class RolesTableComponent implements Table<Role>, OnInit {
+export class RolesTableComponent implements Table<Role> {
   roleService = inject(RoleService);
 
   // enter i18n keys here
@@ -25,8 +25,6 @@ export class RolesTableComponent implements Table<Role>, OnInit {
     'edit',
     'delete',
   ]);
-
-  ngOnInit() {}
 
   setTableRefreshMethodName(): string {
     return 'getAllRoles';

@@ -1,0 +1,22 @@
+<!-- HEADER -->
+<div class="flex align-center justify-between">
+  <h3>Erfolg!</h3>
+
+  <span matSnackBarActions>
+    {{ currentDate() | date: 'HH:mm' }}
+
+    <button
+      (click)="snackBarRef.dismissWithAction()"
+      mat-icon-button
+      matSnackBarAction
+    >
+      <mat-icon> close </mat-icon>
+    </button>
+  </span>
+</div>
+
+<!-- CONTENT -->
+
+<div>
+  {{ message ?? 'Der Vorgang war erfolgreich.' }}
+</div>
