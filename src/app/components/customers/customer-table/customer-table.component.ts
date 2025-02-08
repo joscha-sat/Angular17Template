@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { TemplateTableComponent } from '../../../shared/template-table/template-table.component';
 import { CustomersStore } from '../../../stores/customer.store';
 import {
@@ -33,6 +33,14 @@ export class CustomerTableComponent
 
   skip = signal(DEFAULT_PAGINATION.skip);
   limit = signal(DEFAULT_PAGINATION.limit);
+
+  constructor() {
+    super();
+
+    effect(() => {
+      console.log(this.customerStore.search());
+    });
+  }
 
   async onPaginationChange(event: BaseQueryParams): Promise<void> {
     this.skip.set(event.skip ?? 0);

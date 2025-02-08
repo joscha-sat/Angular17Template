@@ -18,14 +18,16 @@ type CustomersState = {
   customers: Customer[];
   totalCustomersCount: number;
   customer?: Customer;
-  filter: { queryParams: any; order: 'asc' | 'desc' };
+  search: string;
+  order: 'asc' | 'desc';
 };
 
 const initialState = signalState<CustomersState>({
   customers: [],
   totalCustomersCount: 0,
   customer: undefined,
-  filter: { queryParams: {}, order: 'asc' },
+  search: '',
+  order: 'asc',
 });
 
 async function apiRequestAndPatchStoreData<T>(
@@ -107,6 +109,10 @@ export const CustomersStore = signalStore(
         customerService.deleteAllCustomers(),
         () => patchState(store, { customers: [] }),
       );
+    },
+
+    updateSearch(newValue: string) {
+      patchState(store, { search: newValue });
     },
   })),
 );

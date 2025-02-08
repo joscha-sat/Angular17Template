@@ -1,4 +1,5 @@
 @use "index" as *;
+@use '@angular/material' as mat;
 @import "assets/theme/theme.css";
 
 // || CSS VARIABLES || #########################################################################################################||
@@ -6,8 +7,14 @@
   /* ----------------------------------------------------------------- */
   /*  ||CUSTOM CSS VARIABLES --> use scss files in assets/scss ||
   /* ----------------------------------------------------------------- */
+}
 
+mat-form-field {
+  @include mat.theme((density: -4));
+}
 
+tr, th {
+  @include mat.theme((density: -2));
 }
 
 
