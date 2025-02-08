@@ -6,7 +6,7 @@ import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerAddEditDialogComponent } from '../dialogs/customer-add-edit-dialog/customer-add-edit-dialog.component';
 import { TemplateTableSearchComponent } from '../../../shared/template-table-search/template-table-search.component';
-import { CustomersStore } from '../../../stores/customer.store';
+import { CustomerService } from '../../../api/customer.service';
 
 @Component({
   selector: 'app-customers-header',
@@ -23,7 +23,7 @@ import { CustomersStore } from '../../../stores/customer.store';
 export class CustomersHeaderComponent {
   readonly dialog = inject(MatDialog);
   fb = inject(FormBuilder);
-  customerStore = inject(CustomersStore);
+  customerService = inject(CustomerService);
 
   form: FormGroup = this.fb.group({
     date: null,

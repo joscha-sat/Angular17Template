@@ -1,17 +1,6 @@
-<app-template-table
-  (paginationChange)="onPaginationChange($event)"
-  [cellTemplatesMap]="{ actions }"
-  [displayedColumns]="displayedColumns()"
-  [headers]="header()"
-  [initialPageSize]="limit()"
-  [tableData]="customerStore.customers()"
-  [totalItems]="totalItems()"
+<app-template-table-fetch
+  [displayedColumns]="columns()"
+  [fetchData]="fetchDataFn"
+  [headers]="headers()"
+  [search]="customerService.search()"
 />
-
-<!-- customized column, value = current name value, tenant(any name can be given) = full object (tenant) -->
-<ng-template #actions let-customer="object">
-  <div class="flex-a-center-g1">
-    <app-delete-icon (clickEvent)="deleteCustomer(customer.id)" />
-    <app-edit-icon (clickEvent)="editCustomer(customer)" />
-  </div>
-</ng-template>

@@ -29,7 +29,7 @@ export class MatSnackbarService {
       horizontalPosition,
       verticalPosition,
       panelClass: [`snackbar-${type}`],
-      // duration: 3000,
+      duration: 3000,
       data: { ...data, title: type, plural },
     });
   }

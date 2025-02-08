@@ -11,7 +11,7 @@ import { TemplateInputComponent } from '../template-input/template-input.compone
 export class TemplateTableSearchComponent implements OnInit {
   fb = inject(FormBuilder);
   searchForm: FormGroup = new FormGroup({});
-  @Input({ required: true }) store: any;
+  @Input({ required: true }) service: any;
 
   ngOnInit(): void {
     this.initForm();
@@ -25,7 +25,6 @@ export class TemplateTableSearchComponent implements OnInit {
 
   onSearchChange($event: Event) {
     const target = $event.target as HTMLInputElement;
-    this.store.updateSearch(target.value);
-    console.log(this.store.search());
+    this.service.search.set(target.value);
   }
 }

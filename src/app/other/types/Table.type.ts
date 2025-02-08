@@ -7,8 +7,8 @@ export type Table<T> = {
 };
 
 export type BaseGetQueryParams = {
-  pageNumber: number;
-  pageSize: number;
+  skip: number;
+  limit: number;
   search?: string;
   searchDate?: string;
   tabValueActive?: boolean;
