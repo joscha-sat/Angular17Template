@@ -86,6 +86,7 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
     );
   };
 
+  // TODO multiple requests after creating an object (and being on page 3 for example > one extra call per page you are on)
   refreshDataSubscription() {
     // Unsubscribe from the previous subscription if it exists
     if (this.subscription) {
