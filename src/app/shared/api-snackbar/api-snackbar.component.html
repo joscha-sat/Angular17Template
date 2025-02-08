@@ -1,0 +1,66 @@
+<!-- HEADER -->
+<div class="flex align-center justify-between">
+  <h3>
+    @switch (data.title) {
+      @case ('info') {
+        {{ 'alert.info' | translate }}!
+      }
+      @case ('success') {
+        {{ 'alert.success' | translate }}!
+      }
+      @case ('error') {
+        {{ 'alert.error' | translate }}! Status: {{ data.errorStatus }}
+      }
+    }
+  </h3>
+
+  <span matSnackBarActions>
+    {{ currentDate() | date: 'dd.MM.yyyy, HH:mm' }}
+
+    <button
+      (click)="snackBarRef.dismissWithAction()"
+      mat-icon-button
+      matSnackBarAction
+    >
+      <mat-icon> close </mat-icon>
+    </button>
+  </span>
+</div>
+
+<!-- CONTENT -->
+<div>
+  @switch (data.title) {
+    @case ('info') {
+      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | translate) : '' }}!
+    }
+    @case ('success') {
+      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | translate) : '' }}
+      @switch (data.methodType) {
+        @case ('POST') {
+          @if (data.plural) {
+            {{ 'http_success.post_plural' | translate }}
+          } @else {
+            {{ 'http_success.post' | translate }}
+          }
+        }
+        @case ('PATCH') {
+          @if (data.plural) {
+            {{ 'http_success.patch_plural' | translate }}
+          } @else {
+            {{ 'http_success.patch' | translate }}
+          }
+        }
+        @case ('DELETE') {
+          @if (data.plural) {
+            {{ 'http_success.delete_plural' | translate }}
+          } @else {
+            {{ 'http_success.delete' | translate }}
+          }
+        }
+      }
+    }
+    @case ('error') {
+      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | translate) : '' }}
+    }
+  }
+</div>

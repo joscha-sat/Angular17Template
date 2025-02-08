@@ -1,5 +1,4 @@
 {
-  "": "",
   "alert": {
     "error": "Fehler",
     "info": "Info",
@@ -8,6 +7,7 @@
     "warn": "Warnung"
   },
   "customer": {
+    "a_customer": "Ein Kunde",
     "create": "Kunden erstellen",
     "edit": "Kunden bearbeiten",
     "title": "Kunde",
@@ -93,6 +93,14 @@
       "patch_unique": "Es gibt bereits einen Benutzer mit dieser E-Mail"
     }
   },
+  "http_success": {
+    "delete": "wurde erfolgreich gelöscht!",
+    "delete_plural": "wurden erfolgreich gelöscht!",
+    "patch": "wurde erfolgreich aktualisiert!",
+    "patch_plural": "wurden erfolgreich aktualisiert!",
+    "post": "wurde erfolgreich erstellt!",
+    "post_plural": "wurden erfolgreich erstellt!"
+  },
   "login": {
     "forgot-password": "Passwort vergessen?",
     "login-btn": "Anmelden",
@@ -113,6 +121,7 @@
     "title-plural": "Aufträge"
   },
   "role": {
+    "a_title": "Eine Rolle",
     "title": "Rolle",
     "title-plural": "Rollen"
   },
@@ -120,6 +129,7 @@
     "title": "Einstellungen"
   },
   "tenant": {
+    "a_title": "Eine Firma",
     "create": "Firma erstellen",
     "edit": "Firma bearbeiten",
     "enter-name": "Firmennamen eingeben",
@@ -127,6 +137,7 @@
     "title": "Firmen"
   },
   "user": {
+    "a_title": "Ein Benutzer",
     "create": "Benutzer erstellen",
     "edit": "Benutzer bearbeiten",
     "title": "Benutzer"

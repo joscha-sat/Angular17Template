@@ -17,9 +17,8 @@ export type TenantQueryParams = BaseQueryParams & {};
 })
 export class TenantService extends GenericHttpService {
   selectedTenantId = signal('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
-
   endpoint = ApiRoutes.TENANT;
-  element = 'Eine Firma'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
+  element_i18nKey = 'tenant.a_title';
 
   // GET ALL
   getAllTenants(
@@ -35,17 +34,26 @@ export class TenantService extends GenericHttpService {
 
   // CREATE ONE Tenant
   createOneTenant(tenant: Tenant): Observable<Tenant> {
-    return this.createOne<Tenant>(this.endpoint, tenant, this.element);
+    return this.createOne<Tenant>(this.endpoint, tenant, this.element_i18nKey);
   }
 
   // CREATE MULTIPLE Tenants
   createMultipleTenant(tenant: Tenant[]): Observable<Tenant[]> {
-    return this.createMultiple<Tenant>(this.endpoint, tenant, this.element);
+    return this.createMultiple<Tenant>(
+      this.endpoint,
+      tenant,
+      this.element_i18nKey,
+    );
   }
 
   // UPDATE ONE Tenant
   updateTenantById(id: idTypes, tenant: Tenant): Observable<Tenant> {
-    return this.updateOne<Tenant>(this.endpoint, tenant, id, this.element);
+    return this.updateOne<Tenant>(
+      this.endpoint,
+      tenant,
+      id,
+      this.element_i18nKey,
+    );
   }
 
   // UPDATE MULTIPLE Tenants
@@ -57,13 +65,13 @@ export class TenantService extends GenericHttpService {
       this.endpoint,
       tenants,
       id,
-      this.element,
+      this.element_i18nKey,
     );
   }
 
   // DELETE ONE Tenant
   deleteTenantById(id: idTypes): Observable<unknown> {
-    return this.deleteOne(this.endpoint, id, this.element);
+    return this.deleteOne(this.endpoint, id, this.element_i18nKey);
   }
 
   // DELETE ALL Tenants

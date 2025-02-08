@@ -19,7 +19,7 @@ export class RoleService extends GenericHttpService {
   authService = inject(AuthService);
 
   endpoint = ApiRoutes.ROLE;
-  element = 'Eine Rolle'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
+  element_i18nKey = 'role.a_title';
 
   //  UTILITY METHODS
   get isSuperAdmin(): boolean {
@@ -45,27 +45,32 @@ export class RoleService extends GenericHttpService {
 
   // CREATE ONE Role
   createOneRole(role: Role): Observable<Role> {
-    return this.createOne<Role>(this.endpoint, role, this.element);
+    return this.createOne<Role>(this.endpoint, role, this.element_i18nKey);
   }
 
   // CREATE MULTIPLE Roles
   createMultipleRole(role: Role[]): Observable<Role[]> {
-    return this.createMultiple<Role>(this.endpoint, role, this.element);
+    return this.createMultiple<Role>(this.endpoint, role, this.element_i18nKey);
   }
 
   // UPDATE ONE Role
   updateRoleById(id: idTypes, role: Role): Observable<Role> {
-    return this.updateOne<Role>(this.endpoint, role, id, this.element);
+    return this.updateOne<Role>(this.endpoint, role, id, this.element_i18nKey);
   }
 
   // UPDATE MULTIPLE Roles
   updateMultipleRoleById(id: idTypes[], roles: Role[]): Observable<Role[]> {
-    return this.updateMultiple<Role>(this.endpoint, roles, id, this.element);
+    return this.updateMultiple<Role>(
+      this.endpoint,
+      roles,
+      id,
+      this.element_i18nKey,
+    );
   }
 
   // DELETE ONE Role
   deleteRoleById(id: idTypes): Observable<unknown> {
-    return this.deleteOne(this.endpoint, id, this.element);
+    return this.deleteOne(this.endpoint, id, this.element_i18nKey);
   }
 
   // DELETE ALL Roles

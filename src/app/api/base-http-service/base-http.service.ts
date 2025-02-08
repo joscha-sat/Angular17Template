@@ -2,6 +2,12 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { forkJoin, Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../other/environment/environment';
+import {
+  MatSnackbarService,
+  MethodType,
+  SnackBarData,
+} from '../../services/mat-snackbar.service';
+import { ApiSnackbarComponent } from '../../shared/api-snackbar/api-snackbar.component';
 
 // Type definitions
 export type idTypes = string | number | (string | number)[];
@@ -23,7 +29,10 @@ export class GenericHttpService {
   searchDate = signal('');
   tabValueActive = signal<boolean | undefined>(undefined);
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private snackBar: MatSnackbarService,
+  ) {}
 
   /**
    * Constructs a full URL based on a given endpoint and optional ID.
@@ -67,43 +76,35 @@ export class GenericHttpService {
    * Creates a new record.
    * @param endpoint - The API endpoint
    * @param body - The body of the resource to be created
-   * @param articleWithElementName - Article name for the resource (for notifications)
+   * @param i18nKeyForElement - Article name for the resource (for notifications)
    * @returns An Observable of the created record
    */
   createOne<T>(
     endpoint: string,
     body: T,
-    articleWithElementName: string,
+    i18nKeyForElement: string,
   ): Observable<T> {
     const action = this.http.post<T>(this.getUrl(endpoint), body);
-    return this.httpAction(
-      action,
-      'Success!',
-      `${articleWithElementName} has been created!`,
-    );
+    return this.httpAction(action, i18nKeyForElement, 'POST');
   }
 
   /**
    * Creates multiple new records.
    * @param endpoint - The API endpoint
    * @param bodies - An array of bodies of the resources to be created
-   * @param articleWithElementName - Article name for the resources (for notifications)
+   * @param i18nKeyForElement - Article name for the resources (for notifications)
    * @returns An Observable of an array of the created records
    */
   createMultiple<T>(
     endpoint: string,
     bodies: T[],
-    articleWithElementName: string,
+    i18nKeyForElement: string,
   ): Observable<T[]> {
     const observables: Observable<T>[] = [];
     for (const body of bodies) {
-      const action = this.createOne(endpoint, body, articleWithElementName);
+      const action = this.createOne(endpoint, body, i18nKeyForElement);
       observables.push(
-        this.httpAction(
-          action,
-          'Success!',
-          `${articleWithElementName} have been created!`,
-        ),
+        this.httpAction(action, i18nKeyForElement, 'POST', true),
       );
     }
     return forkJoin(observables);
@@ -114,21 +115,17 @@ export class GenericHttpService {
    * @param endpoint - The API endpoint
    * @param body - The updated body of the resource
    * @param id - The ID of the resource to be updated
-   * @param articleWithElementName - Article name for the resource (for notifications)
+   * @param i18nKeyForElement - Article name for the resource (for notifications)
    * @returns An Observable of the updated record
    */
   updateOne<T>(
     endpoint: string,
     body: T,
     id: idTypes,
-    articleWithElementName: string,
+    i18nKeyForElement: string,
   ): Observable<T> {
     const action = this.http.patch<T>(this.getUrl(endpoint, id), body);
-    return this.httpAction(
-      action,
-      'Success!',
-      `${articleWithElementName} has been updated!`,
-    );
+    return this.httpAction(action, i18nKeyForElement, 'PATCH');
   }
 
   /**
@@ -136,14 +133,14 @@ export class GenericHttpService {
    * @param endpoint - The API endpoint
    * @param bodies - An array of updated bodies of the resources
    * @param ids - An array of IDs of the resources to be updated
-   * @param articleWithElementName - Article name for the resources (for notifications)
+   * @param i18nKeyForElement - Article name for the resources (for notifications)
    * @returns An Observable of an array of the updated records
    */
   updateMultiple<T>(
     endpoint: string,
     bodies: T[],
     ids: idTypes[],
-    articleWithElementName: string,
+    i18nKeyForElement: string,
   ): Observable<T[]> {
     const observables: Observable<T>[] = [];
     for (const index in bodies) {
@@ -151,14 +148,10 @@ export class GenericHttpService {
         endpoint,
         bodies[index],
         ids[index],
-        articleWithElementName,
+        i18nKeyForElement,
       );
       observables.push(
-        this.httpAction(
-          action,
-          'Success!',
-          `${articleWithElementName} have been updated!`,
-        ),
+        this.httpAction(action, i18nKeyForElement, 'PATCH', true),
       );
     }
     return forkJoin(observables);
@@ -168,20 +161,16 @@ export class GenericHttpService {
    * Deletes a single record.
    * @param endpoint - The API endpoint
    * @param id - The ID of the resource to be deleted
-   * @param articleWithElementName - Article name for the resource (for notifications)
+   * @param i18nKeyForElement - Article name for the resource (for notifications)
    * @returns An Observable of the delete result
    */
   deleteOne(
     endpoint: string,
     id: idTypes,
-    articleWithElementName: string,
+    i18nKeyForElement: string,
   ): Observable<unknown> {
     const action = this.http.delete(this.getUrl(endpoint, id));
-    return this.httpAction(
-      action,
-      'Success!',
-      `${articleWithElementName} has been deleted!`,
-    );
+    return this.httpAction(action, i18nKeyForElement, 'DELETE');
   }
 
   /**
@@ -198,18 +187,20 @@ export class GenericHttpService {
   /**
    * Helper function to handle HTTP actions and show notifications.
    * @param action - The Observable of the HTTP action
-   * @param successTitle - The success title for the notification
-   * @param successMessage - The success message for the notification
+   * @param i18nKeyForElement translate key for element_i18nKey
+   * @param methodType 'POST' | 'PATCH' | 'DELETE'
+   * @param plural boolean for correct translation output
    * @returns An Observable that manages the HTTP action and notifications
    */
   private httpAction<T>(
     action: Observable<T>,
-    successTitle: string,
-    successMessage: string,
+    i18nKeyForElement: string,
+    methodType?: MethodType,
+    plural?: boolean,
   ): Observable<T> {
     return action.pipe(
       tap(() => {
-        this.handleHttpSuccess(successTitle, successMessage);
+        this.handleHttpSuccess(i18nKeyForElement, methodType, plural);
         this._refreshObservable.next();
       }),
     );
@@ -232,16 +223,18 @@ export class GenericHttpService {
     return params;
   }
 
-  /**
-   * Handles successful HTTP requests and shows notifications.
-   * @param pushTitle - Optional: The title for the notification
-   * @param pushText - Optional: The text for the notification
-   */
-  private handleHttpSuccess(pushTitle?: string, pushText?: string) {
-    // this._snackBar.openSnackbar(
-    //   'success',
-    //   pushTitle ?? 'Success!',
-    //   pushText ?? '',
-    // );
+  private handleHttpSuccess(
+    i18nKeyForElement: string,
+    methodType?: MethodType,
+    plural: boolean = false,
+  ) {
+    console.log(methodType);
+    const payload: SnackBarData = {
+      i18nKeyOrMessage: i18nKeyForElement,
+      methodType,
+      plural,
+    };
+
+    this.snackBar.openSnackBar(ApiSnackbarComponent, 'success', payload);
   }
 }

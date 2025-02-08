@@ -8,6 +8,7 @@
     "warn": "Warning"
   },
   "customer": {
+    "a_customer": "A customer",
     "create": "Create customer",
     "edit": "Edit customer",
     "title": "Customer",
@@ -30,6 +31,7 @@
     "email": "Email",
     "empty": "No entries available",
     "english": "English",
+    "error": "Creating the object failed!",
     "firstName": "First name",
     "german": "German",
     "inactive": "Inactive",
@@ -65,6 +67,14 @@
     "status-409": "Conflict in request to the server",
     "status-500": "An internal server error has occurred"
   },
+  "http_success": {
+    "delete": "was successfully deleted!",
+    "delete_plural": "were successfully deleted!",
+    "patch": "was successfully updated!",
+    "patch_plural": "were successfully updated!",
+    "post": "was successfully created!",
+    "post_plural": "were successfully created!"
+  },
   "login": {
     "forgot-password": "Forgot your password?",
     "login-btn": "Login",
@@ -85,6 +95,7 @@
     "title-plural": "Orders"
   },
   "role": {
+    "a_title": "A role",
     "title": "Role",
     "title-plural": "Roles"
   },
@@ -92,6 +103,7 @@
     "title": "Settings"
   },
   "tenant": {
+    "a_title": "A tenant",
     "create": "Create tenant",
     "edit": "Edit tenant",
     "enter-name": "Enter a tenant name",
@@ -99,6 +111,7 @@
     "title": "Tenant"
   },
   "user": {
+    "a_title": "A user",
     "create": "Create user",
     "edit": "Edit user",
     "title": "User"

@@ -16,7 +16,7 @@ type QueryParams = BaseQueryParams;
 })
 export class UserService extends GenericHttpService {
   endpoint = ApiRoutes.USER;
-  element = 'Ein Nutzer'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
+  element_i18nKey = 'user.a_title';
 
   // GET ALL
   getAllUsers(
@@ -32,27 +32,32 @@ export class UserService extends GenericHttpService {
 
   // CREATE ONE
   createOneUser(user: User): Observable<User> {
-    return this.createOne<User>(this.endpoint, user, this.element);
+    return this.createOne<User>(this.endpoint, user, this.element_i18nKey);
   }
 
   // CREATE MULTIPLE
   createMultipleUser(user: User[]): Observable<User[]> {
-    return this.createMultiple<User>(this.endpoint, user, this.element);
+    return this.createMultiple<User>(this.endpoint, user, this.element_i18nKey);
   }
 
   // UPDATE ONE
   updateUserById(id: idTypes, user: User): Observable<User> {
-    return this.updateOne<User>(this.endpoint, user, id, this.element);
+    return this.updateOne<User>(this.endpoint, user, id, this.element_i18nKey);
   }
 
   // UPDATE MULTIPLE
   updateMultipleUserById(id: idTypes[], users: User[]): Observable<User[]> {
-    return this.updateMultiple<User>(this.endpoint, users, id, this.element);
+    return this.updateMultiple<User>(
+      this.endpoint,
+      users,
+      id,
+      this.element_i18nKey,
+    );
   }
 
   // DELETE ONE
   deleteUserById(id: idTypes): Observable<unknown> {
-    return this.deleteOne(this.endpoint, id, this.element);
+    return this.deleteOne(this.endpoint, id, this.element_i18nKey);
   }
 
   // DELETE ALL

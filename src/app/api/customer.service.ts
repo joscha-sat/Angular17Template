@@ -16,7 +16,7 @@ type QueryParams = BaseQueryParams;
 })
 export class CustomerService extends GenericHttpService {
   endpoint = ApiRoutes.CUSTOMERS;
-  element = 'Ein Kunde'; // deutschen Begriff mit Ein/e hier reinschreiben für snackbar
+  element_i18nKey = 'customer.a_customer';
 
   // GET ALL
   getAllCustomers(
@@ -32,17 +32,30 @@ export class CustomerService extends GenericHttpService {
 
   // CREATE ONE
   createOneCustomer(customer: Customer): Observable<Customer> {
-    return this.createOne<Customer>(this.endpoint, customer, this.element);
+    return this.createOne<Customer>(
+      this.endpoint,
+      customer,
+      this.element_i18nKey,
+    );
   }
 
   // CREATE MULTIPLE
   createMultipleCustomer(customer: Customer[]): Observable<Customer[]> {
-    return this.createMultiple<Customer>(this.endpoint, customer, this.element);
+    return this.createMultiple<Customer>(
+      this.endpoint,
+      customer,
+      this.element_i18nKey,
+    );
   }
 
   // UPDATE ONE
   updateCustomerById(id: idTypes, customer: Customer): Observable<Customer> {
-    return this.updateOne<Customer>(this.endpoint, customer, id, this.element);
+    return this.updateOne<Customer>(
+      this.endpoint,
+      customer,
+      id,
+      this.element_i18nKey,
+    );
   }
 
   // UPDATE MULTIPLE
@@ -54,13 +67,13 @@ export class CustomerService extends GenericHttpService {
       this.endpoint,
       customers,
       id,
-      this.element,
+      this.element_i18nKey,
     );
   }
 
   // DELETE ONE
   deleteCustomerById(id: idTypes): Observable<unknown> {
-    return this.deleteOne(this.endpoint, id, this.element);
+    return this.deleteOne(this.endpoint, id, this.element_i18nKey);
   }
 
   // DELETE ALL

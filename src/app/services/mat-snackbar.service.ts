@@ -5,8 +5,11 @@ import {
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { ComponentType } from '@angular/cdk/overlay';
+import { SnackbarComponentData } from '../shared/api-snackbar/api-snackbar.component';
 
 export type SnackBarTypes = 'info' | 'success' | 'error';
+export type SnackBarData = Omit<SnackbarComponentData, 'title'>;
+export type MethodType = 'POST' | 'PATCH' | 'DELETE';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +20,8 @@ export class MatSnackbarService {
   openSnackBar(
     component: ComponentType<unknown>,
     type: SnackBarTypes,
-    data?: any,
+    data?: SnackBarData,
+    plural: boolean = false,
     horizontalPosition: MatSnackBarHorizontalPosition = 'end',
     verticalPosition: MatSnackBarVerticalPosition = 'top',
   ): void {
@@ -26,7 +30,7 @@ export class MatSnackbarService {
       verticalPosition,
       panelClass: [`snackbar-${type}`],
       // duration: 3000,
-      data,
+      data: { ...data, title: type, plural },
     });
   }
 }
