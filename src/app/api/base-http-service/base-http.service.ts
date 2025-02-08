@@ -200,6 +200,7 @@ export class GenericHttpService {
   ): Observable<T> {
     return action.pipe(
       tap(() => {
+        console.log('action triggered');
         this.handleHttpSuccess(i18nKeyForElement, methodType, plural);
         this._refreshObservable.next();
       }),
@@ -228,7 +229,6 @@ export class GenericHttpService {
     methodType?: MethodType,
     plural: boolean = false,
   ) {
-    console.log(methodType);
     const payload: SnackBarData = {
       i18nKeyOrMessage: i18nKeyForElement,
       methodType,

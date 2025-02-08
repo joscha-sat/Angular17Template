@@ -1,5 +1,5 @@
 <div class="table-container">
-  <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
+  <table [dataSource]="tableData()" class="mat-elevation-z8" mat-table>
     @for (column of displayedColumns(); track column) {
       <ng-container [matColumnDef]="column">
         <!-- Displays the title of the header for each column -->
@@ -53,12 +53,10 @@
     <tr *matRowDef="let row; columns: displayedColumns()" mat-row></tr>
   </table>
 
-  {{ totalItemsCount() }}
   <mat-paginator
+    (page)="pageChange($event)"
     [length]="totalItemsCount()"
     [pageSizeOptions]="pageSizes()"
     [pageSize]="initialPageSize()"
   ></mat-paginator>
 </div>
-
-{{ totalItemsCount() }}

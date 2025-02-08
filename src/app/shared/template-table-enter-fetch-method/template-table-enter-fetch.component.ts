@@ -6,13 +6,12 @@ import {
   inject,
   Input,
   input,
-  output,
   signal,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { DatePipe, NgIf, NgTemplateOutlet } from '@angular/common';
@@ -45,7 +44,7 @@ export type FetchDataFunction<T> = (
     IsDatePipe,
   ],
   templateUrl: './template-table-enter-fetch.component.html',
-  styleUrl: './template-table-enter-fetch.component.scss',
+  styleUrls: ['./template-table-enter-fetch.component.scss'],
 })
 export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   fetchData = input.required<FetchDataFunction<T>>();
@@ -55,74 +54,44 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
 
   // fetch parameter signals
   search = input<string>('');
-  // Create an intermediary debounced signal for search
   debouncedSearch = signal('');
 
   searchDate = input<string>('');
   tabValueActive = input<boolean | undefined>(undefined);
-
   pageSizes = input<number[]>([5, 10, 25, 100]);
   initialPageSize = input<number>(10);
 
   totalItemsCount = signal<number>(0);
   limit = signal<number>(10);
   skip = signal<number>(0);
-
-  paginationChange = output<{ skip: number; limit: number }>();
+  tableData = signal<T[]>([]);
 
   dataSource = new MatTableDataSource<T>([]);
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatSort) sort?: MatSort;
-
   private destroyRef = inject(DestroyRef);
 
   constructor() {
-    toObservable(this.search)
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe((value) => {
-        this.debouncedSearch.set(value);
-      });
+    this.subscribeToSearch();
 
     effect(() => {
-      const params: BaseGetQueryParams = {
-        skip: this.skip(),
-        limit: this.limit(),
-        search: this.debouncedSearch(),
-        searchDate: this.searchDate(),
-        tabValueActive: this.tabValueActive(),
-      };
-
+      const params: BaseGetQueryParams = this.getQueryParams();
       this.fetchData()(params)
         .pipe(
           tap((response: ResponseWithRecords<T>) => {
             this.totalItemsCount.set(response.total);
-            if (this.paginator) {
-              this.paginator.length = response.total;
-            }
           }),
           map((response) => response.records),
           catchError(() => of([])),
         )
         .subscribe((records) => {
-          this.dataSource.data = records;
+          this.tableData.set(records);
         });
-    });
-
-    effect(() => {
-      const total = this.totalItemsCount();
-      if (this.paginator) {
-        this.paginator.length = total;
-      }
     });
   }
 
   // hooks --------------------------------------------------- ||
-
   ngAfterViewInit() {
     this.setupDataSourcePaginator();
     this.setupDataSourceSort();
@@ -132,14 +101,9 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
 
   emitSkipLimitOnPaginatorChange() {
     if (!this.paginator) return;
-
     this.paginator.page
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((event) => {
-        this.skip.set(event.pageIndex * event.pageSize);
-        this.limit.set(event.pageSize);
-        this.paginationChange.emit({ skip: this.skip(), limit: this.limit() });
-      });
+      .subscribe((event: PageEvent) => this.updatePaginationParams(event));
   }
 
   setupDataSourcePaginator() {
@@ -158,7 +122,6 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   extractNestedProperty(item: any, key: string): any {
     const keys = key.split('.');
     let value = item;
-
     for (const k of keys) {
       if (value && Object.hasOwn(value, k)) {
         value = value[k];
@@ -167,5 +130,40 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
       }
     }
     return value;
+  }
+
+  pageChange(event: PageEvent) {
+    console.log('triggered');
+    this.updatePaginationParams(event);
+  }
+
+  // Helper method to update pagination parameters
+  private updatePaginationParams(event: PageEvent): void {
+    this.skip.set(event.pageIndex * event.pageSize);
+    this.limit.set(event.pageSize);
+  }
+
+  // Helper method to encapsulate query params creation
+  private getQueryParams(): BaseGetQueryParams {
+    return {
+      skip: this.skip(),
+      limit: this.limit(),
+      search: this.debouncedSearch(),
+      searchDate: this.searchDate(),
+      tabValueActive: this.tabValueActive(),
+    };
+  }
+
+  // Helper method to subscribe to search changes with debounce
+  private subscribeToSearch(): void {
+    toObservable(this.search)
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((value) => {
+        this.debouncedSearch.set(value);
+      });
   }
 }

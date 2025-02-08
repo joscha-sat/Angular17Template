@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import {
   BehaviorSubject,
+  debounceTime,
   forkJoin,
   Observable,
   Subscription,
@@ -86,8 +87,14 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
   };
 
   refreshDataSubscription() {
-    this.subscription =
-      this.setTableRefreshService().refreshObservable$.subscribe(() => {
+    // Unsubscribe from the previous subscription if it exists
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+
+    this.subscription = this.setTableRefreshService()
+      .refreshObservable$.pipe(debounceTime(50))
+      .subscribe(() => {
         this.refresh$.next(null);
       });
   }
