@@ -12,11 +12,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { MatButton } from '@angular/material/button';
-import {
-  MatSnackbarService,
-  SnackBarData,
-} from '../../../services/mat-snackbar.service';
-import { ApiSnackbarComponent } from '../../../shared/api-snackbar/api-snackbar.component';
 
 @Component({
   selector: 'app-tenant-header',
@@ -32,7 +27,6 @@ import { ApiSnackbarComponent } from '../../../shared/api-snackbar/api-snackbar.
 export class TenantHeaderComponent implements OnInit, OnChanges {
   fb = inject(FormBuilder);
   tenantService = inject(TenantService);
-  snackbarService = inject(MatSnackbarService);
 
   form: FormGroup = new FormGroup({});
   tenants = input.required<Tenant[]>();
@@ -64,12 +58,5 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     }
   }
 
-  openCreateTenantDialog() {
-    const data: SnackBarData = {
-      data: undefined,
-      i18nKeyOrMessage: 'general.all',
-    };
-
-    this.snackbarService.openSnackBar(ApiSnackbarComponent, 'info', data);
-  }
+  openCreateTenantDialog() {}
 }
