@@ -86,7 +86,6 @@ export class CustomerAddEditDialogComponent implements OnInit {
       .createOneCustomer(this.customerFromFormData)
       .subscribe(() => {
         this.dialog.closeAll();
-        this.utilityService.tableDataRefreshSubject.next();
       });
   }
 

@@ -12,7 +12,6 @@ import {
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe, NgIf, NgTemplateOutlet } from '@angular/common';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
 
@@ -58,23 +57,9 @@ export class TemplateTableComponent<T> implements AfterViewInit {
   }
 
   // methods --------------------------------------------------- ||
-
-  emitSkipLimitOnPaginatorChange() {
-    if (!this.paginator) return;
-
-    this.paginator.page
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((event) => {
-        const skip = event.pageIndex * event.pageSize;
-        const limit = event.pageSize;
-        this.paginationChange.emit({ skip, limit });
-      });
-  }
-
   setupDataSourcePaginator() {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
-      this.emitSkipLimitOnPaginatorChange();
     }
   }
 

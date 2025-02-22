@@ -22,6 +22,7 @@
     "back": "Zurück",
     "cancel": "Abbrechen",
     "createdAt": "Erstellt am",
+    "updatedAt": "Aktualisiert am",
     "delete": "Löschen",
     "delete-hint": "Das Löschen kann anschließend nicht rückgängig gemacht werden!",
     "delete-title": "Element löschen?",

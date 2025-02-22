@@ -79,12 +79,12 @@ Enums > src/app/other/enums
 
 **very helpful to not miss anything + have type security - use this in the component.ts**
 
-- `extends TableRefresherComponent<ClassModel>`
+- `extends BaseTableComponent<ClassModel>`
 - `implements Table<ClassModel>`
 
 ````ts
 export class TestViewComponent
-  extends TableRefresherComponent<User>
+  extends BaseTableComponent<User>
   implements Table<User>, OnInit {
 
   // inject the service responsible for the api call (get all)
@@ -146,7 +146,7 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
 </ng-template>
 ```
 
-### Table refresh class: ComponentClass "extends TableRefresherComponent<Model>"
+### Table refresh class: ComponentClass "extends BaseTableComponent<Model>"
 
 Used to automatically refresh the table data after a http request (POST, PATCH, DELETE)
 
@@ -171,7 +171,7 @@ located at: src/app/shared/table-refresher
 Example usage in a table component:
 
 ````ts
-export class TenantTableComponent extends TableRefresherComponent<Tenant> {
+export class TenantTableComponent extends BaseTableComponent<Tenant> {
   setTableRefreshService() {
     return this.tenantService;
   }

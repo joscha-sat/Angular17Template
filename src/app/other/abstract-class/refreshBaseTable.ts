@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import {
   BehaviorSubject,
-  debounceTime,
   forkJoin,
   Observable,
+  of,
   Subscription,
   switchMap,
 } from 'rxjs';
@@ -24,61 +24,54 @@ import { FetchDataFunction } from '../../shared/template-table-enter-fetch-metho
   styles: '',
   imports: [],
 })
-export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
-  refresh$ = new BehaviorSubject(null);
-  protected translateService = inject(TranslateService);
-  // Property to control whether to send parameters or not
-  protected noParams: boolean = false;
-  private subscription: Subscription | undefined;
+export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
+  refresh$ = new BehaviorSubject(null); // Emits when data needs to be refreshed
+  protected translateService = inject(TranslateService); // Translation service
+  protected noParams: boolean = false; // Flag to skip sending params
+  private subscription: Subscription | undefined; // Subscription for refresh
 
   ngOnInit(): void {
-    this.refreshDataSubscription();
+    this.refreshDataSubscription(); // Initialize refresh subscription
   }
 
+  // Translates table headers using the translation service
   translateHeaders(headers: WritableSignal<string[]>): void {
-    forkJoin(headers().map((key) => this.translateService.get(key))).subscribe(
-      (results) => {
-        headers.set(results);
-      },
-    );
+    forkJoin(
+      headers().map((key) => (key ? this.translateService.get(key) : of(''))),
+    ).subscribe((results) => headers.set(results));
   }
 
-  // Method must be implemented in each derived component
-  abstract setTableRefreshService(): any;
+  abstract setTableRefreshService(): any; // Must return the service to refresh data
+  abstract setTableRefreshMethodName(): string; // Must return the method name to call
 
-  // Method must be implemented in each derived component
-  abstract setTableRefreshMethodName(): string;
-
-  // Optional method to override in derived components for additional parameters
-  setAdditionalParams(): any {
+  setCustomParams(): any {
     return null;
-  }
+  } // Optional: override to add extra params
 
+  // Builds query params, skips if noParams is true
   buildParams(baseParams: BaseGetQueryParams): any {
-    if (this.noParams) {
-      return {}; // Return an empty object if noParams is true
-    }
-
-    const active =
-      baseParams.tabValueActive !== undefined
-        ? String(baseParams.tabValueActive)
-        : undefined;
-    const additionalParams = this.setAdditionalParams();
+    if (this.noParams) return {};
     return {
       limit: baseParams.limit,
       skip: baseParams.skip,
       search: baseParams.search,
+      sort: baseParams.sort,
       searchDate: baseParams.searchDate,
-      active,
-      ...additionalParams,
+      active:
+        baseParams.tabValueActive !== undefined
+          ? String(baseParams.tabValueActive)
+          : undefined,
+      ...this.setCustomParams(),
     };
   }
 
+  // Fetches data using the service and method defined in derived components
   fetchDataFn: FetchDataFunction<T> = (baseParams: BaseGetQueryParams) => {
     const params = this.buildParams(baseParams);
     const service = this.setTableRefreshService();
     const methodName = this.setTableRefreshMethodName();
 
+    // Explicitly cast the return type to Observable<ResponseWithRecords<T>>
     return this.refresh$.pipe(
       switchMap(
         () => service[methodName](params) as Observable<ResponseWithRecords<T>>,
@@ -86,23 +79,15 @@ export abstract class TableRefresherComponent<T> implements OnInit, OnDestroy {
     );
   };
 
-  // TODO multiple requests after creating an object (and being on page 3 for example > one extra call per page you are on)
+  // Subscribes to refresh events and triggers data refresh
   refreshDataSubscription() {
-    // Unsubscribe from the previous subscription if it exists
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-
-    this.subscription = this.setTableRefreshService()
-      .refreshObservable$.pipe(debounceTime(50))
-      .subscribe(() => {
-        this.refresh$.next(null);
-      });
+    this.subscription =
+      this.setTableRefreshService().refreshObservable$.subscribe(() =>
+        this.refresh$.next(null),
+      );
   }
 
   ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
+    this.subscription?.unsubscribe(); // Cleanup on component destroy
   }
 }

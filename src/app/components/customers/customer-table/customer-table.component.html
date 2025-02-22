@@ -1,6 +1,13 @@
 <app-template-table-fetch
+  [cellTemplatesMap]="{ delete }"
   [displayedColumns]="columns()"
   [fetchData]="fetchDataFn"
   [headers]="headers()"
   [search]="customerService.search()"
 />
+
+<ng-template #delete let-customer="object">
+  <div class="flex-a-center-g1">
+    <app-delete-icon (clickEvent)="deleteCustomer(customer.id)" />
+  </div>
+</ng-template>

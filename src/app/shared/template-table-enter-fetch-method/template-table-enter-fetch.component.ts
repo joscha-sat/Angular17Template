@@ -1,8 +1,8 @@
 import {
   AfterViewInit,
   Component,
+  computed,
   DestroyRef,
-  effect,
   inject,
   Input,
   input,
@@ -16,7 +16,10 @@ import { MatSort } from '@angular/material/sort';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { DatePipe, NgIf, NgTemplateOutlet } from '@angular/common';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
-import { BaseGetQueryParams } from '../../other/types/Table.type';
+import {
+  BaseGetQueryParams,
+  SortParamType,
+} from '../../other/types/Table.type';
 import {
   catchError,
   debounceTime,
@@ -24,6 +27,7 @@ import {
   map,
   Observable,
   of,
+  switchMap,
   tap,
 } from 'rxjs';
 import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
@@ -52,11 +56,12 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   displayedColumns = input.required<string[]>();
   @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
 
-  // fetch parameter signals
+  // Input/Signals for search, pagination, etc.
   search = input<string>('');
   debouncedSearch = signal('');
 
   searchDate = input<string>('');
+  sortValue = input<SortParamType | undefined>(undefined);
   tabValueActive = input<boolean | undefined>(undefined);
   pageSizes = input<number[]>([5, 10, 25, 100]);
   initialPageSize = input<number>(10);
@@ -72,52 +77,32 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   @ViewChild(MatSort) sort?: MatSort;
   private destroyRef = inject(DestroyRef);
 
+  // Create a computed signal that derives the query parameters.
+  private queryParams = computed<BaseGetQueryParams>(() => ({
+    skip: this.skip(),
+    limit: this.limit(),
+    search: this.debouncedSearch(),
+    searchDate: this.searchDate(),
+    sort: this.sortValue(),
+    tabValueActive: this.tabValueActive(),
+  }));
+
   constructor() {
     this.subscribeToSearch();
-
-    effect(() => {
-      const params: BaseGetQueryParams = this.getQueryParams();
-      this.fetchData()(params)
-        .pipe(
-          tap((response: ResponseWithRecords<T>) => {
-            this.totalItemsCount.set(response.total);
-          }),
-          map((response) => response.records),
-          catchError(() => of([])),
-        )
-        .subscribe((records) => {
-          this.tableData.set(records);
-        });
-    });
+    this.subscribeToQueryParams();
   }
 
-  // hooks --------------------------------------------------- ||
   ngAfterViewInit() {
     this.setupDataSourcePaginator();
     this.setupDataSourceSort();
   }
 
-  // methods --------------------------------------------------- ||
-
-  emitSkipLimitOnPaginatorChange() {
-    if (!this.paginator) return;
-    this.paginator.page
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((event: PageEvent) => this.updatePaginationParams(event));
+  // Called on manual page change (if needed)
+  pageChange(event: PageEvent) {
+    this.updatePaginationParams(event);
   }
 
-  setupDataSourcePaginator() {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
-      this.emitSkipLimitOnPaginatorChange();
-    }
-  }
-
-  setupDataSourceSort() {
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
-  }
+  // This subscription will react to changes of the computed query parameters,
 
   extractNestedProperty(item: any, key: string): any {
     const keys = key.split('.');
@@ -132,29 +117,6 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
     return value;
   }
 
-  pageChange(event: PageEvent) {
-    console.log('triggered');
-    this.updatePaginationParams(event);
-  }
-
-  // Helper method to update pagination parameters
-  private updatePaginationParams(event: PageEvent): void {
-    this.skip.set(event.pageIndex * event.pageSize);
-    this.limit.set(event.pageSize);
-  }
-
-  // Helper method to encapsulate query params creation
-  private getQueryParams(): BaseGetQueryParams {
-    return {
-      skip: this.skip(),
-      limit: this.limit(),
-      search: this.debouncedSearch(),
-      searchDate: this.searchDate(),
-      tabValueActive: this.tabValueActive(),
-    };
-  }
-
-  // Helper method to subscribe to search changes with debounce
   private subscribeToSearch(): void {
     toObservable(this.search)
       .pipe(
@@ -165,5 +127,59 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
       .subscribe((value) => {
         this.debouncedSearch.set(value);
       });
+  }
+
+  // which includes pagination changes.
+  private subscribeToQueryParams(): void {
+    toObservable(this.queryParams)
+      .pipe(
+        // adjust debounce time if necessary
+        debounceTime(100),
+        // Use a custom distinct comparison
+        distinctUntilChanged(
+          (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr),
+        ),
+        // Cancel previous request and switch to new one.
+        switchMap((params) => {
+          return this.fetchData()(params).pipe(
+            tap((response: ResponseWithRecords<T>) => {
+              this.totalItemsCount.set(response.total);
+            }),
+            map((response) => response.records),
+            catchError(() => of([])),
+          );
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((records) => {
+        this.tableData.set(records);
+      });
+  }
+
+  // Paginator setup
+  private emitSkipLimitOnPaginatorChange() {
+    if (!this.paginator) return;
+    this.paginator.page
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((event: PageEvent) => this.updatePaginationParams(event));
+  }
+
+  private setupDataSourcePaginator() {
+    if (this.paginator) {
+      this.dataSource.paginator = this.paginator;
+      this.emitSkipLimitOnPaginatorChange();
+    }
+  }
+
+  private setupDataSourceSort() {
+    if (this.sort) {
+      this.dataSource.sort = this.sort;
+    }
+  }
+
+  // Update skip and limit signals for pagination.
+  private updatePaginationParams(event: PageEvent): void {
+    this.skip.set(event.pageIndex * event.pageSize);
+    this.limit.set(event.pageSize);
   }
 }

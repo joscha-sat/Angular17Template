@@ -6,10 +6,13 @@ export type Table<T> = {
   columns: WritableSignal<(keyof T | 'delete' | 'edit')[]>;
 };
 
+export type SortParamType = `${string},ASC` | `${string},DESC`;
+
 export type BaseGetQueryParams = {
   skip: number;
   limit: number;
   search?: string;
   searchDate?: string;
+  sort?: SortParamType;
   tabValueActive?: boolean;
 };

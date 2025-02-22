@@ -1,15 +1,13 @@
 import { inject, Injectable, WritableSignal } from '@angular/core';
 import { DropDownItem } from '../other/types/DropDownItem.type';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, map, Observable, Subject } from 'rxjs';
+import { filter, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilityService {
   router = inject(Router);
-
-  tableDataRefreshSubject = new Subject<void>();
 
   createDropdownItems(
     dataArray: WritableSignal<any[]>,

@@ -23,6 +23,7 @@
     "back": "Back",
     "cancel": "Cancel",
     "createdAt": "Created at",
+    "updatedAt": "Updated at",
     "delete": "Delete",
     "delete-hint": "The deletion can not be redone afterwards!",
     "delete-title": "Delete element?",

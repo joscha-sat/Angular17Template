@@ -1,10 +1,9 @@
-<app-template-table
+<app-template-table-fetch
   [cellTemplatesMap]="{ name, actions }"
-  [displayedColumns]="displayedColumns()"
-  [headers]="header()"
-  [initialPageSize]="limit()"
-  [tableData]="users()"
-  [totalItems]="totalItems()"
+  [displayedColumns]="columns()"
+  [fetchData]="fetchDataFn"
+  [headers]="headers()"
+  [search]="userService.search()"
 />
 
 <ng-template #name let-user="object">
@@ -13,6 +12,6 @@
 
 <ng-template #actions let-user="object">
   <div class="flex-a-center-g1">
-    <app-delete-icon (clickEvent)="deleteUser(user.id)" />
+    <!--    <app-delete-icon (clickEvent)="deleteUser(user.id)" />-->
   </div>
 </ng-template>
