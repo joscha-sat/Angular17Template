@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TemplateInputComponent } from '../template-input/template-input.component';
 
@@ -11,7 +11,7 @@ import { TemplateInputComponent } from '../template-input/template-input.compone
 export class TemplateTableSearchComponent implements OnInit {
   fb = inject(FormBuilder);
   searchForm: FormGroup = new FormGroup({});
-  @Input({ required: true }) service: any;
+  readonly service = input.required<any>();
 
   ngOnInit(): void {
     this.initForm();
@@ -25,6 +25,6 @@ export class TemplateTableSearchComponent implements OnInit {
 
   onSearchChange($event: Event) {
     const target = $event.target as HTMLInputElement;
-    this.service.search.set(target.value);
+    this.service().search.set(target.value);
   }
 }

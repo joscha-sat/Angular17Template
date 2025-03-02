@@ -8,9 +8,7 @@
         <!-- Displays the corresponding data for each cell in the column -->
         <td mat-cell *matCellDef="let element">
           <!-- If a custom template exists for this column, render it -->
-          <ng-container
-            *ngIf="cellTemplatesMap[column] as template; else defaultCell"
-          >
+          @if (cellTemplatesMap()[column]; as template) {
             <ng-container
               *ngTemplateOutlet="
                 template;
@@ -19,43 +17,36 @@
                   object: element,
                 }
               "
-            ></ng-container>
-          </ng-container>
+          ></ng-container>
+        } @else {
+          <!-- dates -->
+          @if (
+            extractNestedProperty(element, column) | isDate) {
+            {{
+            extractNestedProperty(element, column)
+            | date: 'dd.MM.yyyy HH:mm'
+            }}
+          } @else {
+            {{ extractNestedProperty(element, column) }}
+          }
+          <!-- raw value -->
+        }
 
-          <!-- Default rendering -->
-          <ng-template #defaultCell>
-            <!-- dates -->
-            <ng-container
-              *ngIf="
-                extractNestedProperty(element, column) | isDate;
-                else rawValue
-              "
-            >
-              {{
-                extractNestedProperty(element, column)
-                  | date: 'dd.MM.yyyy HH:mm'
-              }}
-            </ng-container>
+        <!-- Default rendering -->
+      </td>
+    </ng-container>
+  }
 
-            <!-- raw value -->
-            <ng-template #rawValue>
-              {{ extractNestedProperty(element, column) }}
-            </ng-template>
-          </ng-template>
-        </td>
-      </ng-container>
-    }
+  <!-- Renders the header row based on the displayedColumns array -->
+  <tr *matHeaderRowDef="displayedColumns(); sticky: true" mat-header-row></tr>
 
-    <!-- Renders the header row based on the displayedColumns array -->
-    <tr *matHeaderRowDef="displayedColumns(); sticky: true" mat-header-row></tr>
+  <!-- Renders the data rows based on the displayedColumns array -->
+  <tr *matRowDef="let row; columns: displayedColumns()" mat-row></tr>
+</table>
 
-    <!-- Renders the data rows based on the displayedColumns array -->
-    <tr *matRowDef="let row; columns: displayedColumns()" mat-row></tr>
-  </table>
-
-  <mat-paginator
-    [length]="totalItems()"
-    [pageSizeOptions]="pageSizes()"
-    [pageSize]="initialPageSize()"
-  ></mat-paginator>
+<mat-paginator
+  [length]="totalItems()"
+  [pageSizeOptions]="pageSizes()"
+  [pageSize]="initialPageSize()"
+></mat-paginator>
 </div>

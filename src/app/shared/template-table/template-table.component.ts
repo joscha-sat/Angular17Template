@@ -3,16 +3,15 @@ import {
   Component,
   DestroyRef,
   inject,
-  Input,
   input,
   output,
   TemplateRef,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { DatePipe, NgIf, NgTemplateOutlet } from '@angular/common';
+import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
 
 @Component({
@@ -21,7 +20,6 @@ import { IsDatePipe } from '../../other/pipes/is-date.pipe';
   imports: [
     MatTableModule,
     MatPaginator,
-    NgIf,
     NgTemplateOutlet,
     DatePipe,
     IsDatePipe,
@@ -32,7 +30,9 @@ import { IsDatePipe } from '../../other/pipes/is-date.pipe';
 export class TemplateTableComponent<T> implements AfterViewInit {
   headers = input.required<string[]>();
   displayedColumns = input.required<string[]>();
-  @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
+  readonly cellTemplatesMap = input<{
+    [key: string]: TemplateRef<any>;
+  }>({});
 
   tableData = input.required<T[]>();
 
@@ -44,8 +44,8 @@ export class TemplateTableComponent<T> implements AfterViewInit {
 
   dataSource = new MatTableDataSource<T>([]);
 
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
-  @ViewChild(MatSort) sort?: MatSort;
+  readonly paginator = viewChild(MatPaginator);
+  readonly sort = viewChild(MatSort);
 
   private destroyRef = inject(DestroyRef);
 
@@ -58,14 +58,16 @@ export class TemplateTableComponent<T> implements AfterViewInit {
 
   // methods --------------------------------------------------- ||
   setupDataSourcePaginator() {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
+    const paginator = this.paginator();
+    if (paginator) {
+      this.dataSource.paginator = paginator;
     }
   }
 
   setupDataSourceSort() {
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
+    const sort = this.sort();
+    if (sort) {
+      this.dataSource.sort = sort;
     }
   }
 

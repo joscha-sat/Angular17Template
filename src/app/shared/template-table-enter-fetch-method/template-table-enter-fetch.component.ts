@@ -4,17 +4,16 @@ import {
   computed,
   DestroyRef,
   inject,
-  Input,
   input,
   signal,
   TemplateRef,
-  ViewChild,
+  viewChild,
 } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { DatePipe, NgIf, NgTemplateOutlet } from '@angular/common';
+import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
 import {
   BaseGetQueryParams,
@@ -42,7 +41,6 @@ export type FetchDataFunction<T> = (
   imports: [
     MatTableModule,
     MatPaginator,
-    NgIf,
     NgTemplateOutlet,
     DatePipe,
     IsDatePipe,
@@ -54,7 +52,9 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   fetchData = input.required<FetchDataFunction<T>>();
   headers = input.required<string[]>();
   displayedColumns = input.required<string[]>();
-  @Input() cellTemplatesMap: { [key: string]: TemplateRef<any> } = {};
+  readonly cellTemplatesMap = input<{
+    [key: string]: TemplateRef<any>;
+  }>({});
 
   // Input/Signals for search, pagination, etc.
   search = input<string>('');
@@ -73,8 +73,8 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
 
   dataSource = new MatTableDataSource<T>([]);
 
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
-  @ViewChild(MatSort) sort?: MatSort;
+  readonly paginator = viewChild(MatPaginator);
+  readonly sort = viewChild(MatSort);
   private destroyRef = inject(DestroyRef);
 
   // Create a computed signal that derives the query parameters.
@@ -158,22 +158,25 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
 
   // Paginator setup
   private emitSkipLimitOnPaginatorChange() {
-    if (!this.paginator) return;
-    this.paginator.page
+    const paginator = this.paginator();
+    if (!paginator) return;
+    paginator.page
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event: PageEvent) => this.updatePaginationParams(event));
   }
 
   private setupDataSourcePaginator() {
-    if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
+    const paginator = this.paginator();
+    if (paginator) {
+      this.dataSource.paginator = paginator;
       this.emitSkipLimitOnPaginatorChange();
     }
   }
 
   private setupDataSourceSort() {
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
+    const sort = this.sort();
+    if (sort) {
+      this.dataSource.sort = sort;
     }
   }
 
