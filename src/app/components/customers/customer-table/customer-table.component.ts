@@ -4,6 +4,7 @@ import { TemplateTableEnterFetchComponent } from '../../../shared/template-table
 import { BaseTableComponent } from '../../../other/abstract-class/refreshBaseTable';
 import { CustomerService } from '../../../api/customer.service';
 import { DeleteIconComponent } from '../../../shared/icons/delete-icon/delete-icon.component';
+import { BaseGetQueryParams } from '../../../other/types/Table.type';
 
 @Component({
   selector: 'app-customer-table',
@@ -34,6 +35,12 @@ export class CustomerTableComponent
 
   setTableRefreshService(): any {
     return this.customerService;
+  }
+
+  override setCustomParams():
+    | Partial<BaseGetQueryParams>
+    | Record<string, string> {
+    return { sort: 'createdAt,DESC' };
   }
 
   setTableRefreshMethodName(): string {
