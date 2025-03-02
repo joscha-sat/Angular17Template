@@ -61,7 +61,7 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   debouncedSearch = signal('');
 
   searchDate = input<string>('');
-  sortValue = input<SortParamType | undefined>(undefined);
+  sortValue = input<SortParamType | undefined>('createdAt,ASC');
   tabValueActive = input<boolean | undefined>(undefined);
   pageSizes = input<number[]>([5, 10, 25, 100]);
   initialPageSize = input<number>(10);

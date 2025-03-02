@@ -3,7 +3,6 @@ import { Customer } from '../../../other/models/Customer';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 import { BaseTableComponent } from '../../../other/abstract-class/refreshBaseTable';
 import { CustomerService } from '../../../api/customer.service';
-import { BaseGetQueryParams } from '../../../other/types/Table.type';
 import { DeleteIconComponent } from '../../../shared/icons/delete-icon/delete-icon.component';
 
 @Component({
@@ -31,12 +30,6 @@ export class CustomerTableComponent
   override ngOnInit() {
     super.ngOnInit();
     super.translateHeaders(this.headers);
-  }
-
-  override setCustomParams():
-    | Partial<BaseGetQueryParams>
-    | Record<string, string> {
-    return { sort: 'createdAt,ASC', test: 'haha' };
   }
 
   setTableRefreshService(): any {
