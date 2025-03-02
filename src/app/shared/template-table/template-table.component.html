@@ -17,36 +17,35 @@
                   object: element,
                 }
               "
-          ></ng-container>
-        } @else {
-          <!-- dates -->
-          @if (
-            extractNestedProperty(element, column) | isDate) {
-            {{
-            extractNestedProperty(element, column)
-            | date: 'dd.MM.yyyy HH:mm'
-            }}
+            ></ng-container>
           } @else {
-            {{ extractNestedProperty(element, column) }}
+            <!-- dates -->
+            @if (extractNestedProperty(element, column) | isDate) {
+              {{
+                extractNestedProperty(element, column)
+                  | date: 'dd.MM.yyyy HH:mm'
+              }}
+            } @else {
+              {{ extractNestedProperty(element, column) }}
+            }
+            <!-- raw value -->
           }
-          <!-- raw value -->
-        }
 
-        <!-- Default rendering -->
-      </td>
-    </ng-container>
-  }
+          <!-- Default rendering -->
+        </td>
+      </ng-container>
+    }
 
-  <!-- Renders the header row based on the displayedColumns array -->
-  <tr *matHeaderRowDef="displayedColumns(); sticky: true" mat-header-row></tr>
+    <!-- Renders the header row based on the displayedColumns array -->
+    <tr *matHeaderRowDef="displayedColumns(); sticky: true" mat-header-row></tr>
 
-  <!-- Renders the data rows based on the displayedColumns array -->
-  <tr *matRowDef="let row; columns: displayedColumns()" mat-row></tr>
-</table>
+    <!-- Renders the data rows based on the displayedColumns array -->
+    <tr *matRowDef="let row; columns: displayedColumns()" mat-row></tr>
+  </table>
 
-<mat-paginator
-  [length]="totalItems()"
-  [pageSizeOptions]="pageSizes()"
-  [pageSize]="initialPageSize()"
-></mat-paginator>
+  <mat-paginator
+    [length]="totalItems()"
+    [pageSizeOptions]="pageSizes()"
+    [pageSize]="initialPageSize()"
+  ></mat-paginator>
 </div>
