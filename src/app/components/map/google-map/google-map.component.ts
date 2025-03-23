@@ -19,6 +19,7 @@ export class GoogleMapComponent {
     lng: 8.804061738643137,
   };
   // All configuration related stuff is going in here
+  // eslint-disable-next-line no-undef
   mapOptions: google.maps.MapOptions = {
     center: this.startingPoint,
     disableDefaultUI: true,
