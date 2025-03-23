@@ -15,4 +15,8 @@ import { CustomerTableComponent } from '../../components/customers/customer-tabl
   templateUrl: './customers.view.component.html',
   styleUrl: './customers.view.component.scss',
 })
-export class CustomersViewComponent {}
+export class CustomersViewComponent {
+  baum(aParam: number) {
+    console.log('baum');
+  }
+}

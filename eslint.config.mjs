@@ -8,7 +8,6 @@ import templateParser from "@angular-eslint/template-parser";
 
 export default defineConfig([
   {
-    // TypeScript files config (.ts) - app, library or project code
     files: ["**/*.ts"],
     languageOptions: {
       parser: tseslint.parser,
@@ -21,14 +20,26 @@ export default defineConfig([
     plugins: {
       "@typescript-eslint": tseslint.plugin,
       "@angular-eslint": angularEslint,
-      "js": js,
+      js: js,
     },
     rules: {
       ...js.configs.recommended.rules,
       ...tseslint.configs.recommended.rules,
       ...angularEslint.configs.recommended.rules,
 
-      // Match your existing angular-eslint config:
+      // Completely disable the JavaScript no-unused-vars rule
+      "no-unused-vars": "off",
+
+      // Configure the TypeScript specific no-unused-vars correctly
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+          "ignoreRestSiblings": true
+        }
+      ],
+
       "@angular-eslint/directive-selector": [
         "error",
         {
@@ -46,11 +57,9 @@ export default defineConfig([
         },
       ],
       "@typescript-eslint/no-explicit-any": "off",
-      "no-unused-vars": "off"
     },
   },
   {
-    // HTML Template files configuration
     files: ["**/*.html"],
     languageOptions: {
       parser: templateParser,
@@ -63,9 +72,7 @@ export default defineConfig([
       ...angularEslintTemplate.configs.accessibility.rules,
     },
   },
-
-  // Optional: You may again ignore the projects folder explicitly or other folders you don't need:
   {
-    ignores: ["projects/**/*", "node_modules/**/*", "dist/**/*"],
+    ignores: ["projects/**/*", "node_modules/**/*", "dist/**/*", ".angular/**/*"],
   },
 ]);
