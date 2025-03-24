@@ -5,8 +5,9 @@ import tseslint from "typescript-eslint";
 import angularEslint from "@angular-eslint/eslint-plugin";
 import angularEslintTemplate from "@angular-eslint/eslint-plugin-template";
 import templateParser from "@angular-eslint/template-parser";
+import rxjsX from 'eslint-plugin-rxjs-x';
 
-// Extract common globals for better maintainability
+// Extract common browser globals for better maintainability
 const browserGlobals = {
   ...globals.browser,
   ...globals.es2021
@@ -19,13 +20,15 @@ const appParserOptions = {
   ecmaVersion: 2022
 };
 
-// Reusable rules for TypeScript files
+// Reusable rules for TypeScript files (updated)
 const tsRules = {
   ...js.configs.recommended.rules,
   ...tseslint.configs.recommended.rules,
   ...angularEslint.configs.recommended.rules,
+  ...rxjsX.configs.recommended.rules,
 
   "no-unused-vars": "off",
+  "rxjs-x/no-implicit-any-catch": "off",
   "@typescript-eslint/no-unused-vars": [
     "warn",
     {
@@ -45,23 +48,26 @@ const tsRules = {
   "@typescript-eslint/no-explicit-any": "off"
 };
 
-// Configuration for TypeScript files (excluding spec files entirely)
+// Configuration for TypeScript files (excluding spec files entirely) (modified with rxjs-x plugin)
 const tsFilesConfig = {
   files: ["**/*.ts"],
   ignores: ["**/*.spec.ts"],
   languageOptions: {
     parser: tseslint.parser,
-    parserOptions: appParserOptions,
+    parserOptions: {
+      ...appParserOptions,
+      projectService: true,
+    },
     globals: browserGlobals,
   },
   plugins: {
     "@typescript-eslint": tseslint.plugin,
     "@angular-eslint": angularEslint,
     js: js,
+    "rxjs-x": rxjsX,
   },
   rules: tsRules,
 };
-
 
 // Rules for HTML templates
 const htmlTemplateRules = {
@@ -80,7 +86,7 @@ const htmlTemplateFilesConfig = {
   rules: htmlTemplateRules,
 };
 
-// all rules exported
+// Export updated configuration
 export default defineConfig([
   tsFilesConfig,
   htmlTemplateFilesConfig,

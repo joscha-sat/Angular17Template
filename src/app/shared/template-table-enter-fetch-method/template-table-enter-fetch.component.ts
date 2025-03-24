@@ -13,7 +13,6 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
 import {
   BaseGetQueryParams,
@@ -38,13 +37,7 @@ export type FetchDataFunction<T> = (
 @Component({
   selector: 'app-template-table-fetch',
   standalone: true,
-  imports: [
-    MatTableModule,
-    MatPaginator,
-    NgTemplateOutlet,
-    DatePipe,
-    IsDatePipe,
-  ],
+  imports: [MatTableModule, MatPaginator, IsDatePipe],
   templateUrl: './template-table-enter-fetch.component.html',
   styleUrls: ['./template-table-enter-fetch.component.scss'],
 })
