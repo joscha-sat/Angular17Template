@@ -9,6 +9,7 @@ import { MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MethodType } from '../../services/mat-snackbar.service';
+import { DatePipe } from '@angular/common';
 
 export type SnackbarComponentData<T = any> = {
   title: 'success' | 'error' | 'info';
@@ -27,6 +28,7 @@ export type SnackbarComponentData<T = any> = {
     MatIconButton,
     MatIcon,
     TranslatePipe,
+    DatePipe,
   ],
   templateUrl: './api-snackbar.component.html',
   styleUrl: './api-snackbar.component.scss',

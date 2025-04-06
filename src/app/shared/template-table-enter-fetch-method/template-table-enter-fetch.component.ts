@@ -29,6 +29,7 @@ import {
   tap,
 } from 'rxjs';
 import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
+import { DatePipe } from '@angular/common';
 
 export type FetchDataFunction<T> = (
   params: BaseGetQueryParams,
@@ -37,7 +38,7 @@ export type FetchDataFunction<T> = (
 @Component({
   selector: 'app-template-table-fetch',
   standalone: true,
-  imports: [MatTableModule, MatPaginator, IsDatePipe],
+  imports: [MatTableModule, MatPaginator, DatePipe, IsDatePipe],
   templateUrl: './template-table-enter-fetch.component.html',
   styleUrls: ['./template-table-enter-fetch.component.scss'],
 })
