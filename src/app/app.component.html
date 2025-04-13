@@ -7,6 +7,9 @@
   <router-outlet />
 </div>
 
-<!--<button (click)="changeTheme()" color="primary" mat-flat-button>theme</button>-->
-
 <!-- globally used http loading spinner  -->
+@if (loadingService.loadingState | async) {
+  <div class="global-spinner-overlay">
+    <mat-spinner color="accent" diameter="50"></mat-spinner>
+  </div>
+}
