@@ -14,105 +14,109 @@ import {
   ResponseWithRecords,
 } from '../api/base-http-service/base-http.service';
 
-type CustomersState = {
+// Extract type aliases for better readability
+type CustomersSortOrder = 'asc' | 'desc';
+
+// Extract state interface for clarity
+interface CustomersState {
   customers: Customer[];
   totalCustomersCount: number;
   customer?: Customer;
   search: string;
-  order: 'asc' | 'desc';
-};
+  order: CustomersSortOrder;
+}
 
-const initialState = signalState<CustomersState>({
+// Extract constant for initial state
+const INITIAL_STATE: CustomersState = {
   customers: [],
   totalCustomersCount: 0,
   customer: undefined,
   search: '',
   order: 'asc',
-});
-
-async function apiRequestAndPatchStoreData<T>(
-  serviceCall: Observable<T>,
-  patchCallback: (data: T) => void,
-): Promise<T> {
-  const response = await lastValueFrom(serviceCall);
-  patchCallback(response);
-  return response;
-}
+};
 
 export const CustomersStore = signalStore(
   { providedIn: 'root' },
-  withState(initialState),
-  withMethods((store, customerService = inject(CustomerService)) => ({
-    // GET ALL Customer
-    async getAllCustomersPromise(
-      queryParams?: BaseQueryParams,
-    ): Promise<ResponseWithRecords<Customer>> {
-      return apiRequestAndPatchStoreData(
-        customerService.getAllCustomers(queryParams),
-        (getAllResponse) =>
-          patchState(store, {
-            customers: getAllResponse.records,
-            totalCustomersCount: getAllResponse.total,
-          }),
-      );
-    },
+  withState(signalState<CustomersState>(INITIAL_STATE)),
+  withMethods((store, customerService = inject(CustomerService)) => {
+    // Move utility function inside the store as a private method
+    async function handleApiRequest<T>(
+      serviceCall: Observable<T>,
+      patchCallback: (data: T) => void,
+    ): Promise<T> {
+      const response = await lastValueFrom(serviceCall);
+      patchCallback(response);
+      return response;
+    }
 
-    // GET ONE Customer
-    async getCustomerByIdPromise(id: string | number): Promise<Customer> {
-      return apiRequestAndPatchStoreData(
-        customerService.getCustomerById(id),
-        (customer) => patchState(store, { customer }),
-      );
-    },
+    return {
+      // Renamed methods by removing redundant "Promise" suffix
+      async getAllCustomers(
+        queryParams?: BaseQueryParams,
+      ): Promise<ResponseWithRecords<Customer>> {
+        return handleApiRequest(
+          customerService.getAllCustomers(queryParams),
+          (getAllResponse) =>
+            patchState(store, {
+              customers: getAllResponse.records,
+              totalCustomersCount: getAllResponse.total,
+            }),
+        );
+      },
 
-    // CREATE ONE Customer
-    async createOneCustomerPromise(customer: Customer): Promise<Customer> {
-      return apiRequestAndPatchStoreData(
-        customerService.createOneCustomer(customer),
-        (newCustomer) =>
-          patchState(store, {
-            customers: [...store.customers(), newCustomer],
-          }),
-      );
-    },
+      async getCustomerById(id: string | number): Promise<Customer> {
+        return handleApiRequest(
+          customerService.getCustomerById(id),
+          (customer) => patchState(store, { customer }),
+        );
+      },
 
-    // UPDATE ONE Customer
-    async updateCustomerByIdPromise(
-      id: string | number,
-      customer: Customer,
-    ): Promise<Customer> {
-      return apiRequestAndPatchStoreData(
-        customerService.updateCustomerById(id, customer),
-        (updatedCustomer) =>
-          patchState(store, {
-            customers: store
-              .customers()
-              .map((item) => (item.id === id ? updatedCustomer : item)),
-          }),
-      );
-    },
+      async createOneCustomer(customer: Customer): Promise<Customer> {
+        return handleApiRequest(
+          customerService.createOneCustomer(customer),
+          (newCustomer) =>
+            patchState(store, {
+              customers: [...store.customers(), newCustomer],
+            }),
+        );
+      },
 
-    // DELETE ONE Customer
-    async deleteCustomerByIdPromise(id: string | number) {
-      return apiRequestAndPatchStoreData(
-        customerService.deleteCustomerById(id),
-        () =>
+      async updateCustomerById(
+        id: string | number,
+        customer: Customer,
+      ): Promise<Customer> {
+        return handleApiRequest(
+          customerService.updateCustomerById(id, customer),
+          (updatedCustomer) =>
+            patchState(store, {
+              customers: store
+                .customers()
+                .map((item) => (item.id === id ? updatedCustomer : item)),
+            }),
+        );
+      },
+
+      async deleteCustomerById(id: string | number): Promise<unknown> {
+        return handleApiRequest(customerService.deleteCustomerById(id), () =>
           patchState(store, {
             customers: store.customers().filter((item) => item.id !== id),
           }),
-      );
-    },
+        );
+      },
 
-    // DELETE ALL Customer
-    async deleteAllCustomersPromise() {
-      return apiRequestAndPatchStoreData(
-        customerService.deleteAllCustomers(),
-        () => patchState(store, { customers: [] }),
-      );
-    },
+      async deleteAllCustomers(): Promise<unknown> {
+        return handleApiRequest(customerService.deleteAllCustomers(), () =>
+          patchState(store, { customers: [] }),
+        );
+      },
 
-    updateSearch(newValue: string) {
-      patchState(store, { search: newValue });
-    },
-  })),
+      updateSearch(newValue: string): void {
+        patchState(store, { search: newValue });
+      },
+
+      updateOrder(order: CustomersSortOrder): void {
+        patchState(store, { order });
+      },
+    };
+  }),
 );
