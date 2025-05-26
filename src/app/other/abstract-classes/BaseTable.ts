@@ -25,10 +25,10 @@ import { FetchDataFunction } from '../../shared/template-table-enter-fetch-metho
   imports: [],
 })
 export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
-  refresh$ = new BehaviorSubject(null); // Emits when data needs to be refreshed
+  private subscription: Subscription | undefined; // Subscription for refresh
   protected translateService = inject(TranslateService); // Translation service
   protected noParams: boolean = false; // Flag to skip sending params
-  private subscription: Subscription | undefined; // Subscription for refresh
+  refresh$ = new BehaviorSubject(null); // Emits when data needs to be refreshed
 
   ngOnInit(): void {
     this.refreshDataSubscription(); // Initialize refresh subscription

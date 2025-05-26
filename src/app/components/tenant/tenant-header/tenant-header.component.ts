@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { MatButton } from '@angular/material/button';
+import { TemplateTableSearchComponent } from '../../../shared/template-table-search/template-table-search.component';
 
 @Component({
   selector: 'app-tenant-header',
@@ -20,6 +21,7 @@ import { MatButton } from '@angular/material/button';
     ReactiveFormsModule,
     HeaderLayoutComponent,
     MatButton,
+    TemplateTableSearchComponent,
   ],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',

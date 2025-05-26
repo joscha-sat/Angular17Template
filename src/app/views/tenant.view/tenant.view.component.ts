@@ -3,10 +3,11 @@ import { TenantHeaderComponent } from '../../components/tenant/tenant-header/ten
 import { TenantService } from '../../api/tenant.service';
 import { Tenant } from '../../models/Tenant';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
+import { TenantTableComponent } from '../../components/tenant/tenant-table/tenant-table.component';
 
 @Component({
   selector: 'app-tenant.view',
-  imports: [TenantHeaderComponent, ViewLayoutComponent],
+  imports: [TenantHeaderComponent, ViewLayoutComponent, TenantTableComponent],
   templateUrl: './tenant.view.component.html',
   styleUrl: './tenant.view.component.scss',
 })

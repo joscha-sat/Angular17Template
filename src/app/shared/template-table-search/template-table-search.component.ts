@@ -9,22 +9,56 @@ import { TemplateInputComponent } from '../template-input/template-input.compone
   styleUrl: './template-table-search.component.scss',
 })
 export class TemplateTableSearchComponent implements OnInit {
-  fb = inject(FormBuilder);
-  searchForm: FormGroup = new FormGroup({});
+  private readonly fb = inject(FormBuilder);
   readonly service = input.required<any>();
 
-  ngOnInit(): void {
-    this.initForm();
+  searchForm: FormGroup;
+
+  constructor() {
+    this.searchForm = this.createSearchForm();
   }
 
-  initForm() {
-    this.searchForm = this.fb.group({
-      search: [],
+  ngOnInit(): void {
+    this.syncSearchValueFromService();
+  }
+
+  // Updates the form value when the search input changes
+  onSearchChange(event: Event): void {
+    const inputValue = this.getInputValueFromEvent(event);
+    this.updateServiceSearchValue(inputValue);
+  }
+
+  // Creates the search form with initial empty value
+  private createSearchForm(): FormGroup {
+    return this.fb.group({
+      search: [null],
     });
   }
 
-  onSearchChange($event: Event) {
-    const target = $event.target as HTMLInputElement;
-    this.service().search.set(target.value);
+  // Synchronizes the form value with the current service search value
+  private syncSearchValueFromService(): void {
+    if (!this.hasServiceSearchFunction()) {
+      return;
+    }
+
+    const currentSearchValue = this.service().search();
+    if (currentSearchValue) {
+      this.searchForm.get('search')?.setValue(currentSearchValue);
+    }
+  }
+
+  // Checks if the service has a search function
+  private hasServiceSearchFunction(): boolean {
+    return !!this.service().search;
+  }
+
+  // Extracts the input value from an event
+  private getInputValueFromEvent(event: Event): string {
+    return (event.target as HTMLInputElement).value;
+  }
+
+  // Updates the service search value
+  private updateServiceSearchValue(value: string): void {
+    this.service().search.set(value);
   }
 }

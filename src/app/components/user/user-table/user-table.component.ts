@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { UserService } from '../../../api/user.service';
 import { User } from '../../../models/User';
-import { BaseTableComponent } from '../../../other/abstract-classes/refreshBaseTable';
+import { BaseTableComponent } from '../../../other/abstract-classes/BaseTable';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 
 const COLUMN_CONFIG = {

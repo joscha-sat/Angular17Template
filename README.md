@@ -74,7 +74,7 @@ Enums > src/app/other/enums
 
 ````angular181html
 
-<app-base-table [columns]="columns()" [fetchData]="fetchDataFn" [headers]="headers()" />
+<app-template-table-fetch [columns]="columns()" [fetchData]="fetchDataFn" [headers]="headers()" />
 ````
 
 **very helpful to not miss anything + have type security - use this in the component.ts**
@@ -132,7 +132,7 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
 
 ```angular181html
 
-<app-base-table
+<app-template-table
   [fetchData]="fetchDataFn"
   [headers]="headers()"
   [columns]="columns()"
@@ -199,10 +199,10 @@ This triggers a getAllMethod with a param called search eg: <br />
 
 ````angular181html
 <!-- search component -->
-<app-base-search [serice]="userService" />
+<app-template-search [serice]="userService" />
 
 <!-- table adjustment (example user) -->
-<app-base-table [search]="userService.search()">
+<app-template-table [search]="userService.search()">
 ````
 
 ### Table date search
@@ -212,17 +212,17 @@ This triggers a getAllMethod with a param called searchDate eg: <br />
 
 ````angular181html
 <!-- search component -->
-<app-base-search-date [service]="customerService" />
+<app-template-search-date [service]="customerService" />
 
 <!-- table adjustment (example customer) -->
-<app-base-table [searchDate]="customerService.searchDate()" />
+<app-template-table [searchDate]="customerService.searchDate()" />
 ````
 
-# Dialogs
+# Dialogs (not up to date in angular material branch)
 
-### How to use base-delete-dialog component: example User
+### How to use template-delete-dialog component: example User
 
-1. create a data object for the base-delete-dialog with all needed values
+1. create a data object for the template-delete-dialog with all needed values
 2. call the openDialog with the BaseDeleteDialogComponent and the created data object
 
 ````ts
