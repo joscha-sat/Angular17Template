@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { RoleService } from '../../../../api/role.service';
-import { Role } from '../../../../other/models/Role';
+import { RoleService } from '../../../../../api/role.service';
+import { Role } from '../../../../../models/Role';
 import { ControlContainer, FormGroupDirective } from '@angular/forms';
 
 @Component({

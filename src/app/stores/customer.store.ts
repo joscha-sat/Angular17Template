@@ -8,7 +8,7 @@ import {
 import { inject } from '@angular/core';
 import { lastValueFrom, Observable } from 'rxjs';
 import { CustomerService } from '../api/customer.service';
-import { Customer } from '../other/models/Customer';
+import { Customer } from '../models/Customer';
 import {
   BaseQueryParams,
   ResponseWithRecords,

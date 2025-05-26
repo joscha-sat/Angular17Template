@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { User } from '../../../other/models/User';
+import { User } from '../../../../models/User';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   FormBuilder,
@@ -7,9 +7,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { UserService } from '../../../api/user.service';
-import { TwoInputsRowLayoutComponent } from '../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout.component';
-import { AddEdit } from '../../../other/types/AddEdit.type';
+import { UserService } from '../../../../api/user.service';
+import { TwoInputsRowLayoutComponent } from '../../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout.component';
+import { AddEdit } from '../../../../other/types/AddEdit.type';
 import { RoleDropdownComponent } from './role-dropdown/role-dropdown.component';
 
 @Component({

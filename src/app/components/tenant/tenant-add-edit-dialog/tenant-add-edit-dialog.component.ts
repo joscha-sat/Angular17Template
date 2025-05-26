@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { Tenant } from '../../../other/models/Tenant';
+import { Tenant } from '../../../models/Tenant';
 import { TenantService } from '../../../api/tenant.service';
 import { AddEdit } from '../../../other/types/AddEdit.type';
 

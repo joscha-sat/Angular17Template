@@ -6,7 +6,7 @@ import {
   idTypes,
   ResponseWithRecords,
 } from './base-http-service/base-http.service';
-import { Customer } from '../other/models/Customer';
+import { Customer } from '../models/Customer';
 import { ApiRoutes } from '../other/enums/api_routes';
 
 type QueryParams = BaseQueryParams;

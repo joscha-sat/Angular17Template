@@ -5,7 +5,7 @@ import { TenantDashboardHeaderComponent } from '../../components/tenant-dashboar
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
 import { ActivatedRoute } from '@angular/router';
 import { TenantService } from '../../api/tenant.service';
-import { Tenant } from '../../other/models/Tenant';
+import { Tenant } from '../../models/Tenant';
 
 @Component({
   selector: 'app-tenant-dashboard.view',

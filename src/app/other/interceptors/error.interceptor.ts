@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { catchError } from 'rxjs';
 import { inject } from '@angular/core';
-import { HttpStatusMsgService } from '../../api/error-messages/http-status-msg.service';
+import { HttpStatusMsgService } from '../../api/base-error-messages/http-status-msg.service';
 import {
   MatSnackbarService,
   SnackBarData,

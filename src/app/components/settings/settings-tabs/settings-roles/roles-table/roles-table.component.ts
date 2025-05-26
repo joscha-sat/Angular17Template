@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { Role } from '../../../../../other/models/Role';
+import { Role } from '../../../../../models/Role';
 import { Table } from '../../../../../other/types/Table.type';
 import { RoleService } from '../../../../../api/role.service';
 

@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Customer } from '../../../../other/models/Customer';
+import { Customer } from '../../../../models/Customer';
 import { TranslateModule } from '@ngx-translate/core';
 import { CustomerService } from '../../../../api/customer.service';
 import {

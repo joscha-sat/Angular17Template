@@ -7,7 +7,7 @@ import {
   idTypes,
   ResponseWithRecords,
 } from './base-http-service/base-http.service';
-import { Tenant } from '../other/models/Tenant';
+import { Tenant } from '../models/Tenant';
 import { ApiRoutes } from '../other/enums/api_routes';
 
 export type TenantQueryParams = BaseQueryParams & {};

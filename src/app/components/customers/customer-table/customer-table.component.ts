@@ -5,9 +5,9 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { Customer } from '../../../other/models/Customer';
+import { Customer } from '../../../models/Customer';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
-import { BaseTableComponent } from '../../../other/abstract-class/refreshBaseTable';
+import { BaseTableComponent } from '../../../other/abstract-classes/refreshBaseTable';
 import { CustomerService } from '../../../api/customer.service';
 import { DeleteIconComponent } from '../../../shared/icons/delete-icon/delete-icon.component';
 import { BaseGetQueryParams } from '../../../other/types/Table.type';

@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
-import { Tenant } from '../../../other/models/Tenant';
+import { Tenant } from '../../../models/Tenant';
 
 @Component({
   selector: 'app-tenant-dashboard-header',

@@ -6,7 +6,7 @@ import {
   idTypes,
   ResponseWithRecords,
 } from './base-http-service/base-http.service';
-import { Role } from '../other/models/Role';
+import { Role } from '../models/Role';
 import { AuthService } from './auth.service';
 import { ApiRoutes } from '../other/enums/api_routes';
 
