@@ -48,16 +48,16 @@ export class GenericHttpService {
 
   /**
    * Fetches all records from a given endpoint with optional query parameters,
-   * mapping them to instances of the provided model type.
+   * optionally mapping them to instances of the provided model type.
    * @param endpoint - The API endpoint
-   * @param modelType - The constructor of the model class (e.g., User)
    * @param queryParams - Optional: Query parameters
-   * @returns An Observable of the response containing the total count and list of model instances
+   * @param modelType - Optional: The constructor of the model class (e.g., User)
+   * @returns An Observable of the response containing the total count and list of records
    */
-  getAll<T>(
+  getAll<T = any>(
     endpoint: string,
-    modelType: new (data: Partial<T>) => T,
     queryParams?: { [key: string]: any },
+    modelType?: new (data: Partial<T>) => T,
   ): Observable<ResponseWithRecords<T>> {
     const params = this.generateParams(queryParams);
     return this.http
@@ -68,9 +68,11 @@ export class GenericHttpService {
         map((response) => {
           return {
             ...response,
-            records: response.records.map(
-              (record) => new modelType(record as Partial<T>),
-            ),
+            records: modelType
+              ? response.records.map(
+                  (record) => new modelType(record as Partial<T>),
+                )
+              : response.records,
           };
         }),
       );
@@ -78,20 +80,24 @@ export class GenericHttpService {
 
   /**
    * Fetches a single record by ID from a given endpoint,
-   * mapping it to an instance of the provided model type.
+   * optionally mapping it to an instance of the provided model type.
    * @param endpoint - The API endpoint
    * @param id - The ID of the resource
-   * @param modelType - The constructor of the model class (e.g., User)
-   * @returns An Observable of the single model instance
+   * @param modelType - Optional: The constructor of the model class (e.g., User)
+   * @returns An Observable of the single record
    */
-  getOne<T>(
+  getOne<T = any>(
     endpoint: string,
     id: idTypes,
-    modelType: new (data: Partial<T>) => T,
+    modelType?: new (data: Partial<T>) => T,
   ): Observable<T> {
     return this.http
       .get<any>(this.getUrl(endpoint, id))
-      .pipe(map((record) => new modelType(record as Partial<T>)));
+      .pipe(
+        map((record) =>
+          modelType ? new modelType(record as Partial<T>) : record,
+        ),
+      );
   }
 
   /**

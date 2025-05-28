@@ -24,7 +24,7 @@ export class TenantService extends GenericHttpService {
   getAllTenants(
     queryParams?: TenantQueryParams,
   ): Observable<ResponseWithRecords<Tenant>> {
-    return this.getAll<Tenant>(this.endpoint, Tenant, queryParams);
+    return this.getAll<Tenant>(this.endpoint, queryParams, Tenant);
   }
 
   // GET ONE Tenant
