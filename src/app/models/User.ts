@@ -3,7 +3,9 @@ import { Tenant } from './Tenant';
 import { Role } from './Role';
 
 export class User extends BaseModel<User> {
-  // Additional properties not in UserData interface
+  private static readonly DEFAULT_DISPLAY_NAME = 'no name';
+  private static readonly DEFAULT_ROLE_NAME = 'no role';
+
   tenant?: Tenant;
   role?: Role;
   tenantId!: string;
@@ -23,7 +25,7 @@ export class User extends BaseModel<User> {
   get fullName(): string {
     const first = this.firstName?.trim() || '';
     const last = this.lastName?.trim() || '';
-    return [first, last].filter(Boolean).join(' ') || 'no name';
+    return [first, last].filter(Boolean).join(' ') || User.DEFAULT_DISPLAY_NAME;
   }
 
   get initials(): string {
@@ -33,7 +35,7 @@ export class User extends BaseModel<User> {
   }
 
   get roleName(): string {
-    return this.role?.name || 'no role';
+    return this.role?.name || User.DEFAULT_ROLE_NAME;
   }
 
   get hasAcceptedInvite(): boolean {
