@@ -22,12 +22,12 @@ export class UserService extends GenericHttpService {
   getAllUsers(
     queryParams?: QueryParams,
   ): Observable<ResponseWithRecords<User>> {
-    return this.getAll<User>(this.endpoint, queryParams);
+    return this.getAll<User>(this.endpoint, User, queryParams);
   }
 
   // GET ONE
   getUserById(id: string | number): Observable<User> {
-    return this.getOne<User>(this.endpoint, id);
+    return this.getOne<User>(this.endpoint, id, User);
   }
 
   // CREATE ONE

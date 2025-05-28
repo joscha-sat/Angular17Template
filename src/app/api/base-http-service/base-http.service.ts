@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
-import { forkJoin, Observable, Subject, tap } from 'rxjs';
+import { forkJoin, map, Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../other/environment/environment';
 import {
   MatSnackbarService,
@@ -10,7 +10,7 @@ import {
 import { ApiSnackbarComponent } from '../../shared/api-snackbar/api-snackbar.component';
 
 // Type definitions
-export type idTypes = string | number | (string | number)[];
+export type idTypes = string | number | Array<string | number>;
 export type ResponseWithRecords<T> = { total: number; records: T[] };
 export type BaseQueryParams = {
   skip?: number;
@@ -37,7 +37,7 @@ export class GenericHttpService {
   /**
    * Constructs a full URL based on a given endpoint and optional ID.
    * @param endpoint - The API endpoint
-   * @param id - Optional: The ID of the resource
+   * @param id - Optional: The ID of the resource or an array of IDs
    * @returns A full URL string
    */
   getUrl(endpoint: string, id?: idTypes): string {
@@ -47,29 +47,51 @@ export class GenericHttpService {
   }
 
   /**
-   * Fetches all records from a given endpoint with optional query parameters.
+   * Fetches all records from a given endpoint with optional query parameters,
+   * mapping them to instances of the provided model type.
    * @param endpoint - The API endpoint
+   * @param modelType - The constructor of the model class (e.g., User)
    * @param queryParams - Optional: Query parameters
-   * @returns An Observable of the response containing the total count and list of records
+   * @returns An Observable of the response containing the total count and list of model instances
    */
   getAll<T>(
     endpoint: string,
+    modelType: new (data: Partial<T>) => T,
     queryParams?: { [key: string]: any },
   ): Observable<ResponseWithRecords<T>> {
     const params = this.generateParams(queryParams);
-    return this.http.get<ResponseWithRecords<T>>(this.getUrl(endpoint), {
-      params,
-    });
+    return this.http
+      .get<ResponseWithRecords<any>>(this.getUrl(endpoint), {
+        params,
+      })
+      .pipe(
+        map((response) => {
+          return {
+            ...response,
+            records: response.records.map(
+              (record) => new modelType(record as Partial<T>),
+            ),
+          };
+        }),
+      );
   }
 
   /**
-   * Fetches a single record by ID from a given endpoint.
+   * Fetches a single record by ID from a given endpoint,
+   * mapping it to an instance of the provided model type.
    * @param endpoint - The API endpoint
    * @param id - The ID of the resource
-   * @returns An Observable of the single record
+   * @param modelType - The constructor of the model class (e.g., User)
+   * @returns An Observable of the single model instance
    */
-  getOne<T>(endpoint: string, id: idTypes): Observable<T> {
-    return this.http.get<T>(this.getUrl(endpoint, id));
+  getOne<T>(
+    endpoint: string,
+    id: idTypes,
+    modelType: new (data: Partial<T>) => T,
+  ): Observable<T> {
+    return this.http
+      .get<any>(this.getUrl(endpoint, id))
+      .pipe(map((record) => new modelType(record as Partial<T>)));
   }
 
   /**
@@ -100,14 +122,11 @@ export class GenericHttpService {
     bodies: T[],
     i18nKeyForElement: string,
   ): Observable<T[]> {
-    const observables: Observable<T>[] = [];
-    for (const body of bodies) {
-      const action = this.createOne(endpoint, body, i18nKeyForElement);
-      observables.push(
-        this.httpAction(action, i18nKeyForElement, 'POST', true),
-      );
-    }
-    return forkJoin(observables);
+    const postObservables = bodies.map((body) =>
+      this.http.post<T>(this.getUrl(endpoint), body),
+    );
+    const batchAction = forkJoin(postObservables);
+    return this.httpAction(batchAction, i18nKeyForElement, 'POST', true);
   }
 
   /**
@@ -142,19 +161,11 @@ export class GenericHttpService {
     ids: idTypes[],
     i18nKeyForElement: string,
   ): Observable<T[]> {
-    const observables: Observable<T>[] = [];
-    for (const index in bodies) {
-      const action = this.updateOne(
-        endpoint,
-        bodies[index],
-        ids[index],
-        i18nKeyForElement,
-      );
-      observables.push(
-        this.httpAction(action, i18nKeyForElement, 'PATCH', true),
-      );
-    }
-    return forkJoin(observables);
+    const patchObservables = bodies.map((body, index) =>
+      this.http.patch<T>(this.getUrl(endpoint, ids[index]), body),
+    );
+    const batchAction = forkJoin(patchObservables);
+    return this.httpAction(batchAction, i18nKeyForElement, 'PATCH', true);
   }
 
   /**
@@ -192,12 +203,12 @@ export class GenericHttpService {
    * @param plural boolean for correct translation output
    * @returns An Observable that manages the HTTP action and notifications
    */
-  private httpAction<T>(
-    action: Observable<T>,
+  private httpAction<U>( // Renamed generic type to U to avoid conflict if T is T[]
+    action: Observable<U>,
     i18nKeyForElement: string,
     methodType?: MethodType,
     plural?: boolean,
-  ): Observable<T> {
+  ): Observable<U> {
     return action.pipe(
       tap(() => {
         this.handleHttpSuccess(i18nKeyForElement, methodType, plural);
@@ -215,7 +226,11 @@ export class GenericHttpService {
     let params = new HttpParams();
     if (queryParams) {
       for (const key in queryParams) {
-        if (queryParams[key]) {
+        if (
+          Object.prototype.hasOwnProperty.call(queryParams, key) &&
+          queryParams[key] !== undefined &&
+          queryParams[key] !== null
+        ) {
           params = params.set(key, queryParams[key]);
         }
       }
@@ -233,7 +248,6 @@ export class GenericHttpService {
       methodType,
       plural,
     };
-
     this.snackBar.openSnackBar(ApiSnackbarComponent, 'success', payload);
   }
 }

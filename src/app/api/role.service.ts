@@ -35,12 +35,12 @@ export class RoleService extends GenericHttpService {
   getAllRoles(
     queryParams?: RoleQueryParams,
   ): Observable<ResponseWithRecords<Role>> {
-    return this.getAll<Role>(this.endpoint, queryParams);
+    return this.getAll<Role>(this.endpoint, Role, queryParams);
   }
 
   // GET ONE Role
   getRoleById(id: string | number): Observable<Role> {
-    return this.getOne<Role>(this.endpoint, id);
+    return this.getOne<Role>(this.endpoint, id, Role);
   }
 
   // CREATE ONE Role
