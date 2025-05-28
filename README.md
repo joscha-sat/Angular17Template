@@ -1,32 +1,70 @@
-# Angular Template (how to work with the template):
+# Angular Template (v20+)
 
-questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
+A comprehensive Angular template with built-in features for rapid application development.
 
-# Table of content
+## Table of Contents
 
-1. [Project structure](#project-structure)
-2. [Everything about table](#tables)
-3. [Dialogs](#dialogs)
+1. [Overview](#overview)
+2. [Project Structure](#project-structure)
+3. [Styling](#styling)
+4. [Components](#components)
+5. [Services](#services)
+6. [Models and Type Definitions](#models-and-type-definitions)
+7. [State Management](#state-management)
+8. [Tables](#tables)
+9. [Dialogs](#dialogs)
+10. [Development](#development)
 
-# Project Structure
+## Overview
 
-# Style (Scss): global scss files are in the assets/scss folder :
+This Angular template provides a solid foundation for building modern web applications with Angular 20+. It includes:
 
-- use _mixins.scss for custom global utility classes (directly usable as html class, no imports needed)
-- use _colors.scss for repeating color values -> import them into the styles.scss as css variables
-- use _variables.scss for custom repeating scss values
-- Used UI Library: TAIGA UI: https://taiga-ui.dev/getting-started
-  - to change TAIGA UI colors / variables use the styles.scss (there are examples)
+- Comprehensive API service architecture
+- Model-based data handling
+- Reusable UI components
+- Table components with advanced features
+- Dialog system
+- State management with @ngrx/signals
+- Internationalization with ngx-translate
+- Code quality tools (ESLint, Prettier, Husky)
 
-### @media queries and breakpoints src/assets/variables
+## Project Structure
 
-- values for common device breakpoints are located here
-- globally usable @media queries for desktop, laptop, tablet and mobile are predefined and ready to be used
-  - implement @use "index" as *; in the component.scss where the media query mixin should be used.
+The project follows a modular structure:
+
+- `src/app/api`: API services for HTTP requests
+- `src/app/components`: Feature-specific components
+- `src/app/models`: Data models
+- `src/app/other`: Types, enums, and environment configurations
+- `src/app/services`: Helper services
+- `src/app/shared`: Reusable UI components
+- `src/app/stores`: State management
+- `src/app/views`: Page components used in routing
+
+## Styling
+
+### Global SCSS Files
+
+Global SCSS files are located in the `assets/scss` folder:
+
+- `_mixins.scss`: Custom global utility classes (directly usable as HTML class, no imports needed)
+- `_colors.scss`: Repeating color values (import them into styles.scss as CSS variables)
+- `_variables.scss`: Custom repeating SCSS values
+
+### UI Library
+
+This template uses Angular Material for UI components. You can customize Material themes in the `styles.scss` file.
+
+### Responsive Design
+
+Media queries and breakpoints are defined in `src/assets/variables`:
+
+- Values for common device breakpoints are predefined
+- Globally usable @media queries for desktop, laptop, tablet, and mobile
 
 #### Example
 
-```css
+```scss
 @use "index" as *;
 
 /*desktop-view >> default */
@@ -42,95 +80,170 @@ questions @ joscha sattler -> j.sattler@28apps.de, joscha.sattler@web.de
 }
 ```
 
-# Components:
+## Components
 
-- Reusable components: src/app/shared --> Base components that can be reused with different data / style via @Input() / @Output()
-  ifferent component blocks, here are the different component blocks for the view (uses reusable components)
+The project uses a component-based architecture:
 
-- Views / Pages src/app/views --> Views use the component blocks to display the full UI. It is used as a kind of "Layout-Component" for the different component blocks and are use in the routing
+### Shared Components
 
-# Services:
+Located in `src/app/shared`, these are reusable components that can be used across the application:
 
-API: src/app/api
+- Base components that can be reused with different data/style via `@Input()` and `@Output()`
+- UI elements like buttons, cards, inputs, etc.
+- Complex components like tables, dialogs, etc.
 
-- the api-folder contains api-services responsible for any http request
-- every api service should extend the GenericHttpService
+### View Components
 
-Helper services: src/app/services
+Located in `src/app/views`, these are page-level components used in routing:
 
-- the services folder contains all services which are used for centralized and reusable methods + data
+- Views use the shared components to display the full UI
+- Act as "Layout Components" for different component blocks
+- Handle page-level logic and data fetching
 
-# Type definition:
+## Services
 
-Typescript classes >  src/app/other/models
+### API Services
 
-Types (uses type not interfaces, same syntax except "=" before {}) >  src/app/other/types
+Located in `src/app/api`, these services handle HTTP requests:
 
-Enums > src/app/other/enums
+- Each service extends the `GenericHttpService` for common CRUD operations
+- Provides type-safe methods for interacting with the backend
+- Handles error handling and notifications
 
-# Tables
+Example API service methods:
 
-### Most basic example possible (using User object)
+- `getAll<T>()`: Fetches all records with pagination, sorting, and filtering
+- `getOne<T>()`: Fetches a single record by ID
+- `createOne<T>()`: Creates a new record
+- `updateOne<T>()`: Updates an existing record
+- `deleteOne()`: Deletes a record
 
-````angular181html
+### Helper Services
 
-<app-template-table-fetch [columns]="columns()" [fetchData]="fetchDataFn" [headers]="headers()" />
-````
+Located in `src/app/services`, these services provide utility functions:
 
-**very helpful to not miss anything + have type security - use this in the component.ts**
+- Centralized and reusable methods
+- Shared data and state
+- Application-wide functionality
 
-- `extends BaseTableComponent<ClassModel>`
-- `implements Table<ClassModel>`
+## Models and Type Definitions
 
-````ts
-export class TestViewComponent
+### Models
+
+Located in `src/app/models`, these are TypeScript classes that represent data entities:
+
+- All models extend the `BaseModel<T>` class
+- Provide type safety and intellisense
+- Can include business logic and computed properties
+
+Example model:
+
+```typescript
+export class User extends BaseModel<User> {
+  firstName!: string;
+  lastName!: string;
+  email!: string;
+
+  get fullName(): string {
+    return `${ this.firstName } ${ this.lastName }`;
+  }
+}
+```
+
+### Types and Enums
+
+- Types: `src/app/other/types` - Type definitions using TypeScript's type syntax
+- Enums: `src/app/other/enums` - Enumeration values for consistent data representation
+
+## State Management
+
+The template includes state management using @ngrx/signals:
+
+- Located in `src/app/stores`
+- Provides a centralized store for application state
+- Uses a reactive approach with signals
+- Includes methods for CRUD operations that update the state
+
+Example store:
+
+```typescript
+export const CustomersStore = signalStore(
+  { providedIn: 'root' },
+  withState(signalState<CustomersState>(INITIAL_STATE)),
+  withMethods((store, customerService = inject(CustomerService)) => {
+    return {
+      async getAllCustomers(queryParams?: BaseQueryParams): Promise<ResponseWithRecords<Customer>> {
+        // Implementation
+      },
+      async createOneCustomer(customer: Customer): Promise<Customer> {
+        // Implementation
+      },
+      // Other methods
+    };
+  }),
+);
+```
+
+## Tables
+
+The template includes a powerful table component system for displaying and managing data.
+
+### Basic Table Example
+
+```html
+
+<app-template-table-fetch
+  [columns]="columns()"
+  [fetchData]="fetchDataFn"
+  [headers]="headers()"
+/>
+```
+
+### Table Component Implementation
+
+For type safety and full functionality, extend the `BaseTableComponent`:
+
+```typescript
+export class UserTableComponent
   extends BaseTableComponent<User>
   implements Table<User>, OnInit {
 
-  // inject the service responsible for the api call (get all)
+  // Inject the service responsible for the API call
   userService = inject(UserService);
 
-  // data columns with the name from the object, where the actual value is stored in
-  columns: WritableSignal<(keyof User | 'delete' | 'edit')[]> = signal(['firstName',]);
+  // Data columns from the model
+  columns: WritableSignal<(keyof User | 'delete' | 'edit')[]> = signal(['firstName']);
 
-  // translated header, just enter the i18n key (and dont forget ngOnInit implementation)
+  // Translated headers (i18n keys)
   headers: WritableSignal<string[]> = signal(['general.firstName']);
 
-  // method name which calls the GET All endpoint in th service (needed for the parent fetchData call)
+  // Method name which calls the GET All endpoint
   setTableRefreshMethodName(): string {
     return 'getAllUsers';
   }
 
-  // service responsible for the api call (needed for the parent fetchData call)
+  // Service responsible for the API call
   setTableRefreshService() {
     return this.userService;
   }
 
-  // ngOnInit using the translateHeaders method, for automatic transation
+  // Initialize with translations
   override ngOnInit() {
     super.ngOnInit();
     super.translateHeaders(this.headers);
   }
 }
-````
-
-### Possible events
-
-- (rowClickEvent)="rowClicked($event)"
-  - emits the full object of the clicked row eg. User
-
-### Customizable table columns in parent component, example:
-
-TS:
-
-```
-  headers = signal<string[]>(['general.name']);
-  columns = signal<string[]>(['name']);
 ```
 
-HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-template #name"
+### Table Events
 
-```angular181html
+- `(rowClickEvent)="rowClicked($event)"`: Emits the full object of the clicked row
+
+### Custom Table Columns
+
+You can customize table columns using templates:
+
+```html
 
 <app-template-table
   [fetchData]="fetchDataFn"
@@ -139,39 +252,20 @@ HTML: **important:** the names inside  [cellTemplatesMap] have to match the ng-t
   [cellTemplatesMap]="{ name }"
 />
 
-<!-- customized column, value = current name value, tenant(any name can be given) = full object (tenant) -->
-<ng-template #name let-value let-tenant="object">
-  {{ value }} {{ tenant }}
-  <app-delete-icon />
+<!-- Custom column template -->
+<ng-template #name let-value let-item="object">
+  {{ value }}
+  <app-delete-icon (click)="deleteItem(item)"/>
 </ng-template>
 ```
 
-### Table refresh class: ComponentClass "extends BaseTableComponent<Model>"
+### Table Refresh
 
-Used to automatically refresh the table data after a http request (POST, PATCH, DELETE)
+Tables automatically refresh after HTTP operations (POST, PATCH, DELETE) when extending `BaseTableComponent<Model>`:
 
-located at: src/app/shared/table-refresher
-
-````
-  // Method must be implemented in each derived component
-  abstract setTableRefreshService(): any;
-
-  // Method must be implemented in each derived component
-  abstract setTableRefreshMethodName(): string;
-
-  // Optional method to override in derived components for additional parameters
-  setAdditionalParams(): any {
-    return null;
-  }
-  
-  // Optional param to override whether or not the getAll should have no params at all
-  protected noParams: boolean = false;
-````
-
-Example usage in a table component:
-
-````ts
+```typescript
 export class TenantTableComponent extends BaseTableComponent<Tenant> {
+  // Required methods
   setTableRefreshService() {
     return this.tenantService;
   }
@@ -180,75 +274,116 @@ export class TenantTableComponent extends BaseTableComponent<Tenant> {
     return 'getAllTenants';
   }
 
-  // adds &name=John to the default query params
+  // Optional methods
   override setAdditionalParams(): any {
-    return { name: 'John' };
+    return { name: 'John' }; // Adds &name=John to query params
   }
 
-  // aremoves every param from the getAll request, so it is just a blank request without a payload
-  override noParams = true;
+  override noParams = true; // Removes all params from the request
 }
-````
+```
 
-### Table search
+### Table Search
 
-#### "service".search() is accessible through GenericHttp in all api services by default
+The template includes built-in search functionality:
 
-This triggers a getAllMethod with a param called search eg: <br />
-/customers?search=max
+```html
+<!-- Search component -->
+<app-template-search [service]="userService"/>
 
-````angular181html
-<!-- search component -->
-<app-template-search [serice]="userService" />
-
-<!-- table adjustment (example user) -->
+<!-- Table with search -->
 <app-template-table [search]="userService.search()">
-````
+```
 
-### Table date search
+This triggers a request like: `/users?search=searchTerm`
 
-This triggers a getAllMethod with a param called searchDate eg: <br />
-/customers?searchDate=2024-06-12T00:00:00.000Z
+### Date Search
 
-````angular181html
-<!-- search component -->
-<app-template-search-date [service]="customerService" />
+For date-based filtering:
 
-<!-- table adjustment (example customer) -->
-<app-template-table [searchDate]="customerService.searchDate()" />
-````
+```html
+<!-- Date search component -->
+<app-template-search-date [service]="customerService"/>
 
-# Dialogs (not up to date in angular material branch)
+<!-- Table with date search -->
+<app-template-table [searchDate]="customerService.searchDate()"/>
+```
 
-### How to use template-delete-dialog component: example User
+This triggers a request like: `/customers?searchDate=2024-06-12T00:00:00.000Z`
 
-1. create a data object for the template-delete-dialog with all needed values
-2. call the openDialog with the BaseDeleteDialogComponent and the created data object
+## Dialogs
 
-````ts
-// TYPE
-export type DeleteContextData = {
-  model: any; // e.g. user 
-  service: any; // e.g. userService
-  deleteMethod: string; // e.g. deleteUserById
+The template includes a dialog system for user interactions.
+
+### Delete Dialog Example
+
+```typescript
+// Create dialog data
+const deleteContextData: DeleteContextData = {
+  model: user,
+  service: this.userService,
+  deleteMethod: 'deleteUserById'
 };
 
-// How to in user.component.ts
-function openDeleteDialog(user: User) {
-  const deleteContextData: DeleteContextData = {
-    model: user,
-    service: this.userService,
-    deleteMethod: 'deleteUserById'
-  };
+// Open the dialog
+this.dialogService.openDialog(BaseDeleteDialogComponent, deleteContextData);
+```
 
-  this.dialogService.openDialog(BaseDeleteDialogComponent, deleteContextData);
-}
-````
+This handles:
 
-that's it, deleting + updating (table) is now fully functional
+- Displaying a confirmation dialog
+- Calling the delete method if confirmed
+- Refreshing the table after deletion
+- Showing success/error notifications
 
-### TODO: how to use general Dialogs
+### Custom Dialogs
 
-## Development server
+You can create custom dialogs by:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. Creating a component that extends `BaseDialogComponent`
+2. Using the `dialogService.openDialog()` method to open it
+3. Handling the dialog result in the callback
+
+## Development
+
+### Development Server
+
+```bash
+# Standard development server
+npm start
+
+# Development with local configuration
+npm run start:local
+```
+
+Navigate to `http://localhost:4200/`. The application will automatically reload when you change any source files.
+
+### Code Quality
+
+The template includes:
+
+- ESLint for code linting (`npm run lint`)
+- Prettier for code formatting
+- Husky for git hooks (runs linting and formatting before commits)
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+The build artifacts will be stored in the `dist/` directory.
+
+### Running Tests
+
+```bash
+npm test
+```
+
+Executes the unit tests via Karma.
+
+## Contact
+
+For questions or support, contact:
+
+- Joscha Sattler: j.sattler@28apps.de or joscha.sattler@web.de
