@@ -1,14 +1,18 @@
 <app-header-layout>
+  <!-- LEFT SIDE --------|| -->
   <ng-container left>
+    <!--  TITLE  -->
     <div class="view-title">
       {{ 'customer.title-plural' | translate }}
     </div>
   </ng-container>
 
+  <!-- RIGHT SIDE --------|| -->
   <div class="flex-a-center-g1" right>
+    <!--  CUSTOMER TABLE SEARCH  -->
     <app-template-table-search [service]="customerService" />
 
-    <!-- new customer button -->
+    <!-- CREATE CUSTOMER BUTTON -->
     <button (click)="openCreateCustomerDialog()" mat-flat-button>
       {{ 'customer.create' | translate }}
     </button>

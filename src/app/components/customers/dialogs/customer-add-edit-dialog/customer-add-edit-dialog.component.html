@@ -1,4 +1,4 @@
-<!-- title -->
+<!-- TITLE -->
 <h2 mat-dialog-title>
   {{
     isCreateCustomerMode()
@@ -7,20 +7,20 @@
   }}
 </h2>
 
-<!-- customer form -->
+<!-- CUSTOMER FORM -->
 @if (form) {
   <mat-dialog-content>
     <form
-      (ngSubmit)="form.valid && submit()"
+      (ngSubmit)="form!.valid && submit()"
       [formGroup]="form"
       class="pt-05 pb-05"
     >
-      <!--  name -->
+      <!--  NAME INPUT -->
       <app-template-input fControlName="name" label="general.name" />
     </form>
   </mat-dialog-content>
 
-  <!--  actions  -->
+  <!--  SUBMIT/ CANCEL ACTION BTNS  -->
   <mat-dialog-actions [align]="'start'" class="flex-a-center-g1">
     <app-save-btn (clickEvent)="submit()" [disabled]="form.invalid" />
     <app-cancel-btn mat-dialog-close />

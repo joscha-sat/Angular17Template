@@ -10,7 +10,7 @@
 }
 
 mat-form-field {
-  @include mat.theme((density: -4));
+  @include mat.theme((density: -3));
 }
 
 tr, th {
@@ -35,8 +35,7 @@ html.dark-mode {
 /* ---------------------------------- */
 
 /* makes sizing simpler */
-*,
-*::before,
+*, *::before,
 *::after {
   box-sizing: border-box;
 }

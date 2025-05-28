@@ -1,0 +1,5 @@
+@use 'index' as *;
+
+.grid-two-cols-wrap {
+  @include customizable-grid(2, 50rem);
+}
