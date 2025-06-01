@@ -369,14 +369,54 @@ For date-based filtering:
 <summary>📝 Date Search Example</summary>
 
 ```html
-<!-- Date search component -->
-<app-template-search-date [service]="customerService"/>
+<!-- In your header component -->
+<app-template-date-search [service]="customerService" />
 
-<!-- Table with date search -->
-<app-template-table [searchDate]="customerService.searchDate()"/>
+<!-- In your table component -->
+<app-template-table-fetch
+  [headers]="headers()"
+  [displayedColumns]="columns()"
+  [fetchData]="fetchDataFn"
+  [searchDate]="customerService.searchDate()"
+/>
 ```
 
 This triggers a request like: `/customers?searchDate=2024-06-12T00:00:00.000Z`
+
+To implement this in your service:
+
+```typescript
+// In your service class
+export class CustomerService {
+  // Create a signal for the date search
+  searchDate: WritableSignal<string> = signal('');
+
+  // Use it in your API calls
+  getAllCustomers(params?: BaseQueryParams): Promise<ResponseWithRecords<Customer>> {
+    // The searchDate will be automatically added to the query params
+    return this.httpService.getAll<Customer>('customers', params);
+  }
+}
+```
+
+You can use both regular search and date search together:
+
+```html
+<!-- In your header component -->
+<app-template-table-search [service]="customerService" />
+<app-template-date-search [service]="customerService" />
+
+<!-- In your table component -->
+<app-template-table-fetch
+  [headers]="headers()"
+  [displayedColumns]="columns()"
+  [fetchData]="fetchDataFn"
+  [search]="customerService.search()"
+  [searchDate]="customerService.searchDate()"
+/>
+```
+
+This will trigger a request like: `/customers?search=searchTerm&searchDate=2024-06-12T00:00:00.000Z`
 </details>
 
 ## 💬 Dialogs
