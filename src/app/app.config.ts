@@ -16,6 +16,11 @@ import {
   MAT_LUXON_DATE_FORMATS,
   provideLuxonDateAdapter,
 } from '@angular/material-luxon-adapter';
+import { registerLocaleData } from '@angular/common';
+import localeDE from '@angular/common/locales/de';
+
+// Register German locale data for DatePipe
+registerLocaleData(localeDE);
 
 // Translation configuration constants
 const DEFAULT_LANGUAGE = 'de';
