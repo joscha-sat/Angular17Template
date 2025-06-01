@@ -1,7 +1,4 @@
-/**
- * Enum for routes used for navigation in the frontend.
- */
-export enum NavRoutes {
+export enum ROUTES {
   // basic routes
   TENANT = 'tenant',
   DASHBOARD = 'dashboard',

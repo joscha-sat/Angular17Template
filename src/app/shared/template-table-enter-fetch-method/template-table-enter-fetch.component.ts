@@ -61,37 +61,37 @@ const VALID_SORT_DIRECTIONS = ['ASC', 'DESC'];
   ],
   templateUrl: './template-table-enter-fetch.component.html',
   styleUrls: ['./template-table-enter-fetch.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush, // Improves performance
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   // Required inputs for table functionality
-  fetchData = input.required<FetchDataFunction<T>>(); // Function to fetch data
-  headers = input.required<string[]>(); // Table column headers
-  displayedColumns = input.required<string[]>(); // Columns to display
-  cellTemplatesMap = input<Record<string, TemplateRef<any>>>({}); // Custom cell templates
+  fetchData = input.required<FetchDataFunction<T>>();
+  headers = input.required<string[]>();
+  displayedColumns = input.required<string[]>();
+  cellTemplatesMap = input<Record<string, TemplateRef<any>>>({});
 
   // Optional configuration inputs
-  search = input(''); // Search term for filtering data
-  searchDate = input(''); // Date filter value
-  initialSort = input<SortParamType | undefined>(undefined); // Initial sort order
-  tabValueActive = input<boolean | undefined>(undefined); // Filter for active tab
-  pageSizes = input(DEFAULT_PAGE_SIZES); // Available page size options
-  initialPageSize = input(DEFAULT_PAGE_SIZE); // Default page size
+  search = input('');
+  searchDate = input('');
+  initialSort = input<SortParamType | undefined>(undefined);
+  tabValueActive = input<boolean | undefined>(undefined);
+  pageSizes = input(DEFAULT_PAGE_SIZES);
+  initialPageSize = input(DEFAULT_PAGE_SIZE);
 
   // Reactive signals for internal state
-  totalItemsCount = signal(0); // Total number of records available
-  limit = signal(this.initialPageSize()); // Items per page
-  skip = signal(0); // Number of items to skip (for pagination)
-  tableData = signal<T[]>([]); // Actual data displayed in the table
-  debouncedSearch = signal(''); // Search term after debounce
-  activeSort = signal<SortParamType | undefined>(this.initialSort()); // Current sort configuration
+  totalItemsCount = signal(0);
+  limit = signal(this.initialPageSize());
+  skip = signal(0);
+  tableData = signal<T[]>([]);
+  debouncedSearch = signal('');
+  activeSort = signal<SortParamType | undefined>(this.initialSort());
 
   // View children for Material components
   readonly paginator = viewChild(MatPaginator);
   readonly sort = viewChild(MatSort);
 
   // Injected dependencies
-  private readonly destroyRef = inject(DestroyRef); // For cleanup subscriptions
+  private readonly destroyRef = inject(DestroyRef);
 
   // Computed query parameters that combine all filter/sort/pagination settings
   private readonly queryParams = computed<BaseGetQueryParams>(() => ({
@@ -104,14 +104,11 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   }));
 
   constructor() {
-    this.initializeTableState();
-    this.setupSearchDebounce();
-    this.setupDataFetchingSubscription();
+    this.initializeReactiveFeatures();
   }
 
   ngAfterViewInit(): void {
-    this.initializePaginator();
-    this.initializeSort();
+    this.initializeMatComponents();
   }
 
   // Updates pagination state when user changes page or page size
@@ -134,10 +131,29 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
     }, obj);
   }
 
-  // --- Private Setup Methods ---
+  // --- Private Initialization Methods ---
+
+  /**
+   * Initializes all reactive features including signals synchronization,
+   * search debouncing, and data fetching subscription
+   */
+  private initializeReactiveFeatures(): void {
+    this.syncSignalsWithInputs();
+    this.setupSearchDebounce();
+    this.setupDataFetchingSubscription();
+  }
+
+  /**
+   * Initializes Material Design components (paginator and sort)
+   * after the view has been initialized
+   */
+  private initializeMatComponents(): void {
+    this.initializePaginator();
+    this.initializeSort();
+  }
 
   // Sets up the initial table state and synchronizes signals with inputs
-  private initializeTableState(): void {
+  private syncSignalsWithInputs(): void {
     effect(() => {
       this.limit.set(this.initialPageSize());
     });
@@ -147,9 +163,9 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   private setupSearchDebounce(): void {
     toObservable(this.search)
       .pipe(
-        debounceTime(SEARCH_DEBOUNCE_TIME), // Wait for user to finish typing
-        distinctUntilChanged(), // Only trigger on actual changes
-        takeUntilDestroyed(this.destroyRef), // Automatic cleanup
+        debounceTime(SEARCH_DEBOUNCE_TIME),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((searchValue) => {
         this.debouncedSearch.set(searchValue);
@@ -169,8 +185,8 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   private setupDataFetchingSubscription(): void {
     toObservable(this.queryParams)
       .pipe(
-        switchMap((params) => this.fetchDataWithErrorHandling(params)), // Cancels previous requests
-        takeUntilDestroyed(this.destroyRef), // Automatic cleanup
+        switchMap((params) => this.fetchDataWithErrorHandling(params)),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((records) => this.tableData.set(records));
   }
@@ -180,12 +196,12 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
     params: BaseGetQueryParams,
   ): Observable<T[]> {
     return this.fetchData()(params).pipe(
-      tap((response) => this.totalItemsCount.set(response.total)), // Update total count
-      map((response) => response.records), // Extract just the records
+      tap((response) => this.totalItemsCount.set(response.total)),
+      map((response) => response.records),
       catchError((error) => {
         console.error('Error fetching data:', error);
         this.totalItemsCount.set(0);
-        return of([]); // Return empty array on error
+        return of([]);
       }),
     );
   }
@@ -202,11 +218,9 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   private initializeSort(): void {
     const sortInstance = this.sort();
     const initialSortValue = this.initialSort();
-
     if (!sortInstance || initialSortValue === undefined) {
       return;
     }
-
     if (typeof initialSortValue === 'string') {
       this.applyInitialSortString(sortInstance, initialSortValue);
     } else {
@@ -223,10 +237,9 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
       .split(',')
       .map((part) => part.trim());
     const direction = directionStr?.toUpperCase() as 'ASC' | 'DESC' | undefined;
-
     if (field && direction && VALID_SORT_DIRECTIONS.includes(direction)) {
-      sortInstance.active = field; // Column to sort by
-      sortInstance.direction = direction.toLowerCase() as SortDirection; // Direction (asc/desc)
+      sortInstance.active = field;
+      sortInstance.direction = direction.toLowerCase() as SortDirection;
     } else {
       this.logInvalidSortFormatWarning(sortString);
     }

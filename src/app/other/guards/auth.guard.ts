@@ -1,7 +1,7 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 
-import { NavRoutes } from '../enums/nav-routes';
+import { ROUTES } from '../enums/ROUTES';
 import { AuthService } from '../../api/auth.service';
 
 /**
@@ -16,7 +16,7 @@ export const authGuard: CanActivateFn = () => {
 
   if (!isLoggedIn) {
     // navigation to login page
-    return router.parseUrl(NavRoutes.LOGIN);
+    return router.parseUrl(ROUTES.LOGIN);
   }
 
   return isLoggedIn;

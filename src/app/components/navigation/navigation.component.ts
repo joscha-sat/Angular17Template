@@ -3,7 +3,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatMiniFabButton } from '@angular/material/button';
 import { NavItem } from '../../other/enums/nav-items';
-import { NavRoutes } from '../../other/enums/nav-routes';
+import { ROUTES } from '../../other/enums/ROUTES';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -35,31 +35,31 @@ export class NavigationComponent implements OnInit {
           {
             tooltip: translations['tenant.title'],
             icon: 'home',
-            link: NavRoutes.TENANT,
+            link: ROUTES.TENANT,
           },
           // user
           {
             tooltip: translations['user.title'],
             icon: 'group',
-            link: NavRoutes.USER,
+            link: ROUTES.USER,
           },
           // customer
           {
             tooltip: translations['customer.title-plural'],
             icon: 'cases',
-            link: NavRoutes.CUSTOMERS,
+            link: ROUTES.CUSTOMERS,
           },
           // map
           // {
           //   tooltip: translations['map.title'],
           //   icon: 'map-pin',
-          //   link: NavRoutes.MAP,
+          //   link: ROUTES.MAP,
           // },
           // settings
           {
             tooltip: translations['settings.title'],
             icon: 'settings',
-            link: NavRoutes.SETTINGS,
+            link: ROUTES.SETTINGS,
           },
 
           // test TODO: REMOVE FOR PRODUCTION!!!

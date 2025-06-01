@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { environment } from '../other/environment/environment';
 import { User } from '../models/User';
 import { ApiRoutes } from '../other/enums/api_routes';
-import { NavRoutes } from '../other/enums/nav-routes';
+import { ROUTES } from '../other/enums/ROUTES';
 
 const StorageKeys = {
   ACCESS_TOKEN: 'access_token',
@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   login(loginBody: LoginBody) {
-    const url = `${this.baseUrl}${NavRoutes.AUTH}/${NavRoutes.LOGIN}`;
+    const url = `${this.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`;
     return this.http.post<any>(url, loginBody).pipe(
       map((response: LoginResponse) => {
         this.setTokens(response.access_token, response.refresh_token);
@@ -56,7 +56,7 @@ export class AuthService {
   logout() {
     this.loggedInUser = undefined;
     this.clearUserSession();
-    this.router.navigateByUrl(NavRoutes.LOGIN).then();
+    this.router.navigateByUrl(ROUTES.LOGIN).then();
   }
 
   sendRefreshToken(): Observable<any> {

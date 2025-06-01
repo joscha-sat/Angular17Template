@@ -8,7 +8,7 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, LoginBody } from '../../../api/auth.service';
 import { Router } from '@angular/router';
-import { NavRoutes } from '../../../other/enums/nav-routes';
+import { ROUTES } from '../../../other/enums/ROUTES';
 import { TemplateInputComponent } from '../../../shared/template-input/template-input.component';
 import { MatButton } from '@angular/material/button';
 
@@ -40,7 +40,7 @@ export class LoginFormComponent {
   submit() {
     if (this.form?.invalid) return;
     this.authService.login(this.loginBody).subscribe(() => {
-      this.roter.navigate(['/' + NavRoutes.TENANT]).then();
+      this.roter.navigate(['/' + ROUTES.TENANT]).then();
     });
   }
 }

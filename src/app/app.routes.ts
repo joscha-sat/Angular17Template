@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { NavRoutes } from './other/enums/nav-routes';
+import { ROUTES } from './other/enums/ROUTES';
 
 import { authGuard } from './other/guards/auth.guard';
 
 export const routes: Routes = [
   // standard route
-  { path: '', redirectTo: NavRoutes.TENANT, pathMatch: 'full' },
+  { path: '', redirectTo: ROUTES.TENANT, pathMatch: 'full' },
 
   // protected routes
   {
@@ -14,7 +14,7 @@ export const routes: Routes = [
     children: [
       // || TENANT || ----------------------------------------------- // >>
       {
-        path: NavRoutes.TENANT,
+        path: ROUTES.TENANT,
         loadComponent: () =>
           import('./views/tenant.view/tenant.view.component').then(
             (m) => m.TenantViewComponent,
@@ -22,7 +22,7 @@ export const routes: Routes = [
       },
       // || TENANT DASHBOARD || -------------------------------------- // >>
       {
-        path: NavRoutes.TENANT + '/' + NavRoutes.DASHBOARD + '/:id',
+        path: ROUTES.TENANT + '/' + ROUTES.DASHBOARD + '/:id',
         loadComponent: () =>
           import(
             './views/tenant-dashboard.view/tenant-dashboard.view.component'
@@ -30,7 +30,7 @@ export const routes: Routes = [
       },
       // || USER || ----------------------------------------------- // >>
       {
-        path: NavRoutes.USER,
+        path: ROUTES.USER,
         loadComponent: () =>
           import('./views/user.view/user.view.component').then(
             (m) => m.UserViewComponent,
@@ -38,7 +38,7 @@ export const routes: Routes = [
       },
       // || CUSTOMER || ----------------------------------------------- // >>
       {
-        path: NavRoutes.CUSTOMERS,
+        path: ROUTES.CUSTOMERS,
         loadComponent: () =>
           import('./views/customers.view/customers.view.component').then(
             (m) => m.CustomersViewComponent,
@@ -46,7 +46,7 @@ export const routes: Routes = [
       },
       // || MAP || ----------------------------------------------- // >>
       {
-        path: NavRoutes.MAP,
+        path: ROUTES.MAP,
         loadComponent: () =>
           import('./views/map.view/map.view.component').then(
             (m) => m.MapViewComponent,
@@ -54,21 +54,21 @@ export const routes: Routes = [
       },
       // || SETTINGS || ----------------------------------------------- // >>
       {
-        path: NavRoutes.SETTINGS,
+        path: ROUTES.SETTINGS,
         loadComponent: () =>
           import('./views/settings.view/settings.view.component').then(
             (m) => m.SettingsViewComponent,
           ),
         children: [
           {
-            path: NavRoutes.GENERAL,
+            path: ROUTES.GENERAL,
             loadComponent: () =>
               import(
                 './views/settings.view/settings-general.view/settings-general.view.component'
               ).then((m) => m.SettingsGeneralViewComponent),
           },
           {
-            path: NavRoutes.ROLES,
+            path: ROUTES.ROLES,
             loadComponent: () =>
               import(
                 './components/settings/settings-tabs/settings-roles/settings-roles.component'
@@ -107,7 +107,7 @@ export const routes: Routes = [
 
   // || LOGIN || ----------------------------------------------- // >>
   {
-    path: NavRoutes.LOGIN,
+    path: ROUTES.LOGIN,
     loadComponent: () =>
       import('./views/login.view/login.view.component').then(
         (m) => m.LoginViewComponent,
@@ -115,5 +115,5 @@ export const routes: Routes = [
   },
 
   // || WILDCARD || ----------------------------------------------- // >>
-  { path: '**', redirectTo: NavRoutes.ERROR, pathMatch: 'full' },
+  { path: '**', redirectTo: ROUTES.ERROR, pathMatch: 'full' },
 ];
