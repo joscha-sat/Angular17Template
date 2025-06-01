@@ -14,7 +14,6 @@ export class TemplateDateSearchComponent {
   dateChange($event: string) {
     if (!$event) {
       this.service().searchDate.set('');
-      console.log('searchdate: ', this.service().searchDate());
       return;
     }
 
