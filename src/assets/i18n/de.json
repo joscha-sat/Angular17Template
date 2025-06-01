@@ -22,7 +22,6 @@
     "back": "Zurück",
     "cancel": "Abbrechen",
     "createdAt": "Erstellt am",
-    "updatedAt": "Aktualisiert am",
     "delete": "Löschen",
     "delete-hint": "Das Löschen kann anschließend nicht rückgängig gemacht werden!",
     "delete-title": "Element löschen?",
@@ -46,6 +45,7 @@
     "search": "Suchen",
     "select-date": "Datum auswählen",
     "title": "Allgemein",
+    "updatedAt": "Aktualisiert am",
     "username": "Benutzername",
     "yes": "Ja"
   },

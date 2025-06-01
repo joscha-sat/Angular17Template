@@ -23,7 +23,6 @@
     "back": "Back",
     "cancel": "Cancel",
     "createdAt": "Created at",
-    "updatedAt": "Updated at",
     "delete": "Delete",
     "delete-hint": "The deletion can not be redone afterwards!",
     "delete-title": "Delete element?",
@@ -48,6 +47,7 @@
     "search": "Search",
     "select-date": "Select a date",
     "title": "General",
+    "updatedAt": "Updated at",
     "username": "Username",
     "yes": "Yes"
   },
