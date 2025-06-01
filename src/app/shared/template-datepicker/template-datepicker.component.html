@@ -1,6 +1,11 @@
-<mat-form-field appearance="outline" class="example-full-width">
+<mat-form-field
+  appearance="outline"
+  class="example-full-width"
+  subscriptSizing="dynamic"
+>
   <mat-label>{{ label() | translate }}</mat-label>
   <input
+    (dateChange)="selectedDateChanged($event.value)"
     [matDatepicker]="picker"
     [max]="maxDate()"
     [min]="minDate()"

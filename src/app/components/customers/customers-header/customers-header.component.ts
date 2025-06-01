@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CustomerAddEditDialogComponent } from '../dialogs/customer-add-edit-dialog/customer-add-edit-dialog.component';
 import { TemplateTableSearchComponent } from '../../../shared/template-table-search/template-table-search.component';
 import { CustomerService } from '../../../api/customer.service';
+import { TemplateDateSearchComponent } from '../../../shared/template-date-search/template-date-search.component';
 
 @Component({
   selector: 'app-customers-header',
@@ -16,6 +17,7 @@ import { CustomerService } from '../../../api/customer.service';
     ReactiveFormsModule,
     MatButton,
     TemplateTableSearchComponent,
+    TemplateDateSearchComponent,
   ],
   templateUrl: './customers-header.component.html',
   styleUrl: './customers-header.component.scss',

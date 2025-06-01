@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output, WritableSignal } from '@angular/core';
 import {
   MatFormField,
   MatInput,
@@ -11,6 +11,7 @@ import {
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
 import { TranslatePipe } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-template-datepicker',
@@ -25,6 +26,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     MatLabel,
     MatFormField,
     TranslatePipe,
+    ReactiveFormsModule,
   ],
   templateUrl: './template-datepicker.component.html',
   styleUrl: './template-datepicker.component.scss',
@@ -32,6 +34,14 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class TemplateDatepickerComponent {
   minDate = input<Date>();
   maxDate = input<Date>();
-
   label = input('general.select-date');
+
+  fControlName = input<string>('date');
+  service = input<{ searchDate: WritableSignal<string> }>();
+
+  dateChange = output<string>();
+
+  selectedDateChanged(isoString: string) {
+    this.dateChange.emit(isoString);
+  }
 }

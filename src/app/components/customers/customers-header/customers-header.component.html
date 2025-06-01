@@ -12,6 +12,8 @@
     <!--  CUSTOMER TABLE SEARCH  -->
     <app-template-table-search [service]="customerService" />
 
+    <app-template-date-search [service]="customerService" />
+
     <!-- CREATE CUSTOMER BUTTON -->
     <button (click)="openCreateCustomerDialog()" mat-flat-button>
       {{ 'customer.create' | translate }}
