@@ -62,6 +62,18 @@ const tsRules = {
       skipBlankLines: false,
       skipComments: false
     }
+  ],
+  "custom-rules/method-too-complex-warning": [
+    "warn",
+    {
+      max: 5
+    }
+  ],
+  "custom-rules/method-too-complex-error": [
+    "error",
+    {
+      max: 9
+    }
   ]
 };
 
