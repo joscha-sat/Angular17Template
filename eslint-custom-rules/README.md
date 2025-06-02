@@ -9,7 +9,7 @@ This directory contains custom ESLint rules for Angular projects.
 This rule enforces a maximum line count for Angular component files with a warning threshold.
 
 - **Rule ID**: `custom-rules/component-max-lines-warning`
-- **Default Threshold**: 400 lines
+- **Default Threshold**: 300 lines
 - **Severity**: Warning
 
 ### component-max-lines-error
@@ -17,7 +17,7 @@ This rule enforces a maximum line count for Angular component files with a warni
 This rule enforces a maximum line count for Angular component files with an error threshold.
 
 - **Rule ID**: `custom-rules/component-max-lines-error`
-- **Default Threshold**: 500 lines
+- **Default Threshold**: 400 lines
 - **Severity**: Error
 
 ## Configuration
@@ -29,17 +29,17 @@ These rules are configured in the project's `eslint.config.mjs` file:
 "custom-rules/component-max-lines-warning": [
   "warn",
   {
-    max: 400,        // Warning threshold
-    skipBlankLines: true,
-    skipComments: true
+    max: 300,        // Warning threshold
+    skipBlankLines: false,
+    skipComments: false
   }
 ],
 "custom-rules/component-max-lines-error": [
   "error",
   {
-    max: 500,        // Error threshold
-    skipBlankLines: true,
-    skipComments: true
+    max: 400,        // Error threshold
+    skipBlankLines: false,
+    skipComments: false
   }
 ]
 ```
@@ -48,7 +48,7 @@ These rules are configured in the project's `eslint.config.mjs` file:
 
 Both rules support the following options:
 
-- `max` (number): The maximum number of lines allowed in a file. Default is 400 for the warning rule and 500 for the error rule.
+- `max` (number): The maximum number of lines allowed in a file. Default is 300 for the warning rule and 400 for the error rule.
 - `skipBlankLines` (boolean): Whether to ignore blank lines when counting. Default is `false`.
 - `skipComments` (boolean): Whether to ignore comments when counting. Default is `false`.
 

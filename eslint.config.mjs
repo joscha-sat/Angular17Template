@@ -50,17 +50,17 @@ const tsRules = {
   "custom-rules/component-max-lines-warning": [
     "warn",
     {
-      max: 400,        // Warning threshold
-      skipBlankLines: true,
-      skipComments: true
+      max: 300,        // Warning threshold
+      skipBlankLines: false,
+      skipComments: false
     }
   ],
   "custom-rules/component-max-lines-error": [
     "error",
     {
-      max: 500,        // Error threshold
-      skipBlankLines: true,
-      skipComments: true
+      max: 400,        // Error threshold
+      skipBlankLines: false,
+      skipComments: false
     }
   ]
 };

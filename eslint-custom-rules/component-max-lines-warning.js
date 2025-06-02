@@ -39,7 +39,7 @@ module.exports = {
   create(context) {
     const sourceCode = context.sourceCode;
     const option = context.options[0] || {};
-    const max = option.max || 400;
+    const max = option.max || 300;
     const skipBlankLines = option.skipBlankLines || false;
     const skipComments = option.skipComments || false;
 
