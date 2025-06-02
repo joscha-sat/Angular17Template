@@ -6,6 +6,7 @@ import angularEslint from "@angular-eslint/eslint-plugin";
 import angularEslintTemplate from "@angular-eslint/eslint-plugin-template";
 import templateParser from "@angular-eslint/template-parser";
 import rxjsX from 'eslint-plugin-rxjs-x';
+import customRules from './eslint-custom-rules/index.js';
 
 // Extract common browser globals for better maintainability
 const browserGlobals = {
@@ -45,7 +46,23 @@ const tsRules = {
     "error",
     {type: "element", prefix: "app", style: "kebab-case"},
   ],
-  "@typescript-eslint/no-explicit-any": "off"
+  "@typescript-eslint/no-explicit-any": "off",
+  "custom-rules/component-max-lines-warning": [
+    "warn",
+    {
+      max: 400,        // Warning threshold
+      skipBlankLines: true,
+      skipComments: true
+    }
+  ],
+  "custom-rules/component-max-lines-error": [
+    "error",
+    {
+      max: 500,        // Error threshold
+      skipBlankLines: true,
+      skipComments: true
+    }
+  ]
 };
 
 // Configuration for TypeScript files (excluding spec files entirely) (modified with rxjs-x plugin)
@@ -65,6 +82,7 @@ const tsFilesConfig = {
     "@angular-eslint": angularEslint,
     js: js,
     "rxjs-x": rxjsX,
+    "custom-rules": customRules,
   },
   rules: tsRules,
 };
