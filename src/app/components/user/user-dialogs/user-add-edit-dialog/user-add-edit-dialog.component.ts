@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { User } from '../../../../models/User';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
@@ -28,17 +28,14 @@ import { RoleDropdownComponent } from './role-dropdown/role-dropdown.component';
 export class UserAddEditDialogComponent implements OnInit, AddEdit {
   model?: User;
   form?: FormGroup;
+  createUserMode = signal(true);
+  private fb = inject(FormBuilder);
+  private userService = inject(UserService);
+  private translateService = inject(TranslateService);
   radioItems = signal([
     { name: this.translateService.instant('general.active') },
     { name: this.translateService.instant('general.inactive') },
   ]);
-  createUserMode = signal(true);
-
-  constructor(
-    private fb: FormBuilder,
-    private userService: UserService,
-    private translateService: TranslateService,
-  ) {}
 
   get userFromFormData(): User {
     // Reads form data and prepares a user object

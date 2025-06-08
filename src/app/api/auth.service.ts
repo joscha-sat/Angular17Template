@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -28,13 +28,11 @@ export type LoginResponse = {
   providedIn: 'root',
 })
 export class AuthService {
+  private http = inject(HttpClient);
+  private router = inject(Router);
+
   private readonly baseUrl = environment.baseUrl;
   private loggedInUser?: User;
-
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-  ) {}
 
   isLoggedIn(): boolean {
     return (

@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { forkJoin, map, Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../other/environment/environment';
 import {
@@ -28,11 +28,8 @@ export class GenericHttpService {
   search = signal<string>('');
   searchDate = signal('');
   tabValueActive = signal<boolean | undefined>(undefined);
-
-  constructor(
-    private readonly http: HttpClient,
-    private snackBar: MatSnackbarService,
-  ) {}
+  private readonly http = inject(HttpClient);
+  private snackBar = inject(MatSnackbarService);
 
   /**
    * Constructs a full URL based on a given endpoint and optional ID.

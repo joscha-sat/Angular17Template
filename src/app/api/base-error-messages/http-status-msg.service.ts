@@ -1,4 +1,4 @@
-import { Injectable, Injector } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiRoutes } from '../../other/enums/api_routes';
@@ -18,7 +18,7 @@ const STATUS_CODES: { [key: number]: string } = {
   providedIn: 'root',
 })
 export class HttpStatusMsgService {
-  constructor(private injector: Injector) {}
+  private injector = inject(Injector);
 
   // Lazy retrieves the TranslateService instance
   private get translateService(): TranslateService {
