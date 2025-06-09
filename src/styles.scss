@@ -1,6 +1,6 @@
-@use "index" as *;
+@use 'index' as *;
 @use '@angular/material' as mat;
-@import "assets/theme/theme.css";
+@import 'assets/themes/theme.css';
 
 // || CSS VARIABLES || #########################################################################################################||
 :root {
@@ -10,13 +10,21 @@
 }
 
 mat-form-field {
-  @include mat.theme((density: -3));
+  @include mat.theme(
+    (
+      density: -3,
+    )
+  );
 }
 
-tr, th {
-  @include mat.theme((density: -2));
+tr,
+th {
+  @include mat.theme(
+    (
+      density: -2,
+    )
+  );
 }
-
 
 /* ----------------------------------------------------------------- */
 /*  ||Angular Material adjustments ||
@@ -35,7 +43,8 @@ html.dark-mode {
 /* ---------------------------------- */
 
 /* makes sizing simpler */
-*, *::before,
+*,
+*::before,
 *::after {
   box-sizing: border-box;
 }
@@ -66,19 +75,19 @@ img {
   shape-margin: 0.75rem;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
-
 
 //mat-snackbar
 .custom-snackbar {
-  background-color: #4CAF50; /* Green background */
+  background-color: #4caf50; /* Green background */
   color: white; /* White text */
 }
 
@@ -92,17 +101,17 @@ body {
 .snackbar-info {
   --mdc-snackbar-container-color: var(--info-container);
   --mdc-snackbar-supporting-text-color: var(--info-container-txt);
-  --mat-sys-inverse-on-surface: var(--info-container-txt)
+  --mat-sys-inverse-on-surface: var(--info-container-txt);
 }
 
 .snackbar-success {
   --mdc-snackbar-container-color: var(--success-bg);
   --mdc-snackbar-supporting-text-color: var(--success-txt);
-  --mat-sys-inverse-on-surface: var(--success-txt)
+  --mat-sys-inverse-on-surface: var(--success-txt);
 }
 
 .snackbar-error {
   --mdc-snackbar-container-color: var(--mat-sys-error-container);
   --mdc-snackbar-supporting-text-color: var(--mat-sys-on-error-container);
-  --mat-sys-inverse-on-surface: var(--mat-sys-on-error-container)
+  --mat-sys-inverse-on-surface: var(--mat-sys-on-error-container);
 }
