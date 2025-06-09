@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { environment } from '../other/environment/environment';
+import { environment } from '../other/environments/environment';
 import { User } from '../models/User';
 import { ApiRoutes } from '../other/enums/api_routes';
 import { ROUTES } from '../other/enums/ROUTES';

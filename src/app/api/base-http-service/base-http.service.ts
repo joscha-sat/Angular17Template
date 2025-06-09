@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { forkJoin, map, Observable, Subject, tap } from 'rxjs';
-import { environment } from '../../other/environment/environment';
+import { environment } from '../../other/environments/environment';
 import {
   MatSnackbarService,
   MethodType,
