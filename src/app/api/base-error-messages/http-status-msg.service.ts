@@ -18,7 +18,7 @@ const STATUS_CODES: { [key: number]: string } = {
   providedIn: 'root',
 })
 export class HttpStatusMsgService {
-  private injector = inject(Injector);
+  private readonly injector = inject(Injector);
 
   // Lazy retrieves the TranslateService instance
   private get translateService(): TranslateService {
@@ -37,37 +37,14 @@ export class HttpStatusMsgService {
     method?: string,
     endpoint?: ApiRoutes | string,
   ) => {
-    // Extract the endpoint from error if available
-    const endpointFromError = this.getEndpointFromError(err);
-    if (endpointFromError) {
-      endpoint = endpointFromError;
-    }
-
-    // Creating translation keys
+    const resolvedEndpoint = this.resolveEndpoint(err, endpoint);
     const errorKey = err.error?.key?.toLowerCase() || '';
-    const translationKey = `http-error.${endpoint}.${method?.toLowerCase()}_${errorKey}`;
-    const genericTranslationKey = `http-error.${errorKey}`;
 
-    // Attempt to translate the specific error message
-    let translated = this.translateService.instant(translationKey);
-    if (translated === translationKey) {
-      translated = this.translateService.instant(genericTranslationKey);
-    }
-
-    // Fallback to error message from the response if translation is not found
-    let message =
-      translated !== genericTranslationKey ? translated : err.error.message;
-
-    // If no message is found, get the message from the status code
-    if (!message) {
-      const statusKey = STATUS_CODES[err.status];
-      const statusMessage = statusKey
-        ? this.translateService.instant(statusKey)
-        : '';
-      message = statusMessage ?? `Unknown error, status code ${err.status}.`;
-    }
-
-    return message;
+    return (
+      this.getTranslatedMessage(resolvedEndpoint, method, errorKey) ||
+      this.getErrorMessage(err) ||
+      this.getStatusMessage(err)
+    );
   };
 
   /**
@@ -90,5 +67,43 @@ export class HttpStatusMsgService {
     return lastSegmentPattern.test(segments[segments.length - 1])
       ? segments[segments.length - 2]
       : segments[segments.length - 1];
+  }
+
+  private resolveEndpoint(
+    err: HttpErrorResponse,
+    endpoint?: ApiRoutes | string,
+  ): ApiRoutes | string | undefined {
+    const endpointFromError = this.getEndpointFromError(err);
+    return endpointFromError || endpoint;
+  }
+
+  private getTranslatedMessage(
+    endpoint: ApiRoutes | string | undefined,
+    method?: string,
+    errorKey?: string,
+  ): string | null {
+    if (!errorKey) return null;
+
+    const translationKey = `http-error.${endpoint}.${method?.toLowerCase()}_${errorKey}`;
+    const genericTranslationKey = `http-error.${errorKey}`;
+
+    let translated = this.translateService.instant(translationKey);
+    if (translated === translationKey) {
+      translated = this.translateService.instant(genericTranslationKey);
+    }
+
+    return translated !== genericTranslationKey ? translated : null;
+  }
+
+  private getErrorMessage(err: HttpErrorResponse): string | null {
+    return err.error?.message || null;
+  }
+
+  private getStatusMessage(err: HttpErrorResponse): string {
+    const statusKey = STATUS_CODES[err.status];
+    const statusMessage = statusKey
+      ? this.translateService.instant(statusKey)
+      : '';
+    return statusMessage || `Unknown error, status code ${err.status}.`;
   }
 }
