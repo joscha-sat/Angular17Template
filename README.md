@@ -515,23 +515,23 @@ For questions or support, contact:
 
 ## 📦 Shared Components UI Docs
 
-Diese Sektion dient als kompakte UI‑Doku für die wiederverwendbaren Shared Components. Jede Komponente wird kurz erklärt und zeigt mindestens zwei Einsatzbeispiele. Zur platzsparenden Darstellung werden Expansion Panels (details/summary) genutzt.
+This section serves as a compact UI documentation for the reusable Shared Components. Each component is briefly explained and shows at least two usage examples. Expansion panels (details/summary) are used to keep the view concise.
 
 <details>
 <summary>app-delete-icon — DeleteIconComponent</summary>
 
-Kurze Beschreibung
-- Zeigt ein Material Icon (delete) und emittiert ein Ereignis bei Klick. Nützlich z. B. in Tabellenzeilen.
+Short description
+- Displays a Material icon (delete) and emits an event on click. Useful e.g. in table rows.
 
 API
 - Selector: app-delete-icon
 - Inputs:
-  - color?: string — CSS-Farbe (Default: var(--mat-sys-error))
+  - color?: string — CSS color (Default: var(--mat-sys-error))
 - Outputs:
-  - clickEvent: void — Wird bei Klick ausgelöst
+  - clickEvent: void — Emitted on click
 
-Beispiele
-1) Einfacher Einsatz in einer Karte
+Examples
+1) Simple usage inside a card
 ```html
 <div class="user-card">
   {{ selectedUser.fullName }}
@@ -539,9 +539,9 @@ Beispiele
 </div>
 ```
 
-2) Eigene Farbe und in einer Tabelle als Zellen‑Action
+2) Custom color and used as a table cell action
 ```html
-<!-- Tabelle mit eigener Farbgebung -->
+<!-- Table with custom color -->
 <ng-template #actions let-item>
   <app-delete-icon color="crimson" (clickEvent)="onDelete(item)" />
 </ng-template>
@@ -552,18 +552,18 @@ Beispiele
 <details>
 <summary>app-edit-icon — EditIconComponent</summary>
 
-Kurze Beschreibung
-- Zeigt ein Material Icon (edit) und emittiert ein Ereignis bei Klick. Ideal für Bearbeiten‑Aktionen.
+Short description
+- Displays a Material icon (edit) and emits an event on click. Ideal for edit actions.
 
 API
 - Selector: app-edit-icon
 - Inputs:
-  - color?: string — CSS-Farbe
+  - color?: string — CSS color
 - Outputs:
-  - clickEvent: void — Wird bei Klick ausgelöst
+  - clickEvent: void — Emitted on click
 
-Beispiele
-1) Neben einem Titel
+Examples
+1) Next to a title
 ```html
 <h3 class="flex items-center gap-8">
   {{ title }}
@@ -571,7 +571,7 @@ Beispiele
 </h3>
 ```
 
-2) Zusammen mit dem Delete‑Icon in einer Action‑Leiste
+2) Together with the delete icon in an action bar
 ```html
 <div class="flex gap-8">
   <app-edit-icon color="#1565c0" (clickEvent)="onEdit(item)" />
@@ -584,22 +584,22 @@ Beispiele
 <details>
 <summary>app-template-datepicker — TemplateDatepickerComponent</summary>
 
-Kurze Beschreibung
-- Kapselt den Angular Material Datepicker inkl. Label und Formular‑Anbindung. Gibt das ausgewählte Datum als ISO‑String über dateChange aus. Optional können min/max‑Datum sowie Label/Feldname gesetzt werden. Kann mit einem Service verwendet werden, der eine searchDate‑Signal‑Property besitzt.
+Short description
+- Wraps the Angular Material Datepicker including label and form binding. Emits the selected date as an ISO string via dateChange. Optionally supports min/max date as well as label/field name. Can be used with a service that has a searchDate signal property.
 
 API
 - Selector: app-template-datepicker
 - Inputs:
   - minDate?: Date
   - maxDate?: Date
-  - label?: string — i18n‑Key (Default: "general.select-date")
-  - fControlName?: string — Name des FormControls (Default: "date")
+  - label?: string — i18n key (Default: "general.select-date")
+  - fControlName?: string — Name of the FormControl (Default: "date")
   - service?: { searchDate: WritableSignal<string> }
 - Outputs:
-  - dateChange: string — ISO‑Datum bei Änderungen
+  - dateChange: string — ISO date when changed
 
-Beispiele
-1) Standalone mit Handler (setzt Datum in Service‑Signal)
+Examples
+1) Standalone with handler (writes date to service signal)
 ```ts
 // component.ts
 import { WritableSignal, signal } from '@angular/core';
@@ -618,7 +618,7 @@ function onDateChange(iso: string) {
 />
 ```
 
-2) Mit min/max und eigenem Label/Feldnamen
+2) With min/max and custom label/field name
 ```html
 <app-template-datepicker
   [minDate]="min"
@@ -635,28 +635,28 @@ function onDateChange(iso: string) {
 <details>
 <summary>app-template-date-search — TemplateDateSearchComponent</summary>
 
-Kurze Beschreibung
-- Stellt ein Datepicker‑Suchfeld bereit und schreibt das ausgewählte Datum direkt in service().searchDate (WritableSignal<string>). Leer‑Auswahl löscht die Suche.
+Short description
+- Provides a datepicker search field and writes the selected date directly into service().searchDate (WritableSignal<string>). Clearing the selection removes the filter.
 
 API
 - Selector: app-template-date-search
 - Inputs:
-  - service: { searchDate: WritableSignal<string> } — erforderlich
+  - service: { searchDate: WritableSignal<string> } — required
 
-Beispiele
-1) In einer Header‑Leiste für Tabellenfilter
+Examples
+1) In a header bar for table filters
 ```html
 <header class="flex gap-16 items-center">
   <app-template-date-search [service]="customerService" />
 </header>
 ```
 
-2) Zusammen mit einer Table‑Komponente (Datum wird automatisch als Query‑Param genutzt)
+2) Together with a table component (date is automatically used as a query param)
 ```html
 <!-- Header -->
 <app-template-date-search [service]="customerService" />
 
-<!-- Tabelle -->
+<!-- Table -->
 <app-template-table-fetch
   [headers]="headers()"
   [columns]="columns()"
@@ -665,8 +665,8 @@ Beispiele
 />
 ```
 
-Hinweis
-- Die Kombination aus normaler Suche und Datumssuche ist möglich (siehe Abschnitt „📅 Date Search“ weiter oben).
+Note
+- Combining regular search and date search is possible (see the “📅 Date Search” section above).
 
 </details>
 
@@ -674,20 +674,20 @@ Hinweis
 <details>
 <summary>app-template-input — TemplateInputComponent</summary>
 
-Kurze Beschreibung
-- Eingabefeld auf Basis von Angular Material, direkt in Reactive Forms einsetzbar (bindet automatisch an das umgebende FormGroup via FormGroupDirective).
+Short description
+- Input field based on Angular Material, directly usable in Reactive Forms (automatically binds to the surrounding FormGroup via FormGroupDirective).
 
 API
 - Selector: app-template-input
 - Inputs:
-  - label?: string — i18n‑Key oder Text (Default: "label")
-  - fControlName: string — Name des FormControls (erforderlich)
+  - label?: string — i18n key or text (Default: "label")
+  - fControlName: string — Name of the FormControl (required)
   - appearance?: 'fill' | 'outline' (Default: 'outline')
   - type?: 'text' | 'password' (Default: 'text')
   - subscriptSizing?: 'dynamic' | 'fixed' (Default: 'dynamic')
 
-Beispiele
-1) Einfaches Suchfeld in einer Toolbar (Reactive Form)
+Examples
+1) Simple search field in a toolbar (Reactive Form)
 ```ts
 // component.ts
 form = this.fb.group({ search: [''] });
@@ -698,7 +698,7 @@ form = this.fb.group({ search: [''] });
 </form>
 ```
 
-2) Passwortfeld mit Appearance "fill"
+2) Password field with appearance "fill"
 ```ts
 // component.ts
 form = this.fb.group({ password: [''] });
@@ -719,25 +719,25 @@ form = this.fb.group({ password: [''] });
 <details>
 <summary>app-template-spinner — TemplateSpinnerComponent</summary>
 
-Kurze Beschreibung
-- Einfache Ladeanzeige (MatProgressSpinner). Ideal für Ladezustände in Listen, Dialogen oder Cards.
+Short description
+- Simple loading indicator (MatProgressSpinner). Ideal for loading states in lists, dialogs, or cards.
 
 API
 - Selector: app-template-spinner
 - Inputs/Outputs: —
 
-Beispiele
-1) Anzeige während eines HTTP‑Ladevorgangs
+Examples
+1) Display during an HTTP loading process
 ```html
 <section class="min-h-200 flex-center">
   <app-template-spinner *ngIf="loading; else content" />
   <ng-template #content>
-    <!-- eigentlicher Inhalt -->
+    <!-- actual content -->
   </ng-template>
 </section>
 ```
 
-2) Inline‑Spinner in einer Button‑Leiste
+2) Inline spinner in a button bar
 ```html
 <button mat-flat-button color="primary" [disabled]="loading">
   {{ 'general.save' | translate }}
@@ -750,24 +750,24 @@ Beispiele
 <details>
 <summary>app-template-table — TemplateTableComponent</summary>
 
-Kurze Beschreibung
-- Tabellenkomponente für lokale Daten (Array<T>) mit Paginierung und Sortierung via Angular Material. Unterstützt Custom‑Zellen per TemplateMap.
+Short description
+- Table component for local data (Array<T>) with pagination and sorting via Angular Material. Supports custom cells via a template map.
 
 API
 - Selector: app-template-table
 - Inputs:
-  - headers: string[] — Überschriften (i18n‑Keys), erforderlich
-  - displayedColumns: string[] — Spaltenkeys (unterstützt Nested Keys via "."), erforderlich
-  - tableData: T[] — Datenquelle, erforderlich
-  - cellTemplatesMap?: { [key: string]: TemplateRef } — Map für Custom‑Zellen
+  - headers: string[] — Headers (i18n keys), required
+  - displayedColumns: string[] — Column keys (supports nested keys via "."), required
+  - tableData: T[] — Data source, required
+  - cellTemplatesMap?: { [key: string]: TemplateRef } — Map for custom cells
   - pageSizes?: number[] (Default: [5,10,25,100])
   - initialPageSize?: number (Default: 10)
-  - totalItems?: number — Gesamtanzahl (für Paginator Anzeige)
+  - totalItems?: number — Total count (for paginator display)
 - Outputs:
   - paginationChange: { skip: number; limit: number }
 
-Beispiele
-1) Einfache Tabelle
+Examples
+1) Simple table
 ```ts
 // component.ts
 headers = signal(['general.name', 'general.email']);
@@ -786,7 +786,7 @@ total = computed(() => users().length); // optional
 />
 ```
 
-2) Custom‑Zelle per Template
+2) Custom cell via template
 ```html
 <ng-template #actions let-item>
   <app-edit-icon (clickEvent)="edit(item)" />
@@ -806,23 +806,23 @@ total = computed(() => users().length); // optional
 <details>
 <summary>app-template-table-search — TemplateTableSearchComponent</summary>
 
-Kurze Beschreibung
-- Leichtgewichtiges Suchfeld für Tabellen. Liest und schreibt direkt in service().search (WritableSignal<string>) mit Debounce in der Tabelle.
+Short description
+- Lightweight search field for tables. Reads and writes directly to service().search (WritableSignal<string>) with debouncing in the table.
 
 API
 - Selector: app-template-table-search
 - Inputs:
-  - service: { search: WritableSignal<string> } — erforderlich
+  - service: { search: WritableSignal<string> } — required
 
-Beispiele
-1) Suche im Tabellen‑Header
+Examples
+1) Search in the table header
 ```html
 <header class="flex gap-12 items-center">
   <app-template-table-search [service]="userService" />
 </header>
 ```
 
-2) Kombination aus Suche und Datumssuche
+2) Combination of search and date search
 ```html
 <header class="flex gap-12 items-center">
   <app-template-table-search [service]="customerService" />
@@ -835,26 +835,26 @@ Beispiele
 <details>
 <summary>app-template-table-fetch — TemplateTableEnterFetchComponent</summary>
 
-Kurze Beschreibung
-- Leistungsfähige Tabelle, die Daten per fetchData‑Funktion (Observable) vom Server lädt. Unterstützt Paginierung, Sortierung, Suche, Datumssuche und Custom‑Zellen.
+Short description
+- Powerful table that loads data from the server via a fetchData function (Observable). Supports pagination, sorting, search, date search, and custom cells.
 
 API
 - Selector: app-template-table-fetch
 - Inputs:
-  - fetchData: (params: BaseGetQueryParams) => Observable<ResponseWithRecords<T>> — erforderlich
-  - headers: string[] — i18n‑Keys, erforderlich
-  - displayedColumns: string[] — Spaltenkeys, erforderlich
+  - fetchData: (params: BaseGetQueryParams) => Observable<ResponseWithRecords<T>> — required
+  - headers: string[] — i18n keys, required
+  - displayedColumns: string[] — Column keys, required
   - cellTemplatesMap?: Record<string, TemplateRef>
-  - search?: string — aktueller Suchwert (z. B. service.search())
-  - searchDate?: string — ISO‑Datum (z. B. service.searchDate())
+  - search?: string — Current search value (e.g. service.search())
+  - searchDate?: string — ISO date (e.g. service.searchDate())
   - initialSort?: string — Format "field,ASC" | "field,DESC"
-  - tabValueActive?: boolean — optionaler zusätzlicher Filter
+  - tabValueActive?: boolean — Optional additional filter
   - pageSizes?: number[] (Default: [5,10,25,100])
   - initialPageSize?: number (Default: 10)
 - Outputs: —
 
-Beispiele
-1) Basisnutzung mit Service‑Funktion
+Examples
+1) Basic usage with a service function
 ```ts
 // component.ts
 fetchDataFn = (params: BaseGetQueryParams) => this.userService.getAllUsers(params);
@@ -869,7 +869,7 @@ columns = signal(['name','email']);
 />
 ```
 
-2) Mit Suche, Datum, Sortierung und Custom‑Zellen
+2) With search, date, sorting and custom cells
 ```html
 <header class="flex gap-12 items-center">
   <app-template-table-search [service]="userService" />
@@ -892,8 +892,8 @@ columns = signal(['name','email']);
 />
 ```
 
-Hinweise
-- Nested Keys in displayedColumns werden unterstützt (z. B. "address.city").
-- initialSort muss das Format "field,ASC" oder "field,DESC" haben.
+Notes
+- Nested keys in displayedColumns are supported (e.g. "address.city").
+- initialSort must have the format "field,ASC" or "field,DESC".
 
 </details>
