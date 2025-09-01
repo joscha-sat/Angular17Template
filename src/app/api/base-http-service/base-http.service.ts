@@ -232,7 +232,8 @@ export class GenericHttpService {
     }
 
     Object.entries(queryParams).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
+      // Skip undefined, null, and empty string values so they are not sent as query params
+      if (value !== undefined && value !== null && value !== '') {
         params = params.set(key, value);
       }
     });

@@ -1,5 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from '@angular/material/snack-bar';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { ComponentType } from '@angular/cdk/overlay';
 import { SnackbarComponentData } from '../shared/api-snackbar/api-snackbar.component';
 
