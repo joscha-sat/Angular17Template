@@ -6,7 +6,10 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authTokenInterceptor } from './other/interceptors/auth-token.interceptor';
 import { isLoadingInterceptor } from './other/interceptors/is-loading.interceptor';
 import { errorInterceptor } from './other/interceptors/error.interceptor';
-import { MAT_LUXON_DATE_FORMATS, provideLuxonDateAdapter, } from '@angular/material-luxon-adapter';
+import {
+  MAT_LUXON_DATE_FORMATS,
+  provideLuxonDateAdapter,
+} from '@angular/material-luxon-adapter';
 import { registerLocaleData } from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import { provideTranslateService } from '@ngx-translate/core';

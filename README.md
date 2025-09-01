@@ -27,6 +27,7 @@ A comprehensive Angular template with built-in features for rapid application de
 9. [💬 Dialogs](#-dialogs)
 10. [👨‍💻 Development](#-development)
 11. [📞 Contact](#-contact)
+12. [📦 Shared Components UI Docs](#-shared-components-ui-docs)
 
 ## ✨ Overview
 
@@ -510,3 +511,389 @@ For questions or support, contact:
 | Name               | Email                                        |
 |--------------------|----------------------------------------------|
 | **Joscha Sattler** | j.sattler@28apps.de or joscha.sattler@web.de |
+
+
+## 📦 Shared Components UI Docs
+
+This section serves as a compact UI documentation for the reusable Shared Components. Each component is briefly explained and shows at least two usage examples. Expansion panels (details/summary) are used to keep the view concise.
+
+<details>
+<summary>app-delete-icon — DeleteIconComponent</summary>
+
+Short description
+- Displays a Material icon (delete) and emits an event on click. Useful e.g. in table rows.
+
+API
+- Selector: app-delete-icon
+- Inputs:
+  - color?: string — CSS color (Default: var(--mat-sys-error))
+- Outputs:
+  - clickEvent: void — Emitted on click
+
+Examples
+1) Simple usage inside a card
+```html
+<div class="user-card">
+  {{ selectedUser.fullName }}
+  <app-delete-icon (clickEvent)="deleteUser(selectedUser)" />
+</div>
+```
+
+2) Custom color and used as a table cell action
+```html
+<!-- Table with custom color -->
+<ng-template #actions let-item>
+  <app-delete-icon color="crimson" (clickEvent)="onDelete(item)" />
+</ng-template>
+```
+
+</details>
+
+<details>
+<summary>app-edit-icon — EditIconComponent</summary>
+
+Short description
+- Displays a Material icon (edit) and emits an event on click. Ideal for edit actions.
+
+API
+- Selector: app-edit-icon
+- Inputs:
+  - color?: string — CSS color
+- Outputs:
+  - clickEvent: void — Emitted on click
+
+Examples
+1) Next to a title
+```html
+<h3 class="flex items-center gap-8">
+  {{ title }}
+  <app-edit-icon (clickEvent)="openEditDialog()" />
+</h3>
+```
+
+2) Together with the delete icon in an action bar
+```html
+<div class="flex gap-8">
+  <app-edit-icon color="#1565c0" (clickEvent)="onEdit(item)" />
+  <app-delete-icon (clickEvent)="onDelete(item)" />
+</div>
+```
+
+</details>
+
+<details>
+<summary>app-template-datepicker — TemplateDatepickerComponent</summary>
+
+Short description
+- Wraps the Angular Material Datepicker including label and form binding. Emits the selected date as an ISO string via dateChange. Optionally supports min/max date as well as label/field name. Can be used with a service that has a searchDate signal property.
+
+API
+- Selector: app-template-datepicker
+- Inputs:
+  - minDate?: Date
+  - maxDate?: Date
+  - label?: string — i18n key (Default: "general.select-date")
+  - fControlName?: string — Name of the FormControl (Default: "date")
+  - service?: { searchDate: WritableSignal<string> }
+- Outputs:
+  - dateChange: string — ISO date when changed
+
+Examples
+1) Standalone with handler (writes date to service signal)
+```ts
+// component.ts
+import { WritableSignal, signal } from '@angular/core';
+class DummyService { searchDate: WritableSignal<string> = signal(''); }
+const service = new DummyService();
+
+function onDateChange(iso: string) {
+  service.searchDate.set(iso);
+}
+```
+```html
+<!-- component.html -->
+<app-template-datepicker
+  [service]="service"
+  (dateChange)="onDateChange($event)"
+/>
+```
+
+2) With min/max and custom label/field name
+```html
+<app-template-datepicker
+  [minDate]="min"
+  [maxDate]="max"
+  label="filters.order-date"
+  fControlName="orderDate"
+  [service]="service"
+  (dateChange)="onDateChange($event)"
+/>
+```
+
+</details>
+
+<details>
+<summary>app-template-date-search — TemplateDateSearchComponent</summary>
+
+Short description
+- Provides a datepicker search field and writes the selected date directly into service().searchDate (WritableSignal<string>). Clearing the selection removes the filter.
+
+API
+- Selector: app-template-date-search
+- Inputs:
+  - service: { searchDate: WritableSignal<string> } — required
+
+Examples
+1) In a header bar for table filters
+```html
+<header class="flex gap-16 items-center">
+  <app-template-date-search [service]="customerService" />
+</header>
+```
+
+2) Together with a table component (date is automatically used as a query param)
+```html
+<!-- Header -->
+<app-template-date-search [service]="customerService" />
+
+<!-- Table -->
+<app-template-table-fetch
+  [headers]="headers()"
+  [columns]="columns()"
+  [fetchData]="fetchDataFn"
+  [searchDate]="customerService.searchDate()"
+/>
+```
+
+Note
+- Combining regular search and date search is possible (see the “📅 Date Search” section above).
+
+</details>
+
+
+<details>
+<summary>app-template-input — TemplateInputComponent</summary>
+
+Short description
+- Input field based on Angular Material, directly usable in Reactive Forms (automatically binds to the surrounding FormGroup via FormGroupDirective).
+
+API
+- Selector: app-template-input
+- Inputs:
+  - label?: string — i18n key or text (Default: "label")
+  - fControlName: string — Name of the FormControl (required)
+  - appearance?: 'fill' | 'outline' (Default: 'outline')
+  - type?: 'text' | 'password' (Default: 'text')
+  - subscriptSizing?: 'dynamic' | 'fixed' (Default: 'dynamic')
+
+Examples
+1) Simple search field in a toolbar (Reactive Form)
+```ts
+// component.ts
+form = this.fb.group({ search: [''] });
+```
+```html
+<form [formGroup]="form" class="flex items-center gap-12">
+  <app-template-input label="general.search" fControlName="search" />
+</form>
+```
+
+2) Password field with appearance "fill"
+```ts
+// component.ts
+form = this.fb.group({ password: [''] });
+```
+```html
+<form [formGroup]="form">
+  <app-template-input
+    label="auth.password"
+    fControlName="password"
+    appearance="fill"
+    type="password"
+  />
+</form>
+```
+
+</details>
+
+<details>
+<summary>app-template-spinner — TemplateSpinnerComponent</summary>
+
+Short description
+- Simple loading indicator (MatProgressSpinner). Ideal for loading states in lists, dialogs, or cards.
+
+API
+- Selector: app-template-spinner
+- Inputs/Outputs: —
+
+Examples
+1) Display during an HTTP loading process
+```html
+<section class="min-h-200 flex-center">
+  <app-template-spinner *ngIf="loading; else content" />
+  <ng-template #content>
+    <!-- actual content -->
+  </ng-template>
+</section>
+```
+
+2) Inline spinner in a button bar
+```html
+<button mat-flat-button color="primary" [disabled]="loading">
+  {{ 'general.save' | translate }}
+  <app-template-spinner *ngIf="loading" />
+</button>
+```
+
+</details>
+
+<details>
+<summary>app-template-table — TemplateTableComponent</summary>
+
+Short description
+- Table component for local data (Array<T>) with pagination and sorting via Angular Material. Supports custom cells via a template map.
+
+API
+- Selector: app-template-table
+- Inputs:
+  - headers: string[] — Headers (i18n keys), required
+  - displayedColumns: string[] — Column keys (supports nested keys via "."), required
+  - tableData: T[] — Data source, required
+  - cellTemplatesMap?: { [key: string]: TemplateRef } — Map for custom cells
+  - pageSizes?: number[] (Default: [5,10,25,100])
+  - initialPageSize?: number (Default: 10)
+  - totalItems?: number — Total count (for paginator display)
+- Outputs:
+  - paginationChange: { skip: number; limit: number }
+
+Examples
+1) Simple table
+```ts
+// component.ts
+headers = signal(['general.name', 'general.email']);
+columns = signal(['name', 'email']);
+users = signal<User[]>([]);
+
+total = computed(() => users().length); // optional
+```
+```html
+<app-template-table
+  [headers]="headers()"
+  [displayedColumns]="columns()"
+  [tableData]="users()"
+  [totalItems]="total()"
+  (paginationChange)="onPage($event)"
+/>
+```
+
+2) Custom cell via template
+```html
+<ng-template #actions let-item>
+  <app-edit-icon (clickEvent)="edit(item)" />
+  <app-delete-icon (clickEvent)="remove(item)" />
+</ng-template>
+
+<app-template-table
+  [headers]="['general.name','general.actions']"
+  [displayedColumns]="['name','actions']"
+  [tableData]="users()"
+  [cellTemplatesMap]="{ actions }"
+/>
+```
+
+</details>
+
+<details>
+<summary>app-template-table-search — TemplateTableSearchComponent</summary>
+
+Short description
+- Lightweight search field for tables. Reads and writes directly to service().search (WritableSignal<string>) with debouncing in the table.
+
+API
+- Selector: app-template-table-search
+- Inputs:
+  - service: { search: WritableSignal<string> } — required
+
+Examples
+1) Search in the table header
+```html
+<header class="flex gap-12 items-center">
+  <app-template-table-search [service]="userService" />
+</header>
+```
+
+2) Combination of search and date search
+```html
+<header class="flex gap-12 items-center">
+  <app-template-table-search [service]="customerService" />
+  <app-template-date-search [service]="customerService" />
+</header>
+```
+
+</details>
+
+<details>
+<summary>app-template-table-fetch — TemplateTableEnterFetchComponent</summary>
+
+Short description
+- Powerful table that loads data from the server via a fetchData function (Observable). Supports pagination, sorting, search, date search, and custom cells.
+
+API
+- Selector: app-template-table-fetch
+- Inputs:
+  - fetchData: (params: BaseGetQueryParams) => Observable<ResponseWithRecords<T>> — required
+  - headers: string[] — i18n keys, required
+  - displayedColumns: string[] — Column keys, required
+  - cellTemplatesMap?: Record<string, TemplateRef>
+  - search?: string — Current search value (e.g. service.search())
+  - searchDate?: string — ISO date (e.g. service.searchDate())
+  - initialSort?: string — Format "field,ASC" | "field,DESC"
+  - tabValueActive?: boolean — Optional additional filter
+  - pageSizes?: number[] (Default: [5,10,25,100])
+  - initialPageSize?: number (Default: 10)
+- Outputs: —
+
+Examples
+1) Basic usage with a service function
+```ts
+// component.ts
+fetchDataFn = (params: BaseGetQueryParams) => this.userService.getAllUsers(params);
+headers = signal(['general.name','general.email']);
+columns = signal(['name','email']);
+```
+```html
+<app-template-table-fetch
+  [headers]="headers()"
+  [displayedColumns]="columns()"
+  [fetchData]="fetchDataFn"
+/>
+```
+
+2) With search, date, sorting and custom cells
+```html
+<header class="flex gap-12 items-center">
+  <app-template-table-search [service]="userService" />
+  <app-template-date-search [service]="userService" />
+</header>
+
+<ng-template #actions let-item>
+  <app-edit-icon (clickEvent)="edit(item)" />
+  <app-delete-icon (clickEvent)="remove(item)" />
+</ng-template>
+
+<app-template-table-fetch
+  [headers]="['general.name','general.actions']"
+  [displayedColumns]="['name','actions']"
+  [cellTemplatesMap]="{ actions }"
+  [fetchData]="fetchDataFn"
+  [search]="userService.search()"
+  [searchDate]="userService.searchDate()"
+  initialSort="name,ASC"
+/>
+```
+
+Notes
+- Nested keys in displayedColumns are supported (e.g. "address.city").
+- initialSort must have the format "field,ASC" or "field,DESC".
+
+</details>
