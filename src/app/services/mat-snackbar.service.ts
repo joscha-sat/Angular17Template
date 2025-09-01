@@ -1,9 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import {
-  MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
-} from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from '@angular/material/snack-bar';
 import { ComponentType } from '@angular/cdk/overlay';
 import { SnackbarComponentData } from '../shared/api-snackbar/api-snackbar.component';
 
@@ -29,7 +25,7 @@ export class MatSnackbarService {
       horizontalPosition,
       verticalPosition,
       panelClass: [`snackbar-${type}`],
-      duration: 3000,
+      duration: 4000,
       data: { ...data, title: type, plural },
     });
   }
