@@ -11,8 +11,7 @@
         <!-- If a custom template exists for this column, use it -->
         <!-- otherwise, fall back to the default template -->
         <td mat-cell *matCellDef="let element">
-          <ng-container
-            *ngTemplateOutlet="
+          <ng-container *ngTemplateOutlet="
               cellTemplatesMap()[column]
                 ? customCellTemplate
                 : defaultCellTemplate;
@@ -22,8 +21,7 @@
                 column: column,
               }
             "
-          >
-          </ng-container>
+           />
         </td>
       </ng-container>
     }
@@ -35,12 +33,11 @@
   </table>
 
   <!-- Pagination control for navigating through table data -->
-  <mat-paginator
-    (page)="handlePageEvent($event)"
+  <mat-paginator (page)="handlePageEvent($event)"
     [length]="totalItemsCount()"
     [pageSizeOptions]="pageSizes()"
     [pageSize]="initialPageSize()"
-  ></mat-paginator>
+   />
 
   <!-- TEMPLATE DEFINITIONS -->
 
@@ -52,15 +49,14 @@
     let-value
   >
     <!-- Delegates rendering to the column-specific template from cellTemplatesMap -->
-    <ng-container
-      *ngTemplateOutlet="
+    <ng-container *ngTemplateOutlet="
         cellTemplatesMap()[column];
         context: {
           $implicit: value,
           object: element,
         }
       "
-    ></ng-container>
+     />
   </ng-template>
 
   <!-- Default template used when no custom template exists for a column -->
