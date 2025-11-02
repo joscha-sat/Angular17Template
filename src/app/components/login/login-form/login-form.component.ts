@@ -25,7 +25,7 @@ import { MatButton } from '@angular/material/button';
   styleUrl: './login-form.component.scss',
 })
 export class LoginFormComponent {
-  roter = inject(Router);
+  router = inject(Router);
   authService = inject(AuthService);
   private fb: FormBuilder = inject(FormBuilder);
   form = this.fb.group({
@@ -39,8 +39,9 @@ export class LoginFormComponent {
 
   submit() {
     if (this.form?.invalid) return;
+    
     this.authService.login(this.loginBody).subscribe(() => {
-      this.roter.navigate(['/' + ROUTES.TENANT]).then();
+      this.router.navigate(['/' + ROUTES.TENANT]).then();
     });
   }
 }
