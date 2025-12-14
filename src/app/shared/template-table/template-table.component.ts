@@ -1,18 +1,9 @@
-import {
-  AfterViewInit,
-  Component,
-  DestroyRef,
-  inject,
-  input,
-  output,
-  TemplateRef,
-  viewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, input, output, TemplateRef, viewChild, } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-template-table',
@@ -47,10 +38,7 @@ export class TemplateTableComponent<T> implements AfterViewInit {
   readonly paginator = viewChild(MatPaginator);
   readonly sort = viewChild(MatSort);
 
-  private destroyRef = inject(DestroyRef);
-
   // hooks --------------------------------------------------- ||
-
   ngAfterViewInit() {
     this.setupDataSourcePaginator();
     this.setupDataSourceSort();
