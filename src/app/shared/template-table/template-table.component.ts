@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, input, output, TemplateRef, viewChild, } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  input,
+  output,
+  TemplateRef,
+  viewChild,
+} from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { DatePipe, NgTemplateOutlet } from '@angular/common';

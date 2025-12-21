@@ -42,7 +42,6 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
   }
 
   abstract setTableRefreshService(): {
-    [key: string]: unknown;
     refreshObservable$: Observable<unknown>;
   }; // Must return the service to refresh data
   abstract setTableRefreshMethodName(): string; // Must return the method name to call
@@ -74,11 +73,14 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
     const service = this.setTableRefreshService();
     const methodName = this.setTableRefreshMethodName();
 
+    // Type assertion to allow accessing methods by string key
+    const serviceWithMethods = service as { [key: string]: unknown };
+
     // Explicitly cast the return type to Observable<ResponseWithRecords<T>>
     return this.refresh$.pipe(
       switchMap(
         () =>
-          (service[methodName] as Function)(params) as Observable<
+          (serviceWithMethods[methodName] as Function)(params) as Observable<
             ResponseWithRecords<T>
           >,
       ),
