@@ -1,4 +1,3 @@
-import { provideAnimations } from '@angular/platform-browser/animations';
 import { ApplicationConfig, LOCALE_ID, Provider } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
@@ -47,7 +46,6 @@ function provideLuxonDateAdapterWithLocale(): Provider[] {
 export const appConfig: ApplicationConfig = {
   providers: [
     { provide: LOCALE_ID, useValue: 'de-DE' },
-    provideAnimations(),
     ...provideLuxonDateAdapterWithLocale(),
     provideHttpClient(
       withInterceptors([
