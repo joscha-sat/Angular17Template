@@ -91,7 +91,7 @@ export class GenericHttpService {
     return this.http
       .get<T>(this.getUrl(endpoint, id))
       .pipe(
-        map((record) =>
+        map((record: T) =>
           modelType ? new modelType(record as Partial<T>) : record,
         ),
       );
@@ -109,7 +109,10 @@ export class GenericHttpService {
     body: T,
     i18nKeyForElement: string,
   ): Observable<T> {
-    const action = this.http.post<T>(this.getUrl(endpoint), body);
+    const action: Observable<T> = this.http.post<T>(
+      this.getUrl(endpoint),
+      body,
+    );
     return this.httpAction(action, i18nKeyForElement, 'POST');
   }
 
@@ -146,7 +149,10 @@ export class GenericHttpService {
     id: idTypes,
     i18nKeyForElement: string,
   ): Observable<T> {
-    const action = this.http.patch<T>(this.getUrl(endpoint, id), body);
+    const action: Observable<T> = this.http.patch<T>(
+      this.getUrl(endpoint, id),
+      body,
+    );
     return this.httpAction(action, i18nKeyForElement, 'PATCH');
   }
 
@@ -184,7 +190,9 @@ export class GenericHttpService {
     id: idTypes,
     i18nKeyForElement: string,
   ): Observable<unknown> {
-    const action = this.http.delete(this.getUrl(endpoint, id));
+    const action: Observable<unknown> = this.http.delete(
+      this.getUrl(endpoint, id),
+    );
     return this.httpAction(action, i18nKeyForElement, 'DELETE');
   }
 
