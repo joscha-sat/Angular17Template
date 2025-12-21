@@ -42,7 +42,7 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
   }
 
   abstract setTableRefreshService(): {
-    [key: string]: any;
+    [key: string]: unknown;
     refreshObservable$: Observable<unknown>;
   }; // Must return the service to refresh data
   abstract setTableRefreshMethodName(): string; // Must return the method name to call
