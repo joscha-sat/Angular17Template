@@ -179,7 +179,7 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   // Resets to first page when search criteria change
   private resetPaginatorToFirstPage(): void {
     if (this.paginator()) {
-      this.paginator()!.firstPage();
+      this.paginator()?.firstPage();
     }
     this.skip.set(0);
   }

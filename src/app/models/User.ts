@@ -13,10 +13,10 @@ export class User extends BaseModel<User> {
   firstName!: string;
   lastName!: string;
   roleId!: string;
-  password?: string | undefined;
-  phone?: string | undefined;
-  active?: boolean | undefined;
-  inviteAcceptedAt?: string | undefined;
+  password?: string;
+  phone?: string;
+  active?: boolean;
+  inviteAcceptedAt?: string;
 
   constructor(params: Partial<User>) {
     super(params);

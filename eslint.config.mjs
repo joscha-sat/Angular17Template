@@ -46,6 +46,14 @@ const tsRules = {
     {type: "element", prefix: "app", style: "kebab-case"},
   ],
   "@typescript-eslint/no-explicit-any": "warn",
+  "@typescript-eslint/no-non-null-assertion": "warn",
+  "@typescript-eslint/no-unsafe-assignment": "warn",
+  "@typescript-eslint/no-unsafe-call": "warn",
+  "@typescript-eslint/no-unsafe-member-access": "warn",
+  "@typescript-eslint/await-thenable": "warn",
+  "@typescript-eslint/no-floating-promises": "warn",
+  "@typescript-eslint/no-misused-promises": "warn",
+  "@typescript-eslint/no-unnecessary-condition": "warn",
   "@typescript-eslint/explicit-function-return-type": [
     "warn",
     {

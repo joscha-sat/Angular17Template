@@ -29,8 +29,9 @@ export class TenantDashboardViewComponent implements OnInit {
 
   getTenantIdByUrl(): void {
     this.route.paramMap.subscribe((paramMap) => {
-      if (paramMap.has('id')) {
-        this.getSelectedTenantById(paramMap.get('id')!);
+      const id = paramMap.get('id');
+      if (id) {
+        this.getSelectedTenantById(id);
       }
     });
   }

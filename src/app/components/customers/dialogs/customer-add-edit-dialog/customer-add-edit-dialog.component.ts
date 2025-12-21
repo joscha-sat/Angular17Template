@@ -47,7 +47,7 @@ export class CustomerAddEditDialogComponent implements OnInit {
 
   get customerFromFormData(): Customer {
     // Reads form data and prepares a user object
-    const formData = this.form?.value;
+    const formData = this.form?.value as { name?: string };
     return new Customer({
       name: formData.name,
     });

@@ -80,9 +80,11 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
     return this.refresh$.pipe(
       switchMap(
         () =>
-          (serviceWithMethods[methodName] as Function)(params) as Observable<
-            ResponseWithRecords<T>
-          >,
+          (
+            serviceWithMethods[methodName] as (
+              params: unknown,
+            ) => Observable<ResponseWithRecords<T>>
+          )(params) as Observable<ResponseWithRecords<T>>,
       ),
     );
   };

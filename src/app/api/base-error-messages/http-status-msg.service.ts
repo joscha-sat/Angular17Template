@@ -38,7 +38,11 @@ export class HttpStatusMsgService {
     endpoint?: ApiRoutes | string,
   ): string => {
     const resolvedEndpoint = this.resolveEndpoint(err, endpoint);
-    const errorKey = err.error?.key?.toLowerCase() || '';
+    const errorKey =
+      (typeof (err.error as { key?: string })?.key === 'string'
+        ? (err.error as { key?: string }).key
+        : ''
+      ).toLowerCase() || '';
 
     return (
       this.getTranslatedMessage(resolvedEndpoint, method, errorKey) ||
@@ -87,22 +91,28 @@ export class HttpStatusMsgService {
     const translationKey = `http-error.${endpoint}.${method?.toLowerCase()}_${errorKey}`;
     const genericTranslationKey = `http-error.${errorKey}`;
 
-    let translated = this.translateService.instant(translationKey);
+    let translated: string = this.translateService.instant(
+      translationKey,
+    ) as string;
     if (translated === translationKey) {
-      translated = this.translateService.instant(genericTranslationKey);
+      translated = this.translateService.instant(
+        genericTranslationKey,
+      ) as string;
     }
 
     return translated !== genericTranslationKey ? translated : null;
   }
 
   private getErrorMessage(err: HttpErrorResponse): string | null {
-    return err.error?.message || null;
+    return typeof (err.error as { message?: string })?.message === 'string'
+      ? (err.error as { message?: string }).message
+      : null;
   }
 
   private getStatusMessage(err: HttpErrorResponse): string {
     const statusKey = STATUS_CODES[err.status];
     const statusMessage = statusKey
-      ? this.translateService.instant(statusKey)
+      ? (this.translateService.instant(statusKey) as string)
       : '';
     return statusMessage || `Unknown error, status code ${err.status}.`;
   }

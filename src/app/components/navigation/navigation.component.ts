@@ -29,7 +29,7 @@ export class NavigationComponent implements OnInit {
         'settings.title',
         'map.title',
       ])
-      .subscribe((translations) => {
+      .subscribe((translations: { [key: string]: string }) => {
         this.navItems.set([
           // tenant
           {

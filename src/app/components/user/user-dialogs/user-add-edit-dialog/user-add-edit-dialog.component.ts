@@ -29,25 +29,33 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   model?: User;
   form?: FormGroup;
   createUserMode = signal(true);
-  private fb = inject(FormBuilder);
-  private userService = inject(UserService);
-  private translateService = inject(TranslateService);
+  private readonly fb = inject(FormBuilder);
+  private readonly userService = inject(UserService);
+  private readonly translateService = inject(TranslateService);
+
   radioItems = signal([
-    { name: this.translateService.instant('general.active') },
-    { name: this.translateService.instant('general.inactive') },
+    { name: this.translateService.instant('general.active') as string },
+    { name: this.translateService.instant('general.inactive') as string },
   ]);
 
   get userFromFormData(): User {
     // Reads form data and prepares a user object
-    const formData = this.form?.value;
+    const formData = this.form?.value as {
+      firstName?: string;
+      lastName?: string;
+      phone?: string;
+      active?: boolean;
+      email?: string;
+      role?: { id: string };
+    };
 
     return new User({
-      firstName: formData.firstName,
+      firstName: formData.firstName as string,
       lastName: formData.lastName,
       phone: formData.phone,
       active: formData.active,
       email: formData.email,
-      roleId: formData.role.id,
+      roleId: formData.role?.id,
     });
   }
 
