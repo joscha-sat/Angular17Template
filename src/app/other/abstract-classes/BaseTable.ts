@@ -41,15 +41,18 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
     ).subscribe((results) => headers.set(results));
   }
 
-  abstract setTableRefreshService(): any; // Must return the service to refresh data
+  abstract setTableRefreshService(): {
+    [key: string]: any;
+    refreshObservable$: Observable<unknown>;
+  }; // Must return the service to refresh data
   abstract setTableRefreshMethodName(): string; // Must return the method name to call
 
-  setCustomParams(): Record<string, any> | null {
+  setCustomParams(): Record<string, unknown> | null {
     return null;
   } // Optional: override to add extra params
 
   // Builds query params, skips if noParams is true
-  buildParams(baseParams: BaseGetQueryParams): Record<string, any> {
+  buildParams(baseParams: BaseGetQueryParams): Record<string, unknown> {
     if (this.noParams) return {};
     return {
       limit: baseParams.limit,
@@ -74,7 +77,10 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
     // Explicitly cast the return type to Observable<ResponseWithRecords<T>>
     return this.refresh$.pipe(
       switchMap(
-        () => service[methodName](params) as Observable<ResponseWithRecords<T>>,
+        () =>
+          (service[methodName] as Function)(params) as Observable<
+            ResponseWithRecords<T>
+          >,
       ),
     );
   };

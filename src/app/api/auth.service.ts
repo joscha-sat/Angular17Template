@@ -24,6 +24,15 @@ export type LoginResponse = {
   user: User;
 };
 
+export interface RefreshTokenResponse {
+  status: number;
+  data: {
+    access: string;
+    refresh: string;
+    user: User;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -43,7 +52,7 @@ export class AuthService {
 
   login(loginBody: LoginBody): Observable<void> {
     const url = `${this.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`;
-    return this.http.post<any>(url, loginBody).pipe(
+    return this.http.post<LoginResponse>(url, loginBody).pipe(
       map((response: LoginResponse) => {
         this.setTokens(response.access_token, response.refresh_token);
         this.setLoggedInUser(response?.user);
@@ -57,9 +66,9 @@ export class AuthService {
     return this.router.navigateByUrl(ROUTES.LOGIN);
   }
 
-  sendRefreshToken(): Observable<any> {
+  sendRefreshToken(): Observable<RefreshTokenResponse> {
     const url = this.buildUrl(ApiRoutes.AUTH, 'refreshToken');
-    return this.http.post<any>(url, {
+    return this.http.post<RefreshTokenResponse>(url, {
       refreshToken: this.getFromLocalStorage(StorageKeys.REFRESH_TOKEN),
     });
   }

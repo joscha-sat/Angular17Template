@@ -1,5 +1,5 @@
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { ApplicationConfig, LOCALE_ID } from '@angular/core';
+import { ApplicationConfig, LOCALE_ID, Provider } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -34,7 +34,7 @@ const LUXON_DATE_FORMAT_CONFIG = {
   },
 };
 
-function provideLuxonDateAdapterWithLocale() {
+function provideLuxonDateAdapterWithLocale(): Provider[] {
   return [
     provideLuxonDateAdapter(LUXON_DATE_FORMAT_CONFIG),
     {

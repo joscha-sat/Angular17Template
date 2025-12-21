@@ -66,17 +66,36 @@ export class TemplateTableComponent<T> implements AfterViewInit {
     }
   }
 
-  extractNestedProperty<T>(item: T, key: string): any {
-    const keys = key.split('.');
-    let value: any = item;
+  extractNestedProperty<T>(
+    item: T,
+    key: string,
+  ): string | number | Date | null | undefined {
+    const value = this.resolvePath(item, key);
 
-    for (const k of keys) {
-      if (value && Object.hasOwn(value, k)) {
-        value = value[k];
-      } else {
-        return null;
-      }
+    if (this.isAllowedType(value)) {
+      return value;
     }
-    return value;
+
+    return null;
+  }
+
+  private resolvePath(item: any, key: string): unknown {
+    return key.split('.').reduce((acc, k) => {
+      return acc && typeof acc === 'object' ? acc[k] : undefined;
+    }, item);
+  }
+
+  private isAllowedType(
+    value: unknown,
+  ): value is string | number | Date | null | undefined {
+    if (value === null || value === undefined) {
+      return true;
+    }
+
+    return (
+      typeof value === 'string' ||
+      typeof value === 'number' ||
+      value instanceof Date
+    );
   }
 }

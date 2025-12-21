@@ -1,5 +1,5 @@
 import { catchError, Observable, switchMap, throwError } from 'rxjs';
-import { AuthService } from '../../api/auth.service';
+import { AuthService, RefreshTokenResponse } from '../../api/auth.service';
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -9,7 +9,6 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { User } from '../../models/User';
 
 const TOKEN_REFRESH_SUCCESS_STATUS = HttpStatusCode.Created;
 
@@ -67,30 +66,25 @@ function handleHttpError(
   }
 
   return authService.sendRefreshToken().pipe(
-    switchMap(
-      (response: {
-        status: number;
-        data: { access: string; refresh: string; user: any };
-      }) => {
-        if (response.status === TOKEN_REFRESH_SUCCESS_STATUS) {
-          // Update tokens and user data
-          authService.setTokens(response.data.access, response.data.refresh);
-          authService.setLoggedInUser(response.data.user as User);
-          // Clone the original request with the new access token
-          const requestWithNewToken = addAuthorizationHeader(
-            originalRequest,
-            authService,
-          );
-          // Retry the original request with the new token
-          return next(requestWithNewToken);
-        } else {
-          authService.logout();
-          return throwError(() => createError(response)) as Observable<
-            HttpEvent<unknown>
-          >;
-        }
-      },
-    ),
+    switchMap((response: RefreshTokenResponse) => {
+      if (response.status === TOKEN_REFRESH_SUCCESS_STATUS) {
+        // Update tokens and user data
+        authService.setTokens(response.data.access, response.data.refresh);
+        authService.setLoggedInUser(response.data.user);
+        // Clone the original request with the new access token
+        const requestWithNewToken = addAuthorizationHeader(
+          originalRequest,
+          authService,
+        );
+        // Retry the original request with the new token
+        return next(requestWithNewToken);
+      } else {
+        authService.logout();
+        return throwError(() => createError(response)) as Observable<
+          HttpEvent<unknown>
+        >;
+      }
+    }),
     catchError((refreshError) => {
       authService.logout();
       return throwError(() => createError(refreshError)) as Observable<

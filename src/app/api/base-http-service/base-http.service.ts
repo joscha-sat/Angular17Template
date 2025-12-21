@@ -51,14 +51,14 @@ export class GenericHttpService {
    * @param modelType - Optional: The constructor of the model class (e.g., User)
    * @returns An Observable of the response containing the total count and list of records
    */
-  getAll<T = any>(
+  getAll<T>(
     endpoint: string,
-    queryParams?: { [key: string]: any },
+    queryParams?: { [key: string]: unknown },
     modelType?: new (data: Partial<T>) => T,
   ): Observable<ResponseWithRecords<T>> {
     const params = this.generateParams(queryParams);
     return this.http
-      .get<ResponseWithRecords<any>>(this.getUrl(endpoint), {
+      .get<ResponseWithRecords<T>>(this.getUrl(endpoint), {
         params,
       })
       .pipe(
@@ -83,13 +83,13 @@ export class GenericHttpService {
    * @param modelType - Optional: The constructor of the model class (e.g., User)
    * @returns An Observable of the single record
    */
-  getOne<T = any>(
+  getOne<T>(
     endpoint: string,
     id: idTypes,
     modelType?: new (data: Partial<T>) => T,
   ): Observable<T> {
     return this.http
-      .get<any>(this.getUrl(endpoint, id))
+      .get<T>(this.getUrl(endpoint, id))
       .pipe(
         map((record) =>
           modelType ? new modelType(record as Partial<T>) : record,
@@ -225,7 +225,7 @@ export class GenericHttpService {
    * @param queryParams - An object with query parameters as key-value pairs
    * @returns An HttpParams object with the generated parameters
    */
-  private generateParams(queryParams?: { [key: string]: any }): HttpParams {
+  private generateParams(queryParams?: { [key: string]: unknown }): HttpParams {
     let params = new HttpParams();
     if (!queryParams) {
       return params;
@@ -234,7 +234,7 @@ export class GenericHttpService {
     Object.entries(queryParams).forEach(([key, value]) => {
       // Skip undefined, null, and empty string values so they are not sent as query params
       if (value !== undefined && value !== null && value !== '') {
-        params = params.set(key, value);
+        params = params.set(key, value as string | number | boolean);
       }
     });
 

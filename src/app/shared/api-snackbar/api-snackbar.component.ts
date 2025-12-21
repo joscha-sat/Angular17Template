@@ -11,7 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { MethodType } from '../../services/mat-snackbar.service';
 import { DatePipe } from '@angular/common';
 
-export type SnackbarComponentData<T = any> = {
+export type SnackbarComponentData<T = unknown> = {
   title: 'success' | 'error' | 'info';
   data?: T;
   i18nKeyOrMessage?: string;

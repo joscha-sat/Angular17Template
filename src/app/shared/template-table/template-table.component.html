@@ -19,15 +19,14 @@
              />
           } @else {
             <!-- dates -->
-            @if (extractNestedProperty(element, column) | isDate) {
-              {{
-                extractNestedProperty(element, column)
-                  | date: 'dd.MM.yyyy HH:mm'
-              }}
-            } @else {
-              {{ extractNestedProperty(element, column) }}
-            }
-            <!-- raw value -->
+            <ng-container *ngTemplateOutlet="
+                defaultCellTemplate;
+                context: {
+                  $implicit: extractNestedProperty(element, column),
+                  object: element,
+                }
+              "
+             />
           }
 
           <!-- Default rendering -->
@@ -46,4 +45,15 @@
     [pageSizeOptions]="pageSizes()"
     [pageSize]="initialPageSize()"
    />
+
+  <!-- Default template used when no custom template exists for a column -->
+  <ng-template #defaultCellTemplate let-value>
+    <!-- For date values: format as DD.MM.YYYY HH:MM -->
+    @if (value | isDate) {
+      {{ value | date: 'dd.MM.yyyy HH:mm' }}
+    } @else {
+      <!-- For all other values: display as plain text -->
+      {{ value }}
+    }
+  </ng-template>
 </div>

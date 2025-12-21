@@ -121,14 +121,17 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
    * Safely extracts a value from a potentially nested object structure.
    * Returns null if any part of the path is undefined or null.
    */
-  extractNestedProperty<U>(obj: U, path: string): any {
-    return path.split('.').reduce((current: any, key) => {
+  extractNestedProperty<U>(
+    obj: U,
+    path: string,
+  ): string | number | Date | null | undefined {
+    return path.split('.').reduce((current: unknown, key) => {
       return current &&
         typeof current === 'object' &&
         Object.hasOwn(current, key)
-        ? current[key]
+        ? (current as Record<string, unknown>)[key]
         : null;
-    }, obj);
+    }, obj) as string | number | Date | null | undefined;
   }
 
   // --- Private Initialization Methods ---
