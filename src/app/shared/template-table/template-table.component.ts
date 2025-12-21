@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  input,
-  output,
-  TemplateRef,
-  viewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, input, output, TemplateRef, viewChild, } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { DatePipe, NgTemplateOutlet } from '@angular/common';
@@ -79,9 +72,12 @@ export class TemplateTableComponent<T> implements AfterViewInit {
     return null;
   }
 
-  private resolvePath(item: any, key: string): unknown {
+  private resolvePath(item: unknown, key: string): unknown {
     return key.split('.').reduce((acc, k) => {
-      return acc && typeof acc === 'object' ? acc[k] : undefined;
+      if (acc && typeof acc === 'object') {
+        return (acc as Record<string, unknown>)[k];
+      }
+      return undefined;
     }, item);
   }
 
