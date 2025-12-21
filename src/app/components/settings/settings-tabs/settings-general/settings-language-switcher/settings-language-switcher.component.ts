@@ -8,10 +8,10 @@ import {
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { LANGUAGE_FULL, Languages } from '../../../../../other/enums/languages';
 
-interface LanguageOption {
+type LanguageOption = {
   name: string;
   id: string;
-}
+};
 
 @Component({
   selector: 'app-settings-language-switcher',
@@ -40,12 +40,15 @@ export class SettingsLanguageSwitcherComponent implements OnInit {
 
   initLanguageFormValue(): void {
     const language: string | null = localStorage.getItem('tuiLanguage');
+
+    const englishValue: { id: Languages; label: string } = {
+      id: Languages.ENGLISH,
+      label: 'English',
+    };
+
     switch (language) {
       case LANGUAGE_FULL.ENGLISH: {
-        this.form.controls.language.setValue({
-          id: Languages.ENGLISH,
-          label: 'English',
-        });
+        this.form.controls.language.setValue(englishValue);
         break;
       }
       case LANGUAGE_FULL.GERMAN: {
@@ -53,6 +56,10 @@ export class SettingsLanguageSwitcherComponent implements OnInit {
           id: Languages.GERMAN,
           label: 'German',
         });
+        break;
+      }
+      default: {
+        this.form.controls.language.setValue(englishValue);
         break;
       }
     }

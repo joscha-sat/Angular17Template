@@ -48,8 +48,8 @@ export class CustomerAddEditDialogComponent implements OnInit {
   model?: Customer;
   form?: FormGroup;
   isCreateCustomerMode: WritableSignal<boolean> = signal(true);
-  private fb: FormBuilder = inject(FormBuilder);
-  private customerService: CustomerService = inject(CustomerService);
+  private readonly fb: FormBuilder = inject(FormBuilder);
+  private readonly customerService: CustomerService = inject(CustomerService);
 
   get customerFromFormData(): Customer {
     // Reads form data and prepares a user object
@@ -92,7 +92,9 @@ export class CustomerAddEditDialogComponent implements OnInit {
   }
 
   updateCustomer(): void {
-    if (!this.model) return;
+    if (!this.model) {
+      return;
+    }
     this.customerService
       .updateCustomerById(this.model.id, this.customerFromFormData)
       .subscribe();

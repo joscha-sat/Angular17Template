@@ -28,21 +28,21 @@ export type LoginResponse = {
   user: User;
 };
 
-export interface RefreshTokenResponse {
+export type RefreshTokenResponse = {
   status: number;
   data: {
     access: string;
     refresh: string;
     user: User;
   };
-}
+};
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private http: HttpClient = inject(HttpClient);
-  private router: Router = inject(Router);
+  private readonly http: HttpClient = inject(HttpClient);
+  private readonly router: Router = inject(Router);
 
   private readonly baseUrl: string = environment.baseUrl;
   private loggedInUser?: User;
@@ -96,7 +96,9 @@ export class AuthService {
   }
 
   getLoggedInUser(): User | null {
-    if (this.loggedInUser) return this.loggedInUser;
+    if (this.loggedInUser) {
+      return this.loggedInUser;
+    }
 
     const userJSON: string | null = this.getFromLocalStorage(StorageKeys.USER);
     return userJSON ? new User(JSON.parse(userJSON)) : null;

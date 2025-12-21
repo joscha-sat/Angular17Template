@@ -15,7 +15,7 @@ export type MethodType = 'POST' | 'PATCH' | 'DELETE';
   providedIn: 'root',
 })
 export class MatSnackbarService {
-  private _snackBar: MatSnackBar = inject(MatSnackBar);
+  private readonly _snackBar: MatSnackBar = inject(MatSnackBar);
 
   openSnackBar(
     component: ComponentType<unknown>,

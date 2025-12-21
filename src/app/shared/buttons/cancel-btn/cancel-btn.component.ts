@@ -9,7 +9,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './cancel-btn.component.scss',
 })
 export class CancelBtnComponent {
-  cancelEvent: OutputEmitterRef<void> = output<void>();
+  readonly cancelEvent: OutputEmitterRef<void> = output<void>();
 
   cancel(): void {
     this.cancelEvent.emit();

@@ -9,9 +9,9 @@ import {
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TemplateInputComponent } from '../template-input/template-input.component';
 
-interface SearchableService {
+type SearchableService = {
   search: WritableSignal<string>;
-}
+};
 
 @Component({
   selector: 'app-template-table-search',

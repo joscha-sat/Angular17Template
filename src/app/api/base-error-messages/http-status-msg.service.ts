@@ -62,7 +62,9 @@ export class HttpStatusMsgService {
    * @returns The extracted endpoint as a string
    */
   getEndpointFromError(err: HttpErrorResponse): string | undefined {
-    if (!err.url) return undefined;
+    if (!err.url) {
+      return undefined;
+    }
 
     // Extracting the endpoint segments from the URL
     const url: URL = new URL(err.url);
@@ -92,7 +94,9 @@ export class HttpStatusMsgService {
     method?: string,
     errorKey?: string,
   ): string | null {
-    if (!errorKey) return null;
+    if (!errorKey) {
+      return null;
+    }
 
     const translationKey: string = `http-error.${endpoint}.${method?.toLowerCase()}_${errorKey}`;
     const genericTranslationKey: string = `http-error.${errorKey}`;

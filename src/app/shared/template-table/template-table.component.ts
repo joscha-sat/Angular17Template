@@ -43,10 +43,11 @@ export class TemplateTableComponent<T> implements AfterViewInit {
   initialPageSize: InputSignal<number> = input<number>(10);
   totalItems: InputSignal<number | undefined> = input<number | undefined>();
 
-  paginationChange: OutputEmitterRef<{ skip: number; limit: number }> = output<{
-    skip: number;
-    limit: number;
-  }>();
+  readonly paginationChange: OutputEmitterRef<{ skip: number; limit: number }> =
+    output<{
+      skip: number;
+      limit: number;
+    }>();
 
   dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
 

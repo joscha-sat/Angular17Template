@@ -3,4 +3,4 @@ export type AddEdit = {
   initForm(): void;
   submit(): void;
   loadModelData(): void;
-};
+}

@@ -47,7 +47,7 @@ export class TemplateDatepickerComponent {
   service: InputSignal<{ searchDate: WritableSignal<string> } | undefined> =
     input<{ searchDate: WritableSignal<string> }>();
 
-  dateChange: OutputEmitterRef<string> = output<string>();
+  readonly dateChange: OutputEmitterRef<string> = output<string>();
 
   selectedDateChanged(isoString: string): void {
     this.dateChange.emit(isoString);

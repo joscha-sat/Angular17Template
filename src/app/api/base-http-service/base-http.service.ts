@@ -18,7 +18,7 @@ export type BaseQueryParams = {
   search?: string;
   sort?: string;
   tabValueActive?: boolean;
-};
+} & { [key: string]: unknown };
 
 @Injectable({ providedIn: 'root' })
 export class GenericHttpService {
@@ -64,16 +64,14 @@ export class GenericHttpService {
         params,
       })
       .pipe(
-        map((response: ResponseWithRecords<T>) => {
-          return {
-            ...response,
-            records: modelType
-              ? response.records.map(
-                  (record: T) => new modelType(record as Partial<T>),
-                )
-              : response.records,
-          };
-        }),
+        map((response: ResponseWithRecords<T>) => ({
+          ...response,
+          records: modelType
+            ? response.records.map(
+                (record: T) => new modelType(record as Partial<T>),
+              )
+            : response.records,
+        })),
       );
   }
 

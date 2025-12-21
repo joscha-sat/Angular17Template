@@ -28,7 +28,7 @@ import { MatButton } from '@angular/material/button';
 export class LoginFormComponent {
   router: Router = inject(Router);
   authService: AuthService = inject(AuthService);
-  private fb: FormBuilder = inject(FormBuilder);
+  private readonly fb: FormBuilder = inject(FormBuilder);
   form: FormGroup = this.fb.group({
     username: ['', { validators: Validators.required, nonNullable: true }],
     password: ['', { validators: Validators.required, nonNullable: true }],
@@ -39,10 +39,12 @@ export class LoginFormComponent {
   }
 
   submit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      return;
+    }
 
     this.authService.login(this.loginBody).subscribe(() => {
-      void this.router.navigate(['/' + ROUTES.TENANT]);
+      this.router.navigate([`/${ROUTES.TENANT}`]).then();
     });
   }
 }

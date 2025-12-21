@@ -15,7 +15,7 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class EditIconComponent {
   color: InputSignal<string | undefined> = input();
-  clickEvent: OutputEmitterRef<void> = output<void>();
+  readonly clickEvent: OutputEmitterRef<void> = output<void>();
 
   iconClick(): void {
     this.clickEvent.emit();

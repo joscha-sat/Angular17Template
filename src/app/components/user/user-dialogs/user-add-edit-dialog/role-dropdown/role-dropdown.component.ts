@@ -23,7 +23,7 @@ import { ControlContainer, FormGroupDirective } from '@angular/forms';
 })
 export class RoleDropdownComponent implements OnInit {
   roles: WritableSignal<Role[]> = signal<Role[]>([]);
-  private roleService: RoleService = inject(RoleService);
+  private readonly roleService: RoleService = inject(RoleService);
 
   ngOnInit(): void {
     this.getAllRoles();

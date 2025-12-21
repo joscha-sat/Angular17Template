@@ -16,7 +16,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class SaveBtnComponent {
   disabled: InputSignal<boolean> = input(false);
-  clickEvent: OutputEmitterRef<void> = output<void>();
+  readonly clickEvent: OutputEmitterRef<void> = output<void>();
 
   save(): void {
     this.clickEvent.emit();

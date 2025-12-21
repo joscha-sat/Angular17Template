@@ -27,6 +27,34 @@ const tsRules = {
   ...angularEslint.configs.recommended.rules,
   ...rxjsX.configs.recommended.rules,
 
+  // Basic JavaScript rules from reference
+  'arrow-body-style': 'error',
+  complexity: [
+    'error',
+    {
+      max: 20,
+    },
+  ],
+  curly: ['error', 'all'],
+  'default-case': 'error',
+  eqeqeq: 'error',
+  'max-lines': ['error', 1000],
+  'no-duplicate-imports': 'error',
+  'no-extra-bind': 'error',
+  'no-labels': 'error',
+  'no-new-func': 'error',
+  'no-param-reassign': 'error',
+  'no-return-await': 'error',
+  'no-sequences': 'error',
+  'no-template-curly-in-string': 'error',
+  'no-void': 'error',
+  'prefer-object-spread': 'error',
+  'prefer-template': 'error',
+  'space-in-parens': ['error', 'never'],
+  yoda: 'error',
+  'no-console': 'warn',
+
+  // Existing rules
   "no-unused-vars": "off",
   "rxjs-x/no-implicit-any-catch": "off",
   "@typescript-eslint/no-unused-vars": [
@@ -45,13 +73,27 @@ const tsRules = {
     "error",
     {type: "element", prefix: "app", style: "kebab-case"},
   ],
+
+  // Angular-specific rules from reference
+  '@angular-eslint/no-forward-ref': 'error',
+  '@angular-eslint/prefer-output-readonly': 'error',
+  '@typescript-eslint/explicit-module-boundary-types': 'error',
+  '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+  '@typescript-eslint/no-require-imports': 'error',
+  '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
+  '@typescript-eslint/prefer-readonly': 'error',
+  '@typescript-eslint/unbound-method': [
+    'error',
+    {
+      ignoreStatic: true,
+    },
+  ],
   "@typescript-eslint/no-explicit-any": "warn",
   "@typescript-eslint/no-non-null-assertion": "warn",
   "@typescript-eslint/no-unsafe-assignment": "warn",
   "@typescript-eslint/no-unsafe-call": "warn",
   "@typescript-eslint/no-unsafe-member-access": "warn",
   "@typescript-eslint/await-thenable": "warn",
-  "@typescript-eslint/no-floating-promises": "warn",
   "@typescript-eslint/no-misused-promises": "warn",
   "@typescript-eslint/no-unnecessary-condition": "warn",
   "@typescript-eslint/typedef": ["warn", {
@@ -105,7 +147,7 @@ const tsRules = {
 // Configuration for TypeScript files (excluding spec files entirely) (modified with rxjs-x plugin)
 const tsFilesConfig = {
   files: ["**/*.ts"],
-  ignores: ["**/*.spec.ts", "**/*.routes.ts"],
+  ignores: ["**/*.spec.ts", "**/*.routes.ts", "**/*main.ts"],
   languageOptions: {
     parser: tseslint.parser,
     parserOptions: {

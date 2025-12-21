@@ -93,7 +93,9 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   }
 
   submit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      return;
+    }
 
     if (this.createUserMode()) {
       this.createUser();
@@ -107,7 +109,9 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   }
 
   updateUser(): void {
-    if (!this.model) return;
+    if (!this.model) {
+      return;
+    }
     this.userService
       .updateUserById(this.model.id, this.userFromFormData)
       .subscribe(() => {});

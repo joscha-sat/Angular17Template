@@ -54,7 +54,9 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
 
   // Builds query params, skips if noParams is true
   buildParams(baseParams: BaseGetQueryParams): Record<string, unknown> {
-    if (this.noParams) return {};
+    if (this.noParams) {
+      return {};
+    }
     return {
       limit: baseParams.limit,
       skip: baseParams.skip,

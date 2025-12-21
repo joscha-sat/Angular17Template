@@ -58,7 +58,7 @@ export class CustomerTableComponent
     return { sort: 'createdAt,DESC' };
   }
 
-  openEditCustomerDialog(customer: Customer): void {
-    console.log(customer);
+  openEditCustomerDialog(): void {
+    //   todo
   }
 }

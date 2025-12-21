@@ -39,7 +39,7 @@ function addAuthorizationHeader(
 ): HttpRequest<unknown> {
   return req.clone({
     setHeaders: {
-      Authorization: 'Bearer ' + authService.getAccessToken(),
+      Authorization: `Bearer ${authService.getAccessToken()}`,
     },
   });
 }
@@ -83,14 +83,14 @@ function handleHttpError(
         // Retry the original request with the new token
         return next(requestWithNewToken);
       } else {
-        void authService.logout();
+        authService.logout().then();
         return throwError(() => createError(response)) as Observable<
           HttpEvent<unknown>
         >;
       }
     }),
     catchError((refreshError: unknown) => {
-      void authService.logout();
+      authService.logout().then();
       return throwError(() => createError(refreshError)) as Observable<
         HttpEvent<unknown>
       >;

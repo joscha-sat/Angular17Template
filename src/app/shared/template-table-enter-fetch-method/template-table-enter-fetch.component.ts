@@ -139,13 +139,15 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
     obj: U,
     path: string,
   ): string | number | Date | null | undefined {
-    return path.split('.').reduce((current: unknown, key: string) => {
-      return current &&
-        typeof current === 'object' &&
-        Object.hasOwn(current, key)
-        ? (current as Record<string, unknown>)[key]
-        : null;
-    }, obj) as string | number | Date | null | undefined;
+    return path
+      .split('.')
+      .reduce(
+        (current: unknown, key: string) =>
+          current && typeof current === 'object' && Object.hasOwn(current, key)
+            ? (current as Record<string, unknown>)[key]
+            : null,
+        obj,
+      ) as string | number | Date | null | undefined;
   }
 
   // --- Private Initialization Methods ---
@@ -219,8 +221,7 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
         this.totalItemsCount.set(response.total),
       ),
       map((response: ResponseWithRecords<T>) => response.records),
-      catchError((error: unknown) => {
-        console.error('Error fetching data:', error);
+      catchError(() => {
         this.totalItemsCount.set(0);
         return of([]);
       }),
@@ -244,8 +245,6 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
     }
     if (typeof initialSortValue === 'string') {
       this.applyInitialSortString(sortInstance, initialSortValue);
-    } else {
-      this.logInvalidSortTypeWarning(initialSortValue);
     }
   }
 
@@ -264,22 +263,6 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
     if (field && direction && VALID_SORT_DIRECTIONS.includes(direction)) {
       sortInstance.active = field;
       sortInstance.direction = direction.toLowerCase() as SortDirection;
-    } else {
-      this.logInvalidSortFormatWarning(sortString);
     }
-  }
-
-  // Logs a warning for invalid sort format
-  private logInvalidSortFormatWarning(sortValue: string): void {
-    console.warn(
-      `[TemplateTableEnterFetchComponent] Invalid initialSort format: "${sortValue}". Expected "field,ASC" or "field,DESC".`,
-    );
-  }
-
-  // Logs a warning for invalid sort type
-  private logInvalidSortTypeWarning(value: unknown): void {
-    console.warn(
-      `[TemplateTableEnterFetchComponent] Invalid type for initialSort: Expected string, but got ${typeof value}.`,
-    );
   }
 }
