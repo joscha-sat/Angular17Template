@@ -16,7 +16,6 @@ const browserGlobals = {
 
 // Common parser options
 const appParserOptions = {
-  project: ["tsconfig.app.json"],
   sourceType: "module",
   ecmaVersion: 2022
 };
@@ -46,7 +45,15 @@ const tsRules = {
     "error",
     {type: "element", prefix: "app", style: "kebab-case"},
   ],
-  "@typescript-eslint/no-explicit-any": "off",
+  "@typescript-eslint/no-explicit-any": "warn",
+  "@typescript-eslint/explicit-function-return-type": [
+    "warn",
+    {
+      allowExpressions: true,
+      allowTypedFunctionExpressions: true,
+      allowHigherOrderFunctions: true,
+    },
+  ],
   "custom-rules/component-max-lines-warning": [
     "warn",
     {

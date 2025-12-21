@@ -37,13 +37,13 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     this.initForm();
   }
 
-  initForm() {
+  initForm(): void {
     this.form = this.fb.group({
       name: [],
     });
   }
 
-  onTenantChange($event: { id: string; label: string }) {
+  onTenantChange($event: { id: string; label: string }): void {
     this.tenantService.selectedTenantId.set($event.id);
   }
 
@@ -60,5 +60,5 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     }
   }
 
-  openCreateTenantDialog() {}
+  openCreateTenantDialog(): void {}
 }

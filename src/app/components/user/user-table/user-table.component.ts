@@ -2,7 +2,9 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { UserService } from '../../../api/user.service';
 import { User } from '../../../models/User';
 import { BaseTableComponent } from '../../../other/abstract-classes/BaseTable';
-import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
+import {
+  TemplateTableEnterFetchComponent
+} from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 
 const COLUMN_CONFIG = {
   displayedColumns: ['name', 'createdAt', 'updatedAt', 'actions'],
@@ -33,7 +35,7 @@ export class UserTableComponent
     return 'getAllUsers';
   }
 
-  setTableRefreshService(): any {
+  setTableRefreshService(): UserService {
     return this.userService;
   }
 }

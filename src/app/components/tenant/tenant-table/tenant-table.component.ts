@@ -30,7 +30,7 @@ export class TenantTableComponent
     super.translateHeaders(this.headers);
   }
 
-  setTableRefreshService() {
+  setTableRefreshService(): TenantService {
     return this.tenantService;
   }
 

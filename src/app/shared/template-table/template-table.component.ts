@@ -1,4 +1,11 @@
-import { AfterViewInit, Component, input, output, TemplateRef, viewChild, } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  input,
+  output,
+  TemplateRef,
+  viewChild,
+} from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { DatePipe, NgTemplateOutlet } from '@angular/common';
@@ -39,20 +46,20 @@ export class TemplateTableComponent<T> implements AfterViewInit {
   readonly sort = viewChild(MatSort);
 
   // hooks --------------------------------------------------- ||
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.setupDataSourcePaginator();
     this.setupDataSourceSort();
   }
 
   // methods --------------------------------------------------- ||
-  setupDataSourcePaginator() {
+  setupDataSourcePaginator(): void {
     const paginator = this.paginator();
     if (paginator) {
       this.dataSource.paginator = paginator;
     }
   }
 
-  setupDataSourceSort() {
+  setupDataSourceSort(): void {
     const sort = this.sort();
     if (sort) {
       this.dataSource.sort = sort;

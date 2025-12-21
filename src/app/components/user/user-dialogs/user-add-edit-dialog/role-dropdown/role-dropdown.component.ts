@@ -23,7 +23,7 @@ export class RoleDropdownComponent implements OnInit {
     this.getAllRoles();
   }
 
-  getAllRoles() {
+  getAllRoles(): void {
     this.roleService.getAllRoles().subscribe((roles) => {
       this.roles.set(roles.records);
     });

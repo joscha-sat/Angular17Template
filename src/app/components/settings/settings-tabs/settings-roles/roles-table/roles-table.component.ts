@@ -30,7 +30,7 @@ export class RolesTableComponent implements Table<Role> {
     return 'getAllRoles';
   }
 
-  setTableRefreshService() {
+  setTableRefreshService(): RoleService {
     return this.roleService;
   }
 }

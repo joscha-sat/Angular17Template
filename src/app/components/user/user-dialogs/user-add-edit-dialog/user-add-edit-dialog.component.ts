@@ -73,7 +73,7 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
     });
   }
 
-  submit() {
+  submit(): void {
     this.convertStringStatusToBoolean();
 
     if (this.createUserMode()) {
@@ -82,18 +82,18 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
     this.updateUser();
   }
 
-  createUser() {
+  createUser(): void {
     this.userService.createOneUser(this.userFromFormData).subscribe(() => {});
   }
 
-  updateUser() {
+  updateUser(): void {
     if (!this.model) return;
     this.userService
       .updateUserById(this.model?.id, this.userFromFormData)
       .subscribe(() => {});
   }
 
-  getActiveStatus = () => {
+  getActiveStatus = (): string => {
     if (this.model?.active === null || this.model?.active === undefined) {
       return 'Aktiv';
     } else {
@@ -101,7 +101,7 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
     }
   };
 
-  convertStringStatusToBoolean() {
+  convertStringStatusToBoolean(): void {
     if (this.form?.controls['active'].value === 'Aktiv') {
       this.form.controls['active'].patchValue(true);
     } else {

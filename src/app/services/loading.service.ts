@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,13 +11,13 @@ import { BehaviorSubject } from 'rxjs';
  * The functionality to set the loading state based on the request duration is implemented in the LoadingInterceptor
  */
 export class LoadingService {
-  private loading$ = new BehaviorSubject<boolean>(false); // only true if the request takes longer than 250ms
+  private readonly loading$ = new BehaviorSubject<boolean>(false); // only true if the request takes longer than 250ms
 
-  get loadingState() {
+  get loadingState(): Observable<boolean> {
     return this.loading$.asObservable();
   }
 
-  setLoadingState(value: boolean) {
+  setLoadingState(value: boolean): void {
     this.loading$.next(value);
   }
 }

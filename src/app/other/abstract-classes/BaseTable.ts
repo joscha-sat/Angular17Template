@@ -25,10 +25,10 @@ import { FetchDataFunction } from '../../shared/template-table-enter-fetch-metho
   imports: [],
 })
 export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
-  private subscription: Subscription | undefined; // Subscription for refresh
+  refresh$ = new BehaviorSubject(null); // Emits when data needs to be refreshed
   protected translateService = inject(TranslateService); // Translation service
   protected noParams: boolean = false; // Flag to skip sending params
-  refresh$ = new BehaviorSubject(null); // Emits when data needs to be refreshed
+  private subscription: Subscription | undefined; // Subscription for refresh
 
   ngOnInit(): void {
     this.refreshDataSubscription(); // Initialize refresh subscription
@@ -44,12 +44,12 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
   abstract setTableRefreshService(): any; // Must return the service to refresh data
   abstract setTableRefreshMethodName(): string; // Must return the method name to call
 
-  setCustomParams(): any {
+  setCustomParams(): Record<string, any> | null {
     return null;
   } // Optional: override to add extra params
 
   // Builds query params, skips if noParams is true
-  buildParams(baseParams: BaseGetQueryParams): any {
+  buildParams(baseParams: BaseGetQueryParams): Record<string, any> {
     if (this.noParams) return {};
     return {
       limit: baseParams.limit,
@@ -80,7 +80,7 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
   };
 
   // Subscribes to refresh events and triggers data refresh
-  refreshDataSubscription() {
+  refreshDataSubscription(): void {
     this.subscription =
       this.setTableRefreshService().refreshObservable$.subscribe(() =>
         this.refresh$.next(null),

@@ -24,7 +24,7 @@ export class TenantViewComponent implements OnInit {
   }
 
   // | normal methods | --------------------------------------------------------------------  ||
-  getTenants() {
+  getTenants(): void {
     this.tenantService.getAllTenants().subscribe((tenants) => {
       this.tenants.set(tenants.records);
     });

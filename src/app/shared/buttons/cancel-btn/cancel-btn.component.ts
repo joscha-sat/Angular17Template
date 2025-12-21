@@ -11,7 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class CancelBtnComponent {
   cancelEvent = output();
 
-  cancel() {
+  cancel(): void {
     this.cancelEvent.emit();
   }
 }

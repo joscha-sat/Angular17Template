@@ -12,7 +12,7 @@ export class SaveBtnComponent {
   disabled = input(false);
   clickEvent = output();
 
-  save() {
+  save(): void {
     this.clickEvent.emit();
   }
 }

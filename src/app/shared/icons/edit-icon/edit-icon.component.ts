@@ -11,7 +11,7 @@ export class EditIconComponent {
   color = input();
   clickEvent = output();
 
-  iconClick() {
+  iconClick(): void {
     this.clickEvent.emit();
   }
 }

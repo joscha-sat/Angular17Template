@@ -22,14 +22,14 @@ export type BaseQueryParams = {
 
 @Injectable({ providedIn: 'root' })
 export class GenericHttpService {
-  private readonly http = inject(HttpClient);
-  private snackBar = inject(MatSnackbarService);
   baseUrl = environment.baseUrl;
   _refreshObservable = new Subject<void>();
   refreshObservable$ = this._refreshObservable.asObservable();
   search = signal<string>('');
   searchDate = signal('');
   tabValueActive = signal<boolean | undefined>(undefined);
+  private readonly http = inject(HttpClient);
+  private readonly snackBar = inject(MatSnackbarService);
 
   /**
    * Constructs a full URL based on a given endpoint and optional ID.
@@ -245,7 +245,7 @@ export class GenericHttpService {
     i18nKeyForElement: string,
     methodType?: MethodType,
     plural: boolean = false,
-  ) {
+  ): void {
     const payload: SnackBarData = {
       i18nKeyOrMessage: i18nKeyForElement,
       methodType,

@@ -22,9 +22,9 @@ import { AsyncPipe } from '@angular/common';
 export class AppComponent {
   title = 'Angular-Template-V2';
   public loadingService = inject(LoadingService);
-  private authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
 
-  get isLoggedIn() {
+  get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
   }
 }

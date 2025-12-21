@@ -12,7 +12,7 @@ export class DeleteIconComponent {
 
   clickEvent = output();
 
-  iconClick() {
+  iconClick(): void {
     this.clickEvent.emit();
   }
 }

@@ -41,7 +41,7 @@ export class AuthService {
     );
   }
 
-  login(loginBody: LoginBody) {
+  login(loginBody: LoginBody): Observable<void> {
     const url = `${this.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`;
     return this.http.post<any>(url, loginBody).pipe(
       map((response: LoginResponse) => {
@@ -51,10 +51,10 @@ export class AuthService {
     );
   }
 
-  logout() {
+  logout(): Promise<boolean> {
     this.loggedInUser = undefined;
     this.clearUserSession();
-    this.router.navigateByUrl(ROUTES.LOGIN).then();
+    return this.router.navigateByUrl(ROUTES.LOGIN);
   }
 
   sendRefreshToken(): Observable<any> {
@@ -72,12 +72,12 @@ export class AuthService {
     return this.getFromLocalStorage(StorageKeys.ACCESS_TOKEN);
   }
 
-  setTokens(accessToken: string, refreshToken: string) {
+  setTokens(accessToken: string, refreshToken: string): void {
     this.setToLocalStorage(StorageKeys.ACCESS_TOKEN, accessToken);
     this.setToLocalStorage(StorageKeys.REFRESH_TOKEN, refreshToken);
   }
 
-  setLoggedInUser(user: User) {
+  setLoggedInUser(user: User): void {
     this.loggedInUser = user;
     this.setToLocalStorage(StorageKeys.USER, JSON.stringify(user));
   }
@@ -93,7 +93,7 @@ export class AuthService {
     return [this.baseUrl, ...parts].join('/');
   }
 
-  private setToLocalStorage(key: string, value: string) {
+  private setToLocalStorage(key: string, value: string): void {
     localStorage.setItem(key, value);
   }
 
@@ -101,7 +101,7 @@ export class AuthService {
     return localStorage.getItem(key);
   }
 
-  private clearUserSession() {
+  private clearUserSession(): void {
     Object.values(StorageKeys).forEach((key) =>
       this.removeFromLocalStorage(key),
     );

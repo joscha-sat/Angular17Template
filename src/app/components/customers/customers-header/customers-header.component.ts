@@ -31,7 +31,7 @@ export class CustomersHeaderComponent {
     date: null,
   });
 
-  openCreateCustomerDialog() {
+  openCreateCustomerDialog(): void {
     this.dialog.open(CustomerAddEditDialogComponent);
   }
 }

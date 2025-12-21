@@ -41,7 +41,7 @@ export class TemplateDatepickerComponent {
 
   dateChange = output<string>();
 
-  selectedDateChanged(isoString: string) {
+  selectedDateChanged(isoString: string): void {
     this.dateChange.emit(isoString);
   }
 }

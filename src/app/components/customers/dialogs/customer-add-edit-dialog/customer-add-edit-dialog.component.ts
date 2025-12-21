@@ -64,20 +64,20 @@ export class CustomerAddEditDialogComponent implements OnInit {
   //   this.isCreateCustomerMode.set(false);
   // }
 
-  initForm() {
+  initForm(): void {
     this.form = this.fb.group({
       name: [this.model?.name, Validators.required],
     });
   }
 
-  submit() {
+  submit(): void {
     if (this.isCreateCustomerMode()) {
       this.createCustomer();
     }
     this.updateCustomer();
   }
 
-  createCustomer() {
+  createCustomer(): void {
     this.customerService
       .createOneCustomer(this.customerFromFormData)
       .subscribe(() => {
@@ -85,7 +85,7 @@ export class CustomerAddEditDialogComponent implements OnInit {
       });
   }
 
-  updateCustomer() {
+  updateCustomer(): void {
     if (!this.model) return;
     this.customerService
       .updateCustomerById(this.model?.id, this.customerFromFormData)

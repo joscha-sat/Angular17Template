@@ -30,25 +30,25 @@ export class TenantAddEditDialogComponent implements OnInit, AddEdit {
     this.initForm();
   }
 
-  getMode() {}
+  getMode(): void {}
 
-  initForm() {
+  initForm(): void {
     this.tenantForm = this.fb.group({
       name: [this.data ?? '', Validators.required],
     });
   }
 
-  createTenant() {
+  createTenant(): void {
     this.tenantService
       .createOneTenant(new Tenant(this.tenantForm?.value))
       .subscribe();
   }
 
-  updateTenant() {
+  updateTenant(): void {
     //   TODO
   }
 
-  submit() {
+  submit(): void {
     if (this.mode === MODE.ADD) {
       this.createTenant();
     } else {

@@ -16,11 +16,11 @@ export class NavigationComponent implements OnInit {
   navItems = signal<NavItem[]>([]);
   private readonly translateService = inject(TranslateService);
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.setTranslatedTextWithNavItems();
   }
 
-  setTranslatedTextWithNavItems() {
+  setTranslatedTextWithNavItems(): void {
     this.translateService
       .get([
         'tenant.title',

@@ -17,13 +17,13 @@ export class ThemingService {
     this.getThemeFromLocalStorage();
   }
 
-  toggleTheme() {
+  toggleTheme(): void {
     this.setTheme(
       this.currentTheme() === THEME.DARK ? THEME.LIGHT : THEME.DARK,
     );
   }
 
-  setTheme(theme: THEME) {
+  setTheme(theme: THEME): void {
     this.currentTheme.set(theme);
 
     if (theme === THEME.DARK) {
@@ -35,7 +35,7 @@ export class ThemingService {
     localStorage.setItem('theme', theme);
   }
 
-  getThemeFromLocalStorage() {
+  getThemeFromLocalStorage(): void {
     const theme = localStorage.getItem('theme');
     if (theme) {
       this.setTheme(theme as THEME);

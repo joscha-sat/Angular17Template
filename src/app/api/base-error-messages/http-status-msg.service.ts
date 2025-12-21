@@ -36,7 +36,7 @@ export class HttpStatusMsgService {
     err: HttpErrorResponse,
     method?: string,
     endpoint?: ApiRoutes | string,
-  ) => {
+  ): string => {
     const resolvedEndpoint = this.resolveEndpoint(err, endpoint);
     const errorKey = err.error?.key?.toLowerCase() || '';
 
@@ -53,7 +53,7 @@ export class HttpStatusMsgService {
    * @returns The extracted endpoint as a string
    */
   getEndpointFromError(err: HttpErrorResponse): string | undefined {
-    if (!err.url) return;
+    if (!err.url) return undefined;
 
     // Extracting the endpoint segments from the URL
     const url = new URL(err.url);

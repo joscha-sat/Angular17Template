@@ -11,7 +11,7 @@ import { TemplateDatepickerComponent } from '../template-datepicker/template-dat
 export class TemplateDateSearchComponent {
   service = input.required<{ searchDate: WritableSignal<string> }>();
 
-  dateChange($event: string) {
+  dateChange($event: string): void {
     if (!$event) {
       this.service().searchDate.set('');
       return;

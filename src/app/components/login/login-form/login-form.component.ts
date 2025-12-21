@@ -37,9 +37,9 @@ export class LoginFormComponent {
     return <LoginBody>this.form.value;
   }
 
-  submit() {
+  submit(): void {
     if (this.form?.invalid) return;
-    
+
     this.authService.login(this.loginBody).subscribe(() => {
       this.router.navigate(['/' + ROUTES.TENANT]).then();
     });
