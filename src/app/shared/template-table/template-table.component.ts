@@ -29,7 +29,7 @@ export class TemplateTableComponent<T> implements AfterViewInit {
   headers = input.required<string[]>();
   displayedColumns = input.required<string[]>();
   readonly cellTemplatesMap = input<{
-    [key: string]: TemplateRef<any>;
+    [key: string]: TemplateRef<unknown>;
   }>({});
 
   tableData = input.required<T[]>();
@@ -66,9 +66,9 @@ export class TemplateTableComponent<T> implements AfterViewInit {
     }
   }
 
-  extractNestedProperty(item: any, key: string): any {
+  extractNestedProperty<T>(item: T, key: string): any {
     const keys = key.split('.');
-    let value = item;
+    let value: any = item;
 
     for (const k of keys) {
       if (value && Object.hasOwn(value, k)) {

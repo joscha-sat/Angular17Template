@@ -9,6 +9,7 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { User } from '../../models/User';
 
 const TOKEN_REFRESH_SUCCESS_STATUS = HttpStatusCode.Created;
 
@@ -41,7 +42,7 @@ function addAuthorizationHeader(
 /**
  * Creates an Error object from any value for use with throwError
  */
-function createError(value: any): Error {
+function createError(value: unknown): Error {
   if (value instanceof Error) {
     return value;
   }
@@ -74,7 +75,7 @@ function handleHttpError(
         if (response.status === TOKEN_REFRESH_SUCCESS_STATUS) {
           // Update tokens and user data
           authService.setTokens(response.data.access, response.data.refresh);
-          authService.setLoggedInUser(response.data.user);
+          authService.setLoggedInUser(response.data.user as User);
           // Clone the original request with the new access token
           const requestWithNewToken = addAuthorizationHeader(
             originalRequest,

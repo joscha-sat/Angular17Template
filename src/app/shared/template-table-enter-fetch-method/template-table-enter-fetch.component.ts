@@ -68,7 +68,7 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   fetchData = input.required<FetchDataFunction<T>>();
   headers = input.required<string[]>();
   displayedColumns = input.required<string[]>();
-  cellTemplatesMap = input<Record<string, TemplateRef<any>>>({});
+  cellTemplatesMap = input<Record<string, TemplateRef<unknown>>>({});
 
   // Optional configuration inputs
   search = input('');
@@ -121,8 +121,8 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
    * Safely extracts a value from a potentially nested object structure.
    * Returns null if any part of the path is undefined or null.
    */
-  extractNestedProperty(obj: any, path: string): any {
-    return path.split('.').reduce((current, key) => {
+  extractNestedProperty<U>(obj: U, path: string): any {
+    return path.split('.').reduce((current: any, key) => {
       return current &&
         typeof current === 'object' &&
         Object.hasOwn(current, key)

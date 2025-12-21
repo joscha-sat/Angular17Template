@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class IsDatePipe implements PipeTransform {
-  transform(value: any): boolean {
-    return !isNaN(Date.parse(value));
+  transform(value: string | number | Date): boolean {
+    return !isNaN(Date.parse(value as string));
   }
 }

@@ -2,6 +2,11 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { LANGUAGE_FULL, Languages } from '../../../../../other/enums/languages';
 
+interface LanguageOption {
+  name: string;
+  id: string;
+}
+
 @Component({
   selector: 'app-settings-language-switcher',
   imports: [ReactiveFormsModule],
@@ -11,7 +16,7 @@ import { LANGUAGE_FULL, Languages } from '../../../../../other/enums/languages';
 export class SettingsLanguageSwitcherComponent implements OnInit {
   fb = inject(FormBuilder);
 
-  dataArray = signal<any[]>([
+  dataArray = signal<LanguageOption[]>([
     {
       name: 'German',
       id: 'de',
