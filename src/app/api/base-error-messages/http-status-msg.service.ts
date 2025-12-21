@@ -18,7 +18,7 @@ const STATUS_CODES: { [key: number]: string } = {
   providedIn: 'root',
 })
 export class HttpStatusMsgService {
-  private readonly injector = inject(Injector);
+  private readonly injector: Injector = inject(Injector);
 
   // Lazy retrieves the TranslateService instance
   private get translateService(): TranslateService {
@@ -37,8 +37,9 @@ export class HttpStatusMsgService {
     method?: string,
     endpoint?: ApiRoutes | string,
   ): string => {
-    const resolvedEndpoint = this.resolveEndpoint(err, endpoint);
-    const errorKey =
+    const resolvedEndpoint: ApiRoutes | string | undefined =
+      this.resolveEndpoint(err, endpoint);
+    const errorKey: string =
       (() => {
         const errorObj = err.error as { key?: string } | undefined;
         return errorObj && typeof errorObj.key === 'string' && errorObj.key
@@ -62,13 +63,13 @@ export class HttpStatusMsgService {
     if (!err.url) return undefined;
 
     // Extracting the endpoint segments from the URL
-    const url = new URL(err.url);
-    const segments = url.pathname
+    const url: URL = new URL(err.url);
+    const segments: string[] = url.pathname
       .split('/')
-      .filter((segment) => segment !== '');
+      .filter((segment: string) => segment !== '');
 
     // Check if the last segment matches a UUID pattern
-    const lastSegmentPattern =
+    const lastSegmentPattern: RegExp =
       /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
     return lastSegmentPattern.test(segments[segments.length - 1])
       ? segments[segments.length - 2]
@@ -79,7 +80,8 @@ export class HttpStatusMsgService {
     err: HttpErrorResponse,
     endpoint?: ApiRoutes | string,
   ): ApiRoutes | string | undefined {
-    const endpointFromError = this.getEndpointFromError(err);
+    const endpointFromError: string | undefined =
+      this.getEndpointFromError(err);
     return endpointFromError || endpoint;
   }
 
@@ -90,8 +92,8 @@ export class HttpStatusMsgService {
   ): string | null {
     if (!errorKey) return null;
 
-    const translationKey = `http-error.${endpoint}.${method?.toLowerCase()}_${errorKey}`;
-    const genericTranslationKey = `http-error.${errorKey}`;
+    const translationKey: string = `http-error.${endpoint}.${method?.toLowerCase()}_${errorKey}`;
+    const genericTranslationKey: string = `http-error.${errorKey}`;
 
     let translated: string = this.translateService.instant(
       translationKey,
@@ -106,15 +108,17 @@ export class HttpStatusMsgService {
   }
 
   private getErrorMessage(err: HttpErrorResponse): string | null {
-    const errorObj = err.error as { message?: string } | undefined;
+    const errorObj: { message?: string } | undefined = err.error as
+      | { message?: string }
+      | undefined;
     return errorObj && typeof errorObj.message === 'string' && errorObj.message
       ? errorObj.message
       : null;
   }
 
   private getStatusMessage(err: HttpErrorResponse): string {
-    const statusKey = STATUS_CODES[err.status];
-    const statusMessage = statusKey
+    const statusKey: string = STATUS_CODES[err.status];
+    const statusMessage: string = statusKey
       ? (this.translateService.instant(statusKey) as string)
       : '';
     return statusMessage || `Unknown error, status code ${err.status}.`;

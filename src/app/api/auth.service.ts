@@ -7,7 +7,11 @@ import { User } from '../models/User';
 import { ApiRoutes } from '../other/enums/api_routes';
 import { ROUTES } from '../other/enums/ROUTES';
 
-const StorageKeys = {
+const StorageKeys: {
+  ACCESS_TOKEN: string;
+  REFRESH_TOKEN: string;
+  USER: string;
+} = {
   ACCESS_TOKEN: 'access_token',
   REFRESH_TOKEN: 'refresh_token',
   USER: 'user',
@@ -37,10 +41,10 @@ export interface RefreshTokenResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private http = inject(HttpClient);
-  private router = inject(Router);
+  private http: HttpClient = inject(HttpClient);
+  private router: Router = inject(Router);
 
-  private readonly baseUrl = environment.baseUrl;
+  private readonly baseUrl: string = environment.baseUrl;
   private loggedInUser?: User;
 
   isLoggedIn(): boolean {
@@ -51,7 +55,7 @@ export class AuthService {
   }
 
   login(loginBody: LoginBody): Observable<void> {
-    const url = `${this.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`;
+    const url: string = `${this.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`;
     return this.http.post<LoginResponse>(url, loginBody).pipe(
       map((response: LoginResponse) => {
         this.setTokens(response.access_token, response.refresh_token);
@@ -67,7 +71,7 @@ export class AuthService {
   }
 
   sendRefreshToken(): Observable<RefreshTokenResponse> {
-    const url = this.buildUrl(ApiRoutes.AUTH, 'refreshToken');
+    const url: string = this.buildUrl(ApiRoutes.AUTH, 'refreshToken');
     return this.http.post<RefreshTokenResponse>(url, {
       refreshToken: this.getFromLocalStorage(StorageKeys.REFRESH_TOKEN),
     });
@@ -94,7 +98,7 @@ export class AuthService {
   getLoggedInUser(): User | null {
     if (this.loggedInUser) return this.loggedInUser;
 
-    const userJSON = this.getFromLocalStorage(StorageKeys.USER);
+    const userJSON: string | null = this.getFromLocalStorage(StorageKeys.USER);
     return userJSON ? new User(JSON.parse(userJSON)) : null;
   }
 
@@ -111,7 +115,7 @@ export class AuthService {
   }
 
   private clearUserSession(): void {
-    Object.values(StorageKeys).forEach((key) =>
+    Object.values(StorageKeys).forEach((key: string) =>
       this.removeFromLocalStorage(key),
     );
   }

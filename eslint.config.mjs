@@ -54,6 +54,16 @@ const tsRules = {
   "@typescript-eslint/no-floating-promises": "warn",
   "@typescript-eslint/no-misused-promises": "warn",
   "@typescript-eslint/no-unnecessary-condition": "warn",
+  "@typescript-eslint/typedef": ["warn", {
+    arrayDestructuring: true,
+    arrowParameter: true,
+    memberVariableDeclaration: true,
+    objectDestructuring: true,
+    parameter: true,
+    propertyDeclaration: true,
+    variableDeclaration: true,
+    variableDeclarationIgnoreFunction: true,
+  }],
   "@typescript-eslint/explicit-function-return-type": [
     "warn",
     {

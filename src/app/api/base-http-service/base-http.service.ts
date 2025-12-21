@@ -22,14 +22,14 @@ export type BaseQueryParams = {
 
 @Injectable({ providedIn: 'root' })
 export class GenericHttpService {
-  baseUrl = environment.baseUrl;
-  _refreshObservable = new Subject<void>();
-  refreshObservable$ = this._refreshObservable.asObservable();
+  baseUrl: string = environment.baseUrl;
+  _refreshObservable: Subject<void> = new Subject<void>();
+  refreshObservable$: Observable<void> = this._refreshObservable.asObservable();
   search = signal<string>('');
-  searchDate = signal('');
+  searchDate = signal<string>('');
   tabValueActive = signal<boolean | undefined>(undefined);
-  private readonly http = inject(HttpClient);
-  private readonly snackBar = inject(MatSnackbarService);
+  private readonly http: HttpClient = inject(HttpClient);
+  private readonly snackBar: MatSnackbarService = inject(MatSnackbarService);
 
   /**
    * Constructs a full URL based on a given endpoint and optional ID.
@@ -56,18 +56,18 @@ export class GenericHttpService {
     queryParams?: { [key: string]: unknown },
     modelType?: new (data: Partial<T>) => T,
   ): Observable<ResponseWithRecords<T>> {
-    const params = this.generateParams(queryParams);
+    const params: HttpParams = this.generateParams(queryParams);
     return this.http
       .get<ResponseWithRecords<T>>(this.getUrl(endpoint), {
         params,
       })
       .pipe(
-        map((response) => {
+        map((response: ResponseWithRecords<T>) => {
           return {
             ...response,
             records: modelType
               ? response.records.map(
-                  (record) => new modelType(record as Partial<T>),
+                  (record: T) => new modelType(record as Partial<T>),
                 )
               : response.records,
           };
@@ -125,10 +125,10 @@ export class GenericHttpService {
     bodies: T[],
     i18nKeyForElement: string,
   ): Observable<T[]> {
-    const postObservables = bodies.map((body) =>
+    const postObservables: Observable<T>[] = bodies.map((body: T) =>
       this.http.post<T>(this.getUrl(endpoint), body),
     );
-    const batchAction = forkJoin(postObservables);
+    const batchAction: Observable<T[]> = forkJoin(postObservables);
     return this.httpAction(batchAction, i18nKeyForElement, 'POST', true);
   }
 
@@ -164,10 +164,11 @@ export class GenericHttpService {
     ids: idTypes[],
     i18nKeyForElement: string,
   ): Observable<T[]> {
-    const patchObservables = bodies.map((body, index) =>
-      this.http.patch<T>(this.getUrl(endpoint, ids[index]), body),
+    const patchObservables: Observable<T>[] = bodies.map(
+      (body: T, index: number) =>
+        this.http.patch<T>(this.getUrl(endpoint, ids[index]), body),
     );
-    const batchAction = forkJoin(patchObservables);
+    const batchAction: Observable<T[]> = forkJoin(patchObservables);
     return this.httpAction(batchAction, i18nKeyForElement, 'PATCH', true);
   }
 
@@ -226,12 +227,12 @@ export class GenericHttpService {
    * @returns An HttpParams object with the generated parameters
    */
   private generateParams(queryParams?: { [key: string]: unknown }): HttpParams {
-    let params = new HttpParams();
+    let params: HttpParams = new HttpParams();
     if (!queryParams) {
       return params;
     }
 
-    Object.entries(queryParams).forEach(([key, value]) => {
+    Object.entries(queryParams).forEach(([key, value]: [string, unknown]) => {
       // Skip undefined, null, and empty string values so they are not sent as query params
       if (value !== undefined && value !== null && value !== '') {
         params = params.set(key, value as string | number | boolean);
