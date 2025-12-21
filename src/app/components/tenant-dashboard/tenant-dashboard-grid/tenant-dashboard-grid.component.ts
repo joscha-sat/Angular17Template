@@ -9,14 +9,13 @@ import { count } from 'rxjs';
   styleUrl: './tenant-dashboard-grid.component.scss',
 })
 export class TenantDashboardGridComponent {
-  gridDataArray: InputSignal<{ count: number; ngxString: string }[]> = input<
-    { count: number; ngxString: string }[]
-  >([
-    { count: 5, ngxString: 'user.title' },
-    { count: 2, ngxString: 'customer.title-plural' },
-    { count: 490, ngxString: 'order.title-plural' },
-    { count: 20, ngxString: 'object.title-plural' },
-  ]);
+  readonly gridDataArray: InputSignal<{ count: number; ngxString: string }[]> =
+    input<{ count: number; ngxString: string }[]>([
+      { count: 5, ngxString: 'user.title' },
+      { count: 2, ngxString: 'customer.title-plural' },
+      { count: 490, ngxString: 'order.title-plural' },
+      { count: 20, ngxString: 'object.title-plural' },
+    ]);
 
   protected readonly count: typeof count = count;
 }

@@ -7,5 +7,5 @@ import { Component, input, InputSignal } from '@angular/core';
   styleUrl: './header-layout.component.scss',
 })
 export class HeaderLayoutComponent {
-  useBreadcrumbs: InputSignal<boolean> = input<boolean>(true);
+  readonly useBreadcrumbs: InputSignal<boolean> = input<boolean>(true);
 }

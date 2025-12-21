@@ -37,13 +37,13 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   form!: FormGroup<{
     [K in keyof Partial<User>]: FormControl<User[K]>;
   }>;
-  createUserMode: WritableSignal<boolean> = signal(true);
+  readonly createUserMode: WritableSignal<boolean> = signal(true);
   private readonly fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
   private readonly userService: UserService = inject(UserService);
   private readonly translateService: TranslateService =
     inject(TranslateService);
 
-  radioItems: WritableSignal<{ name: string }[]> = signal([
+  readonly radioItems: WritableSignal<{ name: string }[]> = signal([
     { name: this.translateService.instant('general.active') as string },
     { name: this.translateService.instant('general.inactive') as string },
   ]);

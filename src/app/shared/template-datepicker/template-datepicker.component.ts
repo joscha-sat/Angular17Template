@@ -39,13 +39,14 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './template-datepicker.component.scss',
 })
 export class TemplateDatepickerComponent {
-  minDate: InputSignal<Date | undefined> = input<Date>();
-  maxDate: InputSignal<Date | undefined> = input<Date>();
-  label: InputSignal<string> = input('general.select-date');
+  readonly minDate: InputSignal<Date | undefined> = input<Date>();
+  readonly maxDate: InputSignal<Date | undefined> = input<Date>();
+  readonly label: InputSignal<string> = input('general.select-date');
 
-  fControlName: InputSignal<string> = input<string>('date');
-  service: InputSignal<{ searchDate: WritableSignal<string> } | undefined> =
-    input<{ searchDate: WritableSignal<string> }>();
+  readonly fControlName: InputSignal<string> = input<string>('date');
+  readonly service: InputSignal<
+    { searchDate: WritableSignal<string> } | undefined
+  > = input<{ searchDate: WritableSignal<string> }>();
 
   readonly dateChange: OutputEmitterRef<string> = output<string>();
 

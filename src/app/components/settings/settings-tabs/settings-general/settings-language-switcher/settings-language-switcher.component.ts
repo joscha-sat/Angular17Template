@@ -22,7 +22,9 @@ type LanguageOption = {
 export class SettingsLanguageSwitcherComponent implements OnInit {
   fb: FormBuilder = inject(FormBuilder);
 
-  dataArray: WritableSignal<LanguageOption[]> = signal<LanguageOption[]>([
+  readonly dataArray: WritableSignal<LanguageOption[]> = signal<
+    LanguageOption[]
+  >([
     {
       name: 'German',
       id: 'de',

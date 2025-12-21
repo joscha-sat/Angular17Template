@@ -15,7 +15,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './save-btn.component.scss',
 })
 export class SaveBtnComponent {
-  disabled: InputSignal<boolean> = input(false);
+  readonly disabled: InputSignal<boolean> = input(false);
   readonly clickEvent: OutputEmitterRef<void> = output<void>();
 
   save(): void {

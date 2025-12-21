@@ -23,17 +23,15 @@ export class TenantTableComponent
 {
   tenantService: TenantService = inject(TenantService);
 
-  headers: WritableSignal<string[]> = signal<string[]>([
+  readonly headers: WritableSignal<string[]> = signal<string[]>([
     'general.name',
     'general.createdAt',
     'general.updatedAt',
   ]);
 
-  columns: WritableSignal<(keyof Tenant)[]> = signal<(keyof Tenant)[]>([
-    'name',
-    'createdAt',
-    'updatedAt',
-  ]);
+  readonly columns: WritableSignal<(keyof Tenant)[]> = signal<(keyof Tenant)[]>(
+    ['name', 'createdAt', 'updatedAt'],
+  );
 
   override ngOnInit(): void {
     super.ngOnInit();

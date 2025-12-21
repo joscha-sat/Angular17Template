@@ -20,9 +20,9 @@ import { FetchDataFunction } from '../../shared/template-table-enter-fetch-metho
 
 @Component({
   selector: 'app-table-refresher',
-  template: '',
-  styles: '',
   imports: [],
+  template: '',
+  styles: ''
 })
 export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
   refresh$: BehaviorSubject<null> = new BehaviorSubject<null>(null); // Emits when data needs to be refreshed

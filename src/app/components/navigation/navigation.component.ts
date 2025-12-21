@@ -19,7 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrl: './navigation.component.scss',
 })
 export class NavigationComponent implements OnInit {
-  navItems: WritableSignal<NavItem[]> = signal<NavItem[]>([]);
+  readonly navItems: WritableSignal<NavItem[]> = signal<NavItem[]>([]);
   private readonly translateService: TranslateService =
     inject(TranslateService);
 

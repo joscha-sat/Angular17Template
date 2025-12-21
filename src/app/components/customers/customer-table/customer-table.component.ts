@@ -15,11 +15,11 @@ import { BaseGetQueryParams } from '../../../other/types/Table.type';
 
 @Component({
   selector: 'app-customer-table',
-  standalone: true,
   imports: [TemplateTableEnterFetchComponent, DeleteIconComponent],
+  standalone: true,
   templateUrl: './customer-table.component.html',
   styleUrl: './customer-table.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomerTableComponent
   extends BaseTableComponent<Customer>
@@ -27,15 +27,18 @@ export class CustomerTableComponent
 {
   public readonly customerService: CustomerService = inject(CustomerService);
 
-  headers: WritableSignal<string[]> = signal<string[]>([
+  readonly headers: WritableSignal<string[]> = signal<string[]>([
     'general.createdAt',
     'general.name',
     '',
   ]);
 
-  columns: WritableSignal<(keyof Customer | 'delete' | 'edit')[]> = signal<
-    (keyof Customer | 'delete' | 'edit')[]
-  >(['createdAt', 'name', 'delete']);
+  readonly columns: WritableSignal<(keyof Customer | 'delete' | 'edit')[]> =
+    signal<(keyof Customer | 'delete' | 'edit')[]>([
+      'createdAt',
+      'name',
+      'delete',
+    ]);
 
   override ngOnInit(): void {
     super.ngOnInit();

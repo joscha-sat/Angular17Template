@@ -30,10 +30,12 @@ export class UserTableComponent
 {
   userService: UserService = inject(UserService);
 
-  columns: WritableSignal<string[]> = signal<string[]>(
+  readonly columns: WritableSignal<string[]> = signal<string[]>(
     COLUMN_CONFIG.displayedColumns,
   );
-  headers: WritableSignal<string[]> = signal<string[]>(COLUMN_CONFIG.headers);
+  readonly headers: WritableSignal<string[]> = signal<string[]>(
+    COLUMN_CONFIG.headers,
+  );
 
   override ngOnInit(): void {
     super.ngOnInit();

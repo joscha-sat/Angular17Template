@@ -47,7 +47,7 @@ export class CustomerAddEditDialogComponent implements OnInit {
   readonly dialog: MatDialog = inject(MatDialog);
   model?: Customer;
   form?: FormGroup;
-  isCreateCustomerMode: WritableSignal<boolean> = signal(true);
+  readonly isCreateCustomerMode: WritableSignal<boolean> = signal(true);
   private readonly fb: FormBuilder = inject(FormBuilder);
   private readonly customerService: CustomerService = inject(CustomerService);
 

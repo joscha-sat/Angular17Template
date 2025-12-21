@@ -25,9 +25,9 @@ export class GenericHttpService {
   baseUrl: string = environment.baseUrl;
   _refreshObservable: Subject<void> = new Subject<void>();
   refreshObservable$: Observable<void> = this._refreshObservable.asObservable();
-  search: WritableSignal<string> = signal<string>('');
-  searchDate: WritableSignal<string> = signal<string>('');
-  tabValueActive: WritableSignal<boolean | undefined> = signal<
+  readonly search: WritableSignal<string> = signal<string>('');
+  readonly searchDate: WritableSignal<string> = signal<string>('');
+  readonly tabValueActive: WritableSignal<boolean | undefined> = signal<
     boolean | undefined
   >(undefined);
   private readonly http: HttpClient = inject(HttpClient);

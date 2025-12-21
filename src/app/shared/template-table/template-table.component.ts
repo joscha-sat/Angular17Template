@@ -17,7 +17,6 @@ import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-template-table',
-  standalone: true,
   imports: [
     MatTableModule,
     MatPaginator,
@@ -25,23 +24,26 @@ import { MatPaginator } from '@angular/material/paginator';
     DatePipe,
     IsDatePipe,
   ],
+  standalone: true,
   templateUrl: './template-table.component.html',
-  styleUrl: './template-table.component.scss',
+  styleUrl: './template-table.component.scss'
 })
 export class TemplateTableComponent<T> implements AfterViewInit {
-  headers: InputSignal<string[]> = input.required<string[]>();
-  displayedColumns: InputSignal<string[]> = input.required<string[]>();
+  readonly headers: InputSignal<string[]> = input.required<string[]>();
+  readonly displayedColumns: InputSignal<string[]> = input.required<string[]>();
   readonly cellTemplatesMap: InputSignal<{
     [key: string]: TemplateRef<unknown>;
   }> = input<{
     [key: string]: TemplateRef<unknown>;
   }>({});
 
-  tableData: InputSignal<T[]> = input.required<T[]>();
+  readonly tableData: InputSignal<T[]> = input.required<T[]>();
 
-  pageSizes: InputSignal<number[]> = input<number[]>([5, 10, 25, 100]);
-  initialPageSize: InputSignal<number> = input<number>(10);
-  totalItems: InputSignal<number | undefined> = input<number | undefined>();
+  readonly pageSizes: InputSignal<number[]> = input<number[]>([5, 10, 25, 100]);
+  readonly initialPageSize: InputSignal<number> = input<number>(10);
+  readonly totalItems: InputSignal<number | undefined> = input<
+    number | undefined
+  >();
 
   readonly paginationChange: OutputEmitterRef<{ skip: number; limit: number }> =
     output<{

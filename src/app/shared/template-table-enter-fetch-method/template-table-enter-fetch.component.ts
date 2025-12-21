@@ -53,7 +53,6 @@ const VALID_SORT_DIRECTIONS: string[] = ['ASC', 'DESC'];
 
 @Component({
   selector: 'app-template-table-fetch',
-  standalone: true,
   imports: [
     CommonModule,
     MatTableModule,
@@ -62,39 +61,39 @@ const VALID_SORT_DIRECTIONS: string[] = ['ASC', 'DESC'];
     DatePipe,
     IsDatePipe,
   ],
+  standalone: true,
   templateUrl: './template-table-enter-fetch.component.html',
-  styleUrls: ['./template-table-enter-fetch.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrl: './template-table-enter-fetch.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   // Required inputs for table functionality
-  fetchData: InputSignal<FetchDataFunction<T>> =
+  readonly fetchData: InputSignal<FetchDataFunction<T>> =
     input.required<FetchDataFunction<T>>();
-  headers: InputSignal<string[]> = input.required<string[]>();
-  displayedColumns: InputSignal<string[]> = input.required<string[]>();
-  cellTemplatesMap: InputSignal<Record<string, TemplateRef<unknown>>> = input<
-    Record<string, TemplateRef<unknown>>
-  >({});
+  readonly headers: InputSignal<string[]> = input.required<string[]>();
+  readonly displayedColumns: InputSignal<string[]> = input.required<string[]>();
+  readonly cellTemplatesMap: InputSignal<Record<string, TemplateRef<unknown>>> =
+    input<Record<string, TemplateRef<unknown>>>({});
 
   // Optional configuration inputs
-  search: InputSignal<string> = input('');
-  searchDate: InputSignal<string> = input('');
-  initialSort: InputSignal<SortParamType | undefined> = input<
+  readonly search: InputSignal<string> = input('');
+  readonly searchDate: InputSignal<string> = input('');
+  readonly initialSort: InputSignal<SortParamType | undefined> = input<
     SortParamType | undefined
   >(undefined);
-  tabValueActive: InputSignal<boolean | undefined> = input<boolean | undefined>(
-    undefined,
-  );
-  pageSizes: InputSignal<number[]> = input(DEFAULT_PAGE_SIZES);
-  initialPageSize: InputSignal<number> = input(DEFAULT_PAGE_SIZE);
+  readonly tabValueActive: InputSignal<boolean | undefined> = input<
+    boolean | undefined
+  >(undefined);
+  readonly pageSizes: InputSignal<number[]> = input(DEFAULT_PAGE_SIZES);
+  readonly initialPageSize: InputSignal<number> = input(DEFAULT_PAGE_SIZE);
 
   // Reactive signals for internal state
-  totalItemsCount: WritableSignal<number> = signal(0);
-  limit: WritableSignal<number> = signal(this.initialPageSize());
-  skip: WritableSignal<number> = signal(0);
-  tableData: WritableSignal<T[]> = signal<T[]>([]);
-  debouncedSearch: WritableSignal<string> = signal('');
-  activeSort: WritableSignal<SortParamType | undefined> = signal<
+  readonly totalItemsCount: WritableSignal<number> = signal(0);
+  readonly limit: WritableSignal<number> = signal(this.initialPageSize());
+  readonly skip: WritableSignal<number> = signal(0);
+  readonly tableData: WritableSignal<T[]> = signal<T[]>([]);
+  readonly debouncedSearch: WritableSignal<string> = signal('');
+  readonly activeSort: WritableSignal<SortParamType | undefined> = signal<
     SortParamType | undefined
   >(this.initialSort());
 

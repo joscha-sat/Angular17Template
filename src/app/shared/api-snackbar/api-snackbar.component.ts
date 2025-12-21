@@ -38,5 +38,5 @@ export class ApiSnackbarComponent {
     inject<SnackbarComponentData>(MAT_SNACK_BAR_DATA);
 
   snackBarRef: MatSnackBarRef<unknown> = inject(MatSnackBarRef);
-  currentDate: WritableSignal<Date> = signal(new Date());
+  readonly currentDate: WritableSignal<Date> = signal(new Date());
 }

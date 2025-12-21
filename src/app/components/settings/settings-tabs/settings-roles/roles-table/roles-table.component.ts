@@ -13,13 +13,13 @@ export class RolesTableComponent implements Table<Role> {
   roleService: RoleService = inject(RoleService);
 
   // enter i18n keys here
-  headers: WritableSignal<string[]> = signal<string[]>([
+  readonly headers: WritableSignal<string[]> = signal<string[]>([
     'general.name',
     'general.description',
     'general.edit',
     'general.delete',
   ]);
-  columns: WritableSignal<(keyof Role | 'delete' | 'edit')[]> = signal<
+  readonly columns: WritableSignal<(keyof Role | 'delete' | 'edit')[]> = signal<
     (keyof Role | 'delete' | 'edit')[]
   >(['name', 'description', 'edit', 'delete']);
 

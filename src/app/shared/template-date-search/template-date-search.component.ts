@@ -9,7 +9,7 @@ import { TemplateDatepickerComponent } from '../template-datepicker/template-dat
   styleUrl: './template-date-search.component.scss',
 })
 export class TemplateDateSearchComponent {
-  service: InputSignal<{ searchDate: WritableSignal<string> }> =
+  readonly service: InputSignal<{ searchDate: WritableSignal<string> }> =
     input.required<{ searchDate: WritableSignal<string> }>();
 
   dateChange($event: string): void {

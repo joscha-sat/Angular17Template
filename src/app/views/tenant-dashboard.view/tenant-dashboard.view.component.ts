@@ -27,7 +27,7 @@ import { Tenant } from '../../models/Tenant';
 export class TenantDashboardViewComponent implements OnInit {
   route: ActivatedRoute = inject(ActivatedRoute);
   tenantService: TenantService = inject(TenantService);
-  tenant: WritableSignal<Tenant> = signal<Tenant>(new Tenant({}));
+  readonly tenant: WritableSignal<Tenant> = signal<Tenant>(new Tenant({}));
 
   ngOnInit(): void {
     this.getTenantIdByUrl();

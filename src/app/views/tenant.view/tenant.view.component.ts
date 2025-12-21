@@ -23,7 +23,7 @@ export class TenantViewComponent implements OnInit {
   tenantService: TenantService = inject(TenantService);
 
   // | signals / vars | --------------------------------------------------------------------  ||
-  tenants: WritableSignal<Tenant[]> = signal<Tenant[]>([]);
+  readonly tenants: WritableSignal<Tenant[]> = signal<Tenant[]>([]);
 
   // | init | ------------------------------------------------------------------------------  ||
   ngOnInit(): void {

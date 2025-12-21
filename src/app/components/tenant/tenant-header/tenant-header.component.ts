@@ -38,21 +38,7 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
   tenantService: TenantService = inject(TenantService);
 
   form: FormGroup = new FormGroup({});
-  tenants: InputSignal<Tenant[]> = input.required<Tenant[]>();
-
-  ngOnInit(): void {
-    this.initForm();
-  }
-
-  initForm(): void {
-    this.form = this.fb.group({
-      name: [],
-    });
-  }
-
-  onTenantChange($event: { id: string; label: string }): void {
-    this.tenantService.selectedTenantId.set($event.id);
-  }
+  readonly tenants: InputSignal<Tenant[]> = input.required<Tenant[]>();
 
   ngOnChanges(changes: SimpleChanges): void {
     const tenantsChange: SimpleChange | undefined = changes['tenants'];
@@ -74,6 +60,20 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
         label: firstTenant.name,
       });
     }
+  }
+
+  ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm(): void {
+    this.form = this.fb.group({
+      name: [],
+    });
+  }
+
+  onTenantChange($event: { id: string; label: string }): void {
+    this.tenantService.selectedTenantId.set($event.id);
   }
 
   openCreateTenantDialog(): void {

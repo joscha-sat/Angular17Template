@@ -10,5 +10,5 @@ import { Tenant } from '../../../models/Tenant';
   styleUrl: './tenant-dashboard-header.component.scss',
 })
 export class TenantDashboardHeaderComponent {
-  tenant: InputSignal<Tenant> = input.required<Tenant>();
+  readonly tenant: InputSignal<Tenant> = input.required<Tenant>();
 }

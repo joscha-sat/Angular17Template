@@ -33,13 +33,15 @@ import {
   ],
 })
 export class TemplateInputComponent {
-  label: InputSignal<string> = input('label');
-  fControlName: InputSignal<string> = input.required<string>();
-  appearance: InputSignal<'fill' | 'outline'> = input<'fill' | 'outline'>(
-    'outline',
+  readonly label: InputSignal<string> = input('label');
+  readonly fControlName: InputSignal<string> = input.required<string>();
+  readonly appearance: InputSignal<'fill' | 'outline'> = input<
+    'fill' | 'outline'
+  >('outline');
+  readonly type: InputSignal<'text' | 'password'> = input<'text' | 'password'>(
+    'text',
   );
-  type: InputSignal<'text' | 'password'> = input<'text' | 'password'>('text');
-  subscriptSizing: InputSignal<'dynamic' | 'fixed'> = input<
+  readonly subscriptSizing: InputSignal<'dynamic' | 'fixed'> = input<
     'dynamic' | 'fixed'
   >('dynamic');
 }
