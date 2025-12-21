@@ -55,7 +55,7 @@ export class AuthService {
     return this.http.post<LoginResponse>(url, loginBody).pipe(
       map((response: LoginResponse) => {
         this.setTokens(response.access_token, response.refresh_token);
-        this.setLoggedInUser(response?.user);
+        this.setLoggedInUser(response.user);
       }),
     );
   }

@@ -39,10 +39,12 @@ export class HttpStatusMsgService {
   ): string => {
     const resolvedEndpoint = this.resolveEndpoint(err, endpoint);
     const errorKey =
-      (typeof (err.error as { key?: string })?.key === 'string'
-        ? (err.error as { key?: string }).key
-        : ''
-      ).toLowerCase() || '';
+      (() => {
+        const errorObj = err.error as { key?: string } | undefined;
+        return errorObj && typeof errorObj.key === 'string' && errorObj.key
+          ? errorObj.key
+          : '';
+      })().toLowerCase() || '';
 
     return (
       this.getTranslatedMessage(resolvedEndpoint, method, errorKey) ||
@@ -104,8 +106,9 @@ export class HttpStatusMsgService {
   }
 
   private getErrorMessage(err: HttpErrorResponse): string | null {
-    return typeof (err.error as { message?: string })?.message === 'string'
-      ? (err.error as { message?: string }).message
+    const errorObj = err.error as { message?: string } | undefined;
+    return errorObj && typeof errorObj.message === 'string' && errorObj.message
+      ? errorObj.message
       : null;
   }
 

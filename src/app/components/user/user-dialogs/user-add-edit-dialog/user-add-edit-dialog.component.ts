@@ -2,8 +2,9 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { User } from '../../../../models/User';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
-  FormBuilder,
+  FormControl,
   FormGroup,
+  NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -27,9 +28,11 @@ import { RoleDropdownComponent } from './role-dropdown/role-dropdown.component';
 })
 export class UserAddEditDialogComponent implements OnInit, AddEdit {
   model?: User;
-  form?: FormGroup;
+  form!: FormGroup<{
+    [K in keyof Partial<User>]: FormControl<User[K]>;
+  }>;
   createUserMode = signal(true);
-  private readonly fb = inject(FormBuilder);
+  private readonly fb = inject(NonNullableFormBuilder);
   private readonly userService = inject(UserService);
   private readonly translateService = inject(TranslateService);
 
@@ -39,23 +42,15 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   ]);
 
   get userFromFormData(): User {
-    // Reads form data and prepares a user object
-    const formData = this.form?.value as {
-      firstName?: string;
-      lastName?: string;
-      phone?: string;
-      active?: boolean;
-      email?: string;
-      role?: { id: string };
-    };
+    const formData = this.form.getRawValue();
 
     return new User({
-      firstName: formData.firstName as string,
+      firstName: formData.firstName,
       lastName: formData.lastName,
       phone: formData.phone,
       active: formData.active,
       email: formData.email,
-      roleId: formData.role?.id,
+      roleId: formData.roleId,
     });
   }
 
@@ -72,22 +67,25 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   // if the model is provided set the form data with it, else set to null
   initForm(): void {
     this.form = this.fb.group({
-      firstName: [this.model?.firstName ?? null, Validators.required],
-      lastName: [this.model?.lastName ?? null, Validators.required],
-      phone: [this.model?.phone ?? null],
-      active: [this.getActiveStatus(), Validators.required],
-      email: [this.model?.email ?? null, Validators.email],
-      role: '',
-    });
+      firstName: [this.model?.firstName ?? '', Validators.required],
+      lastName: [this.model?.lastName ?? '', Validators.required],
+      phone: [this.model?.phone ?? ''],
+      active: [this.model?.active ?? true, Validators.required],
+      email: [this.model?.email ?? '', Validators.email],
+      roleId: [this.model?.roleId ?? ''],
+    }) as FormGroup<{
+      [K in keyof Partial<User>]: FormControl<User[K]>;
+    }>;
   }
 
   submit(): void {
-    this.convertStringStatusToBoolean();
+    if (this.form.invalid) return;
 
     if (this.createUserMode()) {
       this.createUser();
+    } else {
+      this.updateUser();
     }
-    this.updateUser();
   }
 
   createUser(): void {
@@ -97,23 +95,7 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   updateUser(): void {
     if (!this.model) return;
     this.userService
-      .updateUserById(this.model?.id, this.userFromFormData)
+      .updateUserById(this.model.id, this.userFromFormData)
       .subscribe(() => {});
-  }
-
-  getActiveStatus = (): string => {
-    if (this.model?.active === null || this.model?.active === undefined) {
-      return 'Aktiv';
-    } else {
-      return this.model?.active ? 'Aktiv' : 'Inaktiv';
-    }
-  };
-
-  convertStringStatusToBoolean(): void {
-    if (this.form?.controls['active'].value === 'Aktiv') {
-      this.form.controls['active'].patchValue(true);
-    } else {
-      this.form?.controls['active'].patchValue(false);
-    }
   }
 }

@@ -79,14 +79,14 @@ function handleHttpError(
         // Retry the original request with the new token
         return next(requestWithNewToken);
       } else {
-        authService.logout();
+        void authService.logout();
         return throwError(() => createError(response)) as Observable<
           HttpEvent<unknown>
         >;
       }
     }),
     catchError((refreshError) => {
-      authService.logout();
+      void authService.logout();
       return throwError(() => createError(refreshError)) as Observable<
         HttpEvent<unknown>
       >;

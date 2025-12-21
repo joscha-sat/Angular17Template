@@ -88,7 +88,7 @@ export class CustomerAddEditDialogComponent implements OnInit {
   updateCustomer(): void {
     if (!this.model) return;
     this.customerService
-      .updateCustomerById(this.model?.id, this.customerFromFormData)
+      .updateCustomerById(this.model.id, this.customerFromFormData)
       .subscribe();
   }
 }

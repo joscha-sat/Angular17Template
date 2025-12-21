@@ -22,7 +22,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       );
 
       if (!errorMessage) {
-        errorMessage = err.message ?? 'unknown error';
+        errorMessage = err.message || 'unknown error';
       }
 
       const snackbarPayload: SnackBarData = {

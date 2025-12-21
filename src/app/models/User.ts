@@ -23,19 +23,21 @@ export class User extends BaseModel<User> {
   }
 
   get fullName(): string {
-    const first = this.firstName?.trim() || '';
-    const last = this.lastName?.trim() || '';
+    const first = this.firstName.trim() || '';
+    const last = this.lastName.trim() || '';
     return [first, last].filter(Boolean).join(' ') || User.DEFAULT_DISPLAY_NAME;
   }
 
   get initials(): string {
-    const first = this.firstName?.charAt(0)?.toUpperCase() || '';
-    const last = this.lastName?.charAt(0)?.toUpperCase() || '';
+    const first = this.firstName.charAt(0).toUpperCase() || '';
+    const last = this.lastName.charAt(0).toUpperCase() || '';
     return first + last;
   }
 
   get roleName(): string {
-    return this.role?.name || User.DEFAULT_ROLE_NAME;
+    return this.role && this.role.name
+      ? this.role.name
+      : User.DEFAULT_ROLE_NAME;
   }
 
   get hasAcceptedInvite(): boolean {

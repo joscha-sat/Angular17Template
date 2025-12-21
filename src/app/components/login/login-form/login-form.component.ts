@@ -38,10 +38,10 @@ export class LoginFormComponent {
   }
 
   submit(): void {
-    if (this.form?.invalid) return;
+    if (this.form.invalid) return;
 
     this.authService.login(this.loginBody).subscribe(() => {
-      this.router.navigate(['/' + ROUTES.TENANT]).then();
+      void this.router.navigate(['/' + ROUTES.TENANT]);
     });
   }
 }

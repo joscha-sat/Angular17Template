@@ -48,12 +48,10 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (
-      changes['tenants'] &&
-      changes['tenants'].currentValue !== changes['tenants'].previousValue &&
-      this.form.controls['name']
-    ) {
-      this.form.controls['name'].setValue({
+    const tenantsChange = changes['tenants'];
+    const nameControl = this.form.controls['name'];
+    if (tenantsChange.currentValue !== tenantsChange.previousValue) {
+      nameControl.setValue({
         id: this.tenants()[0].id,
         label: this.tenants()[0].name,
       });
