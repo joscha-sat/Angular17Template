@@ -10,15 +10,21 @@ import {
 } from '@angular/common/http';
 import { inject } from '@angular/core';
 
-const TOKEN_REFRESH_SUCCESS_STATUS = HttpStatusCode.Created;
+const TOKEN_REFRESH_SUCCESS_STATUS: HttpStatusCode = HttpStatusCode.Created;
 
-export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthService);
+export const authTokenInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn,
+) => {
+  const authService: AuthService = inject(AuthService);
   // Add authorization header to the request
-  const requestWithToken = addAuthorizationHeader(req, authService);
+  const requestWithToken: HttpRequest<unknown> = addAuthorizationHeader(
+    req,
+    authService,
+  );
   // Handle request and catch errors
   return next(requestWithToken).pipe(
-    catchError((error) =>
+    catchError((error: HttpErrorResponse) =>
       handleHttpError(error, requestWithToken, next, authService),
     ),
   );
@@ -72,10 +78,8 @@ function handleHttpError(
         authService.setTokens(response.data.access, response.data.refresh);
         authService.setLoggedInUser(response.data.user);
         // Clone the original request with the new access token
-        const requestWithNewToken = addAuthorizationHeader(
-          originalRequest,
-          authService,
-        );
+        const requestWithNewToken: HttpRequest<unknown> =
+          addAuthorizationHeader(originalRequest, authService);
         // Retry the original request with the new token
         return next(requestWithNewToken);
       } else {
@@ -85,7 +89,7 @@ function handleHttpError(
         >;
       }
     }),
-    catchError((refreshError) => {
+    catchError((refreshError: unknown) => {
       void authService.logout();
       return throwError(() => createError(refreshError)) as Observable<
         HttpEvent<unknown>

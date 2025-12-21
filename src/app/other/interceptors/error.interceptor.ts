@@ -1,4 +1,9 @@
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import {
+  HttpErrorResponse,
+  HttpHandlerFn,
+  HttpInterceptorFn,
+  HttpRequest,
+} from '@angular/common/http';
 import { catchError } from 'rxjs';
 import { inject } from '@angular/core';
 import { HttpStatusMsgService } from '../../api/base-error-messages/http-status-msg.service';
@@ -8,9 +13,13 @@ import {
 } from '../../services/mat-snackbar.service';
 import { ApiSnackbarComponent } from '../../shared/api-snackbar/api-snackbar.component';
 
-export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-  const statusTranslationService = inject(HttpStatusMsgService);
-  const snackbarService = inject(MatSnackbarService);
+export const errorInterceptor: HttpInterceptorFn = (
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn,
+) => {
+  const statusTranslationService: HttpStatusMsgService =
+    inject(HttpStatusMsgService);
+  const snackbarService: MatSnackbarService = inject(MatSnackbarService);
 
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {

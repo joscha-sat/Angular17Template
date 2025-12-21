@@ -41,7 +41,9 @@ export class HttpStatusMsgService {
       this.resolveEndpoint(err, endpoint);
     const errorKey: string =
       (() => {
-        const errorObj = err.error as { key?: string } | undefined;
+        const errorObj: { key?: string } | undefined = err.error as
+          | { key?: string }
+          | undefined;
         return errorObj && typeof errorObj.key === 'string' && errorObj.key
           ? errorObj.key
           : '';

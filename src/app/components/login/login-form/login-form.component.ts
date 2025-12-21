@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
+  FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
@@ -25,10 +26,10 @@ import { MatButton } from '@angular/material/button';
   styleUrl: './login-form.component.scss',
 })
 export class LoginFormComponent {
-  router = inject(Router);
-  authService = inject(AuthService);
+  router: Router = inject(Router);
+  authService: AuthService = inject(AuthService);
   private fb: FormBuilder = inject(FormBuilder);
-  form = this.fb.group({
+  form: FormGroup = this.fb.group({
     username: ['', { validators: Validators.required, nonNullable: true }],
     password: ['', { validators: Validators.required, nonNullable: true }],
   });

@@ -9,6 +9,7 @@ import {
 import { Role } from '../models/Role';
 import { AuthService } from './auth.service';
 import { ApiRoutes } from '../other/enums/api_routes';
+import { User } from '../models/User';
 
 export type RoleQueryParams = BaseQueryParams & {};
 
@@ -16,14 +17,14 @@ export type RoleQueryParams = BaseQueryParams & {};
   providedIn: 'root',
 })
 export class RoleService extends GenericHttpService {
-  authService = inject(AuthService);
+  authService: AuthService = inject(AuthService);
 
-  endpoint = ApiRoutes.ROLE;
-  element_i18nKey = 'role.a_title';
+  endpoint: ApiRoutes = ApiRoutes.ROLE;
+  element_i18nKey: string = 'role.a_title';
 
   //  UTILITY METHODS
   get isSuperAdmin(): boolean {
-    const user = this.authService.getLoggedInUser();
+    const user: User | null = this.authService.getLoggedInUser();
 
     if (!user?.role) {
       return false;

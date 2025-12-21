@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 import {
   MatFormField,
   MatFormFieldModule,
@@ -33,9 +33,13 @@ import {
   ],
 })
 export class TemplateInputComponent {
-  label = input('label');
-  fControlName = input.required<string>();
-  appearance = input<'fill' | 'outline'>('outline');
-  type = input<'text' | 'password'>('text');
-  subscriptSizing = input<'dynamic' | 'fixed'>('dynamic');
+  label: InputSignal<string> = input('label');
+  fControlName: InputSignal<string> = input.required<string>();
+  appearance: InputSignal<'fill' | 'outline'> = input<'fill' | 'outline'>(
+    'outline',
+  );
+  type: InputSignal<'text' | 'password'> = input<'text' | 'password'>('text');
+  subscriptSizing: InputSignal<'dynamic' | 'fixed'> = input<
+    'dynamic' | 'fixed'
+  >('dynamic');
 }

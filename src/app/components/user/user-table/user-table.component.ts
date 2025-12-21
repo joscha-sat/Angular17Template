@@ -1,12 +1,19 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { UserService } from '../../../api/user.service';
 import { User } from '../../../models/User';
 import { BaseTableComponent } from '../../../other/abstract-classes/BaseTable';
-import {
-  TemplateTableEnterFetchComponent
-} from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
+import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 
-const COLUMN_CONFIG = {
+const COLUMN_CONFIG: {
+  displayedColumns: string[];
+  headers: string[];
+} = {
   displayedColumns: ['name', 'createdAt', 'updatedAt', 'actions'],
   headers: ['general.name', 'general.createdAt', 'general.updatedAt', ''],
 };
@@ -21,10 +28,12 @@ export class UserTableComponent
   extends BaseTableComponent<User>
   implements OnInit
 {
-  userService = inject(UserService);
+  userService: UserService = inject(UserService);
 
-  columns = signal(COLUMN_CONFIG.displayedColumns);
-  headers = signal(COLUMN_CONFIG.headers);
+  columns: WritableSignal<string[]> = signal<string[]>(
+    COLUMN_CONFIG.displayedColumns,
+  );
+  headers: WritableSignal<string[]> = signal<string[]>(COLUMN_CONFIG.headers);
 
   override ngOnInit(): void {
     super.ngOnInit();

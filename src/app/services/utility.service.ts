@@ -6,10 +6,11 @@ import { filter, map, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class UtilityService {
-  router = inject(Router);
+  router: Router = inject(Router);
 
   urlContainsName(name: string): Observable<boolean> {
     return this.router.events.pipe(
+      // eslint-disable-next-line @typescript-eslint/typedef
       filter((event) => event instanceof NavigationEnd),
       map(() => this.router.url.includes(name)),
     );

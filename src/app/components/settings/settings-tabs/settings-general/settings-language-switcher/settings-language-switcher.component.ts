@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { LANGUAGE_FULL, Languages } from '../../../../../other/enums/languages';
 
@@ -14,9 +20,9 @@ interface LanguageOption {
   styleUrl: './settings-language-switcher.component.scss',
 })
 export class SettingsLanguageSwitcherComponent implements OnInit {
-  fb = inject(FormBuilder);
+  fb: FormBuilder = inject(FormBuilder);
 
-  dataArray = signal<LanguageOption[]>([
+  dataArray: WritableSignal<LanguageOption[]> = signal<LanguageOption[]>([
     {
       name: 'German',
       id: 'de',
@@ -27,12 +33,13 @@ export class SettingsLanguageSwitcherComponent implements OnInit {
     },
   ]);
 
+  // eslint-disable-next-line @typescript-eslint/typedef
   form = this.fb.group({
     language: {},
   });
 
   initLanguageFormValue(): void {
-    const language = localStorage.getItem('tuiLanguage');
+    const language: string | null = localStorage.getItem('tuiLanguage');
     switch (language) {
       case LANGUAGE_FULL.ENGLISH: {
         this.form.controls.language.setValue({

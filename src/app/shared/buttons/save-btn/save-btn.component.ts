@@ -1,4 +1,10 @@
-import { Component, input, output } from '@angular/core';
+import {
+  Component,
+  input,
+  InputSignal,
+  output,
+  OutputEmitterRef,
+} from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -9,8 +15,8 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './save-btn.component.scss',
 })
 export class SaveBtnComponent {
-  disabled = input(false);
-  clickEvent = output();
+  disabled: InputSignal<boolean> = input(false);
+  clickEvent: OutputEmitterRef<void> = output<void>();
 
   save(): void {
     this.clickEvent.emit();

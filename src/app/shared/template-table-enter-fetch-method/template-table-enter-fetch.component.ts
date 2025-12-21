@@ -7,9 +7,12 @@ import {
   effect,
   inject,
   input,
+  InputSignal,
+  Signal,
   signal,
   TemplateRef,
   viewChild,
+  WritableSignal,
 } from '@angular/core';
 import {
   MatPaginator,
@@ -43,10 +46,10 @@ export type FetchDataFunction<T> = (
 ) => Observable<ResponseWithRecords<T>>;
 
 // Constants for commonly used values to avoid magic numbers/strings
-const DEFAULT_PAGE_SIZES = [5, 10, 25, 100];
-const DEFAULT_PAGE_SIZE = 10;
-const SEARCH_DEBOUNCE_TIME = 500; // milliseconds
-const VALID_SORT_DIRECTIONS = ['ASC', 'DESC'];
+const DEFAULT_PAGE_SIZES: number[] = [5, 10, 25, 100];
+const DEFAULT_PAGE_SIZE: number = 10;
+const SEARCH_DEBOUNCE_TIME: number = 500; // milliseconds
+const VALID_SORT_DIRECTIONS: string[] = ['ASC', 'DESC'];
 
 @Component({
   selector: 'app-template-table-fetch',
@@ -65,43 +68,54 @@ const VALID_SORT_DIRECTIONS = ['ASC', 'DESC'];
 })
 export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   // Required inputs for table functionality
-  fetchData = input.required<FetchDataFunction<T>>();
-  headers = input.required<string[]>();
-  displayedColumns = input.required<string[]>();
-  cellTemplatesMap = input<Record<string, TemplateRef<unknown>>>({});
+  fetchData: InputSignal<FetchDataFunction<T>> =
+    input.required<FetchDataFunction<T>>();
+  headers: InputSignal<string[]> = input.required<string[]>();
+  displayedColumns: InputSignal<string[]> = input.required<string[]>();
+  cellTemplatesMap: InputSignal<Record<string, TemplateRef<unknown>>> = input<
+    Record<string, TemplateRef<unknown>>
+  >({});
 
   // Optional configuration inputs
-  search = input('');
-  searchDate = input('');
-  initialSort = input<SortParamType | undefined>(undefined);
-  tabValueActive = input<boolean | undefined>(undefined);
-  pageSizes = input(DEFAULT_PAGE_SIZES);
-  initialPageSize = input(DEFAULT_PAGE_SIZE);
+  search: InputSignal<string> = input('');
+  searchDate: InputSignal<string> = input('');
+  initialSort: InputSignal<SortParamType | undefined> = input<
+    SortParamType | undefined
+  >(undefined);
+  tabValueActive: InputSignal<boolean | undefined> = input<boolean | undefined>(
+    undefined,
+  );
+  pageSizes: InputSignal<number[]> = input(DEFAULT_PAGE_SIZES);
+  initialPageSize: InputSignal<number> = input(DEFAULT_PAGE_SIZE);
 
   // Reactive signals for internal state
-  totalItemsCount = signal(0);
-  limit = signal(this.initialPageSize());
-  skip = signal(0);
-  tableData = signal<T[]>([]);
-  debouncedSearch = signal('');
-  activeSort = signal<SortParamType | undefined>(this.initialSort());
+  totalItemsCount: WritableSignal<number> = signal(0);
+  limit: WritableSignal<number> = signal(this.initialPageSize());
+  skip: WritableSignal<number> = signal(0);
+  tableData: WritableSignal<T[]> = signal<T[]>([]);
+  debouncedSearch: WritableSignal<string> = signal('');
+  activeSort: WritableSignal<SortParamType | undefined> = signal<
+    SortParamType | undefined
+  >(this.initialSort());
 
   // View children for Material components
-  readonly paginator = viewChild(MatPaginator);
-  readonly sort = viewChild(MatSort);
+  readonly paginator: Signal<MatPaginator | undefined> =
+    viewChild(MatPaginator);
+  readonly sort: Signal<MatSort | undefined> = viewChild(MatSort);
 
   // Injected dependencies
-  private readonly destroyRef = inject(DestroyRef);
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   // Computed query parameters that combine all filter/sort/pagination settings
-  private readonly queryParams = computed<BaseGetQueryParams>(() => ({
-    skip: this.skip(),
-    limit: this.limit(),
-    search: this.debouncedSearch(),
-    searchDate: this.searchDate(),
-    sort: this.activeSort(),
-    tabValueActive: this.tabValueActive(),
-  }));
+  private readonly queryParams: Signal<BaseGetQueryParams> =
+    computed<BaseGetQueryParams>(() => ({
+      skip: this.skip(),
+      limit: this.limit(),
+      search: this.debouncedSearch(),
+      searchDate: this.searchDate(),
+      sort: this.activeSort(),
+      tabValueActive: this.tabValueActive(),
+    }));
 
   constructor() {
     this.initializeReactiveFeatures();
@@ -125,7 +139,7 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
     obj: U,
     path: string,
   ): string | number | Date | null | undefined {
-    return path.split('.').reduce((current: unknown, key) => {
+    return path.split('.').reduce((current: unknown, key: string) => {
       return current &&
         typeof current === 'object' &&
         Object.hasOwn(current, key)
@@ -170,7 +184,7 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
         distinctUntilChanged(),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe((searchValue) => {
+      .subscribe((searchValue: string) => {
         this.debouncedSearch.set(searchValue);
         this.resetPaginatorToFirstPage();
       });
@@ -188,10 +202,12 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   private setupDataFetchingSubscription(): void {
     toObservable(this.queryParams)
       .pipe(
-        switchMap((params) => this.fetchDataWithErrorHandling(params)),
+        switchMap((params: BaseGetQueryParams) =>
+          this.fetchDataWithErrorHandling(params),
+        ),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe((records) => this.tableData.set(records));
+      .subscribe((records: T[]) => this.tableData.set(records));
   }
 
   // Wraps data fetching with error handling and response processing
@@ -199,9 +215,11 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
     params: BaseGetQueryParams,
   ): Observable<T[]> {
     return this.fetchData()(params).pipe(
-      tap((response) => this.totalItemsCount.set(response.total)),
-      map((response) => response.records),
-      catchError((error) => {
+      tap((response: ResponseWithRecords<T>) =>
+        this.totalItemsCount.set(response.total),
+      ),
+      map((response: ResponseWithRecords<T>) => response.records),
+      catchError((error: unknown) => {
         console.error('Error fetching data:', error);
         this.totalItemsCount.set(0);
         return of([]);
@@ -211,7 +229,7 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
 
   // Sets up the paginator with initial values
   private initializePaginator(): void {
-    const paginatorInstance = this.paginator();
+    const paginatorInstance: MatPaginator | undefined = this.paginator();
     if (paginatorInstance) {
       paginatorInstance.pageSize = this.initialPageSize();
     }
@@ -219,8 +237,8 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
 
   // Configures initial sort settings if provided
   private initializeSort(): void {
-    const sortInstance = this.sort();
-    const initialSortValue = this.initialSort();
+    const sortInstance: MatSort | undefined = this.sort();
+    const initialSortValue: SortParamType | undefined = this.initialSort();
     if (!sortInstance || initialSortValue === undefined) {
       return;
     }
@@ -236,10 +254,13 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
     sortInstance: MatSort,
     sortString: string,
   ): void {
-    const [field, directionStr] = sortString
+    const [field, directionStr]: string[] = sortString
       .split(',')
-      .map((part) => part.trim());
-    const direction = directionStr.toUpperCase() as 'ASC' | 'DESC' | undefined;
+      .map((part: string) => part.trim());
+    const direction: 'ASC' | 'DESC' | undefined = directionStr.toUpperCase() as
+      | 'ASC'
+      | 'DESC'
+      | undefined;
     if (field && direction && VALID_SORT_DIRECTIONS.includes(direction)) {
       sortInstance.active = field;
       sortInstance.direction = direction.toLowerCase() as SortDirection;

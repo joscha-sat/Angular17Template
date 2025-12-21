@@ -1,4 +1,11 @@
-import { Component, inject, input, OnInit, WritableSignal, } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  InputSignal,
+  OnInit,
+  WritableSignal,
+} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TemplateInputComponent } from '../template-input/template-input.component';
 
@@ -13,9 +20,10 @@ interface SearchableService {
   styleUrl: './template-table-search.component.scss',
 })
 export class TemplateTableSearchComponent implements OnInit {
-  readonly service = input.required<SearchableService>();
+  readonly service: InputSignal<SearchableService> =
+    input.required<SearchableService>();
   searchForm: FormGroup;
-  private readonly fb = inject(FormBuilder);
+  private readonly fb: FormBuilder = inject(FormBuilder);
 
   constructor() {
     this.searchForm = this.createSearchForm();
@@ -27,7 +35,7 @@ export class TemplateTableSearchComponent implements OnInit {
 
   // Updates the form value when the search input changes
   onSearchChange(event: Event): void {
-    const inputValue = this.getInputValueFromEvent(event);
+    const inputValue: string = this.getInputValueFromEvent(event);
     this.updateServiceSearchValue(inputValue);
   }
 
@@ -44,7 +52,7 @@ export class TemplateTableSearchComponent implements OnInit {
       return;
     }
 
-    const currentSearchValue = this.service().search();
+    const currentSearchValue: string = this.service().search();
     if (currentSearchValue) {
       this.searchForm.get('search')?.setValue(currentSearchValue);
     }

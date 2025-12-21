@@ -8,9 +8,9 @@ import { AuthService } from '../../api/auth.service';
  * navigates to home page if user is logged in.
  */
 export const loginPageAccessGuard: CanActivateFn = () => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
-  const isLoggedIn = authService.isLoggedIn();
+  const authService: AuthService = inject(AuthService);
+  const router: Router = inject(Router);
+  const isLoggedIn: boolean = authService.isLoggedIn();
 
   if (isLoggedIn) {
     // navigation to login page

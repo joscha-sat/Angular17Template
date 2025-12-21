@@ -23,9 +23,9 @@ import { TemplateDateSearchComponent } from '../../../shared/template-date-searc
   styleUrl: './customers-header.component.scss',
 })
 export class CustomersHeaderComponent {
-  readonly dialog = inject(MatDialog);
-  fb = inject(FormBuilder);
-  customerService = inject(CustomerService);
+  readonly dialog: MatDialog = inject(MatDialog);
+  fb: FormBuilder = inject(FormBuilder);
+  customerService: CustomerService = inject(CustomerService);
 
   form: FormGroup = this.fb.group({
     date: null,

@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import {
@@ -16,9 +16,11 @@ export type TenantQueryParams = BaseQueryParams & {};
   providedIn: 'root',
 })
 export class TenantService extends GenericHttpService {
-  selectedTenantId = signal('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
-  endpoint = ApiRoutes.TENANT;
-  element_i18nKey = 'tenant.a_title';
+  selectedTenantId: WritableSignal<string> = signal(
+    'be9733b2-7695-4a41-96ed-9c0fcb2772dd',
+  );
+  endpoint: ApiRoutes = ApiRoutes.TENANT;
+  element_i18nKey: string = 'tenant.a_title';
 
   // GET ALL
   getAllTenants(

@@ -3,12 +3,13 @@ import { inject } from '@angular/core';
 
 import { ROUTES } from '../enums/ROUTES';
 import { AuthService } from '../../api/auth.service';
+import { User } from '../../models/User';
 
 export const globalUserGuard: CanActivateFn = () => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+  const authService: AuthService = inject(AuthService);
+  const router: Router = inject(Router);
 
-  const user = authService.getLoggedInUser();
+  const user: User | null = authService.getLoggedInUser();
 
   if (user?.role?.global) {
     return true;

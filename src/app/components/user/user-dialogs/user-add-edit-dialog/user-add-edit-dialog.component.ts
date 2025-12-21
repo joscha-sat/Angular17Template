@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { User } from '../../../../models/User';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
@@ -31,18 +37,26 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   form!: FormGroup<{
     [K in keyof Partial<User>]: FormControl<User[K]>;
   }>;
-  createUserMode = signal(true);
-  private readonly fb = inject(NonNullableFormBuilder);
-  private readonly userService = inject(UserService);
-  private readonly translateService = inject(TranslateService);
+  createUserMode: WritableSignal<boolean> = signal(true);
+  private readonly fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
+  private readonly userService: UserService = inject(UserService);
+  private readonly translateService: TranslateService =
+    inject(TranslateService);
 
-  radioItems = signal([
+  radioItems: WritableSignal<{ name: string }[]> = signal([
     { name: this.translateService.instant('general.active') as string },
     { name: this.translateService.instant('general.inactive') as string },
   ]);
 
   get userFromFormData(): User {
-    const formData = this.form.getRawValue();
+    const formData: {
+      firstName?: string;
+      lastName?: string;
+      phone?: string;
+      active?: boolean;
+      email?: string;
+      roleId?: string;
+    } = this.form.getRawValue();
 
     return new User({
       firstName: formData.firstName,

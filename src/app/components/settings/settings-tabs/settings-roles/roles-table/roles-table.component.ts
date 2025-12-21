@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Role } from '../../../../../models/Role';
 import { Table } from '../../../../../other/types/Table.type';
 import { RoleService } from '../../../../../api/role.service';
@@ -10,21 +10,18 @@ import { RoleService } from '../../../../../api/role.service';
   styleUrl: './roles-table.component.scss',
 })
 export class RolesTableComponent implements Table<Role> {
-  roleService = inject(RoleService);
+  roleService: RoleService = inject(RoleService);
 
   // enter i18n keys here
-  headers = signal<string[]>([
+  headers: WritableSignal<string[]> = signal<string[]>([
     'general.name',
     'general.description',
     'general.edit',
     'general.delete',
   ]);
-  columns = signal<(keyof Role | 'delete' | 'edit')[]>([
-    'name',
-    'description',
-    'edit',
-    'delete',
-  ]);
+  columns: WritableSignal<(keyof Role | 'delete' | 'edit')[]> = signal<
+    (keyof Role | 'delete' | 'edit')[]
+  >(['name', 'description', 'edit', 'delete']);
 
   setTableRefreshMethodName(): string {
     return 'getAllRoles';

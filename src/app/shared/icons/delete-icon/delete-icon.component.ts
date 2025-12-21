@@ -1,4 +1,10 @@
-import { Component, input, output } from '@angular/core';
+import {
+  Component,
+  input,
+  InputSignal,
+  output,
+  OutputEmitterRef,
+} from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
@@ -8,9 +14,9 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './delete-icon.component.scss',
 })
 export class DeleteIconComponent {
-  color = input('var(--mat-sys-error)');
+  color: InputSignal<string> = input('var(--mat-sys-error)');
 
-  clickEvent = output();
+  clickEvent: OutputEmitterRef<void> = output<void>();
 
   iconClick(): void {
     this.clickEvent.emit();

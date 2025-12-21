@@ -2,7 +2,10 @@ import {
   AfterViewInit,
   Component,
   input,
+  InputSignal,
   output,
+  OutputEmitterRef,
+  Signal,
   TemplateRef,
   viewChild,
 } from '@angular/core';
@@ -26,24 +29,30 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrl: './template-table.component.scss',
 })
 export class TemplateTableComponent<T> implements AfterViewInit {
-  headers = input.required<string[]>();
-  displayedColumns = input.required<string[]>();
-  readonly cellTemplatesMap = input<{
+  headers: InputSignal<string[]> = input.required<string[]>();
+  displayedColumns: InputSignal<string[]> = input.required<string[]>();
+  readonly cellTemplatesMap: InputSignal<{
+    [key: string]: TemplateRef<unknown>;
+  }> = input<{
     [key: string]: TemplateRef<unknown>;
   }>({});
 
-  tableData = input.required<T[]>();
+  tableData: InputSignal<T[]> = input.required<T[]>();
 
-  pageSizes = input<number[]>([5, 10, 25, 100]);
-  initialPageSize = input<number>(10);
-  totalItems = input<number>();
+  pageSizes: InputSignal<number[]> = input<number[]>([5, 10, 25, 100]);
+  initialPageSize: InputSignal<number> = input<number>(10);
+  totalItems: InputSignal<number | undefined> = input<number | undefined>();
 
-  paginationChange = output<{ skip: number; limit: number }>();
+  paginationChange: OutputEmitterRef<{ skip: number; limit: number }> = output<{
+    skip: number;
+    limit: number;
+  }>();
 
-  dataSource = new MatTableDataSource<T>([]);
+  dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
 
-  readonly paginator = viewChild(MatPaginator);
-  readonly sort = viewChild(MatSort);
+  readonly paginator: Signal<MatPaginator | undefined> =
+    viewChild(MatPaginator);
+  readonly sort: Signal<MatSort | undefined> = viewChild(MatSort);
 
   // hooks --------------------------------------------------- ||
   ngAfterViewInit(): void {
@@ -53,14 +62,15 @@ export class TemplateTableComponent<T> implements AfterViewInit {
 
   // methods --------------------------------------------------- ||
   setupDataSourcePaginator(): void {
-    const paginator = this.paginator();
+    const paginator: MatPaginator | undefined = this.paginator();
     if (paginator) {
       this.dataSource.paginator = paginator;
     }
   }
 
   setupDataSourceSort(): void {
-    const sort = this.sort();
+    const sort: import('@angular/material/sort').MatSort | undefined =
+      this.sort();
     if (sort) {
       this.dataSource.sort = sort;
     }
@@ -70,7 +80,7 @@ export class TemplateTableComponent<T> implements AfterViewInit {
     item: T,
     key: string,
   ): string | number | Date | null | undefined {
-    const value = this.resolvePath(item, key);
+    const value: unknown = this.resolvePath(item, key);
 
     if (this.isAllowedType(value)) {
       return value;
@@ -80,7 +90,7 @@ export class TemplateTableComponent<T> implements AfterViewInit {
   }
 
   private resolvePath(item: unknown, key: string): unknown {
-    return key.split('.').reduce((acc, k) => {
+    return key.split('.').reduce((acc: unknown, k: string) => {
       if (acc && typeof acc === 'object') {
         return (acc as Record<string, unknown>)[k];
       }

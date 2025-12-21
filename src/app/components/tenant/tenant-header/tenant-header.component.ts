@@ -2,13 +2,20 @@ import {
   Component,
   inject,
   input,
+  InputSignal,
   OnChanges,
   OnInit,
+  SimpleChange,
   SimpleChanges,
 } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Tenant } from '../../../models/Tenant';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { MatButton } from '@angular/material/button';
@@ -27,11 +34,11 @@ import { TemplateTableSearchComponent } from '../../../shared/template-table-sea
   styleUrl: './tenant-header.component.scss',
 })
 export class TenantHeaderComponent implements OnInit, OnChanges {
-  fb = inject(FormBuilder);
-  tenantService = inject(TenantService);
+  fb: FormBuilder = inject(FormBuilder);
+  tenantService: TenantService = inject(TenantService);
 
   form: FormGroup = new FormGroup({});
-  tenants = input.required<Tenant[]>();
+  tenants: InputSignal<Tenant[]> = input.required<Tenant[]>();
 
   ngOnInit(): void {
     this.initForm();
@@ -48,15 +55,28 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    const tenantsChange = changes['tenants'];
-    const nameControl = this.form.controls['name'];
-    if (tenantsChange.currentValue !== tenantsChange.previousValue) {
+    const tenantsChange: SimpleChange | undefined = changes['tenants'];
+
+    if (
+      !tenantsChange.currentValue ||
+      tenantsChange.currentValue === tenantsChange.previousValue
+    ) {
+      return;
+    }
+
+    const nameControl: AbstractControl | undefined = this.form.controls['name'];
+    const firstTenant: Tenant | undefined = this.tenants()[0];
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (nameControl && firstTenant) {
       nameControl.setValue({
-        id: this.tenants()[0].id,
-        label: this.tenants()[0].name,
+        id: firstTenant.id,
+        label: firstTenant.name,
       });
     }
   }
 
-  openCreateTenantDialog(): void {}
+  openCreateTenantDialog(): void {
+    /* TODO document why this method 'openCreateTenantDialog' is empty */
+  }
 }

@@ -10,5 +10,5 @@ import { UserService } from '../../../api/user.service';
   styleUrl: './user-header.component.scss',
 })
 export class UserHeaderComponent {
-  userService = inject(UserService);
+  userService: UserService = inject(UserService);
 }

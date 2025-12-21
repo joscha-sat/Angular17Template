@@ -4,6 +4,7 @@ import {
   inject,
   OnInit,
   signal,
+  WritableSignal,
 } from '@angular/core';
 import { Customer } from '../../../models/Customer';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
@@ -24,15 +25,17 @@ export class CustomerTableComponent
   extends BaseTableComponent<Customer>
   implements OnInit
 {
-  public readonly customerService = inject(CustomerService);
+  public readonly customerService: CustomerService = inject(CustomerService);
 
-  headers = signal<string[]>(['general.createdAt', 'general.name', '']);
-
-  columns = signal<(keyof Customer | 'delete' | 'edit')[]>([
-    'createdAt',
-    'name',
-    'delete',
+  headers: WritableSignal<string[]> = signal<string[]>([
+    'general.createdAt',
+    'general.name',
+    '',
   ]);
+
+  columns: WritableSignal<(keyof Customer | 'delete' | 'edit')[]> = signal<
+    (keyof Customer | 'delete' | 'edit')[]
+  >(['createdAt', 'name', 'delete']);
 
   override ngOnInit(): void {
     super.ngOnInit();

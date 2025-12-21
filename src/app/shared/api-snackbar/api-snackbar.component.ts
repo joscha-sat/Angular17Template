@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import {
   MAT_SNACK_BAR_DATA,
   MatSnackBarAction,
@@ -34,8 +34,9 @@ export type SnackbarComponentData<T = unknown> = {
   styleUrl: './api-snackbar.component.scss',
 })
 export class ApiSnackbarComponent {
-  data = inject<SnackbarComponentData>(MAT_SNACK_BAR_DATA);
+  data: SnackbarComponentData<unknown> =
+    inject<SnackbarComponentData>(MAT_SNACK_BAR_DATA);
 
-  snackBarRef = inject(MatSnackBarRef);
-  currentDate = signal(new Date());
+  snackBarRef: MatSnackBarRef<unknown> = inject(MatSnackBarRef);
+  currentDate: WritableSignal<Date> = signal(new Date());
 }

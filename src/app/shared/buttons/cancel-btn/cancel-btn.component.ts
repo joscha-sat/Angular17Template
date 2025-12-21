@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, output, OutputEmitterRef } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -9,7 +9,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './cancel-btn.component.scss',
 })
 export class CancelBtnComponent {
-  cancelEvent = output();
+  cancelEvent: OutputEmitterRef<void> = output<void>();
 
   cancel(): void {
     this.cancelEvent.emit();

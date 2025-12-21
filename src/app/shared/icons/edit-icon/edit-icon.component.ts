@@ -1,4 +1,10 @@
-import { Component, input, output } from '@angular/core';
+import {
+  Component,
+  input,
+  InputSignal,
+  output,
+  OutputEmitterRef,
+} from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
@@ -8,8 +14,8 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './edit-icon.component.scss',
 })
 export class EditIconComponent {
-  color = input();
-  clickEvent = output();
+  color: InputSignal<string | undefined> = input();
+  clickEvent: OutputEmitterRef<void> = output<void>();
 
   iconClick(): void {
     this.clickEvent.emit();

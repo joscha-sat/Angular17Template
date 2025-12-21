@@ -18,10 +18,18 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 registerLocaleData(localeDE);
 
 // Translation configuration constants
-const DEFAULT_LANGUAGE = 'de';
+const DEFAULT_LANGUAGE: string = 'de';
 
 // Date format configuration constant
-const LUXON_DATE_FORMAT_CONFIG = {
+const LUXON_DATE_FORMAT_CONFIG: {
+  parse: { dateInput: string };
+  display: {
+    dateInput: string;
+    monthYearLabel: string;
+    dateA11yLabel: string;
+    monthYearA11yLabel: string;
+  };
+} = {
   parse: {
     dateInput: 'dd.MM.yyyy',
   },

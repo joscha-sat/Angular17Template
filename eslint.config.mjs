@@ -105,7 +105,7 @@ const tsRules = {
 // Configuration for TypeScript files (excluding spec files entirely) (modified with rxjs-x plugin)
 const tsFilesConfig = {
   files: ["**/*.ts"],
-  ignores: ["**/*.spec.ts"],
+  ignores: ["**/*.spec.ts", "**/*.routes.ts"],
   languageOptions: {
     parser: tseslint.parser,
     parserOptions: {

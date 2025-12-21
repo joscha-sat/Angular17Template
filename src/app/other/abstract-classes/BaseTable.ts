@@ -25,8 +25,8 @@ import { FetchDataFunction } from '../../shared/template-table-enter-fetch-metho
   imports: [],
 })
 export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
-  refresh$ = new BehaviorSubject(null); // Emits when data needs to be refreshed
-  protected translateService = inject(TranslateService); // Translation service
+  refresh$: BehaviorSubject<null> = new BehaviorSubject<null>(null); // Emits when data needs to be refreshed
+  protected translateService: TranslateService = inject(TranslateService); // Translation service
   protected noParams: boolean = false; // Flag to skip sending params
   private subscription: Subscription | undefined; // Subscription for refresh
 
@@ -37,8 +37,10 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
   // Translates table headers using the translation service
   translateHeaders(headers: WritableSignal<string[]>): void {
     forkJoin(
-      headers().map((key) => (key ? this.translateService.get(key) : of(''))),
-    ).subscribe((results) => headers.set(results));
+      headers().map((key: string) =>
+        key ? this.translateService.get(key) : of(''),
+      ),
+    ).subscribe((results: string[]) => headers.set(results));
   }
 
   abstract setTableRefreshService(): {
@@ -69,12 +71,16 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
 
   // Fetches data using the service and method defined in derived components
   fetchDataFn: FetchDataFunction<T> = (baseParams: BaseGetQueryParams) => {
-    const params = this.buildParams(baseParams);
-    const service = this.setTableRefreshService();
-    const methodName = this.setTableRefreshMethodName();
+    const params: Record<string, unknown> = this.buildParams(baseParams);
+    const service: {
+      refreshObservable$: Observable<unknown>;
+    } = this.setTableRefreshService();
+    const methodName: string = this.setTableRefreshMethodName();
 
     // Type assertion to allow accessing methods by string key
-    const serviceWithMethods = service as { [key: string]: unknown };
+    const serviceWithMethods: { [key: string]: unknown } = service as {
+      [key: string]: unknown;
+    };
 
     // Explicitly cast the return type to Observable<ResponseWithRecords<T>>
     return this.refresh$.pipe(

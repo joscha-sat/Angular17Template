@@ -11,7 +11,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
  * The functionality to set the loading state based on the request duration is implemented in the LoadingInterceptor
  */
 export class LoadingService {
-  private readonly loading$ = new BehaviorSubject<boolean>(false); // only true if the request takes longer than 250ms
+  private readonly loading$: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false); // only true if the request takes longer than 250ms
 
   get loadingState(): Observable<boolean> {
     return this.loading$.asObservable();

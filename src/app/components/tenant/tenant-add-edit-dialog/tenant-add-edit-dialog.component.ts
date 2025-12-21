@@ -19,11 +19,11 @@ import { AddEdit } from '../../../other/types/AddEdit.type';
 })
 export class TenantAddEditDialogComponent implements OnInit, AddEdit {
   data: Tenant | undefined;
-  mode = MODE.ADD;
+  mode: MODE = MODE.ADD;
   tenantForm?: FormGroup;
-  fb = inject(FormBuilder);
-  tenantService = inject(TenantService);
-  protected readonly MODE = MODE;
+  fb: FormBuilder = inject(FormBuilder);
+  tenantService: TenantService = inject(TenantService);
+  protected readonly MODE: typeof MODE = MODE;
 
   ngOnInit(): void {
     this.getMode();

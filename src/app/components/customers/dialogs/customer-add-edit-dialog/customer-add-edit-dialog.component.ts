@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -37,17 +43,17 @@ import { UtilityService } from '../../../../services/utility.service';
   styleUrl: './customer-add-edit-dialog.component.scss',
 })
 export class CustomerAddEditDialogComponent implements OnInit {
-  utilityService = inject(UtilityService);
-  readonly dialog = inject(MatDialog);
+  utilityService: UtilityService = inject(UtilityService);
+  readonly dialog: MatDialog = inject(MatDialog);
   model?: Customer;
   form?: FormGroup;
-  isCreateCustomerMode = signal(true);
-  private fb = inject(FormBuilder);
-  private customerService = inject(CustomerService);
+  isCreateCustomerMode: WritableSignal<boolean> = signal(true);
+  private fb: FormBuilder = inject(FormBuilder);
+  private customerService: CustomerService = inject(CustomerService);
 
   get customerFromFormData(): Customer {
     // Reads form data and prepares a user object
-    const formData = this.form?.value as { name?: string };
+    const formData: { name?: string } = this.form?.value as { name?: string };
     return new Customer({
       name: formData.name,
     });

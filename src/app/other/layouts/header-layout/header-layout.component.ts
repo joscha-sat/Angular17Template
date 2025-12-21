@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 
 @Component({
   selector: 'app-header-layout',
@@ -7,5 +7,5 @@ import { Component, input } from '@angular/core';
   styleUrl: './header-layout.component.scss',
 })
 export class HeaderLayoutComponent {
-  useBreadcrumbs = input<boolean>(true);
+  useBreadcrumbs: InputSignal<boolean> = input<boolean>(true);
 }

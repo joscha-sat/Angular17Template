@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 export enum THEME {
@@ -10,8 +10,10 @@ export enum THEME {
   providedIn: 'root',
 })
 export class ThemingService {
-  private readonly document = inject(DOCUMENT);
-  private readonly currentTheme = signal<THEME>(THEME.LIGHT);
+  private readonly document: Document = inject(DOCUMENT);
+  private readonly currentTheme: WritableSignal<THEME> = signal<THEME>(
+    THEME.LIGHT,
+  );
 
   constructor() {
     this.getThemeFromLocalStorage();
@@ -36,7 +38,7 @@ export class ThemingService {
   }
 
   getThemeFromLocalStorage(): void {
-    const theme = localStorage.getItem('theme');
+    const theme: string | null = localStorage.getItem('theme');
     if (theme) {
       this.setTheme(theme as THEME);
     }

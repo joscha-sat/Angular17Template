@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { forkJoin, map, Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../other/environments/environment';
 import {
@@ -25,9 +25,11 @@ export class GenericHttpService {
   baseUrl: string = environment.baseUrl;
   _refreshObservable: Subject<void> = new Subject<void>();
   refreshObservable$: Observable<void> = this._refreshObservable.asObservable();
-  search = signal<string>('');
-  searchDate = signal<string>('');
-  tabValueActive = signal<boolean | undefined>(undefined);
+  search: WritableSignal<string> = signal<string>('');
+  searchDate: WritableSignal<string> = signal<string>('');
+  tabValueActive: WritableSignal<boolean | undefined> = signal<
+    boolean | undefined
+  >(undefined);
   private readonly http: HttpClient = inject(HttpClient);
   private readonly snackBar: MatSnackbarService = inject(MatSnackbarService);
 

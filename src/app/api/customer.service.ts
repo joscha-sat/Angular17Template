@@ -15,8 +15,8 @@ type QueryParams = BaseQueryParams;
   providedIn: 'root',
 })
 export class CustomerService extends GenericHttpService {
-  endpoint = ApiRoutes.CUSTOMERS;
-  element_i18nKey = 'customer.a_customer';
+  endpoint: ApiRoutes = ApiRoutes.CUSTOMERS;
+  element_i18nKey: string = 'customer.a_customer';
 
   // GET ALL
   getAllCustomers(

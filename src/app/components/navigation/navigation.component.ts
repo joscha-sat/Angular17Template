@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatMiniFabButton } from '@angular/material/button';
@@ -13,8 +19,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrl: './navigation.component.scss',
 })
 export class NavigationComponent implements OnInit {
-  navItems = signal<NavItem[]>([]);
-  private readonly translateService = inject(TranslateService);
+  navItems: WritableSignal<NavItem[]> = signal<NavItem[]>([]);
+  private readonly translateService: TranslateService =
+    inject(TranslateService);
 
   ngOnInit(): void {
     this.setTranslatedTextWithNavItems();

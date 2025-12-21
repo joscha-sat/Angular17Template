@@ -1,4 +1,11 @@
-import { Component, input, output, WritableSignal } from '@angular/core';
+import {
+  Component,
+  input,
+  InputSignal,
+  output,
+  OutputEmitterRef,
+  WritableSignal,
+} from '@angular/core';
 import {
   MatFormField,
   MatInput,
@@ -32,14 +39,15 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './template-datepicker.component.scss',
 })
 export class TemplateDatepickerComponent {
-  minDate = input<Date>();
-  maxDate = input<Date>();
-  label = input('general.select-date');
+  minDate: InputSignal<Date | undefined> = input<Date>();
+  maxDate: InputSignal<Date | undefined> = input<Date>();
+  label: InputSignal<string> = input('general.select-date');
 
-  fControlName = input<string>('date');
-  service = input<{ searchDate: WritableSignal<string> }>();
+  fControlName: InputSignal<string> = input<string>('date');
+  service: InputSignal<{ searchDate: WritableSignal<string> } | undefined> =
+    input<{ searchDate: WritableSignal<string> }>();
 
-  dateChange = output<string>();
+  dateChange: OutputEmitterRef<string> = output<string>();
 
   selectedDateChanged(isoString: string): void {
     this.dateChange.emit(isoString);
