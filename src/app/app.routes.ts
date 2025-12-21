@@ -24,9 +24,9 @@ export const routes: Routes = [
       {
         path: ROUTES.TENANT + '/' + ROUTES.DASHBOARD + '/:id',
         loadComponent: () =>
-          import(
-            './views/tenant-dashboard.view/tenant-dashboard.view.component'
-          ).then((m) => m.TenantDashboardViewComponent),
+          import('./views/tenant-dashboard.view/tenant-dashboard.view.component').then(
+            (m) => m.TenantDashboardViewComponent,
+          ),
       },
       // || USER || ----------------------------------------------- // >>
       {
@@ -63,16 +63,16 @@ export const routes: Routes = [
           {
             path: ROUTES.GENERAL,
             loadComponent: () =>
-              import(
-                './views/settings.view/settings-general.view/settings-general.view.component'
-              ).then((m) => m.SettingsGeneralViewComponent),
+              import('./views/settings.view/settings-general.view/settings-general.view.component').then(
+                (m) => m.SettingsGeneralViewComponent,
+              ),
           },
           {
             path: ROUTES.ROLES,
             loadComponent: () =>
-              import(
-                './components/settings/settings-tabs/settings-roles/settings-roles.component'
-              ).then((m) => m.SettingsRolesComponent),
+              import('./components/settings/settings-tabs/settings-roles/settings-roles.component').then(
+                (m) => m.SettingsRolesComponent,
+              ),
           },
         ],
       },

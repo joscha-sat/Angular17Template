@@ -6,6 +6,7 @@
     "start": "ng serve",
     "start:local": "ng serve --configuration=local",
     "build": "ng build",
+    "prettier:write": "npx prettier --write \"src/**/*.{html,ts,scss}\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",

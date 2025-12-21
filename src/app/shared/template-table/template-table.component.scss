@@ -1,9 +1,10 @@
-[class*=" mat-column-"]:not(:last-child) {
+[class*=' mat-column-']:not(:last-child) {
   border-right: 1px solid black;
 }
 
 .table-container {
-  table, mat-paginator {
+  table,
+  mat-paginator {
     overflow: hidden;
     border-radius: 1rem;
   }
@@ -17,4 +18,3 @@
   border: 1px solid black;
   border-radius: 1rem;
 }
-

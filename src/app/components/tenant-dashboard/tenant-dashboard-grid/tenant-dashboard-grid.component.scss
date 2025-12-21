@@ -1,4 +1,4 @@
-@use "index" as *;
+@use 'index' as *;
 
 .grid-with-custom-settings {
   --min-column-size: 200px;
@@ -9,7 +9,6 @@
 .card {
   padding: 3rem;
 }
-
 
 @include mobile-view {
   .card {

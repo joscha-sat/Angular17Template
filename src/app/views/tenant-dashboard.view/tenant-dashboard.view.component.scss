@@ -1,4 +1,4 @@
-@use "index" as *;
+@use 'index' as *;
 
 .grid {
   grid-template-columns: 2fr 5fr;
@@ -8,14 +8,8 @@
   padding-top: 0.55rem;
 }
 
-
 @include tablet-view {
   .grid {
     grid-template-columns: 1fr;
   }
 }
-
-
-
-
-

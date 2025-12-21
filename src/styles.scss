@@ -11,18 +11,18 @@
 
 mat-form-field {
   @include mat.theme(
-      (
-        density: -3,
-      )
+    (
+      density: -3,
+    )
   );
 }
 
 tr,
 th {
   @include mat.theme(
-      (
-        density: -2,
-      )
+    (
+      density: -2,
+    )
   );
 }
 
