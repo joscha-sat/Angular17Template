@@ -11,7 +11,21 @@
     "test": "ng test",
     "lint": "ng lint",
     "prepare": "husky",
-    "eslint": "eslint"
+    "eslint": "eslint",
+    "migrate:standalone": "ng generate @angular/core:standalone",
+    "migrate:control_flow": "ng generate @angular/core:control-flow",
+    "migrate:signal_inputs": "ng generate @angular/core:signal-input-migration",
+    "migrate:signal_outputs": "ng generate @angular/core:output-migration",
+    "migrate:cleanup_imports": "ng generate @angular/core:cleanup-unused-imports",
+    "migrate:self_closing_tags": "ng generate @angular/core:self-closing-tag",
+    "migrate:common_module": "ng generate @angular/core:common-to-standalone",
+    "migrate:inject": "ng generate @angular/core:inject",
+    "migrate:route_lazy_loading": "ng generate @angular/core:route-lazy-loading",
+    "migrate:signal_queries": "ng generate @angular/core:signal-queries-migration",
+    "migrate:ngclass_to_class": "ng generate @angular/core:ngclass-to-class",
+    "migrate:ngstyle_to_style": "ng generate @angular/core:ngstyle-to-style",
+    "migrate:router_testing_module": "ng generate @angular/core:router-testing-module-migration",
+    "migrate:all": "npm run migrate:standalone && npm run migrate:control_flow && npm run migrate:signal_inputs && npm run migrate:signal_outputs && npm run migrate:signal_queries && npm run migrate:inject && npm run migrate:route_lazy_loading && npm run migrate:ngclass_to_class && npm run migrate:ngstyle_to_style && npm run migrate:self_closing_tags && npm run migrate:common_module && npm run migrate:router_testing_module && npm run migrate:cleanup_imports"
   },
   "private": true,
   "dependencies": {
