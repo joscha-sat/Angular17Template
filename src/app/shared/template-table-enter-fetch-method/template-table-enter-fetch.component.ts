@@ -64,7 +64,7 @@ const VALID_SORT_DIRECTIONS: string[] = ['ASC', 'DESC'];
   standalone: true,
   templateUrl: './template-table-enter-fetch.component.html',
   styleUrl: './template-table-enter-fetch.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   // Required inputs for table functionality

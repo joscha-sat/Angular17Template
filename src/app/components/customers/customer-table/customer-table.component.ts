@@ -19,7 +19,7 @@ import { BaseGetQueryParams } from '../../../other/types/Table.type';
   standalone: true,
   templateUrl: './customer-table.component.html',
   styleUrl: './customer-table.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CustomerTableComponent
   extends BaseTableComponent<Customer>

@@ -26,7 +26,7 @@ import { MatPaginator } from '@angular/material/paginator';
   ],
   standalone: true,
   templateUrl: './template-table.component.html',
-  styleUrl: './template-table.component.scss'
+  styleUrl: './template-table.component.scss',
 })
 export class TemplateTableComponent<T> implements AfterViewInit {
   readonly headers: InputSignal<string[]> = input.required<string[]>();
