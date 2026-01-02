@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
-
 import { CustomerTableComponent } from './customer-table.component';
+import { CustomerService } from '../../../api/customer.service';
 
 describe('CustomerTableComponent', () => {
   let component: CustomerTableComponent;
@@ -10,6 +10,7 @@ describe('CustomerTableComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CustomerTableComponent, TranslateModule.forRoot()],
+      providers: [CustomerService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CustomerTableComponent);
