@@ -113,6 +113,11 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "runnerConfig": "vitest.config.ts"
+          },
+          "configurations": {
+            "browser": {
+              "browsers": ["chromium"]
+            }
           }
         },
         "lint": {
