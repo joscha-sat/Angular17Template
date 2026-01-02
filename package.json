@@ -8,7 +8,7 @@
     "build": "ng build",
     "prettier:write": "npx prettier --write \"src/**/*.{html,ts,scss}\"",
     "watch": "ng build --watch --configuration development",
-    "run-unit-tests": "ng test --no-watch",
+    "run-unit-tests:terminal": "ng test --no-watch",
     "run-unit-tests:browser": "ng test --configuration=browser",
     "lint": "ng lint",
     "prepare": "husky",
