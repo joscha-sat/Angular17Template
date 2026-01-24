@@ -57,6 +57,10 @@ module.exports = {
             ) {
               return;
             }
+            // Skip title tags as they're usually not translated in the HTML head
+            if (parent.name === 'title') {
+              return;
+            }
           }
           parent = parent.parent;
         }

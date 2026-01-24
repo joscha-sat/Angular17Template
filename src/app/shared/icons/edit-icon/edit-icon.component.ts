@@ -6,10 +6,11 @@ import {
   OutputEmitterRef,
 } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-edit-icon',
-  imports: [MatIcon],
+  imports: [MatIcon, TranslocoPipe],
   templateUrl: './edit-icon.component.html',
   styleUrl: './edit-icon.component.scss',
 })

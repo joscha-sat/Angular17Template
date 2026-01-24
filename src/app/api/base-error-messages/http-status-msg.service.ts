@@ -1,16 +1,17 @@
 import { inject, Injectable, Injector } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiRoutes } from '../../other/enums/api_routes';
 
-// A mapping of HTTP status codes to error messages
+// A mapping of HTTP status codes to translation keys
 const STATUS_CODES: { [key: number]: string } = {
-  400: 'Bad Request',
-  401: 'Unauthorized',
-  403: 'Forbidden',
-  404: 'Not Found',
-  406: 'Not Acceptable',
-  409: 'Conflict',
-  500: 'Internal Server Error',
+  400: 'generic-http-error.status-400',
+  401: 'generic-http-error.status-401',
+  403: 'generic-http-error.status-403',
+  404: 'generic-http-error.status-404',
+  406: 'generic-http-error.status-406',
+  409: 'generic-http-error.status-409',
+  500: 'generic-http-error.status-500',
 };
 
 @Injectable({
@@ -18,6 +19,11 @@ const STATUS_CODES: { [key: number]: string } = {
 })
 export class HttpStatusMsgService {
   private readonly injector: Injector = inject(Injector);
+
+  // Lazy retrieves the TranslocoService instance
+  private get translocoService(): TranslocoService {
+    return this.injector.get(TranslocoService);
+  }
 
   /**
    * Method to get the appropriate error message for a given HTTP error status
@@ -88,8 +94,53 @@ export class HttpStatusMsgService {
     method?: string,
     errorKey?: string,
   ): string | null {
-    // Without translation service, we return null to fall back to other error messages
-    return null;
+    if (!errorKey) {
+      return null;
+    }
+
+    const specificKey: string = this.buildSpecificTranslationKey(
+      endpoint,
+      method,
+      errorKey,
+    );
+    const genericKey: string = `http-error.${errorKey}`;
+
+    return (
+      this.tryTranslateSpecific(specificKey) ??
+      this.tryTranslateGeneric(genericKey) ??
+      null
+    );
+  }
+
+  private buildSpecificTranslationKey(
+    endpoint: ApiRoutes | string | undefined,
+    method?: string,
+    errorKey?: string,
+  ): string {
+    return `http-error.${endpoint}.${method?.toLowerCase()}_${errorKey}`;
+  }
+
+  private tryTranslateSpecific(translationKey: string): string | null {
+    try {
+      const translated: string =
+        this.translocoService.translate(translationKey);
+      return translated !== translationKey && translated ? translated : null;
+    } catch {
+      return null;
+    }
+  }
+
+  private tryTranslateGeneric(genericTranslationKey: string): string | null {
+    try {
+      const translated: string = this.translocoService.translate(
+        genericTranslationKey,
+      );
+      return translated !== genericTranslationKey && translated
+        ? translated
+        : null;
+    } catch {
+      return null;
+    }
   }
 
   private getErrorMessage(err: HttpErrorResponse): string | null {
@@ -102,7 +153,10 @@ export class HttpStatusMsgService {
   }
 
   private getStatusMessage(err: HttpErrorResponse): string {
-    const statusMessage: string = STATUS_CODES[err.status];
+    const statusKey: string = STATUS_CODES[err.status];
+    const statusMessage: string = statusKey
+      ? this.translocoService.translate(statusKey)
+      : '';
     return statusMessage || `Unknown error, status code ${err.status}.`;
   }
 }

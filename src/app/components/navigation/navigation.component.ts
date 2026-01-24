@@ -10,11 +10,17 @@ import { MatIcon } from '@angular/material/icon';
 import { MatMiniFabButton } from '@angular/material/button';
 import { NavItem } from '../../other/enums/nav-items';
 import { ROUTES } from '../../other/enums/ROUTES';
-import { TranslocoService } from '@jsverse/transloco';
+import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-navigation',
-  imports: [RouterLinkActive, MatIcon, RouterLink, MatMiniFabButton],
+  imports: [
+    RouterLinkActive,
+    MatIcon,
+    RouterLink,
+    MatMiniFabButton,
+    TranslocoPipe,
+  ],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
 })
@@ -28,13 +34,14 @@ export class NavigationComponent implements OnInit {
   }
 
   setTranslatedTextWithNavItems(): void {
-    const translations = this.translocoService.translate([
-      'tenant.title',
-      'user.title',
-      'customer.title-plural',
-      'settings.title',
-      'map.title',
-    ]);
+    const translations: Record<string, string> =
+      this.translocoService.translate([
+        'tenant.title',
+        'user.title',
+        'customer.title-plural',
+        'settings.title',
+        'map.title',
+      ]);
 
     this.navItems.set([
       // tenant

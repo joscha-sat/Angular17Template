@@ -29,7 +29,7 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
 
   // Translates table headers using the translation service
   translateHeaders(headers: WritableSignal<string[]>): void {
-    const translations = headers().map((key: string) =>
+    const translations: string[] = headers().map((key: string) =>
       key ? this.translocoService.translate(key) : '',
     );
     headers.set(translations);
