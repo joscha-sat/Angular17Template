@@ -61,6 +61,10 @@ module.exports = {
             if (parent.name === 'title') {
               return;
             }
+            // Skip mat-icon elements as they use icon names, not translatable text
+            if (parent.name === 'mat-icon') {
+              return;
+            }
           }
           parent = parent.parent;
         }
