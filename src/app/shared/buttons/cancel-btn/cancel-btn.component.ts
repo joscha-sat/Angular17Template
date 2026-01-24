@@ -1,10 +1,10 @@
 import { Component, output, OutputEmitterRef } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-cancel-btn',
-  imports: [MatButton, TranslatePipe],
+  imports: [MatButton, TranslocoPipe],
   templateUrl: './cancel-btn.component.html',
   styleUrl: './cancel-btn.component.scss',
 })

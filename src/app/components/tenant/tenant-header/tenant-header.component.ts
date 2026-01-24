@@ -8,7 +8,6 @@ import {
   SimpleChange,
   SimpleChanges,
 } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { Tenant } from '../../../models/Tenant';
 import {
   AbstractControl,
@@ -20,15 +19,16 @@ import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { MatButton } from '@angular/material/button';
 import { TemplateTableSearchComponent } from '../../../shared/template-table-search/template-table-search.component';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-tenant-header',
   imports: [
-    TranslateModule,
     ReactiveFormsModule,
     HeaderLayoutComponent,
     MatButton,
     TemplateTableSearchComponent,
+    TranslocoPipe,
   ],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',

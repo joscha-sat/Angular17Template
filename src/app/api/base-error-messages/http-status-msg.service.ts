@@ -1,17 +1,16 @@
 import { inject, Injectable, Injector } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiRoutes } from '../../other/enums/api_routes';
 
-// A mapping of HTTP status codes to translation keys
+// A mapping of HTTP status codes to error messages
 const STATUS_CODES: { [key: number]: string } = {
-  400: 'generic-http-error.status-400',
-  401: 'generic-http-error.status-401',
-  403: 'generic-http-error.status-403',
-  404: 'generic-http-error.status-404',
-  406: 'generic-http-error.status-406',
-  409: 'generic-http-error.status-409',
-  500: 'generic-http-error.status-500',
+  400: 'Bad Request',
+  401: 'Unauthorized',
+  403: 'Forbidden',
+  404: 'Not Found',
+  406: 'Not Acceptable',
+  409: 'Conflict',
+  500: 'Internal Server Error',
 };
 
 @Injectable({
@@ -19,11 +18,6 @@ const STATUS_CODES: { [key: number]: string } = {
 })
 export class HttpStatusMsgService {
   private readonly injector: Injector = inject(Injector);
-
-  // Lazy retrieves the TranslateService instance
-  private get translateService(): TranslateService {
-    return this.injector.get(TranslateService);
-  }
 
   /**
    * Method to get the appropriate error message for a given HTTP error status
@@ -94,23 +88,8 @@ export class HttpStatusMsgService {
     method?: string,
     errorKey?: string,
   ): string | null {
-    if (!errorKey) {
-      return null;
-    }
-
-    const translationKey: string = `http-error.${endpoint}.${method?.toLowerCase()}_${errorKey}`;
-    const genericTranslationKey: string = `http-error.${errorKey}`;
-
-    let translated: string = this.translateService.instant(
-      translationKey,
-    ) as string;
-    if (translated === translationKey) {
-      translated = this.translateService.instant(
-        genericTranslationKey,
-      ) as string;
-    }
-
-    return translated !== genericTranslationKey ? translated : null;
+    // Without translation service, we return null to fall back to other error messages
+    return null;
   }
 
   private getErrorMessage(err: HttpErrorResponse): string | null {
@@ -123,10 +102,7 @@ export class HttpStatusMsgService {
   }
 
   private getStatusMessage(err: HttpErrorResponse): string {
-    const statusKey: string = STATUS_CODES[err.status];
-    const statusMessage: string = statusKey
-      ? (this.translateService.instant(statusKey) as string)
-      : '';
+    const statusMessage: string = STATUS_CODES[err.status];
     return statusMessage || `Unknown error, status code ${err.status}.`;
   }
 }

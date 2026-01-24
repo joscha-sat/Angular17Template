@@ -6,14 +6,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 import { Tenant } from '../../../models/Tenant';
 import { TenantService } from '../../../api/tenant.service';
 import { AddEdit } from '../../../other/types/AddEdit.type';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-tenant-add-edit-dialog',
-  imports: [ReactiveFormsModule, TranslateModule],
+  imports: [ReactiveFormsModule, TranslocoPipe],
   templateUrl: './tenant-add-edit-dialog.component.html',
   styleUrl: './tenant-add-edit-dialog.component.scss',
 })

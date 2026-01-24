@@ -5,23 +5,23 @@ import {
   MatLabel,
 } from '@angular/material/form-field';
 import { MatInput, MatInputModule } from '@angular/material/input';
-import { TranslatePipe } from '@ngx-translate/core';
 import {
   ControlContainer,
   FormGroupDirective,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-template-input',
   imports: [
     MatFormField,
     MatInput,
-    TranslatePipe,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatLabel,
+    TranslocoPipe,
   ],
   templateUrl: './template-input.component.html',
   styleUrl: './template-input.component.scss',

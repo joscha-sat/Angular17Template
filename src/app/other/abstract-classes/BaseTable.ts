@@ -5,18 +5,11 @@ import {
   OnInit,
   WritableSignal,
 } from '@angular/core';
-import {
-  BehaviorSubject,
-  forkJoin,
-  Observable,
-  of,
-  Subscription,
-  switchMap,
-} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
-import { TranslateService } from '@ngx-translate/core';
 import { BaseGetQueryParams } from '../types/Table.type';
 import { FetchDataFunction } from '../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
+import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-table-refresher',
@@ -26,7 +19,7 @@ import { FetchDataFunction } from '../../shared/template-table-enter-fetch-metho
 })
 export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
   refresh$: BehaviorSubject<null> = new BehaviorSubject<null>(null); // Emits when data needs to be refreshed
-  protected translateService: TranslateService = inject(TranslateService); // Translation service
+  protected translocoService: TranslocoService = inject(TranslocoService); // Translation service
   protected noParams: boolean = false; // Flag to skip sending params
   private subscription: Subscription | undefined; // Subscription for refresh
 
@@ -36,11 +29,10 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
 
   // Translates table headers using the translation service
   translateHeaders(headers: WritableSignal<string[]>): void {
-    forkJoin(
-      headers().map((key: string) =>
-        key ? this.translateService.get(key) : of(''),
-      ),
-    ).subscribe((results: string[]) => headers.set(results));
+    const translations = headers().map((key: string) =>
+      key ? this.translocoService.translate(key) : '',
+    );
+    headers.set(translations);
   }
 
   abstract setTableRefreshService(): {

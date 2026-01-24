@@ -6,21 +6,21 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, LoginBody } from '../../../api/auth.service';
 import { Router } from '@angular/router';
 import { ROUTES } from '../../../other/enums/ROUTES';
 import { TemplateInputComponent } from '../../../shared/template-input/template-input.component';
 import { MatButton } from '@angular/material/button';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login-form',
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    TranslateModule,
     TemplateInputComponent,
     MatButton,
+    TranslocoPipe,
   ],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',

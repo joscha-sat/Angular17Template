@@ -17,8 +17,8 @@ import {
   MatDatepickerInput,
   MatDatepickerToggle,
 } from '@angular/material/datepicker';
-import { TranslatePipe } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-template-datepicker',
@@ -32,8 +32,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDatepickerInput,
     MatLabel,
     MatFormField,
-    TranslatePipe,
     ReactiveFormsModule,
+    TranslocoPipe,
   ],
   templateUrl: './template-datepicker.component.html',
   styleUrl: './template-datepicker.component.scss',

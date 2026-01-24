@@ -47,7 +47,7 @@ This Angular template provides a solid foundation for building modern web applic
 The project follows a modular structure:
 
 | Directory            | Purpose                                      |
-|----------------------|----------------------------------------------|
+| -------------------- | -------------------------------------------- |
 | `src/app/api`        | API services for HTTP requests               |
 | `src/app/components` | Feature-specific components                  |
 | `src/app/models`     | Data models                                  |
@@ -64,7 +64,7 @@ The project follows a modular structure:
 Global SCSS files are located in the `assets/scss` folder:
 
 | File              | Purpose                                                                          |
-|-------------------|----------------------------------------------------------------------------------|
+| ----------------- | -------------------------------------------------------------------------------- |
 | `_mixins.scss`    | Custom global utility classes (directly usable as HTML class, no imports needed) |
 | `_colors.scss`    | Repeating color values (import them into styles.scss as CSS variables)           |
 | `_variables.scss` | Custom repeating SCSS values                                                     |
@@ -83,7 +83,7 @@ Media queries and breakpoints are defined in `src/assets/variables`:
 #### Example
 
 ```scss
-@use "index" as *;
+@use 'index' as *;
 
 /*desktop-view >> default */
 .grid {
@@ -138,7 +138,7 @@ Located in `src/app/api`, these services handle HTTP requests:
 - ✅ Handles error handling and notifications
 
 | Method           | Purpose                                                     |
-|------------------|-------------------------------------------------------------|
+| ---------------- | ----------------------------------------------------------- |
 | `getAll<T>()`    | Fetches all records with pagination, sorting, and filtering |
 | `getOne<T>()`    | Fetches a single record by ID                               |
 | `createOne<T>()` | Creates a new record                                        |
@@ -173,7 +173,7 @@ export class User extends BaseModel<User> {
   email!: string;
 
   get fullName(): string {
-    return `${ this.firstName } ${ this.lastName }`;
+    return `${this.firstName} ${this.lastName}`;
   }
 }
 ```
@@ -183,7 +183,7 @@ export class User extends BaseModel<User> {
 ### 🏷️ Types and Enums
 
 | Category  | Location              | Purpose                                               |
-|-----------|-----------------------|-------------------------------------------------------|
+| --------- | --------------------- | ----------------------------------------------------- |
 | **Types** | `src/app/other/types` | Type definitions using TypeScript's type syntax       |
 | **Enums** | `src/app/other/enums` | Enumeration values for consistent data representation |
 
@@ -235,12 +235,7 @@ The template includes a powerful table component system for displaying and manag
 ### 📊 Basic Table Example
 
 ```html
-
-<app-template-table-fetch
-  [columns]="columns()"
-  [fetchData]="fetchDataFn"
-  [headers]="headers()"
-/>
+<app-template-table-fetch [columns]="columns()" [fetchData]="fetchDataFn" [headers]="headers()" />
 ```
 
 ### 🧩 Table Component Implementation
@@ -251,10 +246,7 @@ For type safety and full functionality, extend the `BaseTableComponent`:
 <summary>📝 Example Implementation</summary>
 
 ```typescript
-export class UserTableComponent
-  extends BaseTableComponent<User>
-  implements Table<User>, OnInit {
-
+export class UserTableComponent extends BaseTableComponent<User> implements Table<User>, OnInit {
   // Inject the service responsible for the API call
   userService = inject(UserService);
 
@@ -287,7 +279,7 @@ export class UserTableComponent
 ### 🔔 Table Events
 
 | Event                                  | Description                              |
-|----------------------------------------|------------------------------------------|
+| -------------------------------------- | ---------------------------------------- |
 | `(rowClickEvent)="rowClicked($event)"` | Emits the full object of the clicked row |
 
 ### 🎨 Custom Table Columns
@@ -298,18 +290,12 @@ You can customize table columns using templates:
 <summary>📝 Example Custom Columns</summary>
 
 ```html
-
-<app-template-table
-  [fetchData]="fetchDataFn"
-  [headers]="headers()"
-  [columns]="columns()"
-  [cellTemplatesMap]="{ name }"
-/>
+<app-template-table [fetchData]="fetchDataFn" [headers]="headers()" [columns]="columns()" [cellTemplatesMap]="{ name }" />
 
 <!-- Custom column template -->
 <ng-template #name let-value let-item="object">
   {{ value }}
-  <app-delete-icon (click)="deleteItem(item)"/>
+  <app-delete-icon (click)="deleteItem(item)" />
 </ng-template>
 ```
 
@@ -353,13 +339,14 @@ The template includes built-in search functionality:
 
 ```html
 <!-- Search component -->
-<app-template-search [service]="userService"/>
+<app-template-search [service]="userService" />
 
 <!-- Table with search -->
-<app-template-table [search]="userService.search()">
+<app-template-table [search]="userService.search()"></app-template-table>
 ```
 
 This triggers a request like: `/users?search=searchTerm`
+
 </details>
 
 ### 📅 Date Search
@@ -374,12 +361,7 @@ For date-based filtering:
 <app-template-date-search [service]="customerService" />
 
 <!-- In your table component -->
-<app-template-table-fetch
-  [headers]="headers()"
-  [displayedColumns]="columns()"
-  [fetchData]="fetchDataFn"
-  [searchDate]="customerService.searchDate()"
-/>
+<app-template-table-fetch [headers]="headers()" [displayedColumns]="columns()" [fetchData]="fetchDataFn" [searchDate]="customerService.searchDate()" />
 ```
 
 This triggers a request like: `/customers?searchDate=2024-06-12T00:00:00.000Z`
@@ -408,16 +390,11 @@ You can use both regular search and date search together:
 <app-template-date-search [service]="customerService" />
 
 <!-- In your table component -->
-<app-template-table-fetch
-  [headers]="headers()"
-  [displayedColumns]="columns()"
-  [fetchData]="fetchDataFn"
-  [search]="customerService.search()"
-  [searchDate]="customerService.searchDate()"
-/>
+<app-template-table-fetch [headers]="headers()" [displayedColumns]="columns()" [fetchData]="fetchDataFn" [search]="customerService.search()" [searchDate]="customerService.searchDate()" />
 ```
 
 This will trigger a request like: `/customers?search=searchTerm&searchDate=2024-06-12T00:00:00.000Z`
+
 </details>
 
 ## 💬 Dialogs
@@ -434,7 +411,7 @@ The template includes a dialog system for user interactions.
 const deleteContextData: DeleteContextData = {
   model: user,
   service: this.userService,
-  deleteMethod: 'deleteUserById'
+  deleteMethod: 'deleteUserById',
 };
 
 // Open the dialog
@@ -490,7 +467,7 @@ Navigate to `http://localhost:4200/`. The application will automatically reload 
 The template includes:
 
 | Tool         | Purpose         | Command                      |
-|--------------|-----------------|------------------------------|
+| ------------ | --------------- | ---------------------------- |
 | **ESLint**   | Code linting    | `npm run lint`               |
 | **Prettier** | Code formatting | `npm run format`             |
 | **Husky**    | Git hooks       | Runs automatically on commit |
@@ -509,9 +486,8 @@ The template includes:
 For questions or support, contact:
 
 | Name               | Email                                        |
-|--------------------|----------------------------------------------|
+| ------------------ | -------------------------------------------- |
 | **Joscha Sattler** | j.sattler@28apps.de or joscha.sattler@web.de |
-
 
 ## 📦 Shared Components UI Docs
 
@@ -521,9 +497,11 @@ This section serves as a compact UI documentation for the reusable Shared Compon
 <summary>app-delete-icon — DeleteIconComponent</summary>
 
 Short description
+
 - Displays a Material icon (delete) and emits an event on click. Useful e.g. in table rows.
 
 API
+
 - Selector: app-delete-icon
 - Inputs:
   - color?: string — CSS color (Default: var(--mat-sys-error))
@@ -531,7 +509,9 @@ API
   - clickEvent: void — Emitted on click
 
 Examples
-1) Simple usage inside a card
+
+1. Simple usage inside a card
+
 ```html
 <div class="user-card">
   {{ selectedUser.fullName }}
@@ -539,7 +519,8 @@ Examples
 </div>
 ```
 
-2) Custom color and used as a table cell action
+2. Custom color and used as a table cell action
+
 ```html
 <!-- Table with custom color -->
 <ng-template #actions let-item>
@@ -553,9 +534,11 @@ Examples
 <summary>app-edit-icon — EditIconComponent</summary>
 
 Short description
+
 - Displays a Material icon (edit) and emits an event on click. Ideal for edit actions.
 
 API
+
 - Selector: app-edit-icon
 - Inputs:
   - color?: string — CSS color
@@ -563,7 +546,9 @@ API
   - clickEvent: void — Emitted on click
 
 Examples
-1) Next to a title
+
+1. Next to a title
+
 ```html
 <h3 class="flex items-center gap-8">
   {{ title }}
@@ -571,7 +556,8 @@ Examples
 </h3>
 ```
 
-2) Together with the delete icon in an action bar
+2. Together with the delete icon in an action bar
+
 ```html
 <div class="flex gap-8">
   <app-edit-icon color="#1565c0" (clickEvent)="onEdit(item)" />
@@ -585,9 +571,11 @@ Examples
 <summary>app-template-datepicker — TemplateDatepickerComponent</summary>
 
 Short description
+
 - Wraps the Angular Material Datepicker including label and form binding. Emits the selected date as an ISO string via dateChange. Optionally supports min/max date as well as label/field name. Can be used with a service that has a searchDate signal property.
 
 API
+
 - Selector: app-template-datepicker
 - Inputs:
   - minDate?: Date
@@ -599,35 +587,31 @@ API
   - dateChange: string — ISO date when changed
 
 Examples
-1) Standalone with handler (writes date to service signal)
+
+1. Standalone with handler (writes date to service signal)
+
 ```ts
 // component.ts
 import { WritableSignal, signal } from '@angular/core';
-class DummyService { searchDate: WritableSignal<string> = signal(''); }
+class DummyService {
+  searchDate: WritableSignal<string> = signal('');
+}
 const service = new DummyService();
 
 function onDateChange(iso: string) {
   service.searchDate.set(iso);
 }
 ```
+
 ```html
 <!-- component.html -->
-<app-template-datepicker
-  [service]="service"
-  (dateChange)="onDateChange($event)"
-/>
+<app-template-datepicker [service]="service" (dateChange)="onDateChange($event)" />
 ```
 
-2) With min/max and custom label/field name
+2. With min/max and custom label/field name
+
 ```html
-<app-template-datepicker
-  [minDate]="min"
-  [maxDate]="max"
-  label="filters.order-date"
-  fControlName="orderDate"
-  [service]="service"
-  (dateChange)="onDateChange($event)"
-/>
+<app-template-datepicker [minDate]="min" [maxDate]="max" label="filters.order-date" fControlName="orderDate" [service]="service" (dateChange)="onDateChange($event)" />
 ```
 
 </details>
@@ -636,48 +620,50 @@ function onDateChange(iso: string) {
 <summary>app-template-date-search — TemplateDateSearchComponent</summary>
 
 Short description
+
 - Provides a datepicker search field and writes the selected date directly into service().searchDate (WritableSignal<string>). Clearing the selection removes the filter.
 
 API
+
 - Selector: app-template-date-search
 - Inputs:
   - service: { searchDate: WritableSignal<string> } — required
 
 Examples
-1) In a header bar for table filters
+
+1. In a header bar for table filters
+
 ```html
 <header class="flex gap-16 items-center">
   <app-template-date-search [service]="customerService" />
 </header>
 ```
 
-2) Together with a table component (date is automatically used as a query param)
+2. Together with a table component (date is automatically used as a query param)
+
 ```html
 <!-- Header -->
 <app-template-date-search [service]="customerService" />
 
 <!-- Table -->
-<app-template-table-fetch
-  [headers]="headers()"
-  [columns]="columns()"
-  [fetchData]="fetchDataFn"
-  [searchDate]="customerService.searchDate()"
-/>
+<app-template-table-fetch [headers]="headers()" [columns]="columns()" [fetchData]="fetchDataFn" [searchDate]="customerService.searchDate()" />
 ```
 
 Note
+
 - Combining regular search and date search is possible (see the “📅 Date Search” section above).
 
 </details>
-
 
 <details>
 <summary>app-template-input — TemplateInputComponent</summary>
 
 Short description
+
 - Input field based on Angular Material, directly usable in Reactive Forms (automatically binds to the surrounding FormGroup via FormGroupDirective).
 
 API
+
 - Selector: app-template-input
 - Inputs:
   - label?: string — i18n key or text (Default: "label")
@@ -687,30 +673,30 @@ API
   - subscriptSizing?: 'dynamic' | 'fixed' (Default: 'dynamic')
 
 Examples
-1) Simple search field in a toolbar (Reactive Form)
+
+1. Simple search field in a toolbar (Reactive Form)
+
 ```ts
 // component.ts
 form = this.fb.group({ search: [''] });
 ```
+
 ```html
 <form [formGroup]="form" class="flex items-center gap-12">
   <app-template-input label="general.search" fControlName="search" />
 </form>
 ```
 
-2) Password field with appearance "fill"
+2. Password field with appearance "fill"
+
 ```ts
 // component.ts
 form = this.fb.group({ password: [''] });
 ```
+
 ```html
 <form [formGroup]="form">
-  <app-template-input
-    label="auth.password"
-    fControlName="password"
-    appearance="fill"
-    type="password"
-  />
+  <app-template-input label="auth.password" fControlName="password" appearance="fill" type="password" />
 </form>
 ```
 
@@ -720,14 +706,18 @@ form = this.fb.group({ password: [''] });
 <summary>app-template-spinner — TemplateSpinnerComponent</summary>
 
 Short description
+
 - Simple loading indicator (MatProgressSpinner). Ideal for loading states in lists, dialogs, or cards.
 
 API
+
 - Selector: app-template-spinner
 - Inputs/Outputs: —
 
 Examples
-1) Display during an HTTP loading process
+
+1. Display during an HTTP loading process
+
 ```html
 <section class="min-h-200 flex-center">
   <app-template-spinner *ngIf="loading; else content" />
@@ -737,10 +727,11 @@ Examples
 </section>
 ```
 
-2) Inline spinner in a button bar
+2. Inline spinner in a button bar
+
 ```html
 <button mat-flat-button color="primary" [disabled]="loading">
-  {{ 'general.save' | translate }}
+  {{ 'general.save' | transloco }}
   <app-template-spinner *ngIf="loading" />
 </button>
 ```
@@ -751,9 +742,11 @@ Examples
 <summary>app-template-table — TemplateTableComponent</summary>
 
 Short description
+
 - Table component for local data (Array<T>) with pagination and sorting via Angular Material. Supports custom cells via a template map.
 
 API
+
 - Selector: app-template-table
 - Inputs:
   - headers: string[] — Headers (i18n keys), required
@@ -767,7 +760,9 @@ API
   - paginationChange: { skip: number; limit: number }
 
 Examples
-1) Simple table
+
+1. Simple table
+
 ```ts
 // component.ts
 headers = signal(['general.name', 'general.email']);
@@ -776,29 +771,20 @@ users = signal<User[]>([]);
 
 total = computed(() => users().length); // optional
 ```
+
 ```html
-<app-template-table
-  [headers]="headers()"
-  [displayedColumns]="columns()"
-  [tableData]="users()"
-  [totalItems]="total()"
-  (paginationChange)="onPage($event)"
-/>
+<app-template-table [headers]="headers()" [displayedColumns]="columns()" [tableData]="users()" [totalItems]="total()" (paginationChange)="onPage($event)" />
 ```
 
-2) Custom cell via template
+2. Custom cell via template
+
 ```html
 <ng-template #actions let-item>
   <app-edit-icon (clickEvent)="edit(item)" />
   <app-delete-icon (clickEvent)="remove(item)" />
 </ng-template>
 
-<app-template-table
-  [headers]="['general.name','general.actions']"
-  [displayedColumns]="['name','actions']"
-  [tableData]="users()"
-  [cellTemplatesMap]="{ actions }"
-/>
+<app-template-table [headers]="['general.name','general.actions']" [displayedColumns]="['name','actions']" [tableData]="users()" [cellTemplatesMap]="{ actions }" />
 ```
 
 </details>
@@ -807,22 +793,27 @@ total = computed(() => users().length); // optional
 <summary>app-template-table-search — TemplateTableSearchComponent</summary>
 
 Short description
+
 - Lightweight search field for tables. Reads and writes directly to service().search (WritableSignal<string>) with debouncing in the table.
 
 API
+
 - Selector: app-template-table-search
 - Inputs:
   - service: { search: WritableSignal<string> } — required
 
 Examples
-1) Search in the table header
+
+1. Search in the table header
+
 ```html
 <header class="flex gap-12 items-center">
   <app-template-table-search [service]="userService" />
 </header>
 ```
 
-2) Combination of search and date search
+2. Combination of search and date search
+
 ```html
 <header class="flex gap-12 items-center">
   <app-template-table-search [service]="customerService" />
@@ -836,9 +827,11 @@ Examples
 <summary>app-template-table-fetch — TemplateTableEnterFetchComponent</summary>
 
 Short description
+
 - Powerful table that loads data from the server via a fetchData function (Observable). Supports pagination, sorting, search, date search, and custom cells.
 
 API
+
 - Selector: app-template-table-fetch
 - Inputs:
   - fetchData: (params: BaseGetQueryParams) => Observable<ResponseWithRecords<T>> — required
@@ -854,22 +847,22 @@ API
 - Outputs: —
 
 Examples
-1) Basic usage with a service function
+
+1. Basic usage with a service function
+
 ```ts
 // component.ts
 fetchDataFn = (params: BaseGetQueryParams) => this.userService.getAllUsers(params);
-headers = signal(['general.name','general.email']);
-columns = signal(['name','email']);
-```
-```html
-<app-template-table-fetch
-  [headers]="headers()"
-  [displayedColumns]="columns()"
-  [fetchData]="fetchDataFn"
-/>
+headers = signal(['general.name', 'general.email']);
+columns = signal(['name', 'email']);
 ```
 
-2) With search, date, sorting and custom cells
+```html
+<app-template-table-fetch [headers]="headers()" [displayedColumns]="columns()" [fetchData]="fetchDataFn" />
+```
+
+2. With search, date, sorting and custom cells
+
 ```html
 <header class="flex gap-12 items-center">
   <app-template-table-search [service]="userService" />
@@ -881,18 +874,11 @@ columns = signal(['name','email']);
   <app-delete-icon (clickEvent)="remove(item)" />
 </ng-template>
 
-<app-template-table-fetch
-  [headers]="['general.name','general.actions']"
-  [displayedColumns]="['name','actions']"
-  [cellTemplatesMap]="{ actions }"
-  [fetchData]="fetchDataFn"
-  [search]="userService.search()"
-  [searchDate]="userService.searchDate()"
-  initialSort="name,ASC"
-/>
+<app-template-table-fetch [headers]="['general.name','general.actions']" [displayedColumns]="['name','actions']" [cellTemplatesMap]="{ actions }" [fetchData]="fetchDataFn" [search]="userService.search()" [searchDate]="userService.searchDate()" initialSort="name,ASC" />
 ```
 
 Notes
+
 - Nested keys in displayedColumns are supported (e.g. "address.city").
 - initialSort must have the format "field,ASC" or "field,DESC".
 

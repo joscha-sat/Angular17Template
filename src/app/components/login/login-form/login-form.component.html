@@ -16,11 +16,11 @@
 
   <!-- forgot password, TODO: add forgot passwort dialog / logic -->
   <span class="forgot-pw-button text-center pointer">
-    {{ 'login.forgot-password' | translate }}
+    {{ 'login.forgot-password' | transloco }}
   </span>
 
   <!-- login button -->
   <button [disabled]="!form || form.invalid" mat-flat-button>
-    {{ 'login.login-btn' | translate }}
+    {{ 'login.login-btn' | transloco }}
   </button>
 </form>

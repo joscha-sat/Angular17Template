@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from './api/auth.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -11,7 +10,6 @@ import { AsyncPipe } from '@angular/common';
   selector: 'app-root',
   imports: [
     RouterOutlet,
-    TranslateModule,
     NavigationComponent,
     MatProgressSpinnerModule,
     AsyncPipe,

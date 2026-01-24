@@ -3,7 +3,7 @@
   class="example-full-width"
   subscriptSizing="dynamic"
 >
-  <mat-label>{{ label() | translate }}</mat-label>
+  <mat-label>{{ label() | transloco }}</mat-label>
   <input
     (dateChange)="selectedDateChanged($event.value)"
     [matDatepicker]="picker"
