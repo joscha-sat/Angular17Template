@@ -7,6 +7,7 @@ import angularEslintTemplate from '@angular-eslint/eslint-plugin-template';
 import templateParser from '@angular-eslint/template-parser';
 import rxjsX from 'eslint-plugin-rxjs-x';
 import customRules from './eslint-custom-rules/index.js';
+import translocoPlugin from './eslint-transloco-plugin/index.js';
 
 // Extract common browser globals for better maintainability
 const browserGlobals = {
@@ -228,6 +229,12 @@ const tsFilesConfig = {
 const htmlTemplateRules = {
   ...angularEslintTemplate.configs.recommended.rules,
   ...angularEslintTemplate.configs.accessibility.rules,
+  ...Object.fromEntries(
+    Object.entries(translocoPlugin.rules).map(([ruleName, rule]) => [
+      `angular-transloco/${ruleName}`,
+      'error',
+    ]),
+  ),
 };
 // Config for Angular HTML templates
 const htmlTemplateFilesConfig = {
@@ -237,6 +244,7 @@ const htmlTemplateFilesConfig = {
   },
   plugins: {
     '@angular-eslint/template': angularEslintTemplate,
+    'angular-transloco': translocoPlugin,
   },
   rules: htmlTemplateRules,
 };
