@@ -1,19 +1,18 @@
-## Scripts to run after changes are done:
+# Project Guidelines
 
-- npm run eslint
-- npx prettier --write "src/\*_/_.{html,ts,scss}"
+## Scripts
+- `npm run eslint`
+- `npx prettier --write "src/**/*.{html,ts,scss}"`
 
-## Tech Stack:
+## Tech Stack
+- Angular: `^21.1.1`
+- Angular Material: `^21.1.1`
+- TypeScript: `~5.9.3`
+- RxJS: `~7.8.2`
+- ESLint: `^9.39.2`
+- Prettier: `^3.8.1`
 
-- Angular: ^21.1.1
-- TypeScript: ~5.9.3
-- RxJS: ~7.8.2
-- Angular Material: ^21.1.1
-- ESLint: ^9.39.2
-- Prettier: ^3.8.1
-
-## Project Structure:
-
+## Project Structure
 ```
 src/
 ├── app/
@@ -47,10 +46,8 @@ src/
 ├── main.ts
 └── styles.scss
 ```
-
-## Refactoring aka clean code criteria:
-
-- DRY (Don't Repeat Yourself)
+## Refactoring Criteria
+- DRY (Don’t Repeat Yourself)
   - bad:
     ```ts
     calculateCircleArea(r) { return 3.14 * r * r; }
@@ -61,7 +58,6 @@ src/
     calculateCircleArea(r) { return Math.PI * r * r; }
     calculateCylinderVolume(r, h) { return calculateCircleArea(r) * h; }
     ```
-
 - KISS (Keep It Simple, Stupid)
   - bad:
     ```ts
@@ -71,8 +67,7 @@ src/
     ```ts
     value || null;
     ```
-
-- YAGNI (You Ain't Gonna Need It)
+- YAGNI (You Ain’t Gonna Need It)
   - bad:
     ```ts
     interface User {
@@ -86,13 +81,12 @@ src/
     (when only id and name are used)
   - good:
     ```ts
-    interface User {
+    type User = {
       id: number;
       name: string;
-    }
+    };
     ```
-
-- Readability over Cleverness (no shortcuts, write things out)
+- Readability over Cleverness
   - bad:
     ```ts
     customerId = customer.map((c) => c.id);
@@ -101,8 +95,7 @@ src/
     ```ts
     customerId = customer.map((customer) => customer.id);
     ```
-
-- No overuse of comments (if needed in english only)
+- No overuse of comments (English only when needed)
   - bad:
     ```ts
     // increment counter by 1
@@ -112,7 +105,6 @@ src/
     ```ts
     i++;
     ```
-
 - No deep nesting
   - bad:
     ```ts
@@ -132,8 +124,5 @@ src/
     return true;
     ```
 
-- dont change behaviour, only update to use clean code
-
 ## Prefer
-
-- tpye over interfacve
+- `type` over `interface`

@@ -1,18 +1,19 @@
 <app-header-layout>
   <div class="flex-a-center-g1" left>
-    <!--  title  -->
+    <!--  TITLE  -->
     <div class="view-title">
       {{ 'tenant.title' | transloco }}
     </div>
 
-    <!--  tenant  dropdown  -->
+    <!-- TENANT FORM  -->
     <form [formGroup]="form"></form>
   </div>
 
   <div class="flex-a-center-g1" right>
+    <!--  TABLE SEARCH  -->
     <app-template-table-search [service]="tenantService" />
 
-    <!-- new tenant button -->
+    <!-- NEW TENANT BUTTON -->
     <button
       (click)="openCreateTenantDialog()"
       color="secondary"

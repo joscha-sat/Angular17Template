@@ -22,24 +22,24 @@ export class TenantService extends GenericHttpService {
   endpoint: ApiRoutes = ApiRoutes.TENANT;
   element_i18nKey: string = 'tenant.a_title';
 
-  // GET ALL
+  // GET ALL > Tenants
   getAllTenants(
     queryParams?: TenantQueryParams,
   ): Observable<ResponseWithRecords<Tenant>> {
     return this.getAll<Tenant>(this.endpoint, queryParams, Tenant);
   }
 
-  // GET ONE Tenant
+  // GET ONE > Tenant
   getTenantById(id: string | number): Observable<Tenant> {
     return this.getOne<Tenant>(this.endpoint, id, Tenant);
   }
 
-  // CREATE ONE Tenant
+  // CREATE ONE > Tenant
   createOneTenant(tenant: Tenant): Observable<Tenant> {
     return this.createOne<Tenant>(this.endpoint, tenant, this.element_i18nKey);
   }
 
-  // CREATE MULTIPLE Tenants
+  // CREATE MULTIPLE > Tenants
   createMultipleTenant(tenant: Tenant[]): Observable<Tenant[]> {
     return this.createMultiple<Tenant>(
       this.endpoint,
@@ -48,7 +48,7 @@ export class TenantService extends GenericHttpService {
     );
   }
 
-  // UPDATE ONE Tenant
+  // PATCH / UPDATE ONE > Tenant
   updateTenantById(id: idTypes, tenant: Tenant): Observable<Tenant> {
     return this.updateOne<Tenant>(
       this.endpoint,
@@ -58,7 +58,7 @@ export class TenantService extends GenericHttpService {
     );
   }
 
-  // UPDATE MULTIPLE Tenants
+  // UPDATE MULTIPLE > Tenants
   updateMultipleTenantById(
     id: idTypes[],
     tenants: Tenant[],
@@ -71,12 +71,12 @@ export class TenantService extends GenericHttpService {
     );
   }
 
-  // DELETE ONE Tenant
+  // DELETE ONE > Tenant
   deleteTenantById(id: idTypes): Observable<unknown> {
     return this.deleteOne(this.endpoint, id, this.element_i18nKey);
   }
 
-  // DELETE ALL Tenants
+  // DELETE ALL > Tenants
   deleteAllTenants(): Observable<unknown> {
     return this.deleteAll<unknown>(this.endpoint);
   }
