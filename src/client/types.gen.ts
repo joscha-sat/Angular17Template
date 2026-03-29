@@ -15,15 +15,29 @@ export type UserDto = {
     roleId: string;
 };
 
-export type LoginBody = {
-    username: string;
-    password: string;
-};
-
 export type User = {
     id: string;
     createdAt: string;
     updatedAt: string;
+    tenantId: string | null;
+    email: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    active: boolean;
+    inviteAcceptedAt: string | null;
+    language: 'de' | 'en';
+    roleId: string | null;
+};
+
+export type UserFindAllResponseDto = {
+    total: number;
+    records: Array<User>;
+};
+
+export type LoginBody = {
+    username: string;
+    password: string;
 };
 
 export type AuthResponse = {
@@ -65,8 +79,39 @@ export type RoleDto = {
     permissions: Array<'FILE_READ' | 'FILE_READ_OWN' | 'FILE_CREATE' | 'FILE_UPDATE' | 'FILE_UPDATE_OWN' | 'FILE_DELETE' | 'FILE_DELETE_OWN' | 'ROLE_READ' | 'ROLE_READ_OWN' | 'ROLE_CREATE' | 'ROLE_UPDATE' | 'ROLE_DELETE' | 'TENANT_READ' | 'TENANT_READ_OWN' | 'TENANT_CREATE' | 'TENANT_UPDATE' | 'TENANT_UPDATE_OWN' | 'TENANT_DELETE' | 'TENANT_DELETE_OWN' | 'USER_READ' | 'USER_READ_OWN' | 'USER_CREATE' | 'USER_UPDATE' | 'USER_UPDATE_OWN' | 'USER_DELETE' | 'USER_DELETE_OWN' | 'KPI_TENANT'>;
 };
 
+export type Role = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    tenantId: string | null;
+    name: string;
+    description: string;
+    superAdmin: boolean;
+    tenantAdmin: boolean;
+    global: boolean;
+    draft: boolean;
+    permissions: Array<'FILE_READ' | 'FILE_READ_OWN' | 'FILE_CREATE' | 'FILE_UPDATE' | 'FILE_UPDATE_OWN' | 'FILE_DELETE' | 'FILE_DELETE_OWN' | 'ROLE_READ' | 'ROLE_READ_OWN' | 'ROLE_CREATE' | 'ROLE_UPDATE' | 'ROLE_DELETE' | 'TENANT_READ' | 'TENANT_READ_OWN' | 'TENANT_CREATE' | 'TENANT_UPDATE' | 'TENANT_UPDATE_OWN' | 'TENANT_DELETE' | 'TENANT_DELETE_OWN' | 'USER_READ' | 'USER_READ_OWN' | 'USER_CREATE' | 'USER_UPDATE' | 'USER_UPDATE_OWN' | 'USER_DELETE' | 'USER_DELETE_OWN' | 'KPI_TENANT'>;
+};
+
+export type RoleFindAllResponseDto = {
+    total: number;
+    records: Array<Role>;
+};
+
 export type TenantDto = {
     name: string;
+};
+
+export type Tenant = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    name: string;
+};
+
+export type TenantFindAllResponseDto = {
+    total: number;
+    records: Array<Tenant>;
 };
 
 export type CreateCustomerDto = {
@@ -81,7 +126,7 @@ export type Customer = {
     name: string;
 };
 
-export type CustomerResponseDto = {
+export type CustomerFindAllResponseDto = {
     total: number;
     records: Array<Customer>;
 };
@@ -95,6 +140,20 @@ export type DeviceTokenDto = {
     deviceToken: string;
 };
 
+export type DeviceToken = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    tenantId: string;
+    userId: string;
+    deviceToken: string;
+};
+
+export type DeviceTokenFindAllResponseDto = {
+    total: number;
+    records: Array<DeviceToken>;
+};
+
 export type AddressDto = {
     tenantId?: string;
     street: string;
@@ -103,6 +162,24 @@ export type AddressDto = {
     city: string;
     longitude: number;
     latitude: number;
+};
+
+export type Address = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    tenantId: string;
+    street: string | null;
+    houseNo: string | null;
+    postalCode: string | null;
+    city: string | null;
+    longitude: number;
+    latitude: number;
+};
+
+export type AddressFindAllResponseDto = {
+    total: number;
+    records: Array<Address>;
 };
 
 export type AppControllerGetHelloData = {
@@ -178,8 +255,10 @@ export type UserControllerFindAllData = {
 };
 
 export type UserControllerFindAllResponses = {
-    200: unknown;
+    default: UserFindAllResponseDto;
 };
+
+export type UserControllerFindAllResponse = UserControllerFindAllResponses[keyof UserControllerFindAllResponses];
 
 export type UserControllerCreateData = {
     body: UserDto;
@@ -225,8 +304,10 @@ export type UserControllerFindOneData = {
 };
 
 export type UserControllerFindOneResponses = {
-    200: unknown;
+    default: User;
 };
+
+export type UserControllerFindOneResponse = UserControllerFindOneResponses[keyof UserControllerFindOneResponses];
 
 export type UserControllerUpdateData = {
     body: UserDto;
@@ -394,8 +475,10 @@ export type RoleControllerFindAllData = {
 };
 
 export type RoleControllerFindAllResponses = {
-    200: unknown;
+    default: RoleFindAllResponseDto;
 };
+
+export type RoleControllerFindAllResponse = RoleControllerFindAllResponses[keyof RoleControllerFindAllResponses];
 
 export type RoleControllerCreateData = {
     body: RoleDto;
@@ -461,8 +544,10 @@ export type RoleControllerFindOneData = {
 };
 
 export type RoleControllerFindOneResponses = {
-    200: unknown;
+    default: Role;
 };
+
+export type RoleControllerFindOneResponse = RoleControllerFindOneResponses[keyof RoleControllerFindOneResponses];
 
 export type RoleControllerUpdateData = {
     body: RoleDto;
@@ -494,8 +579,10 @@ export type TenantControllerFindAllData = {
 };
 
 export type TenantControllerFindAllResponses = {
-    200: unknown;
+    default: TenantFindAllResponseDto;
 };
+
+export type TenantControllerFindAllResponse = TenantControllerFindAllResponses[keyof TenantControllerFindAllResponses];
 
 export type TenantControllerCreateData = {
     body: TenantDto;
@@ -534,8 +621,10 @@ export type TenantControllerFindOneData = {
 };
 
 export type TenantControllerFindOneResponses = {
-    200: unknown;
+    default: Tenant;
 };
+
+export type TenantControllerFindOneResponse = TenantControllerFindOneResponses[keyof TenantControllerFindOneResponses];
 
 export type TenantControllerUpdateData = {
     body: TenantDto;
@@ -567,7 +656,7 @@ export type CustomersControllerFindAllData = {
 };
 
 export type CustomersControllerFindAllResponses = {
-    default: CustomerResponseDto;
+    default: CustomerFindAllResponseDto;
 };
 
 export type CustomersControllerFindAllResponse = CustomersControllerFindAllResponses[keyof CustomersControllerFindAllResponses];
@@ -606,8 +695,10 @@ export type CustomersControllerFindOneData = {
 };
 
 export type CustomersControllerFindOneResponses = {
-    200: unknown;
+    default: Customer;
 };
+
+export type CustomersControllerFindOneResponse = CustomersControllerFindOneResponses[keyof CustomersControllerFindOneResponses];
 
 export type CustomersControllerUpdateData = {
     body: UpdateCustomerDto;
@@ -646,8 +737,10 @@ export type DeviceTokenControllerFindAllData = {
 };
 
 export type DeviceTokenControllerFindAllResponses = {
-    200: unknown;
+    default: DeviceTokenFindAllResponseDto;
 };
+
+export type DeviceTokenControllerFindAllResponse = DeviceTokenControllerFindAllResponses[keyof DeviceTokenControllerFindAllResponses];
 
 export type DeviceTokenControllerCreateData = {
     body: DeviceTokenDto;
@@ -670,8 +763,10 @@ export type DeviceTokenControllerFindOneData = {
 };
 
 export type DeviceTokenControllerFindOneResponses = {
-    200: unknown;
+    default: DeviceToken;
 };
+
+export type DeviceTokenControllerFindOneResponse = DeviceTokenControllerFindOneResponses[keyof DeviceTokenControllerFindOneResponses];
 
 export type DeviceTokenControllerUpdateData = {
     body?: never;
@@ -737,8 +832,10 @@ export type AddressControllerFindAllData = {
 };
 
 export type AddressControllerFindAllResponses = {
-    200: unknown;
+    default: AddressFindAllResponseDto;
 };
+
+export type AddressControllerFindAllResponse = AddressControllerFindAllResponses[keyof AddressControllerFindAllResponses];
 
 export type AddressControllerCreateData = {
     body: AddressDto;
@@ -774,8 +871,10 @@ export type AddressControllerFindOneData = {
 };
 
 export type AddressControllerFindOneResponses = {
-    200: unknown;
+    default: Address;
 };
+
+export type AddressControllerFindOneResponse = AddressControllerFindOneResponses[keyof AddressControllerFindOneResponses];
 
 export type AddressControllerUpdateData = {
     body: AddressDto;
