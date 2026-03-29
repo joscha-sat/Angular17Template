@@ -3,8 +3,8 @@
  */
 export abstract class BaseModel<Model extends BaseModel<Model>> {
   id!: string;
-  createdAt!: Date;
-  updatedAt!: Date;
+  createdAt!: string | Date;
+  updatedAt!: string | Date;
 
   protected constructor(object: Partial<Model>) {
     Object.assign(this, object);
