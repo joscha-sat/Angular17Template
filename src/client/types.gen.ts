@@ -135,6 +135,13 @@ export type UpdateCustomerDto = {
     [key: string]: unknown;
 };
 
+export type DeleteResultDto = {
+    /**
+     * Number of affected rows
+     */
+    affected: number;
+};
+
 export type DeviceTokenDto = {
     tenantId?: string;
     deviceToken: string;
@@ -152,6 +159,13 @@ export type DeviceToken = {
 export type DeviceTokenFindAllResponseDto = {
     total: number;
     records: Array<DeviceToken>;
+};
+
+export type NotificationResponseDto = {
+    /**
+     * Whether the notification was sent successfully
+     */
+    success: boolean;
 };
 
 export type AddressDto = {
@@ -669,8 +683,10 @@ export type CustomersControllerCreateData = {
 };
 
 export type CustomersControllerCreateResponses = {
-    201: unknown;
+    default: Customer;
 };
+
+export type CustomersControllerCreateResponse = CustomersControllerCreateResponses[keyof CustomersControllerCreateResponses];
 
 export type CustomersControllerRemoveData = {
     body?: never;
@@ -682,8 +698,10 @@ export type CustomersControllerRemoveData = {
 };
 
 export type CustomersControllerRemoveResponses = {
-    200: unknown;
+    default: DeleteResultDto;
 };
+
+export type CustomersControllerRemoveResponse = CustomersControllerRemoveResponses[keyof CustomersControllerRemoveResponses];
 
 export type CustomersControllerFindOneData = {
     body?: never;
@@ -710,8 +728,10 @@ export type CustomersControllerUpdateData = {
 };
 
 export type CustomersControllerUpdateResponses = {
-    200: unknown;
+    default: Customer;
 };
+
+export type CustomersControllerUpdateResponse = CustomersControllerUpdateResponses[keyof CustomersControllerUpdateResponses];
 
 export type PermissionControllerGetAllData = {
     body?: never;
@@ -791,11 +811,10 @@ export type DeviceTokenControllerSendNotificationData = {
 };
 
 export type DeviceTokenControllerSendNotificationResponses = {
-    /**
-     * Returns true if the notification was sent successfully, false if not.
-     */
-    default: unknown;
+    default: NotificationResponseDto;
 };
+
+export type DeviceTokenControllerSendNotificationResponse = DeviceTokenControllerSendNotificationResponses[keyof DeviceTokenControllerSendNotificationResponses];
 
 export type DeviceTokenControllerRemoveAllData = {
     body?: never;
