@@ -3,13 +3,13 @@
   <h3>
     @switch (data.title) {
       @case ('info') {
-        {{ 'alert.info' | translate }}!
+        {{ 'alert.info' | transloco }}!
       }
       @case ('success') {
-        {{ 'alert.success' | translate }}!
+        {{ 'alert.success' | transloco }}!
       }
       @case ('error') {
-        {{ 'alert.error' | translate }}! Status: {{ data.errorStatus }}
+        {{ 'alert.error' | transloco }}! Status: {{ data.errorStatus }}
       }
     }
   </h3>
@@ -22,7 +22,7 @@
       mat-icon-button
       matSnackBarAction
     >
-      <mat-icon> close </mat-icon>
+      <mat-icon>close</mat-icon>
     </button>
   </span>
 </div>
@@ -31,36 +31,36 @@
 <div>
   @switch (data.title) {
     @case ('info') {
-      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | translate) : '' }}!
+      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | transloco) : '' }}!
     }
     @case ('success') {
-      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | translate) : '' }}
+      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | transloco) : '' }}
       @switch (data.methodType) {
         @case ('POST') {
           @if (data.plural) {
-            {{ 'http_success.post_plural' | translate }}
+            {{ 'http_success.post_plural' | transloco }}
           } @else {
-            {{ 'http_success.post' | translate }}
+            {{ 'http_success.post' | transloco }}
           }
         }
         @case ('PATCH') {
           @if (data.plural) {
-            {{ 'http_success.patch_plural' | translate }}
+            {{ 'http_success.patch_plural' | transloco }}
           } @else {
-            {{ 'http_success.patch' | translate }}
+            {{ 'http_success.patch' | transloco }}
           }
         }
         @case ('DELETE') {
           @if (data.plural) {
-            {{ 'http_success.delete_plural' | translate }}
+            {{ 'http_success.delete_plural' | transloco }}
           } @else {
-            {{ 'http_success.delete' | translate }}
+            {{ 'http_success.delete' | transloco }}
           }
         }
       }
     }
     @case ('error') {
-      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | translate) : '' }}
+      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | transloco) : '' }}
     }
   }
 </div>

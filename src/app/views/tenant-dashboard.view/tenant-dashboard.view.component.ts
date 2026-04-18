@@ -6,7 +6,6 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { TenantDashboardGridComponent } from '../../components/tenant-dashboard/tenant-dashboard-grid/tenant-dashboard-grid.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { TenantDashboardHeaderComponent } from '../../components/tenant-dashboard/tenant-dashboard-header/tenant-dashboard-header.component';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -17,7 +16,6 @@ import { Tenant } from '../../models/Tenant';
   selector: 'app-tenant-dashboard.view',
   imports: [
     TenantDashboardGridComponent,
-    TranslateModule,
     TenantDashboardHeaderComponent,
     ViewLayoutComponent,
   ],

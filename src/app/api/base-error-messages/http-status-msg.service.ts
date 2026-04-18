@@ -1,5 +1,5 @@
 import { inject, Injectable, Injector } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslocoService } from '@jsverse/transloco';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ApiRoutes } from '../../other/enums/api_routes';
 
@@ -20,9 +20,9 @@ const STATUS_CODES: { [key: number]: string } = {
 export class HttpStatusMsgService {
   private readonly injector: Injector = inject(Injector);
 
-  // Lazy retrieves the TranslateService instance
-  private get translateService(): TranslateService {
-    return this.injector.get(TranslateService);
+  // Lazy retrieves the TranslocoService instance
+  private get translocoService(): TranslocoService {
+    return this.injector.get(TranslocoService);
   }
 
   /**
@@ -98,19 +98,49 @@ export class HttpStatusMsgService {
       return null;
     }
 
-    const translationKey: string = `http-error.${endpoint}.${method?.toLowerCase()}_${errorKey}`;
-    const genericTranslationKey: string = `http-error.${errorKey}`;
+    const specificKey: string = this.buildSpecificTranslationKey(
+      endpoint,
+      method,
+      errorKey,
+    );
+    const genericKey: string = `http-error.${errorKey}`;
 
-    let translated: string = this.translateService.instant(
-      translationKey,
-    ) as string;
-    if (translated === translationKey) {
-      translated = this.translateService.instant(
-        genericTranslationKey,
-      ) as string;
+    return (
+      this.tryTranslateSpecific(specificKey) ??
+      this.tryTranslateGeneric(genericKey) ??
+      null
+    );
+  }
+
+  private buildSpecificTranslationKey(
+    endpoint: ApiRoutes | string | undefined,
+    method?: string,
+    errorKey?: string,
+  ): string {
+    return `http-error.${endpoint}.${method?.toLowerCase()}_${errorKey}`;
+  }
+
+  private tryTranslateSpecific(translationKey: string): string | null {
+    try {
+      const translated: string =
+        this.translocoService.translate(translationKey);
+      return translated !== translationKey && translated ? translated : null;
+    } catch {
+      return null;
     }
+  }
 
-    return translated !== genericTranslationKey ? translated : null;
+  private tryTranslateGeneric(genericTranslationKey: string): string | null {
+    try {
+      const translated: string = this.translocoService.translate(
+        genericTranslationKey,
+      );
+      return translated !== genericTranslationKey && translated
+        ? translated
+        : null;
+    } catch {
+      return null;
+    }
   }
 
   private getErrorMessage(err: HttpErrorResponse): string | null {
@@ -125,7 +155,7 @@ export class HttpStatusMsgService {
   private getStatusMessage(err: HttpErrorResponse): string {
     const statusKey: string = STATUS_CODES[err.status];
     const statusMessage: string = statusKey
-      ? (this.translateService.instant(statusKey) as string)
+      ? this.translocoService.translate(statusKey)
       : '';
     return statusMessage || `Unknown error, status code ${err.status}.`;
   }

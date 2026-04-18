@@ -6,11 +6,11 @@ import {
   OutputEmitterRef,
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-save-btn',
-  imports: [MatButton, TranslatePipe],
+  imports: [MatButton, TranslocoPipe],
   templateUrl: './save-btn.component.html',
   styleUrl: './save-btn.component.scss',
 })

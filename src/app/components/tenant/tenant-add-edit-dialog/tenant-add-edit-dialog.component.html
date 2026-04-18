@@ -2,8 +2,8 @@
   <div class="view-title pb-1">
     {{
       mode === MODE.ADD
-        ? ('tenant.create' | translate)
-        : ('tenant.edit' | translate)
+        ? ('tenant.create' | transloco)
+        : ('tenant.edit' | transloco)
     }}
   </div>
 
@@ -13,5 +13,5 @@
     <!--  ACTIONS  -->
   </form>
 } @else {
-  {{ 'http.status-400' | translate }}
+  {{ 'http.status-400' | transloco }}
 }

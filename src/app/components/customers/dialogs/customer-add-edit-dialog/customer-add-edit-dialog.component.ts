@@ -12,7 +12,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { Customer } from '../../../../models/Customer';
-import { TranslateModule } from '@ngx-translate/core';
 import { CustomerService } from '../../../../api/customer.service';
 import {
   MatDialog,
@@ -26,11 +25,12 @@ import { SaveBtnComponent } from '../../../../shared/buttons/save-btn/save-btn.c
 import { CancelBtnComponent } from '../../../../shared/buttons/cancel-btn/cancel-btn.component';
 import { UtilityService } from '../../../../services/utility.service';
 
+import { TranslocoPipe } from '@jsverse/transloco';
+
 @Component({
   selector: 'app-customer-add-edit-dialog',
   imports: [
     ReactiveFormsModule,
-    TranslateModule,
     MatDialogTitle,
     MatDialogContent,
     TemplateInputComponent,
@@ -38,6 +38,7 @@ import { UtilityService } from '../../../../services/utility.service';
     MatDialogClose,
     SaveBtnComponent,
     CancelBtnComponent,
+    TranslocoPipe,
   ],
   templateUrl: './customer-add-edit-dialog.component.html',
   styleUrl: './customer-add-edit-dialog.component.scss',

@@ -1,8 +1,9 @@
 import { BaseModel } from './BaseModel';
 import { Tenant } from './Tenant';
 import { Role } from './Role';
+import { UserDto } from '../../client';
 
-export class User extends BaseModel<User> {
+export class User extends BaseModel<User> implements UserDto {
   private static readonly DEFAULT_DISPLAY_NAME: string = 'no name';
   private static readonly DEFAULT_ROLE_NAME: string = 'no role';
 
@@ -13,9 +14,9 @@ export class User extends BaseModel<User> {
   firstName!: string;
   lastName!: string;
   roleId!: string;
-  password?: string;
-  phone?: string;
-  active?: boolean;
+  password!: string;
+  phone!: string;
+  active!: boolean;
   inviteAcceptedAt?: string;
 
   constructor(params: Partial<User>) {
@@ -40,7 +41,7 @@ export class User extends BaseModel<User> {
       : User.DEFAULT_ROLE_NAME;
   }
 
-  get hasAcceptedInvite(): boolean {
+  get hasInviteAccepted(): boolean {
     return !!this.inviteAcceptedAt;
   }
 }

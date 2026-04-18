@@ -6,7 +6,6 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { User } from '../../../../models/User';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   FormControl,
   FormGroup,
@@ -19,15 +18,17 @@ import { TwoInputsRowLayoutComponent } from '../../../../other/layouts/two-input
 import { AddEdit } from '../../../../other/types/AddEdit.type';
 import { RoleDropdownComponent } from './role-dropdown/role-dropdown.component';
 
+import { TranslocoPipe } from '@jsverse/transloco';
+
 @Component({
   selector: 'app-user-add-edit-dialog',
   imports: [
-    TranslateModule,
     ReactiveFormsModule,
 
     TwoInputsRowLayoutComponent,
 
     RoleDropdownComponent,
+    TranslocoPipe,
   ],
   templateUrl: './user-add-edit-dialog.component.html',
   styleUrl: './user-add-edit-dialog.component.scss',
@@ -40,12 +41,10 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   readonly createUserMode: WritableSignal<boolean> = signal(true);
   private readonly fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
   private readonly userService: UserService = inject(UserService);
-  private readonly translateService: TranslateService =
-    inject(TranslateService);
 
   readonly radioItems: WritableSignal<{ name: string }[]> = signal([
-    { name: this.translateService.instant('general.active') as string },
-    { name: this.translateService.instant('general.inactive') as string },
+    { name: 'Active' },
+    { name: 'Inactive' },
   ]);
 
   get userFromFormData(): User {

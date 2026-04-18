@@ -1,4 +1,10 @@
-import { ApplicationConfig, LOCALE_ID, Provider } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  ApplicationConfig,
+  isDevMode,
+  LOCALE_ID,
+  Provider,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -11,14 +17,25 @@ import {
 } from '@angular/material-luxon-adapter';
 import { registerLocaleData } from '@angular/common';
 import localeDE from '@angular/common/locales/de';
-import { provideTranslateService } from '@ngx-translate/core';
-import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslocoHttpLoader } from './transloco-loader';
+import { provideTransloco, TranslocoService } from '@jsverse/transloco';
+import { firstValueFrom } from 'rxjs';
 
 // Register German locale data for DatePipe
 registerLocaleData(localeDE);
 
 // Translation configuration constants
 const DEFAULT_LANGUAGE: string = 'de';
+
+// Initialize Transloco with default language
+export function initializeTransloco(
+  translocoService: TranslocoService,
+): () => Promise<unknown> {
+  return () => {
+    translocoService.setActiveLang(DEFAULT_LANGUAGE);
+    return firstValueFrom(translocoService.load(DEFAULT_LANGUAGE));
+  };
+}
 
 // Date format configuration constant
 const LUXON_DATE_FORMAT_CONFIG: {
@@ -63,16 +80,22 @@ export const appConfig: ApplicationConfig = {
       ]),
     ),
     provideRouter(routes),
-
-    // NGX-Translate using provider-based API
-    provideTranslateService({
-      lang: DEFAULT_LANGUAGE,
-      fallbackLang: DEFAULT_LANGUAGE,
-      loader: provideTranslateHttpLoader({
-        // Adjusted to typical Angular assets path
-        prefix: '/assets/i18n/',
-        suffix: '.json',
-      }),
+    provideHttpClient(),
+    provideTransloco({
+      config: {
+        availableLangs: ['en', 'de'],
+        defaultLang: 'de',
+        // Remove this option if your application doesn't support changing language in runtime.
+        reRenderOnLangChange: true,
+        prodMode: !isDevMode(),
+      },
+      loader: TranslocoHttpLoader,
     }),
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [TranslocoService],
+      useFactory: initializeTransloco,
+    },
   ],
 };

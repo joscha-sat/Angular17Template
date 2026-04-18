@@ -22,6 +22,7 @@
     "all": "All",
     "back": "Back",
     "cancel": "Cancel",
+    "close": "Close",
     "createdAt": "Created at",
     "delete": "Delete",
     "delete-hint": "The deletion can not be redone afterwards!",
@@ -37,6 +38,7 @@
     "inactive": "Inactive",
     "language": "Language",
     "lastName": "Last name",
+    "logo": "Logo",
     "name": "Name",
     "no": "No",
     "ok": "Ok",
@@ -59,7 +61,7 @@
     "phone": "Enter a phone number",
     "text": "Enter a text"
   },
-  "http": {
+  "generic-http-error": {
     "status-400": "Request invalid or incorrect!",
     "status-401": "Not authenticated!",
     "status-403": "Missing Permissions",
