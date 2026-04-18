@@ -3,7 +3,7 @@ import { TestViewComponent } from './test-view.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TemplateDatepickerComponent } from '../../shared/template-datepicker/template-datepicker.component';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslocoModule } from '@jsverse/transloco';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 describe('TestViewComponent', () => {
@@ -17,7 +17,7 @@ describe('TestViewComponent', () => {
         ReactiveFormsModule,
         TemplateDatepickerComponent,
         ViewLayoutComponent,
-        TranslateModule.forRoot(),
+        TranslocoModule,
       ],
       providers: [provideNativeDateAdapter()],
     }).compileComponents();

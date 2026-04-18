@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TenantViewComponent } from './tenant.view.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { TenantHeaderComponent } from '../../components/tenant/tenant-header/tenant-header.component';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
 import { TenantTableComponent } from '../../components/tenant/tenant-table/tenant-table.component';
@@ -21,7 +20,6 @@ describe('TenantViewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         TenantViewComponent,
-        TranslateModule.forRoot(),
         TenantHeaderComponent,
         ViewLayoutComponent,
         TenantTableComponent,

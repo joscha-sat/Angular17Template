@@ -3,7 +3,6 @@ import { UserViewComponent } from './user.view.component';
 import { UserHeaderComponent } from '../../components/user/user-header/user-header.component';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
 import { UserTableComponent } from '../../components/user/user-table/user-table.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../api/user.service';
 import { of } from 'rxjs';
 
@@ -24,7 +23,6 @@ describe('UserViewComponent', () => {
         UserHeaderComponent,
         ViewLayoutComponent,
         UserTableComponent,
-        TranslateModule.forRoot(),
       ],
       providers: [{ provide: UserService, useValue: mockUserService }],
     }).compileComponents();
