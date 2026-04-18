@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TenantDashboardGridComponent } from './tenant-dashboard-grid.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 
 describe('TenantDashboardGridComponent', () => {
   let component: TenantDashboardGridComponent;
@@ -8,7 +8,7 @@ describe('TenantDashboardGridComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TenantDashboardGridComponent, TranslateModule.forRoot()],
+      imports: [TenantDashboardGridComponent, getTranslocoModule()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TenantDashboardGridComponent);

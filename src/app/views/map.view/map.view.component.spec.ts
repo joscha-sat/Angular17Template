@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MapViewComponent } from './map.view.component';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
 import { MapHeaderComponent } from '../../components/map/map-header/map-header.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 
 // Mock the Google Maps API before loading the component
 const mockGoogle = {
@@ -36,7 +36,7 @@ describe('MapViewComponent', () => {
         MapViewComponent,
         ViewLayoutComponent,
         MapHeaderComponent,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
       ],
     }).compileComponents();
 

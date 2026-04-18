@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { CustomerTableComponent } from './customer-table.component';
 import { CustomerService } from '../../../api/customer.service';
 
@@ -9,7 +9,7 @@ describe('CustomerTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CustomerTableComponent, TranslateModule.forRoot()],
+      imports: [CustomerTableComponent, getTranslocoModule()],
       providers: [CustomerService],
     }).compileComponents();
 

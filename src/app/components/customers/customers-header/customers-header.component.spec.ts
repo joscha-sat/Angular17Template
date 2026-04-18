@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { CustomersHeaderComponent } from './customers-header.component';
@@ -10,7 +10,7 @@ describe('CustomersHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CustomersHeaderComponent, TranslateModule.forRoot()],
+      imports: [CustomersHeaderComponent, getTranslocoModule()],
       providers: [provideNativeDateAdapter()],
     }).compileComponents();
 

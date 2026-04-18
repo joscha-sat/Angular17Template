@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TenantTableComponent } from './tenant-table.component';
 import { TenantService } from '../../../api/tenant.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 import { of } from 'rxjs';
 
@@ -20,7 +20,7 @@ describe('TenantTableComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         TenantTableComponent,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
         TemplateTableEnterFetchComponent,
       ],
       providers: [{ provide: TenantService, useValue: mockTenantService }],

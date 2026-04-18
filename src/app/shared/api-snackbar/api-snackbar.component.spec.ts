@@ -3,7 +3,7 @@ import {
   MAT_SNACK_BAR_DATA,
   MatSnackBarRef,
 } from '@angular/material/snack-bar';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 
 import { ApiSnackbarComponent } from './api-snackbar.component';
 
@@ -26,7 +26,7 @@ describe('ApiSnackbarComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [ApiSnackbarComponent, TranslateModule.forRoot()],
+      imports: [ApiSnackbarComponent, getTranslocoModule()],
       providers: [
         { provide: MAT_SNACK_BAR_DATA, useValue: mockSnackbarData },
         { provide: MatSnackBarRef, useValue: mockSnackBarRef },

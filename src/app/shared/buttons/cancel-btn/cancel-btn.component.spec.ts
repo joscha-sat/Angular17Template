@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 
 import { CancelBtnComponent } from './cancel-btn.component';
 
@@ -9,7 +9,7 @@ describe('CancelBtnComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CancelBtnComponent, TranslateModule.forRoot()],
+      imports: [CancelBtnComponent, getTranslocoModule()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CancelBtnComponent);

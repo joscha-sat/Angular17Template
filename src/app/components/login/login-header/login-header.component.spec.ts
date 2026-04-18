@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 
 import { LoginHeaderComponent } from './login-header.component';
 
@@ -9,7 +9,7 @@ describe('LoginHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginHeaderComponent, TranslateModule.forRoot()],
+      imports: [LoginHeaderComponent, getTranslocoModule()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginHeaderComponent);

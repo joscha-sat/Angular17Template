@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TenantDashboardHeaderComponent } from './tenant-dashboard-header.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 
 describe('TenantDashboardHeaderComponent', () => {
@@ -11,7 +11,7 @@ describe('TenantDashboardHeaderComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         TenantDashboardHeaderComponent,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
         HeaderLayoutComponent,
       ],
     }).compileComponents();

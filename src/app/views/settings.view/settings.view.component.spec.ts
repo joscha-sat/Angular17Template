@@ -3,7 +3,7 @@ import { SettingsViewComponent } from './settings.view.component';
 import { SettingsHeaderComponent } from '../../components/settings/settings-header/settings-header.component';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
 import { SettingsTabsComponent } from '../../components/settings/settings-tabs/settings-tabs.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 
 describe('SettingsViewComponent', () => {
   let component: SettingsViewComponent;
@@ -16,7 +16,7 @@ describe('SettingsViewComponent', () => {
         ViewLayoutComponent,
         SettingsHeaderComponent,
         SettingsTabsComponent,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
       ],
     }).compileComponents();
 

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserHeaderComponent } from './user-header.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { UserService } from '../../../api/user.service';
 
@@ -12,7 +12,7 @@ describe('UserHeaderComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         UserHeaderComponent,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
         HeaderLayoutComponent,
       ],
       providers: [UserService],

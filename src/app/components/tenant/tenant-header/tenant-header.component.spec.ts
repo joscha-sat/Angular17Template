@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { TenantHeaderComponent } from './tenant-header.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
@@ -15,7 +15,7 @@ describe('TenantHeaderComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         TenantHeaderComponent,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
         ReactiveFormsModule,
         HeaderLayoutComponent,
         MatButton,

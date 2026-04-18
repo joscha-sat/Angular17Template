@@ -4,7 +4,7 @@ import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout
 import { CustomersHeaderComponent } from '../../components/customers/customers-header/customers-header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CustomerTableComponent } from '../../components/customers/customer-table/customer-table.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 describe('CustomersViewComponent', () => {
@@ -19,7 +19,7 @@ describe('CustomersViewComponent', () => {
         CustomersHeaderComponent,
         ReactiveFormsModule,
         CustomerTableComponent,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
       ],
       providers: [provideNativeDateAdapter()],
     }).compileComponents();

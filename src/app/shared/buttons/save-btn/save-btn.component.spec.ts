@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { SaveBtnComponent } from './save-btn.component';
 
 describe('SaveBtnComponent', () => {
@@ -8,7 +8,7 @@ describe('SaveBtnComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SaveBtnComponent, TranslateModule.forRoot()],
+      imports: [SaveBtnComponent, getTranslocoModule()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SaveBtnComponent);

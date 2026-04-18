@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SettingsHeaderComponent } from './settings-header.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 
 describe('SettingsHeaderComponent', () => {
@@ -12,7 +12,7 @@ describe('SettingsHeaderComponent', () => {
       imports: [
         SettingsHeaderComponent,
         HeaderLayoutComponent,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
       ],
     }).compileComponents();
 

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TenantAddEditDialogComponent } from './tenant-add-edit-dialog.component';
 import { TenantService } from '../../../api/tenant.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 
 describe('TenantAddEditDialogComponent', () => {
   let component: TenantAddEditDialogComponent;
@@ -13,7 +13,7 @@ describe('TenantAddEditDialogComponent', () => {
       imports: [
         TenantAddEditDialogComponent,
         ReactiveFormsModule,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
       ],
       providers: [TenantService, FormBuilder],
     }).compileComponents();

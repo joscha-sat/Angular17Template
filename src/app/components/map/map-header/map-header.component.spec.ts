@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 
 import { MapHeaderComponent } from './map-header.component';
 
@@ -9,7 +9,7 @@ describe('MapHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MapHeaderComponent, TranslateModule.forRoot()],
+      imports: [MapHeaderComponent, getTranslocoModule()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MapHeaderComponent);

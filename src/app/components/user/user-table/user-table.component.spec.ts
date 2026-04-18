@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserTableComponent } from './user-table.component';
 import { UserService } from '../../../api/user.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 import { of } from 'rxjs';
 
@@ -20,7 +20,7 @@ describe('UserTableComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         UserTableComponent,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
         TemplateTableEnterFetchComponent,
       ],
       providers: [{ provide: UserService, useValue: mockUserService }],

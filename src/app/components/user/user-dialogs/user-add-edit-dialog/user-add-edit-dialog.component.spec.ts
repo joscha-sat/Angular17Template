@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserAddEditDialogComponent } from './user-add-edit-dialog.component';
 import { UserService } from '../../../../api/user.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
+import { TranslocoService } from '@jsverse/transloco';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { TwoInputsRowLayoutComponent } from '../../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout.component';
@@ -52,14 +53,14 @@ describe('UserAddEditDialogComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         UserAddEditDialogComponent,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
         ReactiveFormsModule,
         TwoInputsRowLayoutComponent,
         RoleDropdownComponent,
       ],
       providers: [
         { provide: UserService, useValue: mockUserService },
-        TranslateService,
+        TranslocoService,
         { provide: NonNullableFormBuilder, useValue: mockFormBuilder },
       ],
     }).compileComponents();

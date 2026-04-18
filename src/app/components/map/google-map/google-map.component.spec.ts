@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 
 import { GoogleMapComponent } from './google-map.component';
 
@@ -16,7 +16,7 @@ describe('GoogleMapComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [GoogleMapComponent, TranslateModule.forRoot()],
+      imports: [GoogleMapComponent, getTranslocoModule()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(GoogleMapComponent);

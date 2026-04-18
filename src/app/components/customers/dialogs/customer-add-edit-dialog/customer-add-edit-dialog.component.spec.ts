@@ -10,7 +10,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { TemplateInputComponent } from '../../../../shared/template-input/template-input.component';
 import { SaveBtnComponent } from '../../../../shared/buttons/save-btn/save-btn.component';
 import { CancelBtnComponent } from '../../../../shared/buttons/cancel-btn/cancel-btn.component';
@@ -34,7 +34,7 @@ describe('CustomerAddEditDialogComponent', () => {
       imports: [
         CustomerAddEditDialogComponent,
         ReactiveFormsModule,
-        TranslateModule.forRoot(),
+        getTranslocoModule(),
         TemplateInputComponent,
         SaveBtnComponent,
         CancelBtnComponent,

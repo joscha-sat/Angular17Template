@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { getTranslocoModule } from '@app/other/transloco-testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { TemplateInputComponent } from './template-input.component';
@@ -26,7 +26,7 @@ describe('TemplateInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TestHostComponent, TranslateModule.forRoot()],
+      imports: [TestHostComponent, getTranslocoModule()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TestHostComponent);
