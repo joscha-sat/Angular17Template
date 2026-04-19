@@ -5,6 +5,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { LoadingService } from './services/loading.service';
 import { AsyncPipe } from '@angular/common';
+import { SidenavStore } from './stores/sidenav.store';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,8 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  readonly sidenavStore = inject(SidenavStore);
+
   title: string = 'Angular-Template-V2';
   public loadingService: LoadingService = inject(LoadingService);
   private readonly authService: AuthService = inject(AuthService);

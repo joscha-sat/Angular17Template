@@ -2,8 +2,7 @@
   <app-navigation />
 }
 
-<!--  some custom margin, to prevent overlapping with the navigation -->
-<div style="margin-left: 4rem">
+<div [style.margin-left.px]="sidenavStore.currentWidth()">
   <router-outlet />
 </div>
 

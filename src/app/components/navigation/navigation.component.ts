@@ -7,20 +7,29 @@ import {
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Button } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { SidenavStore } from '../../stores/sidenav.store';
 import { NavItem } from '../../other/enums/nav-items';
 import { ROUTES } from '../../other/enums/ROUTES';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-navigation',
-  imports: [RouterLinkActive, RouterLink, Button, TranslocoPipe],
+  imports: [RouterLinkActive, RouterLink, Button, TooltipModule, TranslocoPipe],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
+  standalone: true,
 })
 export class NavigationComponent implements OnInit {
   readonly navItems: WritableSignal<NavItem[]> = signal<NavItem[]>([]);
+
   private readonly translocoService: TranslocoService =
     inject(TranslocoService);
+  private readonly sidenavStore = inject(SidenavStore);
+
+  get expanded() {
+    return this.sidenavStore.expanded;
+  }
 
   ngOnInit(): void {
     this.setTranslatedTextWithNavItems();
@@ -47,5 +56,9 @@ export class NavigationComponent implements OnInit {
       { tooltip: translations[3], icon: 'pi pi-cog', link: ROUTES.SETTINGS },
       { tooltip: 'Test', icon: 'pi pi-wrench', link: 'test' },
     ]);
+  }
+
+  toggleExpanded(): void {
+    this.sidenavStore.toggle();
   }
 }
