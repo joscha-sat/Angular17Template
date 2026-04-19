@@ -41,7 +41,6 @@ export type FetchDataFunction<T> = (
 const DEFAULT_PAGE_SIZES: number[] = [5, 10, 25, 100];
 const DEFAULT_PAGE_SIZE: number = 10;
 const SEARCH_DEBOUNCE_TIME: number = 500;
-const VALID_SORT_DIRECTIONS: string[] = ['ASC', 'DESC'];
 
 @Component({
   selector: 'app-template-table-fetch',

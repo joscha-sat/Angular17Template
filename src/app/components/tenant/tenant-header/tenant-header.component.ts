@@ -9,12 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Tenant } from '../../../models/Tenant';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { ButtonModule } from 'primeng/button';
@@ -43,22 +38,16 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const tenantsChange: SimpleChange | undefined = changes['tenants'];
 
-    if (
-      !tenantsChange.currentValue ||
-      tenantsChange.currentValue === tenantsChange.previousValue
-    ) {
+    if (!tenantsChange.currentValue) {
       return;
     }
 
-    const nameControl: AbstractControl | undefined = this.form.controls['name'];
-    const firstTenant: Tenant | undefined = this.tenants()[0];
+    const firstTenant: Tenant = this.tenants()[0];
 
-    if (nameControl && firstTenant) {
-      nameControl.setValue({
-        id: firstTenant.id,
-        label: firstTenant.name,
-      });
-    }
+    this.form.controls['name'].setValue({
+      id: firstTenant.id,
+      label: firstTenant.name,
+    });
   }
 
   ngOnInit(): void {

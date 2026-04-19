@@ -60,7 +60,7 @@ export class TemplateTableSearchComponent implements OnInit {
 
   // Checks if the service has a search function
   private hasServiceSearchFunction(): boolean {
-    return !!this.service().search;
+    return 'search' in this.service();
   }
 
   // Extracts the input value from an event

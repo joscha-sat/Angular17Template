@@ -1,9 +1,4 @@
-import {
-  APP_INITIALIZER,
-  ApplicationConfig,
-  isDevMode,
-  LOCALE_ID,
-} from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, isDevMode, LOCALE_ID, } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -17,6 +12,8 @@ import { provideTransloco, TranslocoService } from '@jsverse/transloco';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { MessageService } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
 
 // Register German locale data for DatePipe
 registerLocaleData(localeDE);
@@ -36,6 +33,11 @@ export function initializeTransloco(
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    providePrimeNG({
+      theme: {
+        preset: Aura,
+      },
+    }),
     { provide: LOCALE_ID, useValue: 'de-DE' },
     provideAnimations(),
     { provide: MessageService },
