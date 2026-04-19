@@ -36,6 +36,9 @@ export const appConfig: ApplicationConfig = {
     providePrimeNG({
       theme: {
         preset: Aura,
+        options: {
+          darkModeSelector: 'none',
+        },
       },
     }),
     { provide: LOCALE_ID, useValue: 'de-DE' },
