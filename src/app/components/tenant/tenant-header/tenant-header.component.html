@@ -4,9 +4,13 @@
     <form [formGroup]="form"></form>
   </div>
 
-  <div class="flex-a-center-g1" right>
+  <div class="flex gap-4 items-center" right>
     <app-template-table-search [service]="tenantService" />
 
-    <p-button (onClick)="openCreateTenantDialog()" label="{{ 'tenant.create' | transloco }}" severity="secondary" />
+    <p-button
+      (onClick)="openCreateTenantDialog()"
+      label="{{ 'tenant.create' | transloco }}"
+      severity="secondary"
+    />
   </div>
 </app-header-layout>
