@@ -3,6 +3,14 @@
     <div class="logo-wrapper">{{ 'general.logo' | transloco }}</div>
 
     <div class="nav-items-wrapper">
+      <p-button
+        [icon]="expanded() ? 'pi pi-angle-left' : 'pi pi-angle-right'"
+        (onClick)="toggleExpanded()"
+        [rounded]="true"
+        [text]="true"
+        styleClass="toggle-btn"
+      />
+
       @for (navItem of navItems(); track navItem) {
         <p-button
           [routerLink]="[navItem.link]"
@@ -18,13 +26,5 @@
         />
       }
     </div>
-
-    <p-button
-      [icon]="expanded() ? 'pi pi-angle-left' : 'pi pi-angle-right'"
-      (onClick)="toggleExpanded()"
-      [rounded]="true"
-      [text]="true"
-      styleClass="toggle-btn"
-    />
   </div>
 </div>

@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 
 const SIDENAV_STATE_KEY = 'sidenav_expanded';
 const COLLAPSED_WIDTH = 64;
-const EXPANDED_WIDTH = 256;
+const EXPANDED_WIDTH = 175;
 
 @Injectable({
   providedIn: 'root',

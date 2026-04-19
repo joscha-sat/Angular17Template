@@ -9,7 +9,7 @@
   transition: width 0.3s ease;
 
   &.expanded {
-    width: 16rem;
+    width: 175px;
 
     .nav-items-wrapper {
       align-items: flex-start;
@@ -51,7 +51,7 @@
 }
 
 :host ::ng-deep .active-btn {
-  background-color: #b0ffc4 !important;
+  background-color: #dbffe5 !important;
   color: #ffffff !important;
   border-radius: 12px;
 }
