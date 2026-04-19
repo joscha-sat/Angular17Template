@@ -1,70 +1,31 @@
-@use 'index' as *;
-@use '@angular/material' as mat;
 @import 'assets/themes/theme.css';
 
-// || CSS VARIABLES || #########################################################################################################||
 :root {
-  /* ----------------------------------------------------------------- */
-  /*  ||CUSTOM CSS VARIABLES --> use scss files in assets/scss ||
-  /* ----------------------------------------------------------------- */
 }
-
-mat-form-field {
-  @include mat.theme(
-    (
-      density: -3,
-    )
-  );
-}
-
-tr,
-th {
-  @include mat.theme(
-    (
-      density: -2,
-    )
-  );
-}
-
-/* ----------------------------------------------------------------- */
-/*  ||Angular Material adjustments ||
-/* ----------------------------------------------------------------- */
 
 html.dark-mode {
   color-scheme: dark;
-}
-
-.mat-mdc-card-header {
-  padding-bottom: 1rem !important;
 }
 
 /* ---------------------------------- */
 /*  || CSS RESET ||  -----------------*/
 /* ---------------------------------- */
 
-/* makes sizing simpler */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-/* remove default spacing */
-/* force styling of type through styling, rather than elements */
 * {
   margin: 0;
   padding: 0;
 }
 
-/* min body height */
-
 body {
   min-height: 100vh;
-  //background: var(--mat-sys-surface);
-  //color: var(--mat-sys-on-surface);
 }
 
-/* responsive images */
 img {
   max-width: 100%;
   height: auto;
@@ -83,39 +44,4 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-}
-
-//mat-snackbar
-.custom-snackbar {
-  background-color: #4caf50; /* Green background */
-  color: white; /* White text */
-}
-
-.custom-snackbar-error {
-  background-color: #f44336; /* Red background */
-  color: white; /* White text */
-}
-
-// Snackbar colors
-// Cover both cases: class applied directly to the container and applied to the overlay pane wrapping the container.
-
-/* Info */
-.snackbar-info .mat-mdc-snack-bar-container,
-.mat-mdc-snack-bar-container.snackbar-info {
-  --mat-sys-inverse-surface: var(--info-container); // background-color
-  --mat-sys-inverse-on-surface: var(--info-container-txt); // text-color
-}
-
-/* Success */
-.snackbar-success .mat-mdc-snack-bar-container,
-.mat-mdc-snack-bar-container.snackbar-success {
-  --mat-sys-inverse-surface: var(--success-bg); // background-color
-  --mat-sys-inverse-on-surface: var(--success-txt); // text-color
-}
-
-/* Error */
-.snackbar-error .mat-mdc-snack-bar-container,
-.mat-mdc-snack-bar-container.snackbar-error {
-  --mat-sys-inverse-surface: var(--error-bg); // background-color
-  --mat-sys-inverse-on-surface: var(--error-txt); // text-color
 }

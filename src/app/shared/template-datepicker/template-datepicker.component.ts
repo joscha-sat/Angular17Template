@@ -6,35 +6,13 @@ import {
   OutputEmitterRef,
   WritableSignal,
 } from '@angular/core';
-import {
-  MatFormField,
-  MatInput,
-  MatLabel,
-  MatSuffix,
-} from '@angular/material/input';
-import {
-  MatDatepicker,
-  MatDatepickerInput,
-  MatDatepickerToggle,
-} from '@angular/material/datepicker';
+import { DatePicker } from 'primeng/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-template-datepicker',
-  imports: [
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatDatepickerToggle,
-    MatDatepicker,
-    MatSuffix,
-    MatDatepickerInput,
-    MatLabel,
-    MatFormField,
-    ReactiveFormsModule,
-    TranslocoPipe,
-  ],
+  imports: [DatePicker, ReactiveFormsModule, TranslocoPipe],
   templateUrl: './template-datepicker.component.html',
   styleUrl: './template-datepicker.component.scss',
 })

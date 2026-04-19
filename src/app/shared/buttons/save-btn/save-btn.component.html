@@ -1,8 +1,6 @@
-<button
-  (click)="save()"
+<p-button
+  (onClick)="save()"
   [disabled]="disabled()"
-  color="primary"
-  mat-flat-button
->
-  {{ 'general.save' | transloco }}
-</button>
+  label="{{ 'general.save' | transloco }}"
+  severity="success"
+/>

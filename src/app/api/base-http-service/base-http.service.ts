@@ -2,12 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { forkJoin, map, Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../other/environments/environment';
-import {
-  MatSnackbarService,
-  MethodType,
-  SnackBarData,
-} from '../../services/mat-snackbar.service';
-import { ApiSnackbarComponent } from '../../shared/api-snackbar/api-snackbar.component';
+import { MatSnackbarService } from '../../services/mat-snackbar.service';
 
 // Type definitions
 export type idTypes = string | number | Array<string | number>;
@@ -32,6 +27,17 @@ export class GenericHttpService {
   >(undefined);
   private readonly http: HttpClient = inject(HttpClient);
   private readonly snackBar: MatSnackbarService = inject(MatSnackbarService);
+
+  private readonly i18nKeys: Record<string, string> = {
+    user: 'Benutzer',
+    users: 'Benutzer',
+    tenant: 'Mandant',
+    tenants: 'Mandant',
+    customer: 'Kunde',
+    customers: 'Kunde',
+    role: 'Rolle',
+    roles: 'Rollen',
+  };
 
   /**
    * Constructs a full URL based on a given endpoint and optional ID.
@@ -215,10 +221,10 @@ export class GenericHttpService {
    * @param plural boolean for correct translation output
    * @returns An Observable that manages the HTTP action and notifications
    */
-  private httpAction<U>( // Renamed generic type to U to avoid conflict if T is T[]
+  private httpAction<U>(
     action: Observable<U>,
     i18nKeyForElement: string,
-    methodType?: MethodType,
+    methodType: string = 'POST',
     plural?: boolean,
   ): Observable<U> {
     return action.pipe(
@@ -252,14 +258,19 @@ export class GenericHttpService {
 
   private handleHttpSuccess(
     i18nKeyForElement: string,
-    methodType?: MethodType,
+    methodType: string = 'POST',
     plural: boolean = false,
   ): void {
-    const payload: SnackBarData = {
-      i18nKeyOrMessage: i18nKeyForElement,
-      methodType,
-      plural,
+    const action: Record<string, string> = {
+      POST: 'erstellt',
+      PATCH: 'aktualisiert',
+      DELETE: 'gelöscht',
     };
-    this.snackBar.openSnackBar(ApiSnackbarComponent, 'success', payload);
+    const elementName: string =
+      this.i18nKeys[i18nKeyForElement] || i18nKeyForElement;
+    const message: string = plural
+      ? `${elementName} erfolgreich ${action[methodType]}`
+      : `${elementName} erfolgreich ${action[methodType]}`;
+    this.snackBar.showSuccess(message);
   }
 }

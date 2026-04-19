@@ -1,17 +1,15 @@
-<mat-form-field
-  appearance="outline"
-  class="example-full-width"
-  subscriptSizing="dynamic"
->
-  <mat-label>{{ label() | transloco }}</mat-label>
-  <input
-    (dateChange)="selectedDateChanged($event.value)"
-    [matDatepicker]="picker"
-    [max]="maxDate()"
-    [min]="minDate()"
-    matInput
+<div class="flex flex-column gap-2 w-full">
+  <label [for]="fControlName()" class="font-semibold">
+    {{ label() | transloco }}
+  </label>
+  <p-datepicker
+    [id]="fControlName()"
+    [formControlName]="fControlName()"
+    [minDate]="minDate()"
+    [maxDate]="maxDate()"
+    [showIcon]="true"
+    dateFormat="dd.mm.yy"
+    placeholder="dd.mm.yyyy"
+    class="w-full"
   />
-  <!--  <mat-hint>MM/DD/YYYY</mat-hint>-->
-  <mat-datepicker-toggle [for]="picker" matIconSuffix />
-  <mat-datepicker #picker />
-</mat-form-field>
+</div>

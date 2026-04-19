@@ -5,11 +5,11 @@ import {
   output,
   OutputEmitterRef,
 } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-edit-icon',
-  imports: [MatIcon],
+  imports: [ButtonModule],
   templateUrl: './edit-icon.component.html',
   styleUrl: './edit-icon.component.scss',
 })

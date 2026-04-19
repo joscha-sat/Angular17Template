@@ -6,21 +6,14 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
-import { MatMiniFabButton } from '@angular/material/button';
+import { ButtonModule } from 'primeng/button';
 import { NavItem } from '../../other/enums/nav-items';
 import { ROUTES } from '../../other/enums/ROUTES';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-navigation',
-  imports: [
-    RouterLinkActive,
-    MatIcon,
-    RouterLink,
-    MatMiniFabButton,
-    TranslocoPipe,
-  ],
+  imports: [RouterLinkActive, RouterLink, ButtonModule, TranslocoPipe],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
 })
@@ -44,43 +37,15 @@ export class NavigationComponent implements OnInit {
       ]);
 
     this.navItems.set([
-      // tenant
-      {
-        tooltip: translations[0],
-        icon: 'home',
-        link: ROUTES.TENANT,
-      },
-      // user
-      {
-        tooltip: translations[1],
-        icon: 'group',
-        link: ROUTES.USER,
-      },
-      // customer
+      { tooltip: translations[0], icon: 'pi pi-home', link: ROUTES.TENANT },
+      { tooltip: translations[1], icon: 'pi pi-users', link: ROUTES.USER },
       {
         tooltip: translations[2],
-        icon: 'cases',
+        icon: 'pi pi-briefcase',
         link: ROUTES.CUSTOMERS,
       },
-      // map
-      // {
-      //   tooltip: translations[4],
-      //   icon: 'map-pin',
-      //   link: ROUTES.MAP,
-      // },
-      // settings
-      {
-        tooltip: translations[3],
-        icon: 'settings',
-        link: ROUTES.SETTINGS,
-      },
-
-      // test TODO: REMOVE FOR PRODUCTION!!!
-      {
-        tooltip: 'Test',
-        icon: 'handyman',
-        link: 'test',
-      },
+      { tooltip: translations[3], icon: 'pi pi-cog', link: ROUTES.SETTINGS },
+      { tooltip: 'Test', icon: 'pi pi-wrench', link: 'test' },
     ]);
   }
 }

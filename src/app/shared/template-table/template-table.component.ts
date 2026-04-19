@@ -5,21 +5,18 @@ import {
   InputSignal,
   output,
   OutputEmitterRef,
-  Signal,
   TemplateRef,
-  viewChild,
 } from '@angular/core';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
 import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
-import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-template-table',
   imports: [
-    MatTableModule,
-    MatPaginator,
+    TableModule,
+    PaginatorModule,
     NgTemplateOutlet,
     DatePipe,
     IsDatePipe,
@@ -45,38 +42,23 @@ export class TemplateTableComponent<T> implements AfterViewInit {
     number | undefined
   >();
 
-  readonly paginationChange: OutputEmitterRef<{ skip: number; limit: number }> =
+  readonly paginationChange: OutputEmitterRef<{ first: number; rows: number }> =
     output<{
-      skip: number;
-      limit: number;
+      first: number;
+      rows: number;
     }>();
 
-  dataSource: MatTableDataSource<T> = new MatTableDataSource<T>([]);
+  first: number = 0;
+  rows: number = 10;
 
-  readonly paginator: Signal<MatPaginator | undefined> =
-    viewChild(MatPaginator);
-  readonly sort: Signal<MatSort | undefined> = viewChild(MatSort);
-
-  // hooks --------------------------------------------------- ||
   ngAfterViewInit(): void {
-    this.setupDataSourcePaginator();
-    this.setupDataSourceSort();
+    this.rows = this.initialPageSize();
   }
 
-  // methods --------------------------------------------------- ||
-  setupDataSourcePaginator(): void {
-    const paginator: MatPaginator | undefined = this.paginator();
-    if (paginator) {
-      this.dataSource.paginator = paginator;
-    }
-  }
-
-  setupDataSourceSort(): void {
-    const sort: import('@angular/material/sort').MatSort | undefined =
-      this.sort();
-    if (sort) {
-      this.dataSource.sort = sort;
-    }
+  onPageChange(event: { first: number; rows: number }): void {
+    this.first = event.first;
+    this.rows = event.rows;
+    this.paginationChange.emit({ first: event.first, rows: event.rows });
   }
 
   extractNestedProperty<T>(

@@ -1,25 +1,12 @@
 <app-header-layout>
   <div class="flex-a-center-g1" left>
-    <!--  TITLE  -->
-    <div class="view-title">
-      {{ 'tenant.title' | transloco }}
-    </div>
-
-    <!-- TENANT FORM  -->
+    <div class="view-title">{{ 'tenant.title' | transloco }}</div>
     <form [formGroup]="form"></form>
   </div>
 
   <div class="flex-a-center-g1" right>
-    <!--  TABLE SEARCH  -->
     <app-template-table-search [service]="tenantService" />
 
-    <!-- NEW TENANT BUTTON -->
-    <button
-      (click)="openCreateTenantDialog()"
-      color="secondary"
-      mat-flat-button
-    >
-      {{ 'tenant.create' | transloco }}
-    </button>
+    <p-button (onClick)="openCreateTenantDialog()" label="{{ 'tenant.create' | transloco }}" severity="secondary" />
   </div>
 </app-header-layout>

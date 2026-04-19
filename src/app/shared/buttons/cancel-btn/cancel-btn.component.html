@@ -1,3 +1,6 @@
-<button (click)="cancel()" class="cancelBtn" mat-flat-button>
-  {{ 'general.cancel' | transloco }}
-</button>
+<p-button
+  (onClick)="cancel()"
+  label="{{ 'general.cancel' | transloco }}"
+  severity="secondary"
+  [outlined]="true"
+/>

@@ -7,11 +7,7 @@ import {
 import { catchError } from 'rxjs';
 import { inject } from '@angular/core';
 import { HttpStatusMsgService } from '../../api/base-error-messages/http-status-msg.service';
-import {
-  MatSnackbarService,
-  SnackBarData,
-} from '../../services/mat-snackbar.service';
-import { ApiSnackbarComponent } from '../../shared/api-snackbar/api-snackbar.component';
+import { MatSnackbarService } from '../../services/mat-snackbar.service';
 
 export const errorInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -34,16 +30,7 @@ export const errorInterceptor: HttpInterceptorFn = (
         errorMessage = err.message || 'unknown error';
       }
 
-      const snackbarPayload: SnackBarData = {
-        errorStatus: err.status,
-        i18nKeyOrMessage: errorMessage,
-      };
-
-      snackbarService.openSnackBar(
-        ApiSnackbarComponent,
-        'error',
-        snackbarPayload,
-      );
+      snackbarService.showError(errorMessage);
 
       throw err;
     }),

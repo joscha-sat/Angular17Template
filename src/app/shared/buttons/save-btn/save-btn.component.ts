@@ -5,12 +5,12 @@ import {
   output,
   OutputEmitterRef,
 } from '@angular/core';
-import { MatButton } from '@angular/material/button';
+import { ButtonModule } from 'primeng/button';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-save-btn',
-  imports: [MatButton, TranslocoPipe],
+  imports: [ButtonModule, TranslocoPipe],
   templateUrl: './save-btn.component.html',
   styleUrl: './save-btn.component.scss',
 })

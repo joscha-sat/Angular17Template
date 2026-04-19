@@ -1,28 +1,19 @@
-<!-- TODO: responsive -->
 <div class="sidebar-wrapper">
   <div class="container">
     <div class="logo-and-nav-items">
-      <!--  logo   -->
       <div class="logo-wrapper">{{ 'general.logo' | transloco }}</div>
 
-      <!--  loop over navItems   -->
       <div class="nav-items-wrapper">
         @for (navItem of navItems(); track navItem) {
-          <!-- tooltip -->
-          <ng-template #tooltip>
-            <div>{{ navItem.tooltip }}</div>
-          </ng-template>
-          <!-- nav button -->
-          <button
-            mat-mini-fab
-            type="button"
+          <p-button
             [routerLink]="[navItem.link]"
             [class.active-btn]="rla.isActive"
             routerLinkActive
             #rla="routerLinkActive"
-          >
-            <mat-icon>{{ navItem.icon }}</mat-icon>
-          </button>
+            [icon]="navItem.icon"
+            [rounded]="true"
+            [text]="true"
+          />
         }
       </div>
     </div>

@@ -1,28 +1,17 @@
-<!-- TITLE -->
-<h2 mat-dialog-title>
-  {{
-    isCreateCustomerMode()
-      ? ('customer.create' | transloco)
-      : ('customer.edit' | transloco)
-  }}
-</h2>
-
-<!-- CUSTOMER FORM -->
-@if (form) {
-  <mat-dialog-content>
-    <form
-      (ngSubmit)="form!.valid && submit()"
-      [formGroup]="form"
-      class="pt-05 pb-05"
-    >
-      <!--  NAME INPUT -->
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [header]="isCreateCustomerMode() ? ('customer.create' | transloco) : ('customer.edit' | transloco)"
+  [style]="{ width: '25rem' }"
+>
+  @if (form) {
+    <form (ngSubmit)="form!.valid && submit()" [formGroup]="form" class="pt-2 pb-2">
       <app-template-input fControlName="name" label="general.name" />
     </form>
-  </mat-dialog-content>
 
-  <!--  SUBMIT/ CANCEL ACTION BTNS  -->
-  <mat-dialog-actions [align]="'start'" class="flex-a-center-g1">
-    <app-save-btn (clickEvent)="submit()" [disabled]="form.invalid" />
-    <app-cancel-btn mat-dialog-close />
-  </mat-dialog-actions>
-}
+    <div class="flex gap-2">
+      <app-save-btn (clickEvent)="submit()" [disabled]="form.invalid" />
+      <app-cancel-btn (cancelEvent)="closeDialog()" />
+    </div>
+  }
+</p-dialog>

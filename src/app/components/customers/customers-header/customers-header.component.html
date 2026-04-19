@@ -1,22 +1,15 @@
 <app-header-layout>
-  <!-- LEFT SIDE --------|| -->
   <ng-container left>
-    <!--  TITLE  -->
     <div class="view-title">
       {{ 'customer.title-plural' | transloco }}
     </div>
   </ng-container>
 
-  <!-- RIGHT SIDE --------|| -->
   <div class="flex-a-center-g1" right>
-    <!--  CUSTOMER TABLE SEARCH  -->
     <app-template-table-search [service]="customerService" />
 
     <app-template-date-search [service]="customerService" />
 
-    <!-- CREATE CUSTOMER BUTTON -->
-    <button (click)="openCreateCustomerDialog()" mat-flat-button>
-      {{ 'customer.create' | transloco }}
-    </button>
+    <p-button (onClick)="openCreateCustomerDialog()" label="{{ 'customer.create' | transloco }}" severity="success" />
   </div>
 </app-header-layout>

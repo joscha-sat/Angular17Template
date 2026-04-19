@@ -2,18 +2,13 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './api/auth.service';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ProgressSpinner } from 'primeng/progressspinner';
 import { LoadingService } from './services/loading.service';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    NavigationComponent,
-    MatProgressSpinnerModule,
-    AsyncPipe,
-  ],
+  imports: [RouterOutlet, NavigationComponent, ProgressSpinner, AsyncPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

@@ -5,16 +5,16 @@ import {
   output,
   OutputEmitterRef,
 } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-delete-icon',
-  imports: [MatIcon],
+  imports: [ButtonModule],
   templateUrl: './delete-icon.component.html',
   styleUrl: './delete-icon.component.scss',
 })
 export class DeleteIconComponent {
-  readonly color: InputSignal<string> = input('var(--mat-sys-error)');
+  readonly color: InputSignal<string> = input('red');
 
   readonly clickEvent: OutputEmitterRef<void> = output<void>();
 

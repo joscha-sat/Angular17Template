@@ -10,7 +10,7 @@ import { AuthService, LoginBody } from '../../../api/auth.service';
 import { Router } from '@angular/router';
 import { ROUTES } from '../../../other/enums/ROUTES';
 import { TemplateInputComponent } from '../../../shared/template-input/template-input.component';
-import { MatButton } from '@angular/material/button';
+import { ButtonModule } from 'primeng/button';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
@@ -19,7 +19,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     FormsModule,
     ReactiveFormsModule,
     TemplateInputComponent,
-    MatButton,
+    ButtonModule,
     TranslocoPipe,
   ],
   templateUrl: './login-form.component.html',

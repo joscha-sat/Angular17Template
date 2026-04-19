@@ -17,7 +17,7 @@ import {
 } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
-import { MatButton } from '@angular/material/button';
+import { ButtonModule } from 'primeng/button';
 import { TemplateTableSearchComponent } from '../../../shared/template-table-search/template-table-search.component';
 import { TranslocoPipe } from '@jsverse/transloco';
 
@@ -26,7 +26,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
   imports: [
     ReactiveFormsModule,
     HeaderLayoutComponent,
-    MatButton,
+    ButtonModule,
     TemplateTableSearchComponent,
     TranslocoPipe,
   ],
@@ -53,7 +53,6 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     const nameControl: AbstractControl | undefined = this.form.controls['name'];
     const firstTenant: Tenant | undefined = this.tenants()[0];
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (nameControl && firstTenant) {
       nameControl.setValue({
         id: firstTenant.id,
@@ -76,7 +75,5 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     this.tenantService.selectedTenantId.set($event.id);
   }
 
-  openCreateTenantDialog(): void {
-    /* TODO document why this method 'openCreateTenantDialog' is empty */
-  }
+  openCreateTenantDialog(): void {}
 }

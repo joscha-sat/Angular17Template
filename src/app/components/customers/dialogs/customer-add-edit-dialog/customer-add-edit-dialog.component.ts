@@ -13,29 +13,18 @@ import {
 } from '@angular/forms';
 import { Customer } from '../../../../models/Customer';
 import { CustomerService } from '../../../../api/customer.service';
-import {
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogTitle,
-} from '@angular/material/dialog';
+import { Dialog } from 'primeng/dialog';
 import { TemplateInputComponent } from '../../../../shared/template-input/template-input.component';
 import { SaveBtnComponent } from '../../../../shared/buttons/save-btn/save-btn.component';
 import { CancelBtnComponent } from '../../../../shared/buttons/cancel-btn/cancel-btn.component';
-import { UtilityService } from '../../../../services/utility.service';
-
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-customer-add-edit-dialog',
   imports: [
     ReactiveFormsModule,
-    MatDialogTitle,
-    MatDialogContent,
+    Dialog,
     TemplateInputComponent,
-    MatDialogActions,
-    MatDialogClose,
     SaveBtnComponent,
     CancelBtnComponent,
     TranslocoPipe,
@@ -44,32 +33,18 @@ import { TranslocoPipe } from '@jsverse/transloco';
   styleUrl: './customer-add-edit-dialog.component.scss',
 })
 export class CustomerAddEditDialogComponent implements OnInit {
-  utilityService: UtilityService = inject(UtilityService);
-  readonly dialog: MatDialog = inject(MatDialog);
   model?: Customer;
   form?: FormGroup;
   readonly isCreateCustomerMode: WritableSignal<boolean> = signal(true);
   private readonly fb: FormBuilder = inject(FormBuilder);
   private readonly customerService: CustomerService = inject(CustomerService);
 
+  visible: boolean = true;
+
   get customerFromFormData(): Customer {
-    // Reads form data and prepares a user object
     const formData: { name?: string } = this.form?.value as { name?: string };
-    return new Customer({
-      name: formData.name,
-    });
+    return new Customer({ name: formData.name });
   }
-
-  ngOnInit(): void {
-    // this.loadModelData();
-    this.initForm();
-  }
-
-  // Todo
-  // loadModelData() {
-  //   this.isCreateCustomerMode.set(true);
-  //   this.isCreateCustomerMode.set(false);
-  // }
 
   initForm(): void {
     this.form = this.fb.group({
@@ -77,18 +52,23 @@ export class CustomerAddEditDialogComponent implements OnInit {
     });
   }
 
+  ngOnInit(): void {
+    this.initForm();
+  }
+
   submit(): void {
     if (this.isCreateCustomerMode()) {
       this.createCustomer();
+    } else {
+      this.updateCustomer();
     }
-    this.updateCustomer();
   }
 
   createCustomer(): void {
     this.customerService
       .createOneCustomer(this.customerFromFormData)
       .subscribe(() => {
-        this.dialog.closeAll();
+        this.closeDialog();
       });
   }
 
@@ -99,5 +79,9 @@ export class CustomerAddEditDialogComponent implements OnInit {
     this.customerService
       .updateCustomerById(this.model.id, this.customerFromFormData)
       .subscribe();
+  }
+
+  closeDialog(): void {
+    this.visible = false;
   }
 }
