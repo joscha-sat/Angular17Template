@@ -6,14 +6,14 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
+import { Button } from 'primeng/button';
 import { NavItem } from '../../other/enums/nav-items';
 import { ROUTES } from '../../other/enums/ROUTES';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-navigation',
-  imports: [RouterLinkActive, RouterLink, ButtonModule, TranslocoPipe],
+  imports: [RouterLinkActive, RouterLink, Button, TranslocoPipe],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
 })

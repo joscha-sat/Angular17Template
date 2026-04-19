@@ -7,20 +7,13 @@ import {
   OutputEmitterRef,
   TemplateRef,
 } from '@angular/core';
-import { TableModule } from 'primeng/table';
-import { PaginatorModule } from 'primeng/paginator';
 import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
+import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'app-template-table',
-  imports: [
-    TableModule,
-    PaginatorModule,
-    NgTemplateOutlet,
-    DatePipe,
-    IsDatePipe,
-  ],
+  imports: [NgTemplateOutlet, DatePipe, IsDatePipe, TableModule],
   standalone: true,
   templateUrl: './template-table.component.html',
   styleUrl: './template-table.component.scss',

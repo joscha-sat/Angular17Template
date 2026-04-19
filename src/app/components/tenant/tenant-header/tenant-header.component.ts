@@ -4,15 +4,12 @@ import {
   input,
   InputSignal,
   OnChanges,
-  OnInit,
-  SimpleChange,
-  SimpleChanges,
 } from '@angular/core';
 import { Tenant } from '../../../models/Tenant';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
-import { ButtonModule } from 'primeng/button';
+import { Button } from 'primeng/button';
 import { TemplateTableSearchComponent } from '../../../shared/template-table-search/template-table-search.component';
 import { TranslocoPipe } from '@jsverse/transloco';
 
@@ -21,24 +18,28 @@ import { TranslocoPipe } from '@jsverse/transloco';
   imports: [
     ReactiveFormsModule,
     HeaderLayoutComponent,
-    ButtonModule,
+    Button,
     TemplateTableSearchComponent,
     TranslocoPipe,
   ],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',
 })
-export class TenantHeaderComponent implements OnInit, OnChanges {
+export class TenantHeaderComponent implements OnChanges {
   fb: FormBuilder = inject(FormBuilder);
   tenantService: TenantService = inject(TenantService);
 
-  form: FormGroup = new FormGroup({});
+  form: FormGroup;
   readonly tenants: InputSignal<Tenant[]> = input.required<Tenant[]>();
 
-  ngOnChanges(changes: SimpleChanges): void {
-    const tenantsChange: SimpleChange | undefined = changes['tenants'];
+  constructor() {
+    this.form = this.fb.group({
+      name: [],
+    });
+  }
 
-    if (!tenantsChange.currentValue) {
+  ngOnChanges(_changes: unknown): void {
+    if (!this.tenants().length) {
       return;
     }
 
@@ -47,16 +48,6 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
     this.form.controls['name'].setValue({
       id: firstTenant.id,
       label: firstTenant.name,
-    });
-  }
-
-  ngOnInit(): void {
-    this.initForm();
-  }
-
-  initForm(): void {
-    this.form = this.fb.group({
-      name: [],
     });
   }
 

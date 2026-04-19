@@ -1,16 +1,10 @@
 import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { AuthService, LoginBody } from '../../../api/auth.service';
 import { Router } from '@angular/router';
 import { ROUTES } from '../../../other/enums/ROUTES';
 import { TemplateInputComponent } from '../../../shared/template-input/template-input.component';
-import { ButtonModule } from 'primeng/button';
+import { Button } from 'primeng/button';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
@@ -19,7 +13,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     FormsModule,
     ReactiveFormsModule,
     TemplateInputComponent,
-    ButtonModule,
+    Button,
     TranslocoPipe,
   ],
   templateUrl: './login-form.component.html',

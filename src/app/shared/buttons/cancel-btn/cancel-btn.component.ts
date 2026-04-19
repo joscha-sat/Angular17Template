@@ -1,10 +1,10 @@
 import { Component, output, OutputEmitterRef } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
+import { Button } from 'primeng/button';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-cancel-btn',
-  imports: [ButtonModule, TranslocoPipe],
+  imports: [Button, TranslocoPipe],
   templateUrl: './cancel-btn.component.html',
   styleUrl: './cancel-btn.component.scss',
 })

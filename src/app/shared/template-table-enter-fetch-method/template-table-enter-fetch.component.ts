@@ -14,7 +14,6 @@ import {
   WritableSignal,
 } from '@angular/core';
 import { TableModule } from 'primeng/table';
-import { PaginatorModule } from 'primeng/paginator';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { CommonModule, DatePipe } from '@angular/common';
 import {
@@ -44,7 +43,7 @@ const SEARCH_DEBOUNCE_TIME: number = 500;
 
 @Component({
   selector: 'app-template-table-fetch',
-  imports: [CommonModule, TableModule, PaginatorModule, DatePipe, IsDatePipe],
+  imports: [CommonModule, DatePipe, IsDatePipe, TableModule],
   standalone: true,
   templateUrl: './template-table-enter-fetch.component.html',
   styleUrl: './template-table-enter-fetch.component.scss',

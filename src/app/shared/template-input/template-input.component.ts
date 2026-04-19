@@ -1,5 +1,5 @@
 import { Component, input, InputSignal } from '@angular/core';
-import { InputTextModule } from 'primeng/inputtext';
+import { InputText } from 'primeng/inputtext';
 import {
   ControlContainer,
   FormGroupDirective,
@@ -9,7 +9,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-template-input',
-  imports: [InputTextModule, ReactiveFormsModule, TranslocoPipe],
+  imports: [InputText, ReactiveFormsModule, TranslocoPipe],
   templateUrl: './template-input.component.html',
   styleUrl: './template-input.component.scss',
   viewProviders: [

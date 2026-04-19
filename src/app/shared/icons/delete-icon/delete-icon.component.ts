@@ -5,11 +5,11 @@ import {
   output,
   OutputEmitterRef,
 } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-delete-icon',
-  imports: [ButtonModule],
+  imports: [Button],
   templateUrl: './delete-icon.component.html',
   styleUrl: './delete-icon.component.scss',
 })
