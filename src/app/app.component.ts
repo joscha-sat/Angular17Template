@@ -6,10 +6,17 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 import { LoadingService } from './services/loading.service';
 import { AsyncPipe } from '@angular/common';
 import { SidenavStore } from './stores/sidenav.store';
+import { Toast } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavigationComponent, ProgressSpinner, AsyncPipe],
+  imports: [
+    RouterOutlet,
+    NavigationComponent,
+    ProgressSpinner,
+    AsyncPipe,
+    Toast,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
