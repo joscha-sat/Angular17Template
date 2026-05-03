@@ -1,10 +1,17 @@
-<div class="flex flex-column gap-2 w-full">
-  <label [for]="fControlName()" class="font-semibold">
-    {{ label() | transloco }}
-  </label>
-  @if (iconClass()) {
-    <p-iconfield>
-      <p-inputicon [class]="iconClass()" />
+<div class="w-full">
+  <p-floatlabel variant="on">
+    @if (iconClass()) {
+      <p-iconfield>
+        <p-inputicon [class]="iconClass()" />
+        <input
+          pInputText
+          [id]="fControlName()"
+          [formControlName]="fControlName()"
+          [type]="type()"
+          class="w-full"
+        />
+      </p-iconfield>
+    } @else {
       <input
         pInputText
         [id]="fControlName()"
@@ -12,14 +19,9 @@
         [type]="type()"
         class="w-full"
       />
-    </p-iconfield>
-  } @else {
-    <input
-      pInputText
-      [id]="fControlName()"
-      [formControlName]="fControlName()"
-      [type]="type()"
-      class="w-full"
-    />
-  }
+    }
+    <label [for]="fControlName()">
+      {{ label() | transloco }}
+    </label>
+  </p-floatlabel>
 </div>

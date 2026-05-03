@@ -66,7 +66,7 @@ export class TenantHeaderComponent implements OnChanges {
         mode: MODE.ADD,
       },
       showHeader: false,
-      width: '40vw',
+      width: '350px',
       modal: true,
       dismissableMask: true,
       closable: true,
