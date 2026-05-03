@@ -1,12 +1,13 @@
+<!-- TABLE CONTAINER -->
 <div class="table-container">
   <p-table
     [value]="tableData()"
     [paginator]="true"
-    [rows]="rows"
+    [rows]="pageSize()"
     [rowsPerPageOptions]="pageSizes()"
     [totalRecords]="totalItemsCount()"
-    [first]="first"
-    (onPage)="onPageChange($event)"
+    [first]="currentPageFirstIndex()"
+    (onPage)="handlePageChange($event)"
     [tableStyle]="{ 'mat-elevation-z8': true }"
     [scrollable]="true"
   >
@@ -48,6 +49,7 @@
     </ng-template>
   </p-table>
 
+  <!-- DEFAULT CELL TEMPLATE -->
   <ng-template #defaultCellTemplate let-value>
     @if (value | isDate) {
       {{ value | date: 'dd.MM.yyyy HH:mm' }}

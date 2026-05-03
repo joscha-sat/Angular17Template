@@ -1,11 +1,12 @@
 import {
-  AfterViewInit,
   Component,
   input,
   InputSignal,
   output,
   OutputEmitterRef,
+  signal,
   TemplateRef,
+  WritableSignal,
 } from '@angular/core';
 import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
@@ -14,18 +15,14 @@ import { TableModule } from 'primeng/table';
 @Component({
   selector: 'app-template-table',
   imports: [NgTemplateOutlet, DatePipe, IsDatePipe, TableModule],
-  standalone: true,
   templateUrl: './template-table.component.html',
   styleUrl: './template-table.component.scss',
 })
-export class TemplateTableComponent<T> implements AfterViewInit {
+export class TemplateTableComponent<T> {
   readonly headers: InputSignal<string[]> = input.required<string[]>();
   readonly displayedColumns: InputSignal<string[]> = input.required<string[]>();
-  readonly cellTemplatesMap: InputSignal<{
-    [key: string]: TemplateRef<unknown>;
-  }> = input<{
-    [key: string]: TemplateRef<unknown>;
-  }>({});
+  readonly cellTemplatesMap: InputSignal<Record<string, TemplateRef<unknown>>> =
+    input<Record<string, TemplateRef<unknown>>>({});
 
   readonly tableData: InputSignal<T[]> = input.required<T[]>();
 
@@ -41,42 +38,40 @@ export class TemplateTableComponent<T> implements AfterViewInit {
       rows: number;
     }>();
 
-  first: number = 0;
-  rows: number = 10;
+  readonly currentPageFirstIndex: WritableSignal<number> = signal(0);
+  readonly currentPageSize: WritableSignal<number> = signal(
+    this.initialPageSize(),
+  );
 
-  ngAfterViewInit(): void {
-    this.rows = this.initialPageSize();
-  }
-
-  onPageChange(event: { first: number; rows: number }): void {
-    this.first = event.first;
-    this.rows = event.rows;
+  handlePageChange(event: { first: number; rows: number }): void {
+    this.currentPageFirstIndex.set(event.first);
+    this.currentPageSize.set(event.rows);
     this.paginationChange.emit({ first: event.first, rows: event.rows });
   }
 
-  extractNestedProperty<T>(
-    item: T,
+  extractNestedProperty<TItem>(
+    item: TItem,
     key: string,
   ): string | number | Date | null | undefined {
-    const value: unknown = this.resolvePath(item, key);
+    const resolvedValue: unknown = this.resolvePropertyPath(item, key);
 
-    if (this.isAllowedType(value)) {
-      return value;
+    if (this.isValidDisplayType(resolvedValue)) {
+      return resolvedValue;
     }
 
     return null;
   }
 
-  private resolvePath(item: unknown, key: string): unknown {
-    return key.split('.').reduce((acc: unknown, k: string) => {
-      if (acc && typeof acc === 'object') {
-        return (acc as Record<string, unknown>)[k];
+  private resolvePropertyPath(item: unknown, key: string): unknown {
+    return key.split('.').reduce((accumulator: unknown, segment: string) => {
+      if (accumulator && typeof accumulator === 'object') {
+        return (accumulator as Record<string, unknown>)[segment];
       }
       return undefined;
     }, item);
   }
 
-  private isAllowedType(
+  private isValidDisplayType(
     value: unknown,
   ): value is string | number | Date | null | undefined {
     if (value === null || value === undefined) {

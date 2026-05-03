@@ -22,33 +22,27 @@ type SearchableService = {
 export class TemplateTableSearchComponent implements OnInit {
   readonly service: InputSignal<SearchableService> =
     input.required<SearchableService>();
-  searchForm: FormGroup;
-  private readonly fb: FormBuilder = inject(FormBuilder);
+  private readonly formBuilder: FormBuilder = inject(FormBuilder);
 
-  constructor() {
-    this.searchForm = this.createSearchForm();
-  }
+  readonly searchForm: FormGroup = this.createSearchForm();
 
   ngOnInit(): void {
     this.syncSearchValueFromService();
   }
 
-  // Updates the form value when the search input changes
-  onSearchChange(event: Event): void {
-    const inputValue: string = this.getInputValueFromEvent(event);
+  handleSearchInputChange(event: Event): void {
+    const inputValue: string = this.extractInputValueFromEvent(event);
     this.updateServiceSearchValue(inputValue);
   }
 
-  // Creates the search form with initial empty value
   private createSearchForm(): FormGroup {
-    return this.fb.group({
+    return this.formBuilder.group({
       search: [null],
     });
   }
 
-  // Synchronizes the form value with the current service search value
   private syncSearchValueFromService(): void {
-    if (!this.hasServiceSearchFunction()) {
+    if (!this.serviceHasSearchProperty()) {
       return;
     }
 
@@ -58,17 +52,14 @@ export class TemplateTableSearchComponent implements OnInit {
     }
   }
 
-  // Checks if the service has a search function
-  private hasServiceSearchFunction(): boolean {
+  private serviceHasSearchProperty(): boolean {
     return 'search' in this.service();
   }
 
-  // Extracts the input value from an event
-  private getInputValueFromEvent(event: Event): string {
+  private extractInputValueFromEvent(event: Event): string {
     return (event.target as HTMLInputElement).value;
   }
 
-  // Updates the service search value
   private updateServiceSearchValue(value: string): void {
     this.service().search.set(value);
   }

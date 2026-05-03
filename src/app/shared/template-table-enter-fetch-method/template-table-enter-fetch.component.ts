@@ -1,13 +1,12 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
   DestroyRef,
-  effect,
   inject,
   input,
   InputSignal,
+  linkedSignal,
   Signal,
   signal,
   TemplateRef,
@@ -16,21 +15,9 @@ import {
 import { TableModule } from 'primeng/table';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { CommonModule, DatePipe } from '@angular/common';
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  Observable,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, switchMap, tap, } from 'rxjs';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
-import {
-  BaseGetQueryParams,
-  SortParamType,
-} from '../../other/types/Table.type';
+import { BaseGetQueryParams, SortParamType, } from '../../other/types/Table.type';
 import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
 
 export type FetchDataFunction<T> = (
@@ -44,12 +31,11 @@ const SEARCH_DEBOUNCE_TIME: number = 500;
 @Component({
   selector: 'app-template-table-fetch',
   imports: [CommonModule, DatePipe, IsDatePipe, TableModule],
-  standalone: true,
   templateUrl: './template-table-enter-fetch.component.html',
   styleUrl: './template-table-enter-fetch.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
+export class TemplateTableEnterFetchComponent<T> {
   readonly fetchData: InputSignal<FetchDataFunction<T>> =
     input.required<FetchDataFunction<T>>();
   readonly headers: InputSignal<string[]> = input.required<string[]>();
@@ -69,23 +55,25 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   readonly initialPageSize: InputSignal<number> = input(DEFAULT_PAGE_SIZE);
 
   readonly totalItemsCount: WritableSignal<number> = signal(0);
-  readonly limit: WritableSignal<number> = signal(this.initialPageSize());
-  readonly skip: WritableSignal<number> = signal(0);
+  readonly pageSize: WritableSignal<number> = linkedSignal({
+    source: this.initialPageSize,
+    computation: () => this.initialPageSize(),
+  });
+  readonly pageOffset: WritableSignal<number> = signal(0);
   readonly tableData: WritableSignal<T[]> = signal<T[]>([]);
   readonly debouncedSearch: WritableSignal<string> = signal('');
   readonly activeSort: WritableSignal<SortParamType | undefined> = signal<
     SortParamType | undefined
   >(this.initialSort());
 
-  private readonly destroyRef: DestroyRef = inject(DestroyRef);
+  readonly currentPageFirstIndex: WritableSignal<number> = signal(0);
 
-  first: number = 0;
-  rows: number = 10;
+  private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   private readonly queryParams: Signal<BaseGetQueryParams> =
     computed<BaseGetQueryParams>(() => ({
-      skip: this.skip(),
-      limit: this.limit(),
+      skip: this.pageOffset(),
+      limit: this.pageSize(),
       search: this.debouncedSearch(),
       searchDate: this.searchDate(),
       sort: this.activeSort(),
@@ -93,16 +81,13 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
     }));
 
   constructor() {
-    this.initializeReactiveFeatures();
+    this.setupSearchDebounce();
+    this.setupDataFetchingSubscription();
   }
 
-  ngAfterViewInit(): void {
-    this.rows = this.initialPageSize();
-  }
-
-  onPageChange(event: { first: number; rows: number }): void {
-    this.skip.set(event.first);
-    this.limit.set(event.rows);
+  handlePageChange(event: { first: number; rows: number }): void {
+    this.pageOffset.set(event.first);
+    this.pageSize.set(event.rows);
   }
 
   extractNestedProperty<U>(
@@ -120,18 +105,6 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
       ) as string | number | Date | null | undefined;
   }
 
-  private initializeReactiveFeatures(): void {
-    this.syncSignalsWithInputs();
-    this.setupSearchDebounce();
-    this.setupDataFetchingSubscription();
-  }
-
-  private syncSignalsWithInputs(): void {
-    effect(() => {
-      this.limit.set(this.initialPageSize());
-    });
-  }
-
   private setupSearchDebounce(): void {
     toObservable(this.search)
       .pipe(
@@ -141,8 +114,8 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
       )
       .subscribe((searchValue: string) => {
         this.debouncedSearch.set(searchValue);
-        this.first = 0;
-        this.skip.set(0);
+        this.currentPageFirstIndex.set(0);
+        this.pageOffset.set(0);
       });
   }
 

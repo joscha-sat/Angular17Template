@@ -5,11 +5,15 @@
     </div>
   </ng-container>
 
-  <div class="flex-a-center-g1" right>
+  <div class="flex-a-center-g1" right [formGroup]="form">
     <app-template-table-search [service]="customerService" />
 
     <app-template-date-search [service]="customerService" />
 
-    <p-button (onClick)="openCreateCustomerDialog()" label="{{ 'customer.create' | transloco }}" severity="success" />
+    <p-button
+      (onClick)="openCreateCustomerDialog()"
+      label="{{ 'customer.create' | transloco }}"
+      severity="success"
+    />
   </div>
 </app-header-layout>

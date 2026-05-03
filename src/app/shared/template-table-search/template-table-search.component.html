@@ -1,6 +1,7 @@
+<!-- SEARCH FORM -->
 <form [formGroup]="searchForm" style="min-width: 10rem">
   <app-template-input
-    (input)="onSearchChange($event)"
+    (input)="handleSearchInputChange($event)"
     fControlName="search"
     type="text"
     iconClass="pi pi-search"
