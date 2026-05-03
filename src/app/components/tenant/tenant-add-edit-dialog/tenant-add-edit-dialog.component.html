@@ -1,5 +1,5 @@
 @if (tenantForm) {
-  <div class="view-title p-6 mb-4">
+  <div class="view-title pt-4 pb-4">
     {{
       mode === MODE.ADD
         ? ('tenant.create' | transloco)
@@ -19,9 +19,13 @@
     />
 
     <!--  ACTIONS  -->
-    <div class="flex justify-end gap-2 mt-4">
-      <app-cancel-btn (cancelEvent)="cancel()" />
-      <app-save-btn [disabled]="tenantForm.invalid" (clickEvent)="submit()" />
+    <div class="flex w-full gap-2">
+      <app-save-btn
+        class="flex-1"
+        [disabled]="tenantForm.invalid"
+        (clickEvent)="submit()"
+      />
+      <app-cancel-btn class="flex-1" (cancelEvent)="cancel()" />
     </div>
   </form>
 } @else {
