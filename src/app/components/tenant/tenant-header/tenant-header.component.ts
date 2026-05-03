@@ -12,6 +12,9 @@ import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/head
 import { Button } from 'primeng/button';
 import { TemplateTableSearchComponent } from '../../../shared/template-table-search/template-table-search.component';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { DialogService } from 'primeng/dynamicdialog';
+import { TenantAddEditDialogComponent } from '../tenant-add-edit-dialog/tenant-add-edit-dialog.component';
+import { MODE } from '../../../other/enums/mode.enum';
 
 @Component({
   selector: 'app-tenant-header',
@@ -22,12 +25,14 @@ import { TranslocoPipe } from '@jsverse/transloco';
     TemplateTableSearchComponent,
     TranslocoPipe,
   ],
+  providers: [DialogService],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',
 })
 export class TenantHeaderComponent implements OnChanges {
-  fb: FormBuilder = inject(FormBuilder);
-  tenantService: TenantService = inject(TenantService);
+  private readonly fb: FormBuilder = inject(FormBuilder);
+  readonly tenantService: TenantService = inject(TenantService);
+  private readonly dialogService: DialogService = inject(DialogService);
 
   form: FormGroup;
   readonly tenants: InputSignal<Tenant[]> = input.required<Tenant[]>();
@@ -55,5 +60,20 @@ export class TenantHeaderComponent implements OnChanges {
     this.tenantService.selectedTenantId.set($event.id);
   }
 
-  openCreateTenantDialog(): void {}
+  openCreateTenantDialog(): void {
+    this.dialogService.open(TenantAddEditDialogComponent, {
+      data: {
+        mode: MODE.ADD,
+      },
+      showHeader: false,
+      width: '40vw',
+      modal: true,
+      dismissableMask: true,
+      closable: true,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+    });
+  }
 }

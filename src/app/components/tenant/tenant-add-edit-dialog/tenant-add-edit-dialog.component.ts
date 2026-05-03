@@ -10,10 +10,20 @@ import { Tenant } from '../../../models/Tenant';
 import { TenantService } from '../../../api/tenant.service';
 import { AddEdit } from '../../../other/types/AddEdit.type';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { TemplateInputComponent } from '../../../shared/template-input/template-input.component';
+import { SaveBtnComponent } from '../../../shared/buttons/save-btn/save-btn.component';
+import { CancelBtnComponent } from '../../../shared/buttons/cancel-btn/cancel-btn.component';
 
 @Component({
   selector: 'app-tenant-add-edit-dialog',
-  imports: [ReactiveFormsModule, TranslocoPipe],
+  imports: [
+    ReactiveFormsModule,
+    TranslocoPipe,
+    TemplateInputComponent,
+    SaveBtnComponent,
+    CancelBtnComponent,
+  ],
   templateUrl: './tenant-add-edit-dialog.component.html',
   styleUrl: './tenant-add-edit-dialog.component.scss',
 })
@@ -21,8 +31,10 @@ export class TenantAddEditDialogComponent implements OnInit, AddEdit {
   data: Tenant | undefined;
   mode: MODE = MODE.ADD;
   tenantForm?: FormGroup;
-  fb: FormBuilder = inject(FormBuilder);
-  tenantService: TenantService = inject(TenantService);
+  private readonly fb: FormBuilder = inject(FormBuilder);
+  private readonly tenantService: TenantService = inject(TenantService);
+  private readonly dialogRef: DynamicDialogRef = inject(DynamicDialogRef);
+  private readonly config: DynamicDialogConfig = inject(DynamicDialogConfig);
   protected readonly MODE: typeof MODE = MODE;
 
   ngOnInit(): void {
@@ -30,25 +42,45 @@ export class TenantAddEditDialogComponent implements OnInit, AddEdit {
     this.initForm();
   }
 
-  getMode(): void {}
+  getMode(): void {
+    if (this.config.data?.mode) {
+      this.mode = this.config.data.mode;
+    }
+    if (this.config.data?.tenant) {
+      this.data = this.config.data.tenant;
+    }
+  }
 
   initForm(): void {
     this.tenantForm = this.fb.group({
-      name: [this.data ?? '', Validators.required],
+      name: [this.data?.name ?? '', Validators.required],
     });
   }
 
   createTenant(): void {
     this.tenantService
       .createOneTenant(new Tenant(this.tenantForm?.value))
-      .subscribe();
+      .subscribe(() => {
+        this.dialogRef.close(true);
+      });
   }
 
   updateTenant(): void {
-    //   TODO
+    if (!this.data) {
+      return;
+    }
+    this.tenantService
+      .updateTenantById(this.data.id, new Tenant(this.tenantForm?.value))
+      .subscribe(() => {
+        this.dialogRef.close(true);
+      });
   }
 
   submit(): void {
+    if (this.tenantForm?.invalid) {
+      return;
+    }
+
     if (this.mode === MODE.ADD) {
       this.createTenant();
     } else {
@@ -56,7 +88,11 @@ export class TenantAddEditDialogComponent implements OnInit, AddEdit {
     }
   }
 
+  cancel(): void {
+    this.dialogRef.close(false);
+  }
+
   loadModelData(): void {
-    //   TODO
+    // Intentionally empty or handle loading logic if required
   }
 }

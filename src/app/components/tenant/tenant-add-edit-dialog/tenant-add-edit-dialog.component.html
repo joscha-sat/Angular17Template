@@ -1,5 +1,5 @@
 @if (tenantForm) {
-  <div class="view-title pb-1">
+  <div class="view-title p-6 mb-4">
     {{
       mode === MODE.ADD
         ? ('tenant.create' | transloco)
@@ -7,10 +7,22 @@
     }}
   </div>
 
-  <form [formGroup]="tenantForm" (ngSubmit)="tenantForm.valid && submit()">
+  <form
+    [formGroup]="tenantForm"
+    (ngSubmit)="tenantForm.valid && submit()"
+    class="flex-col-gap1"
+  >
     <!--  NAME INPUT  -->
+    <app-template-input
+      fControlName="name"
+      [label]="'tenant.name' | transloco"
+    />
 
     <!--  ACTIONS  -->
+    <div class="flex justify-end gap-2 mt-4">
+      <app-cancel-btn (cancelEvent)="cancel()" />
+      <app-save-btn [disabled]="tenantForm.invalid" (clickEvent)="submit()" />
+    </div>
   </form>
 } @else {
   {{ 'http.status-400' | transloco }}
