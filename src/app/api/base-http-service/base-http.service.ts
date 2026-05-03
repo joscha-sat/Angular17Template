@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { forkJoin, map, Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../other/environments/environment';
-import { MatSnackbarService } from '../../services/mat-snackbar.service';
+import { ToastService } from '../../services/toast.service';
 
 // Type definitions
 export type idTypes = string | number | Array<string | number>;
@@ -26,7 +26,7 @@ export class GenericHttpService {
     boolean | undefined
   >(undefined);
   private readonly http: HttpClient = inject(HttpClient);
-  private readonly snackBar: MatSnackbarService = inject(MatSnackbarService);
+  private readonly snackBar: ToastService = inject(ToastService);
 
   private readonly i18nKeys: Record<string, string> = {
     user: 'Benutzer',

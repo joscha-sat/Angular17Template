@@ -8,7 +8,7 @@ export type MethodType = 'POST' | 'PATCH' | 'DELETE';
 @Injectable({
   providedIn: 'root',
 })
-export class MatSnackbarService {
+export class ToastService {
   private readonly _messageService: MessageService = inject(MessageService);
 
   show(type: SnackBarData['message'], severity: SnackBarTypes): void {

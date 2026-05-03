@@ -7,7 +7,7 @@ import {
 import { catchError } from 'rxjs';
 import { inject } from '@angular/core';
 import { HttpStatusMsgService } from '../../api/base-error-messages/http-status-msg.service';
-import { MatSnackbarService } from '../../services/mat-snackbar.service';
+import { ToastService } from '../../services/toast.service';
 
 export const errorInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
@@ -15,7 +15,7 @@ export const errorInterceptor: HttpInterceptorFn = (
 ) => {
   const statusTranslationService: HttpStatusMsgService =
     inject(HttpStatusMsgService);
-  const snackbarService: MatSnackbarService = inject(MatSnackbarService);
+  const snackbarService: ToastService = inject(ToastService);
 
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {

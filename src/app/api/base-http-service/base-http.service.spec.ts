@@ -5,7 +5,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { GenericHttpService } from './base-http.service';
-import { MatSnackbarService } from '../../services/mat-snackbar.service';
+import { ToastService } from '../../services/toast.service';
 
 interface TestModel {
   id: number;
@@ -24,7 +24,7 @@ class TestClassModel {
 describe('GenericHttpService', () => {
   let service: GenericHttpService;
   let httpMock: HttpTestingController;
-  let snackBarMock: MockedObject<MatSnackbarService>;
+  let snackBarMock: MockedObject<ToastService>;
 
   beforeEach(() => {
     snackBarMock = {
@@ -33,7 +33,7 @@ describe('GenericHttpService', () => {
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [{ provide: MatSnackbarService, useValue: snackBarMock }],
+      providers: [{ provide: ToastService, useValue: snackBarMock }],
     });
 
     service = TestBed.inject(GenericHttpService);
