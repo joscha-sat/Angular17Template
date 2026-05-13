@@ -1,0 +1,16 @@
+<p-toast />
+
+@if (isLoggedIn) {
+<app-navigation />
+}
+
+<div [style.margin-left.px]="sidenavStore.currentWidth()">
+  <router-outlet />
+</div>
+
+<!-- globally used http loading spinner  -->
+@if (loadingService.loadingState | async) {
+<div class="global-spinner-overlay">
+  <p-progress-spinner [style]="{ width: '50px', height: '50px' }" />
+</div>
+}

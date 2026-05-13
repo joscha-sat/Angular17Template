@@ -1,0 +1,30 @@
+<div class="sidenav-wrapper" [class.expanded]="expanded">
+  <div class="sidenav-container">
+    <div class="logo-wrapper">{{ 'general.logo' | transloco }}</div>
+
+    <div class="nav-items-wrapper">
+      <p-button
+        [icon]="expanded ? 'pi pi-angle-left' : 'pi pi-angle-right'"
+        (onClick)="toggleExpanded()"
+        [rounded]="true"
+        [text]="true"
+        styleClass="toggle-btn"
+      />
+
+      @for (navItem of navItems(); track navItem) {
+      <p-button
+        [routerLink]="[navItem.link]"
+        [class.active-btn]="rla.isActive"
+        routerLinkActive
+        #rla="routerLinkActive"
+        [icon]="navItem.icon"
+        [label]="expanded ? navItem.tooltip : ''"
+        [rounded]="true"
+        [text]="true"
+        [pTooltip]="!expanded ? navItem.tooltip : ''"
+        tooltipPosition="right"
+      />
+      }
+    </div>
+  </div>
+</div>

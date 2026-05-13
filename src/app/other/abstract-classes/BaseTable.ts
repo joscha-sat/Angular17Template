@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit, WritableSignal } from '@angular/c
 import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
 import { BaseGetQueryParams } from '../types/Table.type';
-import { FetchDataFunction } from '../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
+import { FetchDataFunction } from '../../shared/template-table-enter-fetch-method/template-table-enter-fetch';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({
