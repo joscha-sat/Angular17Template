@@ -9,9 +9,6 @@ const EXPANDED_WIDTH: number = 175;
 })
 export class SidenavStore {
   readonly expanded: WritableSignal<boolean> = signal<boolean>(false);
-  readonly collapsedWidth: WritableSignal<number> = signal<number>(COLLAPSED_WIDTH);
-  readonly expandedWidth: WritableSignal<number> = signal<number>(EXPANDED_WIDTH);
-
   readonly currentWidth: WritableSignal<number> = signal<number>(COLLAPSED_WIDTH);
 
   constructor() {
