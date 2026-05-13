@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, signal, WritableSignal, } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Button } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';

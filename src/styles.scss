@@ -35,3 +35,8 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+:host ::ng-deep p-paginator,
+.p-paginator {
+  justify-content: flex-end !important;
+}

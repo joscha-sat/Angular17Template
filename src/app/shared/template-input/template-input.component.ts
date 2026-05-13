@@ -3,7 +3,11 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
 import { FloatLabel } from 'primeng/floatlabel';
-import { ControlContainer, FormGroupDirective, ReactiveFormsModule, } from '@angular/forms';
+import {
+  ControlContainer,
+  FormGroupDirective,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
