@@ -2,10 +2,8 @@
  * @fileoverview Rule to enforce maximum line count for Angular component files (warning threshold)
  */
 
-"use strict";
-
 /** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+export default {
   meta: {
     type: "suggestion",
     docs: {

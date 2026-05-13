@@ -26,8 +26,8 @@ A comprehensive Angular template with built-in features for rapid application de
 8. [📑 Tables](#-tables)
 9. [💬 Dialogs](#-dialogs)
 10. [👨‍💻 Development](#-development)
-11. [📞 Contact](#-contact)
-12. [📦 Shared Components UI Docs](#-shared-components-ui-docs)
+11. [📦 Shared Components UI Docs](#-shared-components-ui-docs)
+12. [📞 Contact](#-contact)
 
 ## ✨ Overview
 
@@ -505,14 +505,6 @@ The template includes:
 
 </details>
 
-## 📞 Contact
-
-For questions or support, contact:
-
-| Name               | Email                                        |
-| ------------------ | -------------------------------------------- |
-| **Joscha Sattler** | j.sattler@28apps.de or joscha.sattler@web.de |
-
 ## 📦 Shared Components UI Docs
 
 This section serves as a compact UI documentation for the reusable Shared Components. Each component is briefly explained and shows at least two usage examples. Expansion panels (details/summary) are used to keep the view concise.
@@ -909,3 +901,11 @@ Notes
 - initialSort must have the format "field,ASC" or "field,DESC".
 
 </details>
+
+## 📞 Contact
+
+For questions or support, contact:
+
+| Name               | Email                                        |
+| ------------------ | -------------------------------------------- |
+| **Joscha Sattler** | j.sattler@28apps.de or joscha.sattler@web.de |

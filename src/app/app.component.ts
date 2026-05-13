@@ -21,7 +21,7 @@ import { Toast } from 'primeng/toast';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  readonly sidenavStore = inject(SidenavStore);
+  readonly sidenavStore: SidenavStore = inject(SidenavStore);
 
   title: string = 'Angular-Template-V2';
   public loadingService: LoadingService = inject(LoadingService);

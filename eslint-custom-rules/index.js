@@ -2,13 +2,18 @@
  * @fileoverview Custom ESLint rules for Angular projects
  */
 
-'use strict';
+import componentMaxLinesWarning from './component-max-lines-warning.js';
+import componentMaxLinesError from './component-max-lines-error.js';
+import methodTooComplexWarning from './method-too-complex-warning.js';
+import methodTooComplexError from './method-too-complex-error.js';
 
-module.exports = {
+const customRules = {
   rules: {
-    'component-max-lines-warning': require('./component-max-lines-warning'),
-    'component-max-lines-error': require('./component-max-lines-error'),
-    'method-too-complex-warning': require('./method-too-complex-warning'),
-    'method-too-complex-error': require('./method-too-complex-error'),
+    'component-max-lines-warning': componentMaxLinesWarning,
+    'component-max-lines-error': componentMaxLinesError,
+    'method-too-complex-warning': methodTooComplexWarning,
+    'method-too-complex-error': methodTooComplexError,
   },
 };
+
+export default customRules;

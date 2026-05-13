@@ -2,10 +2,8 @@
  * @fileoverview Rule to enforce maximum cyclomatic complexity for methods
  */
 
-'use strict';
-
 /** @type {import('eslint').Rule.RuleModule} */
-module.exports = {
+export default {
   meta: {
     type: 'suggestion',
     docs: {

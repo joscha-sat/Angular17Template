@@ -1,9 +1,11 @@
-const requireTranslocoT = require('./rules/require-transloco-t');
-const requireAltTranslocoT = require('./rules/require-alt-transloco-t');
+import requireTranslocoT from './rules/require-transloco-t.js';
+import requireAltTranslocoT from './rules/require-alt-transloco-t.js';
 
-module.exports = {
+const translocoRules = {
   rules: {
     'require-transloco-t': requireTranslocoT,
     'require-alt-transloco-t': requireAltTranslocoT,
   },
 };
+
+export default translocoRules;
