@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RoleDropdownComponent } from './role-dropdown.component';
+import { MessageService } from 'primeng/api';
 
 describe('RoleDropdownComponent', () => {
   let component: RoleDropdownComponent;
@@ -8,6 +9,7 @@ describe('RoleDropdownComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RoleDropdownComponent],
+      providers: [MessageService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RoleDropdownComponent);

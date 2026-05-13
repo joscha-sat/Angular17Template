@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SettingsRolesComponent } from './settings-roles.component';
+import { MessageService } from 'primeng/api';
 
 describe('SettingsRolesComponent', () => {
   let component: SettingsRolesComponent;
@@ -8,6 +9,7 @@ describe('SettingsRolesComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SettingsRolesComponent],
+      providers: [MessageService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SettingsRolesComponent);

@@ -7,6 +7,7 @@ import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 import { TwoInputsRowLayoutComponent } from '../../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout.component';
 import { RoleDropdownComponent } from './role-dropdown/role-dropdown.component';
+import { MessageService } from 'primeng/api';
 
 describe('UserAddEditDialogComponent', () => {
   let component: UserAddEditDialogComponent;
@@ -62,6 +63,7 @@ describe('UserAddEditDialogComponent', () => {
         { provide: UserService, useValue: mockUserService },
         TranslocoService,
         { provide: NonNullableFormBuilder, useValue: mockFormBuilder },
+        MessageService,
       ],
     }).compileComponents();
 

@@ -3,6 +3,7 @@ import { UserHeaderComponent } from './user-header.component';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { UserService } from '../../../api/user.service';
+import { MessageService } from 'primeng/api';
 
 describe('UserHeaderComponent', () => {
   let component: UserHeaderComponent;
@@ -11,7 +12,7 @@ describe('UserHeaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [UserHeaderComponent, getTranslocoModule(), HeaderLayoutComponent],
-      providers: [UserService],
+      providers: [UserService, MessageService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UserHeaderComponent);

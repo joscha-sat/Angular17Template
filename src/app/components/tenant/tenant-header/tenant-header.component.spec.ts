@@ -5,6 +5,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { TemplateTableSearchComponent } from '../../../shared/template-table-search/template-table-search.component';
+import { MessageService } from 'primeng/api';
 
 describe('TenantHeaderComponent', () => {
   let component: TenantHeaderComponent;
@@ -19,7 +20,7 @@ describe('TenantHeaderComponent', () => {
         HeaderLayoutComponent,
         TemplateTableSearchComponent,
       ],
-      providers: [FormBuilder, TenantService],
+      providers: [FormBuilder, TenantService, MessageService],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TenantHeaderComponent);
