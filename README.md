@@ -23,9 +23,9 @@ A comprehensive Angular template with built-in features for rapid application de
 5. [🔌 Services](#-services)
 6. [📊 Models and Type Definitions](#-models-and-type-definitions)
 7. [🔄 State Management](#-state-management)
-8. [📑 Tables](#-tables)
-9. [💬 Dialogs](#-dialogs)
-10. [👨‍💻 Development](#-development)
+8. [👨‍💻 Development](#-development)
+9. [📑 Tables](#-tables)
+10. [💬 Dialogs](#-dialogs)
 11. [📦 Shared Components UI Docs](#-shared-components-ui-docs)
 12. [📞 Contact](#-contact)
 
@@ -252,6 +252,43 @@ export const CustomerStore = signalStore(
 
 </details>
 
+## 👨‍💻 Development
+
+### 🚀 Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Standard development server
+npm start
+
+# Development with local configuration
+npm run start:local
+```
+
+Navigate to `http://localhost:4200/`. The application will automatically reload when you change any source files.
+
+### ✅ Code Quality
+
+The template includes:
+
+| Tool         | Purpose         | Command                      |
+| ------------ | --------------- | ---------------------------- |
+| **ESLint**   | Code linting        | `npm run lint`               |
+| **Prettier** | Code formatting     | `npm run prettier:write`     |
+| **Vitest**   | Unit testing        | `npm run run-unit-tests:terminal` |
+| **Husky**    | Git hooks           | Runs automatically on commit |
+
+<details>
+<summary>🔧 Configuration Files</summary>
+
+- `eslint.config.mjs` - ESLint configuration
+- `.prettierrc` - Prettier configuration
+- `.husky/pre-commit` - Pre-commit hook configuration
+
+</details>
+
 ## 📑 Tables
 
 The template includes a powerful table component system for displaying and managing data.
@@ -466,42 +503,6 @@ You can create custom dialogs by:
 - Use consistent styling across all dialogs
 - Handle loading states and errors gracefully
 - Provide clear feedback on actions
-
-</details>
-
-## 👨‍💻 Development
-
-### 🚀 Getting Started
-
-```bash
-# Install dependencies
-npm install
-
-# Standard development server
-npm start
-
-# Development with local configuration
-npm run start:local
-```
-
-Navigate to `http://localhost:4200/`. The application will automatically reload when you change any source files.
-
-### ✅ Code Quality
-
-The template includes:
-
-| Tool         | Purpose         | Command                      |
-| ------------ | --------------- | ---------------------------- |
-| **ESLint**   | Code linting    | `npm run lint`               |
-| **Prettier** | Code formatting | `npm run prettier:write`     |
-| **Husky**    | Git hooks       | Runs automatically on commit |
-
-<details>
-<summary>🔧 Configuration Files</summary>
-
-- `eslint.config.mjs` - ESLint configuration
-- `.prettierrc` - Prettier configuration
-- `.husky/pre-commit` - Pre-commit hook configuration
 
 </details>
 
