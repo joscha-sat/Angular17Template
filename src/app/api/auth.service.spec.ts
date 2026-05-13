@@ -1,4 +1,4 @@
-import type { MockedObject } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, type MockedObject, vi } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
@@ -118,7 +118,9 @@ describe('AuthService', () => {
 
     it('should handle login error', () => {
       service.login(mockLoginBody).subscribe({
-        next: () => expect.fail('should have failed'),
+        next: () => {
+          throw new Error('should have failed');
+        },
         error: (error) => {
           expect(error).toBeTruthy();
         },
