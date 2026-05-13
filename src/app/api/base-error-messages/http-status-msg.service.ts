@@ -37,16 +37,11 @@ export class HttpStatusMsgService {
     method?: string,
     endpoint?: ApiRoutes | string,
   ): string => {
-    const resolvedEndpoint: ApiRoutes | string | undefined =
-      this.resolveEndpoint(err, endpoint);
+    const resolvedEndpoint: ApiRoutes | string | undefined = this.resolveEndpoint(err, endpoint);
     const errorKey: string =
       (() => {
-        const errorObj: { key?: string } | undefined = err.error as
-          | { key?: string }
-          | undefined;
-        return errorObj && typeof errorObj.key === 'string' && errorObj.key
-          ? errorObj.key
-          : '';
+        const errorObj: { key?: string } | undefined = err.error as { key?: string } | undefined;
+        return errorObj && typeof errorObj.key === 'string' && errorObj.key ? errorObj.key : '';
       })().toLowerCase() || '';
 
     return (
@@ -68,9 +63,7 @@ export class HttpStatusMsgService {
 
     // Extracting the endpoint segments from the URL
     const url: URL = new URL(err.url);
-    const segments: string[] = url.pathname
-      .split('/')
-      .filter((segment: string) => segment !== '');
+    const segments: string[] = url.pathname.split('/').filter((segment: string) => segment !== '');
 
     // Check if the last segment matches a UUID pattern
     const lastSegmentPattern: RegExp =
@@ -84,8 +77,7 @@ export class HttpStatusMsgService {
     err: HttpErrorResponse,
     endpoint?: ApiRoutes | string,
   ): ApiRoutes | string | undefined {
-    const endpointFromError: string | undefined =
-      this.getEndpointFromError(err);
+    const endpointFromError: string | undefined = this.getEndpointFromError(err);
     return endpointFromError || endpoint;
   }
 
@@ -98,18 +90,10 @@ export class HttpStatusMsgService {
       return null;
     }
 
-    const specificKey: string = this.buildSpecificTranslationKey(
-      endpoint,
-      method,
-      errorKey,
-    );
+    const specificKey: string = this.buildSpecificTranslationKey(endpoint, method, errorKey);
     const genericKey: string = `http-error.${errorKey}`;
 
-    return (
-      this.tryTranslateSpecific(specificKey) ??
-      this.tryTranslateGeneric(genericKey) ??
-      null
-    );
+    return this.tryTranslateSpecific(specificKey) ?? this.tryTranslateGeneric(genericKey) ?? null;
   }
 
   private buildSpecificTranslationKey(
@@ -122,8 +106,7 @@ export class HttpStatusMsgService {
 
   private tryTranslateSpecific(translationKey: string): string | null {
     try {
-      const translated: string =
-        this.translocoService.translate(translationKey);
+      const translated: string = this.translocoService.translate(translationKey);
       return translated !== translationKey && translated ? translated : null;
     } catch {
       return null;
@@ -132,12 +115,8 @@ export class HttpStatusMsgService {
 
   private tryTranslateGeneric(genericTranslationKey: string): string | null {
     try {
-      const translated: string = this.translocoService.translate(
-        genericTranslationKey,
-      );
-      return translated !== genericTranslationKey && translated
-        ? translated
-        : null;
+      const translated: string = this.translocoService.translate(genericTranslationKey);
+      return translated !== genericTranslationKey && translated ? translated : null;
     } catch {
       return null;
     }
@@ -154,9 +133,7 @@ export class HttpStatusMsgService {
 
   private getStatusMessage(err: HttpErrorResponse): string {
     const statusKey: string = STATUS_CODES[err.status];
-    const statusMessage: string = statusKey
-      ? this.translocoService.translate(statusKey)
-      : '';
+    const statusMessage: string = statusKey ? this.translocoService.translate(statusKey) : '';
     return statusMessage || `Unknown error, status code ${err.status}.`;
   }
 }

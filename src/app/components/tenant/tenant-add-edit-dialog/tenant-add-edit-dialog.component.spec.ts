@@ -10,11 +10,7 @@ describe('TenantAddEditDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TenantAddEditDialogComponent,
-        ReactiveFormsModule,
-        getTranslocoModule(),
-      ],
+      imports: [TenantAddEditDialogComponent, ReactiveFormsModule, getTranslocoModule()],
       providers: [TenantService, FormBuilder],
     }).compileComponents();
 

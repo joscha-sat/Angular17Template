@@ -1,10 +1,4 @@
-import {
-  Component,
-  input,
-  InputSignal,
-  output,
-  OutputEmitterRef,
-} from '@angular/core';
+import { Component, input, InputSignal, output, OutputEmitterRef } from '@angular/core';
 import { Button } from 'primeng/button';
 import { TranslocoPipe } from '@jsverse/transloco';
 

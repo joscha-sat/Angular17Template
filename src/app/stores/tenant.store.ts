@@ -1,4 +1,4 @@
-import { computed, inject } from '@angular/core';
+import { computed, inject, type Signal } from '@angular/core';
 import {
   patchState,
   signalStore,
@@ -22,11 +22,11 @@ import { TenantService } from '../api/tenant.service';
 import { ResponseWithRecords } from '../api/base-http-service/base-http.service';
 import { Tenant } from '../models/Tenant';
 
-interface TenantState {
+type TenantState = {
   tenant?: ResponseWithRecords<Tenant>;
   selectedTenant?: Tenant;
   loading: boolean;
-}
+};
 
 const initialState: TenantState = {
   tenant: undefined,
@@ -44,12 +44,12 @@ export const TenantStore = signalStore(
   withState(initialState),
 
   // COMPUTED
-  withComputed(({ entities }) => ({
+  withComputed(({ entities }: { entities: Signal<Tenant[]> }) => ({
     totalCount: computed(() => entities().length),
   })),
 
   // METHODS
-  withMethods((store, service = inject(TenantService)) => ({
+  withMethods((store, service: TenantService = inject(TenantService)) => ({
     // GET ALL
     getAllTenants: rxMethod<void>(
       pipe(
@@ -57,7 +57,7 @@ export const TenantStore = signalStore(
         switchMap(() =>
           service.getAllTenants().pipe(
             tapResponse({
-              next: (items) =>
+              next: (items: ResponseWithRecords<Tenant>) =>
                 patchState(store, setAllEntities(items.records), {
                   tenant: items,
                 }),
@@ -73,11 +73,10 @@ export const TenantStore = signalStore(
     getTenantById: rxMethod<number>(
       pipe(
         tap(() => patchState(store, { loading: true })),
-        switchMap((id) =>
+        switchMap((id: number) =>
           service.getTenantById(id).pipe(
             tapResponse({
-              next: (item) =>
-                patchState(store, setEntity(item), { selectedTenant: item }),
+              next: (item: Tenant) => patchState(store, setEntity(item), { selectedTenant: item }),
               error: console.error,
             }),
             finalize(() => patchState(store, { loading: false })),
@@ -90,10 +89,10 @@ export const TenantStore = signalStore(
     createOneTenant: rxMethod<Tenant>(
       pipe(
         tap(() => patchState(store, { loading: true })),
-        switchMap((payload) =>
+        switchMap((payload: Tenant) =>
           service.createOneTenant(payload).pipe(
             tapResponse({
-              next: (item) => patchState(store, addEntity(item)),
+              next: (item: Tenant) => patchState(store, addEntity(item)),
               error: console.error,
             }),
             finalize(() => patchState(store, { loading: false })),
@@ -106,10 +105,10 @@ export const TenantStore = signalStore(
     updateTenantById: rxMethod<Tenant>(
       pipe(
         tap(() => patchState(store, { loading: true })),
-        switchMap((payload) =>
+        switchMap((payload: Tenant) =>
           service.updateTenantById(payload.id, payload).pipe(
             tapResponse({
-              next: (item) =>
+              next: (item: Tenant) =>
                 patchState(store, updateEntity({ id: item.id, changes: item })),
               error: console.error,
             }),
@@ -123,7 +122,7 @@ export const TenantStore = signalStore(
     deleteTenantById: rxMethod<number>(
       pipe(
         tap(() => patchState(store, { loading: true })),
-        switchMap((id) =>
+        switchMap((id: number) =>
           service.deleteTenantById(id).pipe(
             tapResponse({
               next: () => patchState(store, removeEntity(id)),
@@ -138,7 +137,7 @@ export const TenantStore = signalStore(
 
   // HOOKS
   withHooks({
-    onInit({ getAllTenants }) {
+    onInit({ getAllTenants }: { getAllTenants: (value: undefined) => void }) {
       getAllTenants(undefined);
     },
   }),

@@ -117,9 +117,7 @@ export class AuthService {
   }
 
   private clearUserSession(): void {
-    Object.values(StorageKeys).forEach((key: string) =>
-      this.removeFromLocalStorage(key),
-    );
+    Object.values(StorageKeys).forEach((key: string) => this.removeFromLocalStorage(key));
   }
 
   private removeFromLocalStorage(key: string): void {

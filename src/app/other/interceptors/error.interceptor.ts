@@ -13,18 +13,14 @@ export const errorInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ) => {
-  const statusTranslationService: HttpStatusMsgService =
-    inject(HttpStatusMsgService);
+  const statusTranslationService: HttpStatusMsgService = inject(HttpStatusMsgService);
   const snackbarService: ToastService = inject(ToastService);
 
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       let errorMessage: string;
 
-      errorMessage = statusTranslationService.getStatusErrorMessage(
-        err,
-        req.method,
-      );
+      errorMessage = statusTranslationService.getStatusErrorMessage(err, req.method);
 
       if (!errorMessage) {
         errorMessage = err.message || 'unknown error';

@@ -1,16 +1,8 @@
 import type { MockedObject } from 'vitest';
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
-import {
-  AuthService,
-  LoginBody,
-  LoginResponse,
-  RefreshTokenResponse,
-} from './auth.service';
+import { AuthService, LoginBody, LoginResponse, RefreshTokenResponse } from './auth.service';
 import { User } from '../models/User';
 import { environment } from '../other/environments/environment';
 import { ROUTES } from '../other/enums/ROUTES';
@@ -114,16 +106,11 @@ describe('AuthService', () => {
       const setUserSpy = vi.spyOn(service, 'setLoggedInUser');
 
       service.login(mockLoginBody).subscribe(() => {
-        expect(loginSpy).toHaveBeenCalledWith(
-          'access-token-123',
-          'refresh-token-123',
-        );
+        expect(loginSpy).toHaveBeenCalledWith('access-token-123', 'refresh-token-123');
         expect(setUserSpy).toHaveBeenCalledWith(mockUser);
       });
 
-      const req = httpMock.expectOne(
-        `${environment.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`,
-      );
+      const req = httpMock.expectOne(`${environment.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`);
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(mockLoginBody);
       req.flush(mockLoginResponse);
@@ -137,9 +124,7 @@ describe('AuthService', () => {
         },
       });
 
-      const req = httpMock.expectOne(
-        `${environment.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`,
-      );
+      const req = httpMock.expectOne(`${environment.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`);
       req.flush('Invalid credentials', {
         status: 401,
         statusText: 'Unauthorized',
@@ -169,9 +154,7 @@ describe('AuthService', () => {
         expect(response).toEqual(mockRefreshTokenResponse);
       });
 
-      const req = httpMock.expectOne(
-        `${environment.baseUrl}/${ApiRoutes.AUTH}/refreshToken`,
-      );
+      const req = httpMock.expectOne(`${environment.baseUrl}/${ApiRoutes.AUTH}/refreshToken`);
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual({ refreshToken: 'refresh-token-123' });
       req.flush(mockRefreshTokenResponse);

@@ -54,24 +54,16 @@ describe('ThemingService', () => {
     it('should set dark theme correctly', () => {
       service.setTheme(THEME.DARK);
 
-      expect(documentMock.documentElement.classList.add).toHaveBeenCalledWith(
-        'dark-mode',
-      );
-      expect(
-        documentMock.documentElement.classList.remove,
-      ).not.toHaveBeenCalledWith('dark-mode');
+      expect(documentMock.documentElement.classList.add).toHaveBeenCalledWith('dark-mode');
+      expect(documentMock.documentElement.classList.remove).not.toHaveBeenCalledWith('dark-mode');
       expect(localStorageMock['theme']).toBe(THEME.DARK);
     });
 
     it('should set light theme correctly', () => {
       service.setTheme(THEME.LIGHT);
 
-      expect(
-        documentMock.documentElement.classList.remove,
-      ).toHaveBeenCalledWith('dark-mode');
-      expect(
-        documentMock.documentElement.classList.add,
-      ).not.toHaveBeenCalledWith('dark-mode');
+      expect(documentMock.documentElement.classList.remove).toHaveBeenCalledWith('dark-mode');
+      expect(documentMock.documentElement.classList.add).not.toHaveBeenCalledWith('dark-mode');
       expect(localStorageMock['theme']).toBe(THEME.LIGHT);
     });
   });

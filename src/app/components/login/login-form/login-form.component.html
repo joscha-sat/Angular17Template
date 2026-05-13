@@ -1,15 +1,7 @@
-<form
-  (ngSubmit)="form.valid && submit()"
-  [formGroup]="form!"
-  class="flex flex-col gap-2"
->
+<form (ngSubmit)="form.valid && submit()" [formGroup]="form!" class="flex flex-col gap-2">
   <app-template-input fControlName="username" label="general.username" />
 
-  <app-template-input
-    fControlName="password"
-    label="general.password"
-    type="password"
-  />
+  <app-template-input fControlName="password" label="general.password" type="password" />
 
   <span class="forgot-pw-button text-center pointer">
     {{ 'login.forgot-password' | transloco }}

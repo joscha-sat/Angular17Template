@@ -15,13 +15,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login-form',
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    TemplateInputComponent,
-    Button,
-    TranslocoPipe,
-  ],
+  imports: [FormsModule, ReactiveFormsModule, TemplateInputComponent, Button, TranslocoPipe],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })

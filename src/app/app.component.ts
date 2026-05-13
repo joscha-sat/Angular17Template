@@ -10,13 +10,7 @@ import { Toast } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    NavigationComponent,
-    ProgressSpinner,
-    AsyncPipe,
-    Toast,
-  ],
+  imports: [RouterOutlet, NavigationComponent, ProgressSpinner, AsyncPipe, Toast],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

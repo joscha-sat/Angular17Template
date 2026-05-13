@@ -1,6 +1,6 @@
 <app-view-layout>
   <!-- HEADER -->
-  <app-tenant-header [tenants]="[]" />
+  <app-tenant-header [tenants]="tenantStore.entities()" />
 
   <!-- TABLE -->
   <app-tenant-table />

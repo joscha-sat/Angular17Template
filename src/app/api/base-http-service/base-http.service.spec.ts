@@ -1,9 +1,6 @@
 import type { MockedObject } from 'vitest';
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { GenericHttpService } from './base-http.service';
 import { ToastService } from '../../services/toast.service';
 
@@ -52,23 +49,17 @@ describe('GenericHttpService', () => {
 
     it('should return base URL with endpoint and ID', () => {
       const url = service.getUrl('users', '123');
-      expect(url).toBe(
-        'https://nest.template.dev.28apps-software.de/users/123',
-      );
+      expect(url).toBe('https://nest.template.dev.28apps-software.de/users/123');
     });
 
     it('should handle numeric IDs', () => {
       const url = service.getUrl('users', 123);
-      expect(url).toBe(
-        'https://nest.template.dev.28apps-software.de/users/123',
-      );
+      expect(url).toBe('https://nest.template.dev.28apps-software.de/users/123');
     });
 
     it('should handle array of IDs', () => {
       const url = service.getUrl('users', ['123', '456']);
-      expect(url).toBe(
-        'https://nest.template.dev.28apps-software.de/users/123,456',
-      );
+      expect(url).toBe('https://nest.template.dev.28apps-software.de/users/123,456');
     });
   });
 
@@ -80,9 +71,7 @@ describe('GenericHttpService', () => {
         expect(response).toEqual(mockResponse);
       });
 
-      const req = httpMock.expectOne(
-        'https://nest.template.dev.28apps-software.de/users',
-      );
+      const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users');
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
     });
@@ -105,16 +94,12 @@ describe('GenericHttpService', () => {
     it('should map records to model type when provided', () => {
       const mockResponse = { total: 1, records: [{ id: 1 }] };
 
-      service
-        .getAll<TestClassModel>('users', undefined, TestClassModel)
-        .subscribe((response) => {
-          expect(response.records[0]).toBeInstanceOf(TestClassModel);
-          expect(response.records[0].id).toBe(1);
-        });
+      service.getAll<TestClassModel>('users', undefined, TestClassModel).subscribe((response) => {
+        expect(response.records[0]).toBeInstanceOf(TestClassModel);
+        expect(response.records[0].id).toBe(1);
+      });
 
-      const req = httpMock.expectOne(
-        'https://nest.template.dev.28apps-software.de/users',
-      );
+      const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users');
       req.flush(mockResponse);
     });
   });
@@ -127,9 +112,7 @@ describe('GenericHttpService', () => {
         expect(response).toEqual(mockResponse);
       });
 
-      const req = httpMock.expectOne(
-        'https://nest.template.dev.28apps-software.de/users/1',
-      );
+      const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users/1');
       expect(req.request.method).toBe('GET');
       req.flush(mockResponse);
     });
@@ -137,16 +120,12 @@ describe('GenericHttpService', () => {
     it('should map record to model type when provided', () => {
       const mockResponse = { id: 1, name: 'Test' };
 
-      service
-        .getOne<TestClassModel>('users', '1', TestClassModel)
-        .subscribe((response) => {
-          expect(response).toBeInstanceOf(TestClassModel);
-          expect(response.id).toBe(1);
-        });
+      service.getOne<TestClassModel>('users', '1', TestClassModel).subscribe((response) => {
+        expect(response).toBeInstanceOf(TestClassModel);
+        expect(response.id).toBe(1);
+      });
 
-      const req = httpMock.expectOne(
-        'https://nest.template.dev.28apps-software.de/users/1',
-      );
+      const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users/1');
       req.flush(mockResponse);
     });
   });
@@ -156,15 +135,11 @@ describe('GenericHttpService', () => {
       const mockBody = { id: 1, name: 'New User' };
       const mockResponse = { id: 1, name: 'New User' };
 
-      service
-        .createOne<TestModel>('users', mockBody, 'user')
-        .subscribe((response) => {
-          expect(response).toEqual(mockResponse);
-        });
+      service.createOne<TestModel>('users', mockBody, 'user').subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
 
-      const req = httpMock.expectOne(
-        'https://nest.template.dev.28apps-software.de/users',
-      );
+      const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users');
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(mockBody);
       req.flush(mockResponse);
@@ -178,15 +153,11 @@ describe('GenericHttpService', () => {
       const mockBody = { id: 1, name: 'Updated User' };
       const mockResponse = { id: 1, name: 'Updated User' };
 
-      service
-        .updateOne<TestModel>('users', mockBody, '1', 'user')
-        .subscribe((response) => {
-          expect(response).toEqual(mockResponse);
-        });
+      service.updateOne<TestModel>('users', mockBody, '1', 'user').subscribe((response) => {
+        expect(response).toEqual(mockResponse);
+      });
 
-      const req = httpMock.expectOne(
-        'https://nest.template.dev.28apps-software.de/users/1',
-      );
+      const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users/1');
       expect(req.request.method).toBe('PATCH');
       expect(req.request.body).toEqual(mockBody);
       req.flush(mockResponse);
@@ -203,9 +174,7 @@ describe('GenericHttpService', () => {
         expect(response).toEqual(mockResponse);
       });
 
-      const req = httpMock.expectOne(
-        'https://nest.template.dev.28apps-software.de/users/1',
-      );
+      const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users/1');
       expect(req.request.method).toBe('DELETE');
       req.flush(mockResponse);
 
@@ -221,9 +190,7 @@ describe('GenericHttpService', () => {
         expect(response).toEqual(mockResponse);
       });
 
-      const req = httpMock.expectOne(
-        'https://nest.template.dev.28apps-software.de/users',
-      );
+      const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users');
       expect(req.request.method).toBe('DELETE');
       req.flush(mockResponse);
     });
@@ -254,13 +221,9 @@ describe('GenericHttpService', () => {
       const spy = vi.fn();
       service.refreshObservable$.subscribe(spy);
 
-      service
-        .createOne<TestModel>('users', { id: 1, name: 'Test' }, 'user')
-        .subscribe();
+      service.createOne<TestModel>('users', { id: 1, name: 'Test' }, 'user').subscribe();
 
-      const req = httpMock.expectOne(
-        'https://nest.template.dev.28apps-software.de/users',
-      );
+      const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users');
       req.flush({ id: 1, name: 'Test' });
 
       expect(spy).toHaveBeenCalled();

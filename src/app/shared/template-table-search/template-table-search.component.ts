@@ -1,11 +1,4 @@
-import {
-  Component,
-  inject,
-  input,
-  InputSignal,
-  OnInit,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, input, InputSignal, OnInit, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TemplateInputComponent } from '../template-input/template-input.component';
 
@@ -20,8 +13,7 @@ type SearchableService = {
   styleUrl: './template-table-search.component.scss',
 })
 export class TemplateTableSearchComponent implements OnInit {
-  readonly service: InputSignal<SearchableService> =
-    input.required<SearchableService>();
+  readonly service: InputSignal<SearchableService> = input.required<SearchableService>();
   private readonly formBuilder: FormBuilder = inject(FormBuilder);
 
   readonly searchForm: FormGroup = this.createSearchForm();

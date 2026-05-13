@@ -15,10 +15,7 @@ describe('TemplateTableComponent', () => {
     component = fixture.componentInstance;
 
     // Set required inputs using setInput
-    fixture.componentRef.setInput('headers', [
-      'Test Header 1',
-      'Test Header 2',
-    ]);
+    fixture.componentRef.setInput('headers', ['Test Header 1', 'Test Header 2']);
     fixture.componentRef.setInput('displayedColumns', ['col1', 'col2']);
     fixture.componentRef.setInput('tableData', []);
 

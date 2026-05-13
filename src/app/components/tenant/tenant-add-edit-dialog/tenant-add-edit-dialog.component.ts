@@ -1,11 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MODE } from '../../../other/enums/mode.enum';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Tenant } from '../../../models/Tenant';
 import { TenantService } from '../../../api/tenant.service';
 import { AddEdit } from '../../../other/types/AddEdit.type';
@@ -34,7 +29,13 @@ export class TenantAddEditDialogComponent implements OnInit, AddEdit {
   private readonly fb: FormBuilder = inject(FormBuilder);
   private readonly tenantService: TenantService = inject(TenantService);
   private readonly dialogRef: DynamicDialogRef = inject(DynamicDialogRef);
-  private readonly config: DynamicDialogConfig = inject(DynamicDialogConfig);
+  private readonly config: DynamicDialogConfig<{
+    mode?: MODE;
+    tenant?: Tenant;
+  }> = inject(DynamicDialogConfig) as DynamicDialogConfig<{
+    mode?: MODE;
+    tenant?: Tenant;
+  }>;
   protected readonly MODE: typeof MODE = MODE;
 
   ngOnInit(): void {
@@ -58,11 +59,9 @@ export class TenantAddEditDialogComponent implements OnInit, AddEdit {
   }
 
   createTenant(): void {
-    this.tenantService
-      .createOneTenant(new Tenant(this.tenantForm?.value))
-      .subscribe(() => {
-        this.dialogRef.close(true);
-      });
+    this.tenantService.createOneTenant(new Tenant(this.tenantForm?.value)).subscribe(() => {
+      this.dialogRef.close(true);
+    });
   }
 
   updateTenant(): void {

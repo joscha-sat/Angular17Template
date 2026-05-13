@@ -236,6 +236,26 @@ const htmlTemplateRules = {
     ]),
   ),
 };
+// Override for store files — signalStore return types are too complex to annotate
+const storeFilesConfig = {
+  files: ['**/*.store.ts'],
+  rules: {
+    '@typescript-eslint/typedef': [
+      'warn',
+      {
+        arrayDestructuring: true,
+        arrowParameter: true,
+        memberVariableDeclaration: true,
+        objectDestructuring: true,
+        parameter: true,
+        propertyDeclaration: true,
+        variableDeclaration: false,
+        variableDeclarationIgnoreFunction: true,
+      },
+    ],
+  },
+};
+
 // Config for Angular HTML templates
 const htmlTemplateFilesConfig = {
   files: ['**/*.html'],
@@ -252,6 +272,7 @@ const htmlTemplateFilesConfig = {
 // Export updated configuration
 export default defineConfig([
   tsFilesConfig,
+  storeFilesConfig,
   htmlTemplateFilesConfig,
   {
     ignores: [

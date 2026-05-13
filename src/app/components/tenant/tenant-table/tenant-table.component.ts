@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 import { BaseTableComponent } from '../../../other/abstract-classes/BaseTable';
 import { Tenant } from '../../../models/Tenant';
@@ -29,9 +23,11 @@ export class TenantTableComponent
     'general.updatedAt',
   ]);
 
-  readonly columns: WritableSignal<(keyof Tenant)[]> = signal<(keyof Tenant)[]>(
-    ['name', 'createdAt', 'updatedAt'],
-  );
+  readonly columns: WritableSignal<(keyof Tenant)[]> = signal<(keyof Tenant)[]>([
+    'name',
+    'createdAt',
+    'updatedAt',
+  ]);
 
   override ngOnInit(): void {
     super.ngOnInit();

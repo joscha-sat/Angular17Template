@@ -18,11 +18,7 @@ describe('UserTableComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [
-        UserTableComponent,
-        getTranslocoModule(),
-        TemplateTableEnterFetchComponent,
-      ],
+      imports: [UserTableComponent, getTranslocoModule(), TemplateTableEnterFetchComponent],
       providers: [{ provide: UserService, useValue: mockUserService }],
     }).compileComponents();
 

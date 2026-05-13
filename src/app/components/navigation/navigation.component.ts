@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Button } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
@@ -22,12 +16,11 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 export class NavigationComponent implements OnInit {
   readonly navItems: WritableSignal<NavItem[]> = signal<NavItem[]>([]);
 
-  private readonly translocoService: TranslocoService =
-    inject(TranslocoService);
-  private readonly sidenavStore = inject(SidenavStore);
+  private readonly translocoService: TranslocoService = inject(TranslocoService);
+  private readonly sidenavStore: SidenavStore = inject(SidenavStore);
 
-  get expanded() {
-    return this.sidenavStore.expanded;
+  get expanded(): boolean {
+    return this.sidenavStore.expanded();
   }
 
   ngOnInit(): void {
@@ -35,13 +28,12 @@ export class NavigationComponent implements OnInit {
   }
 
   setTranslatedTextWithNavItems(): void {
-    const translations: Record<string, string> =
-      this.translocoService.translate([
-        'tenant.title',
-        'user.title',
-        'settings.title',
-        'map.title',
-      ]);
+    const translations: Record<string, string> = this.translocoService.translate([
+      'tenant.title',
+      'user.title',
+      'settings.title',
+      'map.title',
+    ]);
 
     this.navItems.set([
       { tooltip: translations[0], icon: 'pi pi-home', link: ROUTES.TENANT },

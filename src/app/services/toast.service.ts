@@ -14,12 +14,7 @@ export class ToastService {
   show(type: SnackBarData['message'], severity: SnackBarTypes): void {
     this._messageService.add({
       severity,
-      summary:
-        severity === 'error'
-          ? 'Error'
-          : severity === 'success'
-            ? 'Success'
-            : 'Info',
+      summary: severity === 'error' ? 'Error' : severity === 'success' ? 'Success' : 'Info',
       detail: type,
       life: 4000,
     });

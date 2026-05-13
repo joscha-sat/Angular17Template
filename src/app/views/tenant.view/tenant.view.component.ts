@@ -12,7 +12,7 @@ import { TenantStore } from '../../stores/tenant.store';
 })
 export class TenantViewComponent {
   // | services | --------------------------------------------------------------------------  ||
-  public tenantStore = inject(TenantStore);
+  public readonly tenantStore: InstanceType<typeof TenantStore> = inject(TenantStore);
 
   // | signals / vars | --------------------------------------------------------------------  ||
 

@@ -22,9 +22,9 @@ export class TemplateDatepickerComponent {
   readonly label: InputSignal<string> = input('general.select-date');
 
   readonly fControlName: InputSignal<string> = input<string>('date');
-  readonly service: InputSignal<
-    { searchDate: WritableSignal<string> } | undefined
-  > = input<{ searchDate: WritableSignal<string> }>();
+  readonly service: InputSignal<{ searchDate: WritableSignal<string> } | undefined> = input<{
+    searchDate: WritableSignal<string>;
+  }>();
 
   readonly dateChange: OutputEmitterRef<string> = output<string>();
 

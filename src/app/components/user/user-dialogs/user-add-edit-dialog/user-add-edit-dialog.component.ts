@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { User } from '../../../../models/User';
 import {
   FormControl,
@@ -22,14 +16,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-user-add-edit-dialog',
-  imports: [
-    ReactiveFormsModule,
-
-    TwoInputsRowLayoutComponent,
-
-    RoleDropdownComponent,
-    TranslocoPipe,
-  ],
+  imports: [ReactiveFormsModule, TwoInputsRowLayoutComponent, RoleDropdownComponent, TranslocoPipe],
   templateUrl: './user-add-edit-dialog.component.html',
   styleUrl: './user-add-edit-dialog.component.scss',
 })
@@ -111,8 +98,6 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
     if (!this.model) {
       return;
     }
-    this.userService
-      .updateUserById(this.model.id, this.userFromFormData)
-      .subscribe(() => {});
+    this.userService.updateUserById(this.model.id, this.userFromFormData).subscribe(() => {});
   }
 }

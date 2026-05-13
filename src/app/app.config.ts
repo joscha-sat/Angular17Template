@@ -1,9 +1,4 @@
-import {
-  APP_INITIALIZER,
-  ApplicationConfig,
-  isDevMode,
-  LOCALE_ID,
-} from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, isDevMode, LOCALE_ID } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -27,9 +22,7 @@ registerLocaleData(localeDE);
 const DEFAULT_LANGUAGE: string = 'de';
 
 // Initialize Transloco with default language
-export function initializeTransloco(
-  translocoService: TranslocoService,
-): () => Promise<unknown> {
+export function initializeTransloco(translocoService: TranslocoService): () => Promise<unknown> {
   return () => {
     translocoService.setActiveLang(DEFAULT_LANGUAGE);
     return firstValueFrom(translocoService.load(DEFAULT_LANGUAGE));
@@ -50,11 +43,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     { provide: MessageService },
     provideHttpClient(
-      withInterceptors([
-        authTokenInterceptor,
-        isLoadingInterceptor,
-        errorInterceptor,
-      ]),
+      withInterceptors([authTokenInterceptor, isLoadingInterceptor, errorInterceptor]),
     ),
     provideRouter(routes),
     provideHttpClient(),

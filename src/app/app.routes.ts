@@ -16,17 +16,13 @@ export const routes: Routes = [
       {
         path: ROUTES.TENANT,
         loadComponent: () =>
-          import('./views/tenant.view/tenant.view.component').then(
-            (m) => m.TenantViewComponent,
-          ),
+          import('./views/tenant.view/tenant.view.component').then((m) => m.TenantViewComponent),
       },
       // || USER || ----------------------------------------------- // >>
       {
         path: ROUTES.USER,
         loadComponent: () =>
-          import('./views/user.view/user.view.component').then(
-            (m) => m.UserViewComponent,
-          ),
+          import('./views/user.view/user.view.component').then((m) => m.UserViewComponent),
       },
       // || SETTINGS || ----------------------------------------------- // >>
       {
@@ -57,9 +53,7 @@ export const routes: Routes = [
       {
         path: 'test',
         loadComponent: () =>
-          import('./views/test-view/test-view.component').then(
-            (m) => m.TestViewComponent,
-          ),
+          import('./views/test-view/test-view.component').then((m) => m.TestViewComponent),
         children: [
           {
             path: 'settings',
@@ -85,9 +79,7 @@ export const routes: Routes = [
   {
     path: ROUTES.LOGIN,
     loadComponent: () =>
-      import('./views/login.view/login.view.component').then(
-        (m) => m.LoginViewComponent,
-      ),
+      import('./views/login.view/login.view.component').then((m) => m.LoginViewComponent),
   },
 
   // || WILDCARD || ----------------------------------------------- // >>

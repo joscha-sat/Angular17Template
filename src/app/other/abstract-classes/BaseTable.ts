@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  OnDestroy,
-  OnInit,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, WritableSignal } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
 import { BaseGetQueryParams } from '../types/Table.type';
@@ -56,9 +50,7 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
       sort: baseParams.sort,
       searchDate: baseParams.searchDate,
       active:
-        baseParams.tabValueActive !== undefined
-          ? String(baseParams.tabValueActive)
-          : undefined,
+        baseParams.tabValueActive !== undefined ? String(baseParams.tabValueActive) : undefined,
       ...this.setCustomParams(),
     };
   }
@@ -91,10 +83,9 @@ export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
 
   // Subscribes to refresh events and triggers data refresh
   refreshDataSubscription(): void {
-    this.subscription =
-      this.setTableRefreshService().refreshObservable$.subscribe(() =>
-        this.refresh$.next(null),
-      );
+    this.subscription = this.setTableRefreshService().refreshObservable$.subscribe(() =>
+      this.refresh$.next(null),
+    );
   }
 
   ngOnDestroy(): void {

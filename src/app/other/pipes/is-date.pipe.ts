@@ -9,17 +9,19 @@ export class IsDatePipe implements PipeTransform {
     if (value === undefined || value === null) {
       return false;
     }
-
     if (value === '') {
       return true;
     }
 
+    return this.isValidFullDate(value);
+  }
+
+  private isValidFullDate(value: string | number | Date): boolean {
     const date: Date = new Date(value);
 
     if (isNaN(date.getTime())) {
       return false;
     }
-
     if (typeof value === 'string' && this.isPartialDate(value)) {
       return false;
     }
@@ -30,8 +32,6 @@ export class IsDatePipe implements PipeTransform {
   private isPartialDate(dateString: string): boolean {
     const yearMonthPattern: RegExp = /^\d{4}-\d{1,2}$/;
     const yearOnlyPattern: RegExp = /^\d{4}$/;
-    return (
-      yearMonthPattern.test(dateString) || yearOnlyPattern.test(dateString)
-    );
+    return yearMonthPattern.test(dateString) || yearOnlyPattern.test(dateString);
   }
 }

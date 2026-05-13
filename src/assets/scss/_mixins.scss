@@ -123,8 +123,7 @@
 
   /* calculations */
   --breakpoint: calc(
-    var(--min-column-size) * var(--column-count) +
-      (var(--gap) * (var(--column-count) - 1))
+    var(--min-column-size) * var(--column-count) + (var(--gap) * (var(--column-count) - 1))
   );
   --column-size: calc((100% / var(--column-count)) - var(--gap));
 
@@ -133,10 +132,7 @@
 
   grid-template-columns: repeat(
     auto-fit,
-    minmax(
-      min(max(var(--column-size), (100% - var(--breakpoint)) * -999), 100%),
-      1fr
-    )
+    minmax(min(max(var(--column-size), (100% - var(--breakpoint)) * -999), 100%), 1fr)
   );
 }
 

@@ -3,11 +3,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
 import { FloatLabel } from 'primeng/floatlabel';
-import {
-  ControlContainer,
-  FormGroupDirective,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
@@ -32,8 +28,6 @@ import { TranslocoPipe } from '@jsverse/transloco';
 export class TemplateInputComponent {
   readonly label: InputSignal<string> = input('');
   readonly fControlName: InputSignal<string> = input.required<string>();
-  readonly type: InputSignal<'text' | 'password'> = input<'text' | 'password'>(
-    'text',
-  );
+  readonly type: InputSignal<'text' | 'password'> = input<'text' | 'password'>('text');
   readonly iconClass: InputSignal<string> = input('');
 }

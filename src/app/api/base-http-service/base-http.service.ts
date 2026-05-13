@@ -22,9 +22,9 @@ export class GenericHttpService {
   refreshObservable$: Observable<void> = this._refreshObservable.asObservable();
   readonly search: WritableSignal<string> = signal<string>('');
   readonly searchDate: WritableSignal<string> = signal<string>('');
-  readonly tabValueActive: WritableSignal<boolean | undefined> = signal<
-    boolean | undefined
-  >(undefined);
+  readonly tabValueActive: WritableSignal<boolean | undefined> = signal<boolean | undefined>(
+    undefined,
+  );
   private readonly http: HttpClient = inject(HttpClient);
   private readonly snackBar: ToastService = inject(ToastService);
 
@@ -46,9 +46,7 @@ export class GenericHttpService {
    * @returns A full URL string
    */
   getUrl(endpoint: string, id?: idTypes): string {
-    return id
-      ? `${this.baseUrl}${endpoint}/${id}`
-      : `${this.baseUrl}${endpoint}`;
+    return id ? `${this.baseUrl}${endpoint}/${id}` : `${this.baseUrl}${endpoint}`;
   }
 
   /**
@@ -73,9 +71,7 @@ export class GenericHttpService {
         map((response: ResponseWithRecords<T>) => ({
           ...response,
           records: modelType
-            ? response.records.map(
-                (record: T) => new modelType(record as Partial<T>),
-              )
+            ? response.records.map((record: T) => new modelType(record as Partial<T>))
             : response.records,
         })),
       );
@@ -89,18 +85,10 @@ export class GenericHttpService {
    * @param modelType - Optional: The constructor of the model class (e.g., User)
    * @returns An Observable of the single record
    */
-  getOne<T>(
-    endpoint: string,
-    id: idTypes,
-    modelType?: new (data: Partial<T>) => T,
-  ): Observable<T> {
+  getOne<T>(endpoint: string, id: idTypes, modelType?: new (data: Partial<T>) => T): Observable<T> {
     return this.http
       .get<T>(this.getUrl(endpoint, id))
-      .pipe(
-        map((record: T) =>
-          modelType ? new modelType(record as Partial<T>) : record,
-        ),
-      );
+      .pipe(map((record: T) => (modelType ? new modelType(record as Partial<T>) : record)));
   }
 
   /**
@@ -110,15 +98,8 @@ export class GenericHttpService {
    * @param i18nKeyForElement - Article name for the resource (for notifications)
    * @returns An Observable of the created record
    */
-  createOne<T>(
-    endpoint: string,
-    body: T,
-    i18nKeyForElement: string,
-  ): Observable<T> {
-    const action: Observable<T> = this.http.post<T>(
-      this.getUrl(endpoint),
-      body,
-    );
+  createOne<T>(endpoint: string, body: T, i18nKeyForElement: string): Observable<T> {
+    const action: Observable<T> = this.http.post<T>(this.getUrl(endpoint), body);
     return this.httpAction(action, i18nKeyForElement, 'POST');
   }
 
@@ -129,11 +110,7 @@ export class GenericHttpService {
    * @param i18nKeyForElement - Article name for the resources (for notifications)
    * @returns An Observable of an array of the created records
    */
-  createMultiple<T>(
-    endpoint: string,
-    bodies: T[],
-    i18nKeyForElement: string,
-  ): Observable<T[]> {
+  createMultiple<T>(endpoint: string, bodies: T[], i18nKeyForElement: string): Observable<T[]> {
     const postObservables: Observable<T>[] = bodies.map((body: T) =>
       this.http.post<T>(this.getUrl(endpoint), body),
     );
@@ -149,16 +126,8 @@ export class GenericHttpService {
    * @param i18nKeyForElement - Article name for the resource (for notifications)
    * @returns An Observable of the updated record
    */
-  updateOne<T>(
-    endpoint: string,
-    body: T,
-    id: idTypes,
-    i18nKeyForElement: string,
-  ): Observable<T> {
-    const action: Observable<T> = this.http.patch<T>(
-      this.getUrl(endpoint, id),
-      body,
-    );
+  updateOne<T>(endpoint: string, body: T, id: idTypes, i18nKeyForElement: string): Observable<T> {
+    const action: Observable<T> = this.http.patch<T>(this.getUrl(endpoint, id), body);
     return this.httpAction(action, i18nKeyForElement, 'PATCH');
   }
 
@@ -176,9 +145,8 @@ export class GenericHttpService {
     ids: idTypes[],
     i18nKeyForElement: string,
   ): Observable<T[]> {
-    const patchObservables: Observable<T>[] = bodies.map(
-      (body: T, index: number) =>
-        this.http.patch<T>(this.getUrl(endpoint, ids[index]), body),
+    const patchObservables: Observable<T>[] = bodies.map((body: T, index: number) =>
+      this.http.patch<T>(this.getUrl(endpoint, ids[index]), body),
     );
     const batchAction: Observable<T[]> = forkJoin(patchObservables);
     return this.httpAction(batchAction, i18nKeyForElement, 'PATCH', true);
@@ -191,14 +159,8 @@ export class GenericHttpService {
    * @param i18nKeyForElement - Article name for the resource (for notifications)
    * @returns An Observable of the delete result
    */
-  deleteOne(
-    endpoint: string,
-    id: idTypes,
-    i18nKeyForElement: string,
-  ): Observable<unknown> {
-    const action: Observable<unknown> = this.http.delete(
-      this.getUrl(endpoint, id),
-    );
+  deleteOne(endpoint: string, id: idTypes, i18nKeyForElement: string): Observable<unknown> {
+    const action: Observable<unknown> = this.http.delete(this.getUrl(endpoint, id));
     return this.httpAction(action, i18nKeyForElement, 'DELETE');
   }
 
@@ -266,8 +228,7 @@ export class GenericHttpService {
       PATCH: 'aktualisiert',
       DELETE: 'gelöscht',
     };
-    const elementName: string =
-      this.i18nKeys[i18nKeyForElement] || i18nKeyForElement;
+    const elementName: string = this.i18nKeys[i18nKeyForElement] || i18nKeyForElement;
     const message: string = plural
       ? `${elementName} erfolgreich ${action[methodType]}`
       : `${elementName} erfolgreich ${action[methodType]}`;

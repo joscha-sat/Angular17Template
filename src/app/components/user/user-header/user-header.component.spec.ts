@@ -10,11 +10,7 @@ describe('UserHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        UserHeaderComponent,
-        getTranslocoModule(),
-        HeaderLayoutComponent,
-      ],
+      imports: [UserHeaderComponent, getTranslocoModule(), HeaderLayoutComponent],
       providers: [UserService],
     }).compileComponents();
 

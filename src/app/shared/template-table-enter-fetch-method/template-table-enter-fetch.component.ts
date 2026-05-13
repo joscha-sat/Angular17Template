@@ -15,9 +15,18 @@ import {
 import { TableModule } from 'primeng/table';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { CommonModule, DatePipe } from '@angular/common';
-import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, switchMap, tap, } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  of,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
-import { BaseGetQueryParams, SortParamType, } from '../../other/types/Table.type';
+import { BaseGetQueryParams, SortParamType } from '../../other/types/Table.type';
 import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
 
 export type FetchDataFunction<T> = (
@@ -36,21 +45,19 @@ const SEARCH_DEBOUNCE_TIME: number = 500;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TemplateTableEnterFetchComponent<T> {
-  readonly fetchData: InputSignal<FetchDataFunction<T>> =
-    input.required<FetchDataFunction<T>>();
+  readonly fetchData: InputSignal<FetchDataFunction<T>> = input.required<FetchDataFunction<T>>();
   readonly headers: InputSignal<string[]> = input.required<string[]>();
   readonly displayedColumns: InputSignal<string[]> = input.required<string[]>();
-  readonly cellTemplatesMap: InputSignal<Record<string, TemplateRef<unknown>>> =
-    input<Record<string, TemplateRef<unknown>>>({});
+  readonly cellTemplatesMap: InputSignal<Record<string, TemplateRef<unknown>>> = input<
+    Record<string, TemplateRef<unknown>>
+  >({});
 
   readonly search: InputSignal<string> = input('');
   readonly searchDate: InputSignal<string> = input('');
-  readonly initialSort: InputSignal<SortParamType | undefined> = input<
-    SortParamType | undefined
-  >(undefined);
-  readonly tabValueActive: InputSignal<boolean | undefined> = input<
-    boolean | undefined
-  >(undefined);
+  readonly initialSort: InputSignal<SortParamType | undefined> = input<SortParamType | undefined>(
+    undefined,
+  );
+  readonly tabValueActive: InputSignal<boolean | undefined> = input<boolean | undefined>(undefined);
   readonly pageSizes: InputSignal<number[]> = input(DEFAULT_PAGE_SIZES);
   readonly initialPageSize: InputSignal<number> = input(DEFAULT_PAGE_SIZE);
 
@@ -70,15 +77,14 @@ export class TemplateTableEnterFetchComponent<T> {
 
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  private readonly queryParams: Signal<BaseGetQueryParams> =
-    computed<BaseGetQueryParams>(() => ({
-      skip: this.pageOffset(),
-      limit: this.pageSize(),
-      search: this.debouncedSearch(),
-      searchDate: this.searchDate(),
-      sort: this.activeSort(),
-      tabValueActive: this.tabValueActive(),
-    }));
+  private readonly queryParams: Signal<BaseGetQueryParams> = computed<BaseGetQueryParams>(() => ({
+    skip: this.pageOffset(),
+    limit: this.pageSize(),
+    search: this.debouncedSearch(),
+    searchDate: this.searchDate(),
+    sort: this.activeSort(),
+    tabValueActive: this.tabValueActive(),
+  }));
 
   constructor() {
     this.setupSearchDebounce();
@@ -90,10 +96,7 @@ export class TemplateTableEnterFetchComponent<T> {
     this.pageSize.set(event.rows);
   }
 
-  extractNestedProperty<U>(
-    obj: U,
-    path: string,
-  ): string | number | Date | null | undefined {
+  extractNestedProperty<U>(obj: U, path: string): string | number | Date | null | undefined {
     return path
       .split('.')
       .reduce(
@@ -122,21 +125,15 @@ export class TemplateTableEnterFetchComponent<T> {
   private setupDataFetchingSubscription(): void {
     toObservable(this.queryParams)
       .pipe(
-        switchMap((params: BaseGetQueryParams) =>
-          this.fetchDataWithErrorHandling(params),
-        ),
+        switchMap((params: BaseGetQueryParams) => this.fetchDataWithErrorHandling(params)),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((records: T[]) => this.tableData.set(records));
   }
 
-  private fetchDataWithErrorHandling(
-    params: BaseGetQueryParams,
-  ): Observable<T[]> {
+  private fetchDataWithErrorHandling(params: BaseGetQueryParams): Observable<T[]> {
     return this.fetchData()(params).pipe(
-      tap((response: ResponseWithRecords<T>) =>
-        this.totalItemsCount.set(response.total),
-      ),
+      tap((response: ResponseWithRecords<T>) => this.totalItemsCount.set(response.total)),
       map((response: ResponseWithRecords<T>) => response.records),
       catchError(() => {
         this.totalItemsCount.set(0);

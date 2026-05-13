@@ -21,27 +21,23 @@ import { TableModule } from 'primeng/table';
 export class TemplateTableComponent<T> {
   readonly headers: InputSignal<string[]> = input.required<string[]>();
   readonly displayedColumns: InputSignal<string[]> = input.required<string[]>();
-  readonly cellTemplatesMap: InputSignal<Record<string, TemplateRef<unknown>>> =
-    input<Record<string, TemplateRef<unknown>>>({});
+  readonly cellTemplatesMap: InputSignal<Record<string, TemplateRef<unknown>>> = input<
+    Record<string, TemplateRef<unknown>>
+  >({});
 
   readonly tableData: InputSignal<T[]> = input.required<T[]>();
 
   readonly pageSizes: InputSignal<number[]> = input<number[]>([5, 10, 25, 100]);
   readonly initialPageSize: InputSignal<number> = input<number>(10);
-  readonly totalItems: InputSignal<number | undefined> = input<
-    number | undefined
-  >();
+  readonly totalItems: InputSignal<number | undefined> = input<number | undefined>();
 
-  readonly paginationChange: OutputEmitterRef<{ first: number; rows: number }> =
-    output<{
-      first: number;
-      rows: number;
-    }>();
+  readonly paginationChange: OutputEmitterRef<{ first: number; rows: number }> = output<{
+    first: number;
+    rows: number;
+  }>();
 
   readonly currentPageFirstIndex: WritableSignal<number> = signal(0);
-  readonly currentPageSize: WritableSignal<number> = signal(
-    this.initialPageSize(),
-  );
+  readonly currentPageSize: WritableSignal<number> = signal(this.initialPageSize());
 
   handlePageChange(event: { first: number; rows: number }): void {
     this.currentPageFirstIndex.set(event.first);
@@ -71,17 +67,11 @@ export class TemplateTableComponent<T> {
     }, item);
   }
 
-  private isValidDisplayType(
-    value: unknown,
-  ): value is string | number | Date | null | undefined {
+  private isValidDisplayType(value: unknown): value is string | number | Date | null | undefined {
     if (value === null || value === undefined) {
       return true;
     }
 
-    return (
-      typeof value === 'string' ||
-      typeof value === 'number' ||
-      value instanceof Date
-    );
+    return typeof value === 'string' || typeof value === 'number' || value instanceof Date;
   }
 }

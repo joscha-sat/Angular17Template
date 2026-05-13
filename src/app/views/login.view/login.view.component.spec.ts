@@ -10,12 +10,7 @@ describe('LoginViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        LoginViewComponent,
-        getTranslocoModule(),
-        LoginFormComponent,
-        LoginHeaderComponent,
-      ],
+      imports: [LoginViewComponent, getTranslocoModule(), LoginFormComponent, LoginHeaderComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginViewComponent);

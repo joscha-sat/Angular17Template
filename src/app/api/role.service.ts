@@ -33,9 +33,7 @@ export class RoleService extends GenericHttpService {
   }
 
   // GET ALL
-  getAllRoles(
-    queryParams?: RoleQueryParams,
-  ): Observable<ResponseWithRecords<Role>> {
+  getAllRoles(queryParams?: RoleQueryParams): Observable<ResponseWithRecords<Role>> {
     return this.getAll<Role>(this.endpoint, queryParams, Role);
   }
 
@@ -61,12 +59,7 @@ export class RoleService extends GenericHttpService {
 
   // UPDATE MULTIPLE Roles
   updateMultipleRoleById(id: idTypes[], roles: Role[]): Observable<Role[]> {
-    return this.updateMultiple<Role>(
-      this.endpoint,
-      roles,
-      id,
-      this.element_i18nKey,
-    );
+    return this.updateMultiple<Role>(this.endpoint, roles, id, this.element_i18nKey);
   }
 
   // DELETE ONE Role

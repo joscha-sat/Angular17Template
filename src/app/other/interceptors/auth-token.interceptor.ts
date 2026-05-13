@@ -18,10 +18,7 @@ export const authTokenInterceptor: HttpInterceptorFn = (
 ) => {
   const authService: AuthService = inject(AuthService);
   // Add authorization header to the request
-  const requestWithToken: HttpRequest<unknown> = addAuthorizationHeader(
-    req,
-    authService,
-  );
+  const requestWithToken: HttpRequest<unknown> = addAuthorizationHeader(req, authService);
   // Handle request and catch errors
   return next(requestWithToken).pipe(
     catchError((error: HttpErrorResponse) =>
@@ -78,22 +75,20 @@ function handleHttpError(
         authService.setTokens(response.data.access, response.data.refresh);
         authService.setLoggedInUser(response.data.user);
         // Clone the original request with the new access token
-        const requestWithNewToken: HttpRequest<unknown> =
-          addAuthorizationHeader(originalRequest, authService);
+        const requestWithNewToken: HttpRequest<unknown> = addAuthorizationHeader(
+          originalRequest,
+          authService,
+        );
         // Retry the original request with the new token
         return next(requestWithNewToken);
       } else {
         authService.logout().then();
-        return throwError(() => createError(response)) as Observable<
-          HttpEvent<unknown>
-        >;
+        return throwError(() => createError(response)) as Observable<HttpEvent<unknown>>;
       }
     }),
     catchError((refreshError: unknown) => {
       authService.logout().then();
-      return throwError(() => createError(refreshError)) as Observable<
-        HttpEvent<unknown>
-      >;
+      return throwError(() => createError(refreshError)) as Observable<HttpEvent<unknown>>;
     }),
   );
 }

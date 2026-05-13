@@ -11,18 +11,14 @@ export enum THEME {
 })
 export class ThemingService {
   private readonly document: Document = inject(DOCUMENT);
-  private readonly currentTheme: WritableSignal<THEME> = signal<THEME>(
-    THEME.LIGHT,
-  );
+  private readonly currentTheme: WritableSignal<THEME> = signal<THEME>(THEME.LIGHT);
 
   constructor() {
     this.getThemeFromLocalStorage();
   }
 
   toggleTheme(): void {
-    this.setTheme(
-      this.currentTheme() === THEME.DARK ? THEME.LIGHT : THEME.DARK,
-    );
+    this.setTheme(this.currentTheme() === THEME.DARK ? THEME.LIGHT : THEME.DARK);
   }
 
   setTheme(theme: THEME): void {

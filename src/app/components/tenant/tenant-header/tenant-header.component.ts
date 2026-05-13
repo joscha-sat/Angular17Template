@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  input,
-  InputSignal,
-  OnChanges,
-} from '@angular/core';
+import { Component, inject, input, InputSignal, OnChanges } from '@angular/core';
 import { Tenant } from '../../../models/Tenant';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
@@ -25,9 +19,9 @@ import { MODE } from '../../../other/enums/mode.enum';
     TemplateTableSearchComponent,
     TranslocoPipe,
   ],
-  providers: [DialogService],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',
+  providers: [DialogService],
 })
 export class TenantHeaderComponent implements OnChanges {
   private readonly fb: FormBuilder = inject(FormBuilder);
