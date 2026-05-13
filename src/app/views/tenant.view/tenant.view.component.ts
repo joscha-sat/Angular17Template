@@ -1,16 +1,8 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { TenantHeaderComponent } from '../../components/tenant/tenant-header/tenant-header.component';
-import { TenantService } from '../../api/tenant.service';
-import { Tenant } from '../../models/Tenant';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
 import { TenantTableComponent } from '../../components/tenant/tenant-table/tenant-table.component';
-import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
+import { TenantStore } from '../../stores/tenant.store';
 
 @Component({
   selector: 'app-tenant.view',
@@ -18,24 +10,13 @@ import { ResponseWithRecords } from '../../api/base-http-service/base-http.servi
   templateUrl: './tenant.view.component.html',
   styleUrl: './tenant.view.component.scss',
 })
-export class TenantViewComponent implements OnInit {
+export class TenantViewComponent {
   // | services | --------------------------------------------------------------------------  ||
-  tenantService: TenantService = inject(TenantService);
+  public tenantStore = inject(TenantStore);
 
   // | signals / vars | --------------------------------------------------------------------  ||
-  readonly tenants: WritableSignal<Tenant[]> = signal<Tenant[]>([]);
 
   // | init | ------------------------------------------------------------------------------  ||
-  ngOnInit(): void {
-    this.getTenants();
-  }
 
   // | normal methods | --------------------------------------------------------------------  ||
-  getTenants(): void {
-    this.tenantService
-      .getAllTenants()
-      .subscribe((tenants: ResponseWithRecords<Tenant>) => {
-        this.tenants.set(tenants.records);
-      });
-  }
 }

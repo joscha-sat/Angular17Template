@@ -1,122 +1,131 @@
-// import {
-//   patchState,
-//   signalState,
-//   signalStore,
-//   withMethods,
-//   withState,
-// } from '@ngrx/signals';
-// import { inject } from '@angular/core';
-// import { lastValueFrom, Observable } from 'rxjs';
-// import { CustomerService } from '../api/customer.service';
-// import { Customer } from '../models/Customer';
-// import {
-//   BaseQueryParams,
-//   ResponseWithRecords,
-// } from '../api/base-http-service/base-http.service';
-//
-// // Extract type aliases for better readability
-// type CustomersSortOrder = 'asc' | 'desc';
-//
-// // Extract state interface for clarity
-// interface CustomersState {
-//   customers: Customer[];
-//   totalCustomersCount: number;
-//   customer?: Customer;
-//   search: string;
-//   order: CustomersSortOrder;
-// }
-//
-// // Extract constant for initial state
-// const INITIAL_STATE: CustomersState = {
-//   customers: [],
-//   totalCustomersCount: 0,
-//   customer: undefined,
-//   search: '',
-//   order: 'asc',
-// };
-//
-// export const CustomersStore = signalStore(
-//   { providedIn: 'root' },
-//   withState(signalState<CustomersState>(INITIAL_STATE)),
-//   withMethods((store, customerService = inject(CustomerService)) => {
-//     // Move utility function inside the store as a private method
-//     async function handleApiRequest<T>(
-//       serviceCall: Observable<T>,
-//       patchCallback: (data: T) => void,
-//     ): Promise<T> {
-//       const response = await lastValueFrom(serviceCall);
-//       patchCallback(response);
-//       return response;
-//     }
-//
-//     return {
-//       // Renamed methods by removing redundant "Promise" suffix
-//       async getAllCustomers(
-//         queryParams?: BaseQueryParams,
-//       ): Promise<ResponseWithRecords<Customer>> {
-//         return handleApiRequest(
-//           customerService.getAllCustomers(queryParams),
-//           (getAllResponse) =>
-//             patchState(store, {
-//               customers: getAllResponse.records,
-//               totalCustomersCount: getAllResponse.total,
-//             }),
-//         );
-//       },
-//
-//       async getCustomerById(id: string | number): Promise<Customer> {
-//         return handleApiRequest(
-//           customerService.getCustomerById(id),
-//           (customer) => patchState(store, { customer }),
-//         );
-//       },
-//
-//       async createOneCustomer(customer: Customer): Promise<Customer> {
-//         return handleApiRequest(
-//           customerService.createOneCustomer(customer),
-//           (newCustomer) =>
-//             patchState(store, {
-//               customers: [...store.customers(), newCustomer],
-//             }),
-//         );
-//       },
-//
-//       async updateCustomerById(
-//         id: string | number,
-//         customer: Customer,
-//       ): Promise<Customer> {
-//         return handleApiRequest(
-//           customerService.updateCustomerById(id, customer),
-//           (updatedCustomer) =>
-//             patchState(store, {
-//               customers: store
-//                 .customers()
-//                 .map((item) => (item.id === id ? updatedCustomer : item)),
-//             }),
-//         );
-//       },
-//
-//       async deleteCustomerById(id: string | number): Promise<unknown> {
-//         return handleApiRequest(customerService.deleteCustomerById(id), () =>
-//           patchState(store, {
-//             customers: store.customers().filter((item) => item.id !== id),
-//           }),
-//         );
-//       },
-//
-//       async deleteAllCustomers(): Promise<unknown> {
-//         return handleApiRequest(customerService.deleteAllCustomers(), () =>
-//           patchState(store, { customers: [] }),
-//         );
-//       },
-//
-//       updateSearch(newValue: string): void {
-//         patchState(store, { search: newValue });
-//       },
-//
-//       updateOrder(order: CustomersSortOrder): void {
-//         patchState(store, { order });
-//       },
-//     };
-//   }),
-// );
+import { computed, inject } from '@angular/core';
+import { patchState, signalStore, withComputed, withMethods, withState, } from '@ngrx/signals';
+import { setAllEntities, withEntities } from '@ngrx/signals/entities';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { tapResponse } from '@ngrx/operators';
+import { pipe, switchMap, tap } from 'rxjs';
+import { Customer } from '../../client';
+import { CustomerService } from '../api/customer.service';
+import { ResponseWithRecords } from '../api/base-http-service/base-http.service';
+
+// STATE TYPES
+interface CustomerState {
+  customersWithRecords: ResponseWithRecords<Customer> | undefined;
+  loading: boolean;
+}
+
+// STATE
+const initialState: CustomerState = {
+  customersWithRecords: undefined,
+  loading: false,
+};
+
+export const CustomerStore = signalStore(
+  { providedIn: 'root' },
+
+  // ENTITIES
+  withEntities<Customer>(),
+
+  // STATE
+  withState(initialState),
+
+  // COMPUTED
+  withComputed(({ entities, loading }) => ({
+    totalCount: computed(() => entities().length),
+    isLoading: computed(() => loading()),
+  })),
+
+  // API METHODS
+  withMethods((store, service = inject(CustomerService)) => ({
+    // GET ALL
+    getAllCustomer: rxMethod<void>(
+      pipe(
+        tap(() => patchState(store, { loading: true })),
+        switchMap(() =>
+          service.getAllCustomers().pipe(
+            tapResponse({
+              next: (customer: ResponseWithRecords<Customer>) =>
+                patchState(store, setAllEntities(customer.records), {
+                  customersWithRecords: customer,
+                  loading: false,
+                }),
+              error: (err: Error) => patchState(store),
+            }),
+          ),
+        ),
+      ),
+    ),
+
+    // GET ONE BY ID
+    // getOneCustomer: rxMethod<number>(
+    //   pipe(
+    //     tap(() => patchState(store, { loading: true, error: null })),
+    //     switchMap((id) =>
+    //       service.getOne(id).pipe(
+    //         tapResponse({
+    //           next: (item) =>
+    //             patchState(store, setEntity(item), { loading: false }),
+    //           error: (err: Error) =>
+    //             patchState(store, { error: err.message, loading: false }),
+    //         }),
+    //       ),
+    //     ),
+    //   ),
+    // ),
+
+    // // CREATE ONE
+    // createOneCustomer: rxMethod<Omit<Item, 'id'>>(
+    //   pipe(
+    //     tap(() => patchState(store, { loading: true, error: null })),
+    //     switchMap((payload) =>
+    //       service.createOne(payload).pipe(
+    //         tapResponse({
+    //           next: (item) =>
+    //             patchState(store, addEntity(item), { loading: false }),
+    //           error: (err: Error) =>
+    //             patchState(store, { error: err.message, loading: false }),
+    //         }),
+    //       ),
+    //     ),
+    //   ),
+    // ),
+    //
+    // // UPDATE ONE BY ID
+    // updateOneCustomerById: rxMethod<Item>(
+    //   pipe(
+    //     tap(() => patchState(store, { loading: true, error: null })),
+    //     switchMap((payload) =>
+    //       service.updateOne(payload.id, payload).pipe(
+    //         tapResponse({
+    //           next: (item) =>
+    //             patchState(
+    //               store,
+    //               updateEntity({ id: item.id, changes: item }),
+    //               { loading: false },
+    //             ),
+    //           error: (err: Error) =>
+    //             patchState(store, { error: err.message, loading: false }),
+    //         }),
+    //       ),
+    //     ),
+    //   ),
+    // ),
+    //
+    // // DELETE ONE BY ID
+    // deleteOneCustomerById: rxMethod<number>(
+    //   pipe(
+    //     tap(() => patchState(store, { loading: true, error: null })),
+    //     switchMap((id) =>
+    //       service.deleteOne(id).pipe(
+    //         tapResponse({
+    //           next: () =>
+    //             patchState(store, removeEntity(id), { loading: false }),
+    //           error: (err: Error) =>
+    //             patchState(store, { error: err.message, loading: false }),
+    //         }),
+    //       ),
+    //     ),
+    //   ),
+    // ),
+  })),
+);

@@ -20,14 +20,6 @@ export const routes: Routes = [
             (m) => m.TenantViewComponent,
           ),
       },
-      // || TENANT DASHBOARD || -------------------------------------- // >>
-      {
-        path: ROUTES.TENANT + '/' + ROUTES.DASHBOARD + '/:id',
-        loadComponent: () =>
-          import('./views/tenant-dashboard.view/tenant-dashboard.view.component').then(
-            (m) => m.TenantDashboardViewComponent,
-          ),
-      },
       // || USER || ----------------------------------------------- // >>
       {
         path: ROUTES.USER,
