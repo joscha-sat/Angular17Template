@@ -3,6 +3,7 @@
   <p-table
     [value]="tableData()"
     [paginator]="true"
+    [lazy]="true"
     [rows]="currentPageSize()"
     [rowsPerPageOptions]="pageSizes()"
     [totalRecords]="totalItems() || 0"

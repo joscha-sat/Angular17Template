@@ -6,7 +6,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![RxJS](https://img.shields.io/badge/RxJS-B7178C?style=for-the-badge&logo=reactivex&logoColor=white)
 ![SCSS](https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=sass&logoColor=white)
-![Angular Material](https://img.shields.io/badge/Material-3f51b5?style=for-the-badge&logo=material-design&logoColor=white)
+![PrimeNG](https://img.shields.io/badge/PrimeNG-DD0031?style=for-the-badge&logo=primeng&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)
 ![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black)
 
@@ -71,7 +71,7 @@ Global SCSS files are located in the `assets/scss` folder:
 
 ### 🧰 UI Library
 
-This template uses **Angular Material** for UI components. You can customize Material themes in the `styles.scss` file.
+This template uses **PrimeNG** for UI components. You can customize PrimeNG themes in the `styles.scss` file.
 
 ### 📱 Responsive Design
 
@@ -498,13 +498,13 @@ This section serves as a compact UI documentation for the reusable Shared Compon
 
 Short description
 
-- Displays a Material icon (delete) and emits an event on click. Useful e.g. in table rows.
+- Displays a PrimeNG icon (delete) and emits an event on click. Useful e.g. in table rows.
 
 API
 
 - Selector: app-delete-icon
 - Inputs:
-  - color?: string — CSS color (Default: var(--mat-sys-error))
+  - color?: string — CSS color (Default: var(--p-error))
 - Outputs:
   - clickEvent: void — Emitted on click
 
@@ -535,7 +535,7 @@ Examples
 
 Short description
 
-- Displays a Material icon (edit) and emits an event on click. Ideal for edit actions.
+- Displays a PrimeNG icon (edit) and emits an event on click. Ideal for edit actions.
 
 API
 
@@ -572,7 +572,7 @@ Examples
 
 Short description
 
-- Wraps the Angular Material Datepicker including label and form binding. Emits the selected date as an ISO string via dateChange. Optionally supports min/max date as well as label/field name. Can be used with a service that has a searchDate signal property.
+- Wraps the PrimeNG Datepicker including label and form binding. Emits the selected date as an ISO string via dateChange. Optionally supports min/max date as well as label/field name. Can be used with a service that has a searchDate signal property.
 
 API
 
@@ -660,7 +660,7 @@ Note
 
 Short description
 
-- Input field based on Angular Material, directly usable in Reactive Forms (automatically binds to the surrounding FormGroup via FormGroupDirective).
+- Input field based on PrimeNG, directly usable in Reactive Forms (automatically binds to the surrounding FormGroup via FormGroupDirective).
 
 API
 
@@ -707,7 +707,7 @@ form = this.fb.group({ password: [''] });
 
 Short description
 
-- Simple loading indicator (MatProgressSpinner). Ideal for loading states in lists, dialogs, or cards.
+- Simple loading indicator (PrimeNG). Ideal for loading states in lists, dialogs, or cards.
 
 API
 
@@ -720,19 +720,21 @@ Examples
 
 ```html
 <section class="min-h-200 flex-center">
-  <app-template-spinner *ngIf="loading; else content" />
-  <ng-template #content>
-    <!-- actual content -->
-  </ng-template>
+  @if (loading) {
+  <app-template-spinner />
+  } @else {
+  <!-- actual content -->
+  }
 </section>
 ```
 
 2. Inline spinner in a button bar
 
 ```html
-<button mat-flat-button color="primary" [disabled]="loading">
-  {{ 'general.save' | transloco }}
-  <app-template-spinner *ngIf="loading" />
+<button pButton severity="primary" [disabled]="loading">
+  {{ 'general.save' | transloco }} @if (loading) {
+  <app-template-spinner />
+  }
 </button>
 ```
 
@@ -743,7 +745,7 @@ Examples
 
 Short description
 
-- Table component for local data (Array<T>) with pagination and sorting via Angular Material. Supports custom cells via a template map.
+- Table component for local data (Array<T>) with pagination and sorting via PrimeNG. Supports custom cells via a template map.
 
 API
 
