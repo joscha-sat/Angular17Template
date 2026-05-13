@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserTableComponent } from './user-table';
+import { UserTable } from './user-table';
 import { UserService } from '../../../api/user.service';
 import { getTranslocoModule } from '@app/other/transloco-testing';
-import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch';
+import { TemplateTableEnterFetch } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch';
 import { of } from 'rxjs';
 
-describe('UserTableComponent', () => {
-  let component: UserTableComponent;
-  let fixture: ComponentFixture<UserTableComponent>;
+describe('UserTable', () => {
+  let component: UserTable;
+  let fixture: ComponentFixture<UserTable>;
   let mockUserService: any;
 
   beforeEach(async () => {
@@ -18,11 +18,11 @@ describe('UserTableComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [UserTableComponent, getTranslocoModule(), TemplateTableEnterFetchComponent],
+      imports: [UserTable, getTranslocoModule(), TemplateTableEnterFetch],
       providers: [{ provide: UserService, useValue: mockUserService }],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UserTableComponent);
+    fixture = TestBed.createComponent(UserTable);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

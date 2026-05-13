@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeleteIconComponent } from './delete-icon';
+import { DeleteIcon } from './delete-icon';
 
-describe('DeleteIconComponent', () => {
-  let component: DeleteIconComponent;
-  let fixture: ComponentFixture<DeleteIconComponent>;
+describe('DeleteIcon', () => {
+  let component: DeleteIcon;
+  let fixture: ComponentFixture<DeleteIcon>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DeleteIconComponent],
+      imports: [DeleteIcon],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DeleteIconComponent);
+    fixture = TestBed.createComponent(DeleteIcon);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

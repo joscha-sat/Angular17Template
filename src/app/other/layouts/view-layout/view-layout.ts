@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './view-layout.html',
   styleUrl: './view-layout.scss',
 })
-export class ViewLayoutComponent {}
+export class ViewLayout {}

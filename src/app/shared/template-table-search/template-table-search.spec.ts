@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 
-import { TemplateTableSearchComponent } from './template-table-search';
+import { TemplateTableSearch } from './template-table-search';
 
-describe('TemplateTableSearchComponent', () => {
-  let component: TemplateTableSearchComponent;
-  let fixture: ComponentFixture<TemplateTableSearchComponent>;
+describe('TemplateTableSearch', () => {
+  let component: TemplateTableSearch;
+  let fixture: ComponentFixture<TemplateTableSearch>;
 
   beforeEach(async () => {
     const mockService = {
@@ -13,10 +13,10 @@ describe('TemplateTableSearchComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [TemplateTableSearchComponent, getTranslocoModule()],
+      imports: [TemplateTableSearch, getTranslocoModule()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TemplateTableSearchComponent);
+    fixture = TestBed.createComponent(TemplateTableSearch);
     component = fixture.componentInstance;
 
     // Set required inputs

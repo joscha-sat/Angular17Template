@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TenantTableComponent } from './tenant-table';
+import { TenantTable } from './tenant-table';
 import { TenantService } from '../../../api/tenant.service';
 import { getTranslocoModule } from '@app/other/transloco-testing';
-import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch';
+import { TemplateTableEnterFetch } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch';
 import { of } from 'rxjs';
 
-describe('TenantTableComponent', () => {
-  let component: TenantTableComponent;
-  let fixture: ComponentFixture<TenantTableComponent>;
+describe('TenantTable', () => {
+  let component: TenantTable;
+  let fixture: ComponentFixture<TenantTable>;
   let mockTenantService: any;
 
   beforeEach(async () => {
@@ -18,11 +18,11 @@ describe('TenantTableComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [TenantTableComponent, getTranslocoModule(), TemplateTableEnterFetchComponent],
+      imports: [TenantTable, getTranslocoModule(), TemplateTableEnterFetch],
       providers: [{ provide: TenantService, useValue: mockTenantService }],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TenantTableComponent);
+    fixture = TestBed.createComponent(TenantTable);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

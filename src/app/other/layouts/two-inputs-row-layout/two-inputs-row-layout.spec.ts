@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TwoInputsRowLayoutComponent } from './two-inputs-row-layout';
+import { TwoInputsRowLayout } from './two-inputs-row-layout';
 
-describe('TwoInputsRowLayoutComponent', () => {
-  let component: TwoInputsRowLayoutComponent;
-  let fixture: ComponentFixture<TwoInputsRowLayoutComponent>;
+describe('TwoInputsRowLayout', () => {
+  let component: TwoInputsRowLayout;
+  let fixture: ComponentFixture<TwoInputsRowLayout>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TwoInputsRowLayoutComponent],
+      imports: [TwoInputsRowLayout],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TwoInputsRowLayoutComponent);
+    fixture = TestBed.createComponent(TwoInputsRowLayout);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

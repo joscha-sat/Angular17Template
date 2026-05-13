@@ -9,7 +9,7 @@ import { InputText } from 'primeng/inputtext';
   templateUrl: './template-icon-field.html',
   styleUrl: './template-icon-field.scss',
 })
-export class TemplateIconFieldComponent {
+export class TemplateIconField {
   readonly iconClass: InputSignal<string> = input.required<string>();
   readonly placeholder: InputSignal<string> = input('');
 }

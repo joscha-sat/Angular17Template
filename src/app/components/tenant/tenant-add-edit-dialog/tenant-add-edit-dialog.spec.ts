@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TenantAddEditDialogComponent } from './tenant-add-edit-dialog';
+import { TenantAddEditDialog } from './tenant-add-edit-dialog';
 import { TenantService } from '../../../api/tenant.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
-describe('TenantAddEditDialogComponent', () => {
-  let component: TenantAddEditDialogComponent;
-  let fixture: ComponentFixture<TenantAddEditDialogComponent>;
+describe('TenantAddEditDialog', () => {
+  let component: TenantAddEditDialog;
+  let fixture: ComponentFixture<TenantAddEditDialog>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TenantAddEditDialogComponent, ReactiveFormsModule, getTranslocoModule()],
+      imports: [TenantAddEditDialog, ReactiveFormsModule, getTranslocoModule()],
       providers: [
         TenantService,
         FormBuilder,
@@ -22,7 +22,7 @@ describe('TenantAddEditDialogComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TenantAddEditDialogComponent);
+    fixture = TestBed.createComponent(TenantAddEditDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

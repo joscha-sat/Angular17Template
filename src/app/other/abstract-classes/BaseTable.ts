@@ -11,7 +11,7 @@ import { TranslocoService } from '@jsverse/transloco';
   template: '',
   styles: '',
 })
-export abstract class BaseTableComponent<T> implements OnInit, OnDestroy {
+export abstract class BaseTable<T> implements OnInit, OnDestroy {
   refresh$: BehaviorSubject<null> = new BehaviorSubject<null>(null); // Emits when data needs to be refreshed
   protected translocoService: TranslocoService = inject(TranslocoService); // Translation service
   protected noParams: boolean = false; // Flag to skip sending params

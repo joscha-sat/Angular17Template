@@ -16,7 +16,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
   templateUrl: './template-datepicker.html',
   styleUrl: './template-datepicker.scss',
 })
-export class TemplateDatepickerComponent {
+export class TemplateDatepicker {
   readonly minDate: InputSignal<Date | undefined> = input<Date>();
   readonly maxDate: InputSignal<Date | undefined> = input<Date>();
   readonly label: InputSignal<string> = input('general.select-date');

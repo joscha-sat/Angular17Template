@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 
-import { LoginHeaderComponent } from './login-header';
+import { LoginHeader } from './login-header';
 
-describe('LoginHeaderComponent', () => {
-  let component: LoginHeaderComponent;
-  let fixture: ComponentFixture<LoginHeaderComponent>;
+describe('LoginHeader', () => {
+  let component: LoginHeader;
+  let fixture: ComponentFixture<LoginHeader>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginHeaderComponent, getTranslocoModule()],
+      imports: [LoginHeader, getTranslocoModule()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LoginHeaderComponent);
+    fixture = TestBed.createComponent(LoginHeader);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

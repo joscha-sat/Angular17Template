@@ -8,7 +8,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
   templateUrl: './save-btn.html',
   styleUrl: './save-btn.scss',
 })
-export class SaveBtnComponent {
+export class SaveBtn {
   readonly disabled: InputSignal<boolean> = input(false);
   readonly clickEvent: OutputEmitterRef<void> = output<void>();
 

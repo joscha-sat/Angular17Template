@@ -2,28 +2,22 @@ import { Component, inject, input, InputSignal, OnChanges } from '@angular/core'
 import { Tenant } from '../../../models/Tenant';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
-import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout';
+import { HeaderLayout } from '../../../other/layouts/header-layout/header-layout';
 import { Button } from 'primeng/button';
-import { TemplateTableSearchComponent } from '../../../shared/template-table-search/template-table-search';
+import { TemplateTableSearch } from '../../../shared/template-table-search/template-table-search';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { DialogService } from 'primeng/dynamicdialog';
-import { TenantAddEditDialogComponent } from '../tenant-add-edit-dialog/tenant-add-edit-dialog';
+import { TenantAddEditDialog } from '../tenant-add-edit-dialog/tenant-add-edit-dialog';
 import { MODE } from '../../../other/enums/mode.enum';
 
 @Component({
   selector: 'app-tenant-header',
-  imports: [
-    ReactiveFormsModule,
-    HeaderLayoutComponent,
-    Button,
-    TemplateTableSearchComponent,
-    TranslocoPipe,
-  ],
+  imports: [ReactiveFormsModule, HeaderLayout, Button, TemplateTableSearch, TranslocoPipe],
   templateUrl: './tenant-header.html',
   styleUrl: './tenant-header.scss',
   providers: [DialogService],
 })
-export class TenantHeaderComponent implements OnChanges {
+export class TenantHeader implements OnChanges {
   private readonly fb: FormBuilder = inject(FormBuilder);
   readonly tenantService: TenantService = inject(TenantService);
   private readonly dialogService: DialogService = inject(DialogService);
@@ -55,7 +49,7 @@ export class TenantHeaderComponent implements OnChanges {
   }
 
   openCreateTenantDialog(): void {
-    this.dialogService.open(TenantAddEditDialogComponent, {
+    this.dialogService.open(TenantAddEditDialog, {
       data: {
         mode: MODE.ADD,
       },

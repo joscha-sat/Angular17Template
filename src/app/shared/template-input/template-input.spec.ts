@@ -3,16 +3,16 @@ import { Component } from '@angular/core';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-import { TemplateInputComponent } from './template-input';
+import { TemplateInput } from './template-input';
 
-// Test host component to wrap TemplateInputComponent in a formGroup
+// Test host component to wrap TemplateInput in a formGroup
 @Component({
   template: `
     <form [formGroup]="testForm">
       <app-template-input fControlName="testControl"></app-template-input>
     </form>
   `,
-  imports: [TemplateInputComponent, ReactiveFormsModule],
+  imports: [TemplateInput, ReactiveFormsModule],
 })
 class TestHostComponent {
   testForm = new FormGroup({
@@ -20,9 +20,9 @@ class TestHostComponent {
   });
 }
 
-describe('TemplateInputComponent', () => {
+describe('TemplateInput', () => {
   let fixture: ComponentFixture<TestHostComponent>;
-  let component: TemplateInputComponent;
+  let component: TemplateInput;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -32,7 +32,7 @@ describe('TemplateInputComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent);
     fixture.detectChanges();
 
-    // Get the nested TemplateInputComponent
+    // Get the nested TemplateInput
     component = fixture.debugElement.children[0].children[0].componentInstance;
   });
 

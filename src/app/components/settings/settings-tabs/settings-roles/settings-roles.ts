@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { RolesTableComponent } from './roles-table/roles-table';
+import { RolesTable } from './roles-table/roles-table';
 
 @Component({
   selector: 'app-settings-roles',
-  imports: [RolesTableComponent],
+  imports: [RolesTable],
   templateUrl: './settings-roles.html',
   styleUrl: './settings-roles.scss',
 })
-export class SettingsRolesComponent {}
+export class SettingsRoles {}

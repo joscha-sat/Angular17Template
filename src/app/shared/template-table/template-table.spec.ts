@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TemplateTableComponent } from './template-table';
+import { TemplateTable } from './template-table';
 
-describe('TemplateTableComponent', () => {
-  let component: TemplateTableComponent<any>;
-  let fixture: ComponentFixture<TemplateTableComponent<any>>;
+describe('TemplateTable', () => {
+  let component: TemplateTable<any>;
+  let fixture: ComponentFixture<TemplateTable<any>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TemplateTableComponent],
+      imports: [TemplateTable],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TemplateTableComponent<any>);
+    fixture = TestBed.createComponent(TemplateTable<any>);
     component = fixture.componentInstance;
 
     // Set required inputs using setInput

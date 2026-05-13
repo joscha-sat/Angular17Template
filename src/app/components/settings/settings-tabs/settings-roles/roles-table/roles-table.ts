@@ -9,7 +9,7 @@ import { RoleService } from '../../../../../api/role.service';
   templateUrl: './roles-table.html',
   styleUrl: './roles-table.scss',
 })
-export class RolesTableComponent implements Table<Role> {
+export class RolesTable implements Table<Role> {
   roleService: RoleService = inject(RoleService);
 
   // enter i18n keys here

@@ -9,17 +9,17 @@ import {
 import { AuthService, LoginBody } from '../../../api/auth.service';
 import { Router } from '@angular/router';
 import { ROUTES } from '../../../other/enums/ROUTES';
-import { TemplateInputComponent } from '../../../shared/template-input/template-input';
+import { TemplateInput } from '../../../shared/template-input/template-input';
 import { Button } from 'primeng/button';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login-form',
-  imports: [FormsModule, ReactiveFormsModule, TemplateInputComponent, Button, TranslocoPipe],
+  imports: [FormsModule, ReactiveFormsModule, TemplateInput, Button, TranslocoPipe],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
 })
-export class LoginFormComponent {
+export class LoginForm {
   router: Router = inject(Router);
   authService: AuthService = inject(AuthService);
   private readonly fb: FormBuilder = inject(FormBuilder);

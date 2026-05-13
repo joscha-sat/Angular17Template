@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SettingsRolesComponent } from './settings-roles';
+import { SettingsRoles } from './settings-roles';
 import { MessageService } from 'primeng/api';
 
-describe('SettingsRolesComponent', () => {
-  let component: SettingsRolesComponent;
-  let fixture: ComponentFixture<SettingsRolesComponent>;
+describe('SettingsRoles', () => {
+  let component: SettingsRoles;
+  let fixture: ComponentFixture<SettingsRoles>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SettingsRolesComponent],
+      imports: [SettingsRoles],
       providers: [MessageService],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SettingsRolesComponent);
+    fixture = TestBed.createComponent(SettingsRoles);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

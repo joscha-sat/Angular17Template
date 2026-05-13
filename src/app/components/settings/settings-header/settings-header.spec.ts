@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SettingsHeaderComponent } from './settings-header';
+import { SettingsHeader } from './settings-header';
 import { getTranslocoModule } from '@app/other/transloco-testing';
-import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout';
+import { HeaderLayout } from '../../../other/layouts/header-layout/header-layout';
 
-describe('SettingsHeaderComponent', () => {
-  let component: SettingsHeaderComponent;
-  let fixture: ComponentFixture<SettingsHeaderComponent>;
+describe('SettingsHeader', () => {
+  let component: SettingsHeader;
+  let fixture: ComponentFixture<SettingsHeader>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SettingsHeaderComponent, HeaderLayoutComponent, getTranslocoModule()],
+      imports: [SettingsHeader, HeaderLayout, getTranslocoModule()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SettingsHeaderComponent);
+    fixture = TestBed.createComponent(SettingsHeader);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

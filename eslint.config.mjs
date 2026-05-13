@@ -98,7 +98,7 @@ const tsRules = {
   '@angular-eslint/no-async-lifecycle-method': 'error',
   '@angular-eslint/component-class-suffix': [
     'error',
-    { suffixes: ['Component', 'Page', 'Dialog'] },
+    { suffixes: ['', 'Page', 'Dialog'] },
   ],
   '@angular-eslint/directive-class-suffix': ['error', { suffixes: ['Directive'] }],
   // Good Practices

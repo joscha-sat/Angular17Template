@@ -7,4 +7,4 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './test-view.html',
   styleUrl: './test-view.scss',
 })
-export class TestViewComponent {}
+export class TestView {}

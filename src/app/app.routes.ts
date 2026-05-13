@@ -15,32 +15,31 @@ export const routes: Routes = [
       // || TENANT || ----------------------------------------------- // >>
       {
         path: ROUTES.TENANT,
-        loadComponent: () =>
-          import('./views/tenant.view/tenant.view').then((m) => m.TenantViewComponent),
+        loadComponent: () => import('./views/tenant.view/tenant.view').then((m) => m.TenantView),
       },
       // || USER || ----------------------------------------------- // >>
       {
         path: ROUTES.USER,
-        loadComponent: () => import('./views/user.view/user.view').then((m) => m.UserViewComponent),
+        loadComponent: () => import('./views/user.view/user.view').then((m) => m.UserView),
       },
       // || SETTINGS || ----------------------------------------------- // >>
       {
         path: ROUTES.SETTINGS,
         loadComponent: () =>
-          import('./views/settings.view/settings.view').then((m) => m.SettingsViewComponent),
+          import('./views/settings.view/settings.view').then((m) => m.SettingsView),
         children: [
           {
             path: ROUTES.GENERAL,
             loadComponent: () =>
               import('./views/settings.view/settings-general.view/settings-general.view').then(
-                (m) => m.SettingsGeneralViewComponent,
+                (m) => m.SettingsGeneralView,
               ),
           },
           {
             path: ROUTES.ROLES,
             loadComponent: () =>
               import('./components/settings/settings-tabs/settings-roles/settings-roles').then(
-                (m) => m.SettingsRolesComponent,
+                (m) => m.SettingsRoles,
               ),
           },
         ],
@@ -49,18 +48,18 @@ export const routes: Routes = [
       // || TEST TODO: REMOVE FOR PRODUCTION!!! || ----------------------------------------------- // >>
       {
         path: 'test',
-        loadComponent: () => import('./views/test-view/test-view').then((m) => m.TestViewComponent),
+        loadComponent: () => import('./views/test-view/test-view').then((m) => m.TestView),
         children: [
           {
             path: 'settings',
             loadComponent: () =>
-              import('./views/settings.view/settings.view').then((m) => m.SettingsViewComponent),
+              import('./views/settings.view/settings.view').then((m) => m.SettingsView),
           },
 
           {
             path: 'tenant',
             loadComponent: () =>
-              import('./views/tenant.view/tenant.view').then((m) => m.TenantViewComponent),
+              import('./views/tenant.view/tenant.view').then((m) => m.TenantView),
           },
         ],
       },
@@ -70,7 +69,7 @@ export const routes: Routes = [
   // || LOGIN || ----------------------------------------------- // >>
   {
     path: ROUTES.LOGIN,
-    loadComponent: () => import('./views/login.view/login.view').then((m) => m.LoginViewComponent),
+    loadComponent: () => import('./views/login.view/login.view').then((m) => m.LoginView),
   },
 
   // || WILDCARD || ----------------------------------------------- // >>

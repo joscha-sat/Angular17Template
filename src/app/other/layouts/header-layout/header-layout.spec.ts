@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HeaderLayoutComponent } from './header-layout';
+import { HeaderLayout } from './header-layout';
 
-describe('HeaderLayoutComponent', () => {
-  let component: HeaderLayoutComponent;
-  let fixture: ComponentFixture<HeaderLayoutComponent>;
+describe('HeaderLayout', () => {
+  let component: HeaderLayout;
+  let fixture: ComponentFixture<HeaderLayout>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderLayoutComponent],
+      imports: [HeaderLayout],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HeaderLayoutComponent);
+    fixture = TestBed.createComponent(HeaderLayout);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

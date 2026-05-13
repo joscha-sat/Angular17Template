@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SettingsGeneralViewComponent } from './settings-general.view';
+import { SettingsGeneralView } from './settings-general.view';
 
-describe('SettingsGeneralViewComponent', () => {
-  let component: SettingsGeneralViewComponent;
-  let fixture: ComponentFixture<SettingsGeneralViewComponent>;
+describe('SettingsGeneralView', () => {
+  let component: SettingsGeneralView;
+  let fixture: ComponentFixture<SettingsGeneralView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SettingsGeneralViewComponent],
+      imports: [SettingsGeneralView],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SettingsGeneralViewComponent);
+    fixture = TestBed.createComponent(SettingsGeneralView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

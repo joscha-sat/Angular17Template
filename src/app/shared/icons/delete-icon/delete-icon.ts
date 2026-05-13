@@ -7,7 +7,7 @@ import { Button } from 'primeng/button';
   templateUrl: './delete-icon.html',
   styleUrl: './delete-icon.scss',
 })
-export class DeleteIconComponent {
+export class DeleteIcon {
   readonly color: InputSignal<string> = input('red');
 
   readonly clickEvent: OutputEmitterRef<void> = output<void>();

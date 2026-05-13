@@ -44,7 +44,7 @@ const SEARCH_DEBOUNCE_TIME: number = 500;
   styleUrl: './template-table-enter-fetch.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TemplateTableEnterFetchComponent<T> {
+export class TemplateTableEnterFetch<T> {
   readonly fetchData: InputSignal<FetchDataFunction<T>> = input.required<FetchDataFunction<T>>();
   readonly headers: InputSignal<string[]> = input.required<string[]>();
   readonly displayedColumns: InputSignal<string[]> = input.required<string[]>();

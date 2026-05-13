@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
-import { TemplateTableEnterFetchComponent } from './template-table-enter-fetch';
+import { TemplateTableEnterFetch } from './template-table-enter-fetch';
 
-describe('TemplateTableEnterFetchComponent', () => {
-  let component: TemplateTableEnterFetchComponent<any>;
-  let fixture: ComponentFixture<TemplateTableEnterFetchComponent<any>>;
+describe('TemplateTableEnterFetch', () => {
+  let component: TemplateTableEnterFetch<any>;
+  let fixture: ComponentFixture<TemplateTableEnterFetch<any>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TemplateTableEnterFetchComponent],
+      imports: [TemplateTableEnterFetch],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TemplateTableEnterFetchComponent<any>);
+    fixture = TestBed.createComponent(TemplateTableEnterFetch<any>);
     component = fixture.componentInstance;
 
     // Set required inputs

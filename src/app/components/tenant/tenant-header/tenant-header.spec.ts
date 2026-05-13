@@ -1,29 +1,29 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { getTranslocoModule } from '@app/other/transloco-testing';
-import { TenantHeaderComponent } from './tenant-header';
+import { TenantHeader } from './tenant-header';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
-import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout';
-import { TemplateTableSearchComponent } from '../../../shared/template-table-search/template-table-search';
+import { HeaderLayout } from '../../../other/layouts/header-layout/header-layout';
+import { TemplateTableSearch } from '../../../shared/template-table-search/template-table-search';
 import { MessageService } from 'primeng/api';
 
-describe('TenantHeaderComponent', () => {
-  let component: TenantHeaderComponent;
-  let fixture: ComponentFixture<TenantHeaderComponent>;
+describe('TenantHeader', () => {
+  let component: TenantHeader;
+  let fixture: ComponentFixture<TenantHeader>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        TenantHeaderComponent,
+        TenantHeader,
         getTranslocoModule(),
         ReactiveFormsModule,
-        HeaderLayoutComponent,
-        TemplateTableSearchComponent,
+        HeaderLayout,
+        TemplateTableSearch,
       ],
       providers: [FormBuilder, TenantService, MessageService],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TenantHeaderComponent);
+    fixture = TestBed.createComponent(TenantHeader);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

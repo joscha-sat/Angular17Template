@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserAddEditDialogComponent } from './user-add-edit-dialog';
+import { UserAddEditDialog } from './user-add-edit-dialog';
 import { UserService } from '../../../../api/user.service';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 import { TranslocoService } from '@jsverse/transloco';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { of } from 'rxjs';
-import { TwoInputsRowLayoutComponent } from '../../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout';
-import { RoleDropdownComponent } from './role-dropdown/role-dropdown';
+import { TwoInputsRowLayout } from '../../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout';
+import { RoleDropdown } from './role-dropdown/role-dropdown';
 import { MessageService } from 'primeng/api';
 
-describe('UserAddEditDialogComponent', () => {
-  let component: UserAddEditDialogComponent;
-  let fixture: ComponentFixture<UserAddEditDialogComponent>;
+describe('UserAddEditDialog', () => {
+  let component: UserAddEditDialog;
+  let fixture: ComponentFixture<UserAddEditDialog>;
 
   beforeEach(async () => {
     const mockUserService = {
@@ -53,11 +53,11 @@ describe('UserAddEditDialogComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        UserAddEditDialogComponent,
+        UserAddEditDialog,
         getTranslocoModule(),
         ReactiveFormsModule,
-        TwoInputsRowLayoutComponent,
-        RoleDropdownComponent,
+        TwoInputsRowLayout,
+        RoleDropdown,
       ],
       providers: [
         { provide: UserService, useValue: mockUserService },
@@ -67,7 +67,7 @@ describe('UserAddEditDialogComponent', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UserAddEditDialogComponent);
+    fixture = TestBed.createComponent(UserAddEditDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

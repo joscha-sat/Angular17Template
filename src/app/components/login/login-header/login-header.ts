@@ -7,4 +7,4 @@ import { TranslocoPipe } from '@jsverse/transloco';
   templateUrl: './login-header.html',
   styleUrl: './login-header.scss',
 })
-export class LoginHeaderComponent {}
+export class LoginHeader {}

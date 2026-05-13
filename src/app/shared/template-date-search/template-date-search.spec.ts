@@ -9,12 +9,12 @@ import {
 } from '@angular/forms';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 
-import { TemplateDateSearchComponent } from './template-date-search';
-import { TemplateDatepickerComponent } from '../template-datepicker/template-datepicker';
+import { TemplateDateSearch } from './template-date-search';
+import { TemplateDatepicker } from '../template-datepicker/template-datepicker';
 
-describe('TemplateDateSearchComponent', () => {
-  let component: TemplateDateSearchComponent;
-  let fixture: ComponentFixture<TemplateDateSearchComponent>;
+describe('TemplateDateSearch', () => {
+  let component: TemplateDateSearch;
+  let fixture: ComponentFixture<TemplateDateSearch>;
 
   beforeEach(async () => {
     const mockService: { searchDate: WritableSignal<string> } = {
@@ -27,23 +27,23 @@ describe('TemplateDateSearchComponent', () => {
     const formGroupDirective: FormGroupDirective = new FormGroupDirective([], []);
     formGroupDirective.form = formGroup;
 
-    TestBed.overrideComponent(TemplateDateSearchComponent, {
+    TestBed.overrideComponent(TemplateDateSearch, {
       add: {
         viewProviders: [{ provide: ControlContainer, useValue: formGroupDirective }],
       },
     });
 
-    TestBed.overrideComponent(TemplateDatepickerComponent, {
+    TestBed.overrideComponent(TemplateDatepicker, {
       add: {
         viewProviders: [{ provide: ControlContainer, useValue: formGroupDirective }],
       },
     });
 
     await TestBed.configureTestingModule({
-      imports: [TemplateDateSearchComponent, getTranslocoModule(), ReactiveFormsModule],
+      imports: [TemplateDateSearch, getTranslocoModule(), ReactiveFormsModule],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TemplateDateSearchComponent);
+    fixture = TestBed.createComponent(TemplateDateSearch);
     component = fixture.componentInstance;
 
     fixture.componentRef.setInput('service', mockService);

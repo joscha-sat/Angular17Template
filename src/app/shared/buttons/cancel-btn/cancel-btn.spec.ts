@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 
-import { CancelBtnComponent } from './cancel-btn';
+import { CancelBtn } from './cancel-btn';
 
-describe('CancelBtnComponent', () => {
-  let component: CancelBtnComponent;
-  let fixture: ComponentFixture<CancelBtnComponent>;
+describe('CancelBtn', () => {
+  let component: CancelBtn;
+  let fixture: ComponentFixture<CancelBtn>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CancelBtnComponent, getTranslocoModule()],
+      imports: [CancelBtn, getTranslocoModule()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CancelBtnComponent);
+    fixture = TestBed.createComponent(CancelBtn);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

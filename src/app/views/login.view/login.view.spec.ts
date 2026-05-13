@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LoginViewComponent } from './login.view';
+import { LoginView } from './login.view';
 import { getTranslocoModule } from '@app/other/transloco-testing';
-import { LoginFormComponent } from '../../components/login/login-form/login-form';
-import { LoginHeaderComponent } from '../../components/login/login-header/login-header';
+import { LoginForm } from '../../components/login/login-form/login-form';
+import { LoginHeader } from '../../components/login/login-header/login-header';
 
-describe('LoginViewComponent', () => {
-  let component: LoginViewComponent;
-  let fixture: ComponentFixture<LoginViewComponent>;
+describe('LoginView', () => {
+  let component: LoginView;
+  let fixture: ComponentFixture<LoginView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LoginViewComponent, getTranslocoModule(), LoginFormComponent, LoginHeaderComponent],
+      imports: [LoginView, getTranslocoModule(), LoginForm, LoginHeader],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LoginViewComponent);
+    fixture = TestBed.createComponent(LoginView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

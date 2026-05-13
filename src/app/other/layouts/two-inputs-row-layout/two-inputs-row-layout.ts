@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './two-inputs-row-layout.html',
   styleUrl: './two-inputs-row-layout.scss',
 })
-export class TwoInputsRowLayoutComponent {}
+export class TwoInputsRowLayout {}

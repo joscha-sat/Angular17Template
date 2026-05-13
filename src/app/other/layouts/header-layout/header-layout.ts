@@ -6,6 +6,6 @@ import { Component, input, InputSignal } from '@angular/core';
   templateUrl: './header-layout.html',
   styleUrl: './header-layout.scss',
 })
-export class HeaderLayoutComponent {
+export class HeaderLayout {
   readonly useBreadcrumbs: InputSignal<boolean> = input<boolean>(true);
 }

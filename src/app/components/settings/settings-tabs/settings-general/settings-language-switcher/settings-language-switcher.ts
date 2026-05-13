@@ -13,7 +13,7 @@ type LanguageOption = {
   templateUrl: './settings-language-switcher.html',
   styleUrl: './settings-language-switcher.scss',
 })
-export class SettingsLanguageSwitcherComponent implements OnInit {
+export class SettingsLanguageSwitcher implements OnInit {
   fb: FormBuilder = inject(FormBuilder);
 
   readonly dataArray: WritableSignal<LanguageOption[]> = signal<LanguageOption[]>([

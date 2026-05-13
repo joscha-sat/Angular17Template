@@ -1,14 +1,14 @@
 import { Component, input, InputSignal, WritableSignal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TemplateDatepickerComponent } from '../template-datepicker/template-datepicker';
+import { TemplateDatepicker } from '../template-datepicker/template-datepicker';
 
 @Component({
   selector: 'app-template-date-search',
-  imports: [TemplateDatepickerComponent, ReactiveFormsModule],
+  imports: [TemplateDatepicker, ReactiveFormsModule],
   templateUrl: './template-date-search.html',
   styleUrl: './template-date-search.scss',
 })
-export class TemplateDateSearchComponent {
+export class TemplateDateSearch {
   readonly service: InputSignal<{ searchDate: WritableSignal<string> }> = input.required<{
     searchDate: WritableSignal<string>;
   }>();

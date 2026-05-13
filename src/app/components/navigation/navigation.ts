@@ -13,7 +13,7 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
   templateUrl: './navigation.html',
   styleUrl: './navigation.scss',
 })
-export class NavigationComponent implements OnInit {
+export class Navigation implements OnInit {
   readonly navItems: WritableSignal<NavItem[]> = signal<NavItem[]>([]);
 
   private readonly translocoService: TranslocoService = inject(TranslocoService);

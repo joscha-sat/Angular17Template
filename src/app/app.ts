@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './api/auth.service';
-import { NavigationComponent } from './components/navigation/navigation';
+import { Navigation } from './components/navigation/navigation';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { LoadingService } from './services/loading.service';
 import { AsyncPipe } from '@angular/common';
@@ -10,11 +10,11 @@ import { Toast } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavigationComponent, ProgressSpinner, AsyncPipe, Toast],
+  imports: [RouterOutlet, Navigation, ProgressSpinner, AsyncPipe, Toast],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class AppComponent {
+export class App {
   readonly sidenavStore: SidenavStore = inject(SidenavStore);
 
   title: string = 'Angular-Template-V2';

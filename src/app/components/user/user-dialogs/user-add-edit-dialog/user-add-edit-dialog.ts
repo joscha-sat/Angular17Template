@@ -8,19 +8,19 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserService } from '../../../../api/user.service';
-import { TwoInputsRowLayoutComponent } from '../../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout';
+import { TwoInputsRowLayout } from '../../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout';
 import { AddEdit } from '../../../../other/types/AddEdit.type';
-import { RoleDropdownComponent } from './role-dropdown/role-dropdown';
+import { RoleDropdown } from './role-dropdown/role-dropdown';
 
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-user-add-edit-dialog',
-  imports: [ReactiveFormsModule, TwoInputsRowLayoutComponent, RoleDropdownComponent, TranslocoPipe],
+  imports: [ReactiveFormsModule, TwoInputsRowLayout, RoleDropdown, TranslocoPipe],
   templateUrl: './user-add-edit-dialog.html',
   styleUrl: './user-add-edit-dialog.scss',
 })
-export class UserAddEditDialogComponent implements OnInit, AddEdit {
+export class UserAddEditDialog implements OnInit, AddEdit {
   model?: User;
   form!: FormGroup<{
     [K in keyof Partial<User>]: FormControl<User[K]>;

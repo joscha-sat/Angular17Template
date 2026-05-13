@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout';
+import { HeaderLayout } from '../../../other/layouts/header-layout/header-layout';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-settings-header',
-  imports: [HeaderLayoutComponent, TranslocoPipe],
+  imports: [HeaderLayout, TranslocoPipe],
   templateUrl: './settings-header.html',
   styleUrl: './settings-header.scss',
 })
-export class SettingsHeaderComponent {}
+export class SettingsHeader {}

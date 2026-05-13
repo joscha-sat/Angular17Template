@@ -1,26 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SettingsViewComponent } from './settings.view';
-import { SettingsHeaderComponent } from '../../components/settings/settings-header/settings-header';
-import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout';
-import { SettingsTabsComponent } from '../../components/settings/settings-tabs/settings-tabs';
+import { SettingsView } from './settings.view';
+import { SettingsHeader } from '../../components/settings/settings-header/settings-header';
+import { ViewLayout } from '../../other/layouts/view-layout/view-layout';
+import { SettingsTabs } from '../../components/settings/settings-tabs/settings-tabs';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 
-describe('SettingsViewComponent', () => {
-  let component: SettingsViewComponent;
-  let fixture: ComponentFixture<SettingsViewComponent>;
+describe('SettingsView', () => {
+  let component: SettingsView;
+  let fixture: ComponentFixture<SettingsView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        SettingsViewComponent,
-        ViewLayoutComponent,
-        SettingsHeaderComponent,
-        SettingsTabsComponent,
-        getTranslocoModule(),
-      ],
+      imports: [SettingsView, ViewLayout, SettingsHeader, SettingsTabs, getTranslocoModule()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SettingsViewComponent);
+    fixture = TestBed.createComponent(SettingsView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

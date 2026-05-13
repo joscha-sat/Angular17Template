@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { SettingsHeaderComponent } from '../../components/settings/settings-header/settings-header';
-import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout';
-import { SettingsTabsComponent } from '../../components/settings/settings-tabs/settings-tabs';
+import { SettingsHeader } from '../../components/settings/settings-header/settings-header';
+import { ViewLayout } from '../../other/layouts/view-layout/view-layout';
+import { SettingsTabs } from '../../components/settings/settings-tabs/settings-tabs';
 
 @Component({
   selector: 'app-settings.view',
-  imports: [ViewLayoutComponent, SettingsHeaderComponent, SettingsTabsComponent],
+  imports: [ViewLayout, SettingsHeader, SettingsTabs],
   templateUrl: './settings.view.html',
   styleUrl: './settings.view.scss',
 })
-export class SettingsViewComponent {}
+export class SettingsView {}

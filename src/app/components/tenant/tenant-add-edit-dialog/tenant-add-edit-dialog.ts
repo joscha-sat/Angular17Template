@@ -6,23 +6,17 @@ import { TenantService } from '../../../api/tenant.service';
 import { AddEdit } from '../../../other/types/AddEdit.type';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TemplateInputComponent } from '../../../shared/template-input/template-input';
-import { SaveBtnComponent } from '../../../shared/buttons/save-btn/save-btn';
-import { CancelBtnComponent } from '../../../shared/buttons/cancel-btn/cancel-btn';
+import { TemplateInput } from '../../../shared/template-input/template-input';
+import { SaveBtn } from '../../../shared/buttons/save-btn/save-btn';
+import { CancelBtn } from '../../../shared/buttons/cancel-btn/cancel-btn';
 
 @Component({
   selector: 'app-tenant-add-edit-dialog',
-  imports: [
-    ReactiveFormsModule,
-    TranslocoPipe,
-    TemplateInputComponent,
-    SaveBtnComponent,
-    CancelBtnComponent,
-  ],
+  imports: [ReactiveFormsModule, TranslocoPipe, TemplateInput, SaveBtn, CancelBtn],
   templateUrl: './tenant-add-edit-dialog.html',
   styleUrl: './tenant-add-edit-dialog.scss',
 })
-export class TenantAddEditDialogComponent implements OnInit, AddEdit {
+export class TenantAddEditDialog implements OnInit, AddEdit {
   data: Tenant | undefined;
   mode: MODE = MODE.ADD;
   tenantForm?: FormGroup;

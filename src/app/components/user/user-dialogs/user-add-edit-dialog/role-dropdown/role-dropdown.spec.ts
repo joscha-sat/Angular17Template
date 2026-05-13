@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RoleDropdownComponent } from './role-dropdown';
+import { RoleDropdown } from './role-dropdown';
 import { MessageService } from 'primeng/api';
 
-describe('RoleDropdownComponent', () => {
-  let component: RoleDropdownComponent;
-  let fixture: ComponentFixture<RoleDropdownComponent>;
+describe('RoleDropdown', () => {
+  let component: RoleDropdown;
+  let fixture: ComponentFixture<RoleDropdown>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RoleDropdownComponent],
+      imports: [RoleDropdown],
       providers: [MessageService],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RoleDropdownComponent);
+    fixture = TestBed.createComponent(RoleDropdown);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

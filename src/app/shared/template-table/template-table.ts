@@ -18,7 +18,7 @@ import { TableModule } from 'primeng/table';
   templateUrl: './template-table.html',
   styleUrl: './template-table.scss',
 })
-export class TemplateTableComponent<T> {
+export class TemplateTable<T> {
   readonly headers: InputSignal<string[]> = input.required<string[]>();
   readonly displayedColumns: InputSignal<string[]> = input.required<string[]>();
   readonly cellTemplatesMap: InputSignal<Record<string, TemplateRef<unknown>>> = input<

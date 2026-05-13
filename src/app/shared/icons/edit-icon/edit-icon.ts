@@ -7,7 +7,7 @@ import { Button } from 'primeng/button';
   templateUrl: './edit-icon.html',
   styleUrl: './edit-icon.scss',
 })
-export class EditIconComponent {
+export class EditIcon {
   readonly color: InputSignal<string | undefined> = input();
   readonly clickEvent: OutputEmitterRef<void> = output<void>();
 

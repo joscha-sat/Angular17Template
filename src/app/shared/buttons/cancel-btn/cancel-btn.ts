@@ -8,7 +8,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
   templateUrl: './cancel-btn.html',
   styleUrl: './cancel-btn.scss',
 })
-export class CancelBtnComponent {
+export class CancelBtn {
   readonly cancelEvent: OutputEmitterRef<void> = output<void>();
 
   cancel(): void {

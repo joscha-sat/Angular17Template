@@ -25,7 +25,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
     },
   ],
 })
-export class TemplateInputComponent {
+export class TemplateInput {
   readonly label: InputSignal<string> = input('');
   readonly fControlName: InputSignal<string> = input.required<string>();
   readonly type: InputSignal<'text' | 'password'> = input<'text' | 'password'>('text');

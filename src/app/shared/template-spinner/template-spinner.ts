@@ -7,4 +7,4 @@ import { ProgressSpinner } from 'primeng/progressspinner';
   templateUrl: './template-spinner.html',
   styleUrl: './template-spinner.scss',
 })
-export class TemplateSpinnerComponent {}
+export class TemplateSpinner {}

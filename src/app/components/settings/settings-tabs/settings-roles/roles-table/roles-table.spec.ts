@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RolesTableComponent } from './roles-table';
+import { RolesTable } from './roles-table';
 import { RoleService } from '../../../../../api/role.service';
 
-describe('RolesTableComponent', () => {
-  let component: RolesTableComponent;
-  let fixture: ComponentFixture<RolesTableComponent>;
+describe('RolesTable', () => {
+  let component: RolesTable;
+  let fixture: ComponentFixture<RolesTable>;
   let mockRoleService: any;
 
   beforeEach(async () => {
@@ -13,11 +13,11 @@ describe('RolesTableComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [RolesTableComponent],
+      imports: [RolesTable],
       providers: [{ provide: RoleService, useValue: mockRoleService }],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RolesTableComponent);
+    fixture = TestBed.createComponent(RolesTable);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

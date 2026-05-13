@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SettingsLanguageSwitcherComponent } from './settings-language-switcher';
+import { SettingsLanguageSwitcher } from './settings-language-switcher';
 
-describe('SettingsLanguageSwitcherComponent', () => {
-  let component: SettingsLanguageSwitcherComponent;
-  let fixture: ComponentFixture<SettingsLanguageSwitcherComponent>;
+describe('SettingsLanguageSwitcher', () => {
+  let component: SettingsLanguageSwitcher;
+  let fixture: ComponentFixture<SettingsLanguageSwitcher>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SettingsLanguageSwitcherComponent],
+      imports: [SettingsLanguageSwitcher],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SettingsLanguageSwitcherComponent);
+    fixture = TestBed.createComponent(SettingsLanguageSwitcher);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserHeaderComponent } from './user-header';
+import { UserHeader } from './user-header';
 import { getTranslocoModule } from '@app/other/transloco-testing';
-import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout';
+import { HeaderLayout } from '../../../other/layouts/header-layout/header-layout';
 import { UserService } from '../../../api/user.service';
 import { MessageService } from 'primeng/api';
 
-describe('UserHeaderComponent', () => {
-  let component: UserHeaderComponent;
-  let fixture: ComponentFixture<UserHeaderComponent>;
+describe('UserHeader', () => {
+  let component: UserHeader;
+  let fixture: ComponentFixture<UserHeader>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserHeaderComponent, getTranslocoModule(), HeaderLayoutComponent],
+      imports: [UserHeader, getTranslocoModule(), HeaderLayout],
       providers: [UserService, MessageService],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UserHeaderComponent);
+    fixture = TestBed.createComponent(UserHeader);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
