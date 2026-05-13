@@ -18,7 +18,6 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
   imports: [RouterLinkActive, RouterLink, Button, TooltipModule, TranslocoPipe],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
-  standalone: true,
 })
 export class NavigationComponent implements OnInit {
   readonly navItems: WritableSignal<NavItem[]> = signal<NavItem[]>([]);
