@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { getTranslocoModule } from '@app/other/transloco-testing';
-import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { TemplateDateSearchComponent } from './template-date-search.component';
 
@@ -17,7 +16,7 @@ describe('TemplateDateSearchComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [TemplateDateSearchComponent, getTranslocoModule()],
-      providers: [provideNativeDateAdapter()],
+      providers: [],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TemplateDateSearchComponent);

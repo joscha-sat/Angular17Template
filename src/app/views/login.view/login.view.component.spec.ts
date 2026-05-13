@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginViewComponent } from './login.view.component';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 import { LoginFormComponent } from '../../components/login/login-form/login-form.component';
-import { MatCardModule } from '@angular/material/card';
 import { LoginHeaderComponent } from '../../components/login/login-header/login-header.component';
 
 describe('LoginViewComponent', () => {
@@ -15,7 +14,6 @@ describe('LoginViewComponent', () => {
         LoginViewComponent,
         getTranslocoModule(),
         LoginFormComponent,
-        MatCardModule,
         LoginHeaderComponent,
       ],
     }).compileComponents();

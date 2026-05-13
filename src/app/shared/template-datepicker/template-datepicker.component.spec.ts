@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { getTranslocoModule } from '@app/other/transloco-testing';
-import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { TemplateDatepickerComponent } from './template-datepicker.component';
 
@@ -11,7 +10,7 @@ describe('TemplateDatepickerComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TemplateDatepickerComponent, getTranslocoModule()],
-      providers: [provideNativeDateAdapter()],
+      providers: [],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TemplateDatepickerComponent);
