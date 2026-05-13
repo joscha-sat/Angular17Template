@@ -1,4 +1,4 @@
-# 🅰️ Angular Template (v20+)
+# 🅰️ Angular Template (v21+)
 
 <div align="center">
 
@@ -31,7 +31,7 @@ A comprehensive Angular template with built-in features for rapid application de
 
 ## ✨ Overview
 
-This Angular template provides a solid foundation for building modern web applications with Angular 20+. It includes:
+This Angular template provides a solid foundation for building modern web applications with Angular 21+. It includes:
 
 - ✅ Comprehensive API service architecture
 - ✅ Model-based data handling
@@ -39,23 +39,23 @@ This Angular template provides a solid foundation for building modern web applic
 - ✅ Table components with advanced features
 - ✅ Dialog system
 - ✅ State management with @ngrx/signals
-- ✅ Internationalization with ngx-translate
+- ✅ Internationalization with Transloco
 - ✅ Code quality tools (ESLint, Prettier, Husky)
 
 ## 🏗️ Project Structure
 
 The project follows a modular structure:
 
-| Directory            | Purpose                                      |
-| -------------------- | -------------------------------------------- |
-| `src/app/api`        | API services for HTTP requests               |
-| `src/app/components` | Feature-specific components                  |
-| `src/app/models`     | Data models                                  |
-| `src/app/other`      | Types, enums, and environment configurations |
-| `src/app/services`   | Helper services                              |
-| `src/app/shared`     | Reusable UI components                       |
-| `src/app/stores`     | State management                             |
-| `src/app/views`      | Page components used in routing              |
+| Directory            | Purpose                                                                            |
+| -------------------- | ---------------------------------------------------------------------------------- |
+| `src/app/api`        | API services for HTTP requests                                                     |
+| `src/app/components` | Feature-specific components                                                        |
+| `src/app/models`     | Data models                                                                        |
+| `src/app/other`      | Abstract classes, types, enums, guards, interceptors, layouts, pipes, environments |
+| `src/app/services`   | Helper services                                                                    |
+| `src/app/shared`     | Reusable UI components                                                             |
+| `src/app/stores`     | State management                                                                   |
+| `src/app/views`      | Page components used in routing                                                    |
 
 ## 🎨 Styling
 
@@ -75,7 +75,7 @@ This template uses **PrimeNG** for UI components. You can customize PrimeNG them
 
 ### 📱 Responsive Design
 
-Media queries and breakpoints are defined in `src/assets/variables`:
+Media queries and breakpoints are defined in `src/assets/scss/`:
 
 - ✅ Values for common device breakpoints are predefined
 - ✅ Globally usable @media queries for desktop, laptop, tablet, and mobile
@@ -137,13 +137,16 @@ Located in `src/app/api`, these services handle HTTP requests:
 - ✅ Provides type-safe methods for interacting with the backend
 - ✅ Handles error handling and notifications
 
-| Method           | Purpose                                                     |
-| ---------------- | ----------------------------------------------------------- |
-| `getAll<T>()`    | Fetches all records with pagination, sorting, and filtering |
-| `getOne<T>()`    | Fetches a single record by ID                               |
-| `createOne<T>()` | Creates a new record                                        |
-| `updateOne<T>()` | Updates an existing record                                  |
-| `deleteOne()`    | Deletes a record                                            |
+| Method                | Purpose                                                     |
+| --------------------- | ----------------------------------------------------------- |
+| `getAll<T>()`         | Fetches all records with pagination, sorting, and filtering |
+| `getOne<T>()`         | Fetches a single record by ID                               |
+| `createOne<T>()`      | Creates a new record                                        |
+| `createMultiple<T>()` | Creates multiple records                                    |
+| `updateOne<T>()`      | Updates an existing record                                  |
+| `updateMultiple<T>()` | Updates multiple records                                    |
+| `deleteOne()`         | Deletes a record                                            |
+| `deleteAll<T>()`      | Deletes all records                                         |
 
 ### 🛠️ Helper Services
 
@@ -209,20 +212,41 @@ The template includes state management using **@ngrx/signals**:
 <summary>📝 Example Store</summary>
 
 ```typescript
-export const CustomersStore = signalStore(
+export const CustomerStore = signalStore(
   { providedIn: 'root' },
-  withState(signalState<CustomersState>(INITIAL_STATE)),
-  withMethods((store, customerService = inject(CustomerService)) => {
-    return {
-      async getAllCustomers(queryParams?: BaseQueryParams): Promise<ResponseWithRecords<Customer>> {
-        // Implementation
-      },
-      async createOneCustomer(customer: Customer): Promise<Customer> {
-        // Implementation
-      },
-      // Other methods
-    };
-  }),
+
+  // ENTITIES
+  withEntities<Customer>(),
+
+  // STATE
+  withState(initialState),
+
+  // COMPUTED
+  withComputed(({ entities, loading }) => ({
+    totalCount: computed(() => entities().length),
+    isLoading: computed(() => loading()),
+  })),
+
+  // API METHODS
+  withMethods((store, service = inject(CustomerService)) => ({
+    getAllCustomers: rxMethod<void>(
+      pipe(
+        tap(() => patchState(store, { loading: true })),
+        switchMap(() =>
+          service.getAllCustomers().pipe(
+            tapResponse({
+              next: (customers: ResponseWithRecords<Customer>) =>
+                patchState(store, setAllEntities(customers.records), {
+                  ...customers,
+                  loading: false,
+                }),
+              error: () => patchState(store, { loading: false }),
+            }),
+          ),
+        ),
+      ),
+    ),
+  })),
 );
 ```
 
@@ -235,7 +259,7 @@ The template includes a powerful table component system for displaying and manag
 ### 📊 Basic Table Example
 
 ```html
-<app-template-table-fetch [columns]="columns()" [fetchData]="fetchDataFn" [headers]="headers()" />
+<app-template-table-fetch [displayedColumns]="columns()" [fetchData]="fetchDataFn" [headers]="headers()" />
 ```
 
 ### 🧩 Table Component Implementation
@@ -320,7 +344,7 @@ export class TenantTableComponent extends BaseTableComponent<Tenant> {
   }
 
   // Optional methods
-  override setAdditionalParams(): any {
+  override setCustomParams(): Record<string, unknown> | null {
     return { name: 'John' }; // Adds &name=John to query params
   }
 
@@ -469,7 +493,7 @@ The template includes:
 | Tool         | Purpose         | Command                      |
 | ------------ | --------------- | ---------------------------- |
 | **ESLint**   | Code linting    | `npm run lint`               |
-| **Prettier** | Code formatting | `npm run format`             |
+| **Prettier** | Code formatting | `npm run prettier:write`     |
 | **Husky**    | Git hooks       | Runs automatically on commit |
 
 <details>
@@ -759,7 +783,7 @@ API
   - initialPageSize?: number (Default: 10)
   - totalItems?: number — Total count (for paginator display)
 - Outputs:
-  - paginationChange: { skip: number; limit: number }
+  - paginationChange: { first: number; rows: number }
 
 Examples
 
