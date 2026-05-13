@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal, } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Button } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
@@ -40,7 +34,6 @@ export class NavigationComponent implements OnInit {
       this.translocoService.translate([
         'tenant.title',
         'user.title',
-        'customer.title-plural',
         'settings.title',
         'map.title',
       ]);
@@ -48,11 +41,6 @@ export class NavigationComponent implements OnInit {
     this.navItems.set([
       { tooltip: translations[0], icon: 'pi pi-home', link: ROUTES.TENANT },
       { tooltip: translations[1], icon: 'pi pi-users', link: ROUTES.USER },
-      {
-        tooltip: translations[2],
-        icon: 'pi pi-briefcase',
-        link: ROUTES.CUSTOMERS,
-      },
       { tooltip: translations[3], icon: 'pi pi-cog', link: ROUTES.SETTINGS },
       { tooltip: 'Test', icon: 'pi pi-wrench', link: 'test' },
     ]);

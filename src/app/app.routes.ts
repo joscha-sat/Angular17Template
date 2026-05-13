@@ -28,22 +28,6 @@ export const routes: Routes = [
             (m) => m.UserViewComponent,
           ),
       },
-      // || CUSTOMER || ----------------------------------------------- // >>
-      {
-        path: ROUTES.CUSTOMERS,
-        loadComponent: () =>
-          import('./views/customers.view/customers.view.component').then(
-            (m) => m.CustomersViewComponent,
-          ),
-      },
-      // || MAP || ----------------------------------------------- // >>
-      {
-        path: ROUTES.MAP,
-        loadComponent: () =>
-          import('./views/map.view/map.view.component').then(
-            (m) => m.MapViewComponent,
-          ),
-      },
       // || SETTINGS || ----------------------------------------------- // >>
       {
         path: ROUTES.SETTINGS,
