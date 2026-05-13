@@ -27,6 +27,7 @@ export class SettingsLanguageSwitcherComponent implements OnInit {
     },
   ]);
 
+  // eslint-disable-next-line @typescript-eslint/typedef
   form = this.fb.group({
     language: {},
   });

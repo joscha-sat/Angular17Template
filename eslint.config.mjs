@@ -92,10 +92,7 @@ const tsRules = {
   '@angular-eslint/prefer-signals': 'error',
   '@angular-eslint/use-pipe-transform-interface': 'error',
   '@angular-eslint/use-component-view-encapsulation': 'error',
-  '@angular-eslint/no-input-prefix': [
-    'error',
-    { prefixes: ['on', 'btn', 'app', 'cmp'] },
-  ],
+  '@angular-eslint/no-input-prefix': ['error', { prefixes: ['on', 'btn', 'app', 'cmp'] }],
   '@angular-eslint/use-injectable-provided-in': 'error',
   '@angular-eslint/no-empty-lifecycle-method': 'error',
   '@angular-eslint/no-async-lifecycle-method': 'error',
@@ -103,10 +100,7 @@ const tsRules = {
     'error',
     { suffixes: ['Component', 'Page', 'Dialog'] },
   ],
-  '@angular-eslint/directive-class-suffix': [
-    'error',
-    { suffixes: ['Directive'] },
-  ],
+  '@angular-eslint/directive-class-suffix': ['error', { suffixes: ['Directive'] }],
   // Good Practices
   '@angular-eslint/no-output-native': 'error',
   '@angular-eslint/no-queries-metadata-property': 'error',
@@ -129,10 +123,7 @@ const tsRules = {
   // Additional recommended rules you might want to add:
   '@angular-eslint/sort-keys-in-type-decorator': 'warn',
   '@angular-eslint/consistent-component-styles': 'warn',
-  '@angular-eslint/component-max-inline-declarations': [
-    'warn',
-    { template: 5, styles: 3 },
-  ],
+  '@angular-eslint/component-max-inline-declarations': ['warn', { template: 5, styles: 3 }],
   '@typescript-eslint/explicit-module-boundary-types': 'error',
   '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
   '@typescript-eslint/no-require-imports': 'error',
@@ -236,6 +227,14 @@ const htmlTemplateRules = {
     ]),
   ),
 };
+// Override for generated client files — skip max-lines as these are auto-generated
+const clientFilesConfig = {
+  files: ['src/client/**/*.ts'],
+  rules: {
+    'max-lines': 'off',
+  },
+};
+
 // Override for store files — signalStore return types are too complex to annotate
 const storeFilesConfig = {
   files: ['**/*.store.ts'],
@@ -244,7 +243,7 @@ const storeFilesConfig = {
       'warn',
       {
         arrayDestructuring: true,
-        arrowParameter: true,
+        arrowParameter: false,
         memberVariableDeclaration: true,
         objectDestructuring: true,
         parameter: true,
@@ -273,14 +272,9 @@ const htmlTemplateFilesConfig = {
 export default defineConfig([
   tsFilesConfig,
   storeFilesConfig,
+  clientFilesConfig,
   htmlTemplateFilesConfig,
   {
-    ignores: [
-      'projects/**/*',
-      'node_modules/**/*',
-      'dist/**/*',
-      '.angular/**/*',
-      '**/*.spec.ts',
-    ],
+    ignores: ['projects/**/*', 'node_modules/**/*', 'dist/**/*', '.angular/**/*', '**/*.spec.ts'],
   },
 ]);

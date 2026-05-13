@@ -10,7 +10,8 @@ export class UtilityService {
 
   urlContainsName(name: string): Observable<boolean> {
     return this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
+      // eslint-disable-next-line @typescript-eslint/typedef
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
       map(() => this.router.url.includes(name)),
     );
   }
