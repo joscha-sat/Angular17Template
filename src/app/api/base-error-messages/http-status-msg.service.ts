@@ -32,11 +32,7 @@ export class HttpStatusMsgService {
    * @param endpoint - Optional: Specific endpoint (e.g., "user")
    * @returns The translated error message
    */
-  getStatusErrorMessage = (
-    err: HttpErrorResponse,
-    method?: string,
-    endpoint?: ApiRoutes | string,
-  ): string => {
+  getStatusErrorMessage = (err: HttpErrorResponse, method?: string, endpoint?: ApiRoutes | string): string => {
     const resolvedEndpoint: ApiRoutes | string | undefined = this.resolveEndpoint(err, endpoint);
     const errorKey: string =
       (() => {
@@ -66,17 +62,13 @@ export class HttpStatusMsgService {
     const segments: string[] = url.pathname.split('/').filter((segment: string) => segment !== '');
 
     // Check if the last segment matches a UUID pattern
-    const lastSegmentPattern: RegExp =
-      /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    const lastSegmentPattern: RegExp = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
     return lastSegmentPattern.test(segments[segments.length - 1])
       ? segments[segments.length - 2]
       : segments[segments.length - 1];
   }
 
-  private resolveEndpoint(
-    err: HttpErrorResponse,
-    endpoint?: ApiRoutes | string,
-  ): ApiRoutes | string | undefined {
+  private resolveEndpoint(err: HttpErrorResponse, endpoint?: ApiRoutes | string): ApiRoutes | string | undefined {
     const endpointFromError: string | undefined = this.getEndpointFromError(err);
     return endpointFromError || endpoint;
   }
@@ -123,12 +115,8 @@ export class HttpStatusMsgService {
   }
 
   private getErrorMessage(err: HttpErrorResponse): string | null {
-    const errorObj: { message?: string } | undefined = err.error as
-      | { message?: string }
-      | undefined;
-    return errorObj && typeof errorObj.message === 'string' && errorObj.message
-      ? errorObj.message
-      : null;
+    const errorObj: { message?: string } | undefined = err.error as { message?: string } | undefined;
+    return errorObj && typeof errorObj.message === 'string' && errorObj.message ? errorObj.message : null;
   }
 
   private getStatusMessage(err: HttpErrorResponse): string {

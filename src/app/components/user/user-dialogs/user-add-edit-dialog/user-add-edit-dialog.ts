@@ -1,12 +1,6 @@
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { User } from '../../../../models/User';
-import {
-  FormControl,
-  FormGroup,
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../../../api/user.service';
 import { TwoInputsRowLayout } from '../../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout';
 import { AddEdit } from '../../../../other/types/AddEdit.type';
@@ -29,10 +23,7 @@ export class UserAddEditDialog implements OnInit, AddEdit {
   private readonly fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
   private readonly userService: UserService = inject(UserService);
 
-  readonly radioItems: WritableSignal<{ name: string }[]> = signal([
-    { name: 'Active' },
-    { name: 'Inactive' },
-  ]);
+  readonly radioItems: WritableSignal<{ name: string }[]> = signal([{ name: 'Active' }, { name: 'Inactive' }]);
 
   get userFromFormData(): User {
     const formData: {

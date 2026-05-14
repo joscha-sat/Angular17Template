@@ -8,14 +8,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-template-input',
-  imports: [
-    IconFieldModule,
-    InputIconModule,
-    InputText,
-    FloatLabel,
-    ReactiveFormsModule,
-    TranslocoPipe,
-  ],
+  imports: [IconFieldModule, InputIconModule, InputText, FloatLabel, ReactiveFormsModule, TranslocoPipe],
   templateUrl: './template-input.html',
   styleUrl: './template-input.scss',
   viewProviders: [

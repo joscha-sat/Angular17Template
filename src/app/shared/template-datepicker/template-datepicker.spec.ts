@@ -1,12 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  ControlContainer,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { ControlContainer, FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 
 import { TemplateDatepicker } from './template-datepicker';

@@ -53,13 +53,7 @@ describe('UserAddEditDialog', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [
-        UserAddEditDialog,
-        getTranslocoModule(),
-        ReactiveFormsModule,
-        TwoInputsRowLayout,
-        RoleDropdown,
-      ],
+      imports: [UserAddEditDialog, getTranslocoModule(), ReactiveFormsModule, TwoInputsRowLayout, RoleDropdown],
       providers: [
         { provide: UserService, useValue: mockUserService },
         TranslocoService,

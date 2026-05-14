@@ -45,10 +45,7 @@ export class TemplateTable<T> {
     this.paginationChange.emit({ first: event.first, rows: event.rows });
   }
 
-  extractNestedProperty<TItem>(
-    item: TItem,
-    key: string,
-  ): string | number | Date | null | undefined {
+  extractNestedProperty<TItem>(item: TItem, key: string): string | number | Date | null | undefined {
     const resolvedValue: unknown = this.resolvePropertyPath(item, key);
 
     if (this.isValidDisplayType(resolvedValue)) {

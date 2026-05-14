@@ -15,23 +15,12 @@ import {
 import { TableModule } from 'primeng/table';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { CommonModule, DatePipe } from '@angular/common';
-import {
-  catchError,
-  debounceTime,
-  distinctUntilChanged,
-  map,
-  Observable,
-  of,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, map, Observable, of, switchMap, tap } from 'rxjs';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
 import { BaseGetQueryParams, SortParamType } from '../../other/types/Table.type';
 import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
 
-export type FetchDataFunction<T> = (
-  params: BaseGetQueryParams,
-) => Observable<ResponseWithRecords<T>>;
+export type FetchDataFunction<T> = (params: BaseGetQueryParams) => Observable<ResponseWithRecords<T>>;
 
 const DEFAULT_PAGE_SIZES: number[] = [5, 10, 25, 100];
 const DEFAULT_PAGE_SIZE: number = 10;
@@ -54,9 +43,7 @@ export class TemplateTableEnterFetch<T> {
 
   readonly search: InputSignal<string> = input('');
   readonly searchDate: InputSignal<string> = input('');
-  readonly initialSort: InputSignal<SortParamType | undefined> = input<SortParamType | undefined>(
-    undefined,
-  );
+  readonly initialSort: InputSignal<SortParamType | undefined> = input<SortParamType | undefined>(undefined);
   readonly tabValueActive: InputSignal<boolean | undefined> = input<boolean | undefined>(undefined);
   readonly pageSizes: InputSignal<number[]> = input(DEFAULT_PAGE_SIZES);
   readonly initialPageSize: InputSignal<number> = input(DEFAULT_PAGE_SIZE);
@@ -69,9 +56,9 @@ export class TemplateTableEnterFetch<T> {
   readonly pageOffset: WritableSignal<number> = signal(0);
   readonly tableData: WritableSignal<T[]> = signal<T[]>([]);
   readonly debouncedSearch: WritableSignal<string> = signal('');
-  readonly activeSort: WritableSignal<SortParamType | undefined> = signal<
-    SortParamType | undefined
-  >(this.initialSort());
+  readonly activeSort: WritableSignal<SortParamType | undefined> = signal<SortParamType | undefined>(
+    this.initialSort(),
+  );
 
   readonly currentPageFirstIndex: WritableSignal<number> = signal(0);
 
@@ -110,11 +97,7 @@ export class TemplateTableEnterFetch<T> {
 
   private setupSearchDebounce(): void {
     toObservable(this.search)
-      .pipe(
-        debounceTime(SEARCH_DEBOUNCE_TIME),
-        distinctUntilChanged(),
-        takeUntilDestroyed(this.destroyRef),
-      )
+      .pipe(debounceTime(SEARCH_DEBOUNCE_TIME), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
       .subscribe((searchValue: string) => {
         this.debouncedSearch.set(searchValue);
         this.currentPageFirstIndex.set(0);

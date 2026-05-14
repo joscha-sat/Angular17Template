@@ -1,20 +1,6 @@
 import { computed, inject, type Signal } from '@angular/core';
-import {
-  patchState,
-  signalStore,
-  withComputed,
-  withHooks,
-  withMethods,
-  withState,
-} from '@ngrx/signals';
-import {
-  addEntity,
-  removeEntity,
-  setAllEntities,
-  setEntity,
-  updateEntity,
-  withEntities,
-} from '@ngrx/signals/entities';
+import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
+import { addEntity, removeEntity, setAllEntities, setEntity, updateEntity, withEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 import { finalize, pipe, switchMap, tap } from 'rxjs';
@@ -108,8 +94,7 @@ export const TenantStore = signalStore(
         switchMap((payload: Tenant) =>
           service.updateTenantById(payload.id, payload).pipe(
             tapResponse({
-              next: (item: Tenant) =>
-                patchState(store, updateEntity({ id: item.id, changes: item })),
+              next: (item: Tenant) => patchState(store, updateEntity({ id: item.id, changes: item })),
               error: console.error,
             }),
             finalize(() => patchState(store, { loading: false })),

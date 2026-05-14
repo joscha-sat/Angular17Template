@@ -1,11 +1,4 @@
-import {
-  Component,
-  input,
-  InputSignal,
-  output,
-  OutputEmitterRef,
-  WritableSignal,
-} from '@angular/core';
+import { Component, input, InputSignal, output, OutputEmitterRef, WritableSignal } from '@angular/core';
 import { DatePicker } from 'primeng/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';

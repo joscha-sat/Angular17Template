@@ -1,18 +1,10 @@
-import {
-  HttpErrorResponse,
-  HttpHandlerFn,
-  HttpInterceptorFn,
-  HttpRequest,
-} from '@angular/common/http';
+import { HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { catchError } from 'rxjs';
 import { inject } from '@angular/core';
 import { HttpStatusMsgService } from '../../api/base-error-messages/http-status-msg.service';
 import { ToastService } from '../../services/toast.service';
 
-export const errorInterceptor: HttpInterceptorFn = (
-  req: HttpRequest<unknown>,
-  next: HttpHandlerFn,
-) => {
+export const errorInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const statusTranslationService: HttpStatusMsgService = inject(HttpStatusMsgService);
   const snackbarService: ToastService = inject(ToastService);
 

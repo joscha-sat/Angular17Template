@@ -1,7 +1,5 @@
 <!-- title -->
-<div class="view-title pb-1">
-  {{ createUserMode() ? ('user.create' | transloco) : ('user.update' | transloco) }}
-</div>
+<div class="view-title pb-1">{{ createUserMode() ? ('user.create' | transloco) : ('user.update' | transloco) }}</div>
 
 <!-- user form -->
 @if (form) {

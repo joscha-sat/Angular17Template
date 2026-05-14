@@ -14,13 +14,7 @@ describe('TenantAddEditDialog', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TenantAddEditDialog, ReactiveFormsModule, getTranslocoModule()],
-      providers: [
-        TenantService,
-        FormBuilder,
-        MessageService,
-        DynamicDialogRef,
-        DynamicDialogConfig,
-      ],
+      providers: [TenantService, FormBuilder, MessageService, DynamicDialogRef, DynamicDialogConfig],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TenantAddEditDialog);

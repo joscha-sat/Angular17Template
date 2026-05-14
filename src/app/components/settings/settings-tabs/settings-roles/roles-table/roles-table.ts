@@ -19,9 +19,12 @@ export class RolesTable implements Table<Role> {
     'general.edit',
     'general.delete',
   ]);
-  readonly columns: WritableSignal<(keyof Role | 'delete' | 'edit')[]> = signal<
-    (keyof Role | 'delete' | 'edit')[]
-  >(['name', 'description', 'edit', 'delete']);
+  readonly columns: WritableSignal<(keyof Role | 'delete' | 'edit')[]> = signal<(keyof Role | 'delete' | 'edit')[]>([
+    'name',
+    'description',
+    'edit',
+    'delete',
+  ]);
 
   setTableRefreshMethodName(): string {
     return 'getAllRoles';

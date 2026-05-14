@@ -25,8 +25,7 @@ export const routes: Routes = [
       // || SETTINGS || ----------------------------------------------- // >>
       {
         path: ROUTES.SETTINGS,
-        loadComponent: () =>
-          import('./views/settings.view/settings.view').then((m) => m.SettingsView),
+        loadComponent: () => import('./views/settings.view/settings.view').then((m) => m.SettingsView),
         children: [
           {
             path: ROUTES.GENERAL,
@@ -38,9 +37,7 @@ export const routes: Routes = [
           {
             path: ROUTES.ROLES,
             loadComponent: () =>
-              import('./components/settings/settings-tabs/settings-roles/settings-roles').then(
-                (m) => m.SettingsRoles,
-              ),
+              import('./components/settings/settings-tabs/settings-roles/settings-roles').then((m) => m.SettingsRoles),
           },
         ],
       },
@@ -52,14 +49,12 @@ export const routes: Routes = [
         children: [
           {
             path: 'settings',
-            loadComponent: () =>
-              import('./views/settings.view/settings.view').then((m) => m.SettingsView),
+            loadComponent: () => import('./views/settings.view/settings.view').then((m) => m.SettingsView),
           },
 
           {
             path: 'tenant',
-            loadComponent: () =>
-              import('./views/tenant.view/tenant.view').then((m) => m.TenantView),
+            loadComponent: () => import('./views/tenant.view/tenant.view').then((m) => m.TenantView),
           },
         ],
       },

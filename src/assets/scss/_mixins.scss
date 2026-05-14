@@ -122,9 +122,7 @@
   --gap: 1rem;
 
   /* calculations */
-  --breakpoint: calc(
-    var(--min-column-size) * var(--column-count) + (var(--gap) * (var(--column-count) - 1))
-  );
+  --breakpoint: calc(var(--min-column-size) * var(--column-count) + (var(--gap) * (var(--column-count) - 1)));
   --column-size: calc((100% / var(--column-count)) - var(--gap));
 
   display: grid;
@@ -144,10 +142,7 @@
 @mixin customizable-grid($cols: 4, $notSmallerAs: 15rem, $gap: 1.5rem) {
   display: grid;
   gap: $gap;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(max(100% / $cols - $gap, $notSmallerAs), 100%), 1fr)
-  );
+  grid-template-columns: repeat(auto-fit, minmax(min(max(100% / $cols - $gap, $notSmallerAs), 100%), 1fr));
 }
 
 .grid-two-cols-wrap {

@@ -27,9 +27,7 @@ export class RoleDropdown implements OnInit {
     this.roleService
       .getAllRoles()
       .subscribe(
-        (
-          roles: import('../../../../../api/base-http-service/base-http.service').ResponseWithRecords<Role>,
-        ) => {
+        (roles: import('../../../../../api/base-http-service/base-http.service').ResponseWithRecords<Role>) => {
           this.roles.set(roles.records);
         },
       );

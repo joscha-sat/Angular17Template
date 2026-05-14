@@ -23,9 +23,7 @@ export abstract class BaseTable<T> implements OnInit, OnDestroy {
 
   // Translates table headers using the translation service
   translateHeaders(headers: WritableSignal<string[]>): void {
-    const translations: string[] = headers().map((key: string) =>
-      key ? this.translocoService.translate(key) : '',
-    );
+    const translations: string[] = headers().map((key: string) => (key ? this.translocoService.translate(key) : ''));
     headers.set(translations);
   }
 
@@ -49,8 +47,7 @@ export abstract class BaseTable<T> implements OnInit, OnDestroy {
       search: baseParams.search,
       sort: baseParams.sort,
       searchDate: baseParams.searchDate,
-      active:
-        baseParams.tabValueActive !== undefined ? String(baseParams.tabValueActive) : undefined,
+      active: baseParams.tabValueActive !== undefined ? String(baseParams.tabValueActive) : undefined,
       ...this.setCustomParams(),
     };
   }
@@ -72,20 +69,16 @@ export abstract class BaseTable<T> implements OnInit, OnDestroy {
     return this.refresh$.pipe(
       switchMap(
         () =>
-          (
-            serviceWithMethods[methodName] as (
-              params: unknown,
-            ) => Observable<ResponseWithRecords<T>>
-          )(params) as Observable<ResponseWithRecords<T>>,
+          (serviceWithMethods[methodName] as (params: unknown) => Observable<ResponseWithRecords<T>>)(
+            params,
+          ) as Observable<ResponseWithRecords<T>>,
       ),
     );
   };
 
   // Subscribes to refresh events and triggers data refresh
   refreshDataSubscription(): void {
-    this.subscription = this.setTableRefreshService().refreshObservable$.subscribe(() =>
-      this.refresh$.next(null),
-    );
+    this.subscription = this.setTableRefreshService().refreshObservable$.subscribe(() => this.refresh$.next(null));
   }
 
   ngOnDestroy(): void {

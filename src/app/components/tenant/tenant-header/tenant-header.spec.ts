@@ -14,13 +14,7 @@ describe('TenantHeader', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TenantHeader,
-        getTranslocoModule(),
-        ReactiveFormsModule,
-        HeaderLayout,
-        TemplateTableSearch,
-      ],
+      imports: [TenantHeader, getTranslocoModule(), ReactiveFormsModule, HeaderLayout, TemplateTableSearch],
       providers: [FormBuilder, TenantService, MessageService],
     }).compileComponents();
 

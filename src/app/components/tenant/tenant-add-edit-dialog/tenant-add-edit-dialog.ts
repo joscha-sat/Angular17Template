@@ -62,11 +62,9 @@ export class TenantAddEditDialog implements OnInit, AddEdit {
     if (!this.data) {
       return;
     }
-    this.tenantService
-      .updateTenantById(this.data.id, new Tenant(this.tenantForm?.value))
-      .subscribe(() => {
-        this.dialogRef.close(true);
-      });
+    this.tenantService.updateTenantById(this.data.id, new Tenant(this.tenantForm?.value)).subscribe(() => {
+      this.dialogRef.close(true);
+    });
   }
 
   submit(): void {

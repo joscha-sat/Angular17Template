@@ -16,9 +16,7 @@ export type TenantQueryParams = BaseQueryParams & {};
   providedIn: 'root',
 })
 export class TenantService extends GenericHttpService {
-  readonly selectedTenantId: WritableSignal<string> = signal(
-    'be9733b2-7695-4a41-96ed-9c0fcb2772dd',
-  );
+  readonly selectedTenantId: WritableSignal<string> = signal('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
   endpoint: ApiRoutes = ApiRoutes.TENANT;
   element_i18nKey: string = 'tenant';
 

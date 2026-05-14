@@ -12,28 +12,20 @@ import { inject } from '@angular/core';
 
 const TOKEN_REFRESH_SUCCESS_STATUS: HttpStatusCode = HttpStatusCode.Created;
 
-export const authTokenInterceptor: HttpInterceptorFn = (
-  req: HttpRequest<unknown>,
-  next: HttpHandlerFn,
-) => {
+export const authTokenInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const authService: AuthService = inject(AuthService);
   // Add authorization header to the request
   const requestWithToken: HttpRequest<unknown> = addAuthorizationHeader(req, authService);
   // Handle request and catch errors
   return next(requestWithToken).pipe(
-    catchError((error: HttpErrorResponse) =>
-      handleHttpError(error, requestWithToken, next, authService),
-    ),
+    catchError((error: HttpErrorResponse) => handleHttpError(error, requestWithToken, next, authService)),
   );
 };
 
 /**
  * Adds the authorization header with bearer token to the request
  */
-function addAuthorizationHeader(
-  req: HttpRequest<unknown>,
-  authService: AuthService,
-): HttpRequest<unknown> {
+function addAuthorizationHeader(req: HttpRequest<unknown>, authService: AuthService): HttpRequest<unknown> {
   return req.clone({
     setHeaders: {
       Authorization: `Bearer ${authService.getAccessToken()}`,
@@ -75,10 +67,7 @@ function handleHttpError(
         authService.setTokens(response.data.access, response.data.refresh);
         authService.setLoggedInUser(response.data.user);
         // Clone the original request with the new access token
-        const requestWithNewToken: HttpRequest<unknown> = addAuthorizationHeader(
-          originalRequest,
-          authService,
-        );
+        const requestWithNewToken: HttpRequest<unknown> = addAuthorizationHeader(originalRequest, authService);
         // Retry the original request with the new token
         return next(requestWithNewToken);
       } else {

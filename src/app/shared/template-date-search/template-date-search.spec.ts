@@ -1,13 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal, WritableSignal } from '@angular/core';
-import {
-  ControlContainer,
-  FormControl,
-  FormGroup,
-  FormGroupDirective,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { ControlContainer, FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 
 import { TemplateDateSearch } from './template-date-search';

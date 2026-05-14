@@ -20,11 +20,7 @@ export class TenantTable extends BaseTable<Tenant> implements Table<Tenant>, OnI
     'general.updatedAt',
   ]);
 
-  readonly columns: WritableSignal<(keyof Tenant)[]> = signal<(keyof Tenant)[]>([
-    'name',
-    'createdAt',
-    'updatedAt',
-  ]);
+  readonly columns: WritableSignal<(keyof Tenant)[]> = signal<(keyof Tenant)[]>(['name', 'createdAt', 'updatedAt']);
 
   override ngOnInit(): void {
     super.ngOnInit();

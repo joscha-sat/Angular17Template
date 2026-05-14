@@ -1,10 +1,4 @@
-import {
-  HttpEvent,
-  HttpHandlerFn,
-  HttpInterceptorFn,
-  HttpRequest,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpEvent, HttpHandlerFn, HttpInterceptorFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { catchError, delay, finalize, of, tap } from 'rxjs';
 import { inject, signal, WritableSignal } from '@angular/core';
 import { LoadingService } from '../../services/loading.service';
@@ -12,10 +6,7 @@ import { LoadingService } from '../../services/loading.service';
 // Set initial request count at '0'
 const count: WritableSignal<number> = signal(0);
 
-export const isLoadingInterceptor: HttpInterceptorFn = (
-  req: HttpRequest<unknown>,
-  next: HttpHandlerFn,
-) => {
+export const isLoadingInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   // Inject the LoadingService
   const loaderService: LoadingService = inject(LoadingService);
 

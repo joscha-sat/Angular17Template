@@ -42,9 +42,7 @@ export const appConfig: ApplicationConfig = {
     { provide: LOCALE_ID, useValue: 'de-DE' },
     provideAnimations(),
     { provide: MessageService },
-    provideHttpClient(
-      withInterceptors([authTokenInterceptor, isLoadingInterceptor, errorInterceptor]),
-    ),
+    provideHttpClient(withInterceptors([authTokenInterceptor, isLoadingInterceptor, errorInterceptor])),
     provideRouter(routes),
     provideHttpClient(),
     provideTransloco({
