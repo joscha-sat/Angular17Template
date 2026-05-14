@@ -1,11 +1,11 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Button } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { SidenavStore } from '../../stores/sidenav.store';
 import { NavItem } from '../../other/enums/nav-items';
 import { ROUTES } from '../../other/enums/ROUTES';
-import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
+import { translateSignal, TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-navigation',
@@ -13,34 +13,22 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
   templateUrl: './navigation.html',
   styleUrl: './navigation.scss',
 })
-export class Navigation implements OnInit {
-  readonly navItems: WritableSignal<NavItem[]> = signal<NavItem[]>([]);
-
-  private readonly translocoService: TranslocoService = inject(TranslocoService);
+export class Navigation {
   private readonly sidenavStore: SidenavStore = inject(SidenavStore);
+
+  private readonly tenantTitle: Signal<string> = translateSignal('tenant.title');
+  private readonly userTitle: Signal<string> = translateSignal('user.title');
+  private readonly settingsTitle: Signal<string> = translateSignal('settings.title');
+
+  readonly navItems: Signal<NavItem[]> = computed<NavItem[]>(() => [
+    { tooltip: this.tenantTitle(), icon: 'pi pi-home', link: ROUTES.TENANT },
+    { tooltip: this.userTitle(), icon: 'pi pi-users', link: ROUTES.USER },
+    { tooltip: this.settingsTitle(), icon: 'pi pi-cog', link: ROUTES.SETTINGS },
+    { tooltip: 'Test', icon: 'pi pi-wrench', link: 'test' },
+  ]);
 
   get expanded(): boolean {
     return this.sidenavStore.expanded();
-  }
-
-  ngOnInit(): void {
-    this.setTranslatedTextWithNavItems();
-  }
-
-  setTranslatedTextWithNavItems(): void {
-    const translations: Record<string, string> = this.translocoService.translate([
-      'tenant.title',
-      'user.title',
-      'settings.title',
-      'map.title',
-    ]);
-
-    this.navItems.set([
-      { tooltip: translations[0], icon: 'pi pi-home', link: ROUTES.TENANT },
-      { tooltip: translations[1], icon: 'pi pi-users', link: ROUTES.USER },
-      { tooltip: translations[3], icon: 'pi pi-cog', link: ROUTES.SETTINGS },
-      { tooltip: 'Test', icon: 'pi pi-wrench', link: 'test' },
-    ]);
   }
 
   toggleExpanded(): void {

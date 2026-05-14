@@ -1200,6 +1200,7 @@ private redirectToEmptyStateIfNoUsers(): void {
 - Use TypeScript's `satisfies` operator for configurations and constants to ensure type-safety while preserving specific literal types
 - Use single-line comments: `//` over `/* */` multi-line comments, only exceptions are methods with 3 or more Params
 - On generating a commit message, use the branch name as a prefix in front of the message
+- Use translateSignal if possible, not translocoService.translate()
 
 ---
 
