@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import {
   BaseQueryParams,
   GenericHttpService,
-  idTypes,
+  ResourceId,
   ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import { User } from '../models/User';
@@ -16,7 +16,7 @@ type QueryParams = BaseQueryParams;
 })
 export class UserService extends GenericHttpService {
   endpoint: ApiRoutes = ApiRoutes.USER;
-  element_i18nKey: string = 'user.a_title';
+  element_i18nKey: string = 'user';
 
   // GET ALL
   getAllUsers(queryParams?: QueryParams): Observable<ResponseWithRecords<User>> {
@@ -39,17 +39,17 @@ export class UserService extends GenericHttpService {
   }
 
   // UPDATE ONE
-  updateUserById(id: idTypes, user: User): Observable<User> {
+  updateUserById(id: ResourceId, user: User): Observable<User> {
     return this.updateOne<User>(this.endpoint, user, id, this.element_i18nKey);
   }
 
   // UPDATE MULTIPLE
-  updateMultipleUserById(id: idTypes[], users: User[]): Observable<User[]> {
+  updateMultipleUserById(id: ResourceId[], users: User[]): Observable<User[]> {
     return this.updateMultiple<User>(this.endpoint, users, id, this.element_i18nKey);
   }
 
   // DELETE ONE
-  deleteUserById(id: idTypes): Observable<unknown> {
+  deleteUserById(id: ResourceId): Observable<unknown> {
     return this.deleteOne(this.endpoint, id, this.element_i18nKey);
   }
 

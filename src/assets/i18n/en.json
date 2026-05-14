@@ -61,6 +61,23 @@
     "phone": "Enter a phone number",
     "text": "Enter a text"
   },
+  "http_action": {
+    "created": "created",
+    "updated": "updated",
+    "deleted": "deleted",
+    "successfully": "successfully",
+    "success_template": "{{resourceName}} was successfully {{actionVerb}}"
+  },
+  "resource": {
+    "user": "User",
+    "users": "Users",
+    "tenant": "Tenant",
+    "tenants": "Tenants",
+    "customer": "Customer",
+    "customers": "Customers",
+    "role": "Role",
+    "roles": "Roles"
+  },
   "generic-http-error": {
     "status-400": "Request invalid or incorrect!",
     "status-401": "Not authenticated!",

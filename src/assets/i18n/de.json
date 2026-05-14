@@ -68,6 +68,23 @@
     "phone": "Telefonnummer eingeben",
     "text": "Text eingeben"
   },
+  "http_action": {
+    "created": "erstellt",
+    "updated": "aktualisiert",
+    "deleted": "gelöscht",
+    "successfully": "erfolgreich",
+    "success_template": "{{resourceName}} wurde erfolgreich {{actionVerb}}"
+  },
+  "resource": {
+    "user": "Benutzer",
+    "users": "Benutzer",
+    "tenant": "Firma",
+    "tenants": "Firmen",
+    "customer": "Kunde",
+    "customers": "Kunden",
+    "role": "Rolle",
+    "roles": "Rollen"
+  },
   "http-error": {
     "role": {
       "create_bad_request": "Falsche Parameter. Das kann nicht gemacht werden",

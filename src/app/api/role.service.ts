@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import {
   BaseQueryParams,
   GenericHttpService,
-  idTypes,
+  ResourceId,
   ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import { Role } from '../models/Role';
@@ -20,7 +20,7 @@ export class RoleService extends GenericHttpService {
   authService: AuthService = inject(AuthService);
 
   endpoint: ApiRoutes = ApiRoutes.ROLE;
-  element_i18nKey: string = 'role.a_title';
+  element_i18nKey: string = 'role';
 
   //  UTILITY METHODS
   get isSuperAdmin(): boolean {
@@ -53,17 +53,17 @@ export class RoleService extends GenericHttpService {
   }
 
   // UPDATE ONE Role
-  updateRoleById(id: idTypes, role: Role): Observable<Role> {
+  updateRoleById(id: ResourceId, role: Role): Observable<Role> {
     return this.updateOne<Role>(this.endpoint, role, id, this.element_i18nKey);
   }
 
   // UPDATE MULTIPLE Roles
-  updateMultipleRoleById(id: idTypes[], roles: Role[]): Observable<Role[]> {
+  updateMultipleRoleById(id: ResourceId[], roles: Role[]): Observable<Role[]> {
     return this.updateMultiple<Role>(this.endpoint, roles, id, this.element_i18nKey);
   }
 
   // DELETE ONE Role
-  deleteRoleById(id: idTypes): Observable<unknown> {
+  deleteRoleById(id: ResourceId): Observable<unknown> {
     return this.deleteOne(this.endpoint, id, this.element_i18nKey);
   }
 

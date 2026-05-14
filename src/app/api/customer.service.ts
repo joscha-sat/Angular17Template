@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import {
   BaseQueryParams,
   GenericHttpService,
-  idTypes,
+  ResourceId,
   ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import { Customer } from '../models/Customer';
@@ -16,7 +16,7 @@ type QueryParams = BaseQueryParams;
 })
 export class CustomerService extends GenericHttpService {
   endpoint: ApiRoutes = ApiRoutes.CUSTOMERS;
-  element_i18nKey: string = 'customer.a_customer';
+  element_i18nKey: string = 'customer';
 
   // GET ALL
   getAllCustomers(queryParams?: QueryParams): Observable<ResponseWithRecords<Customer>> {
@@ -39,17 +39,17 @@ export class CustomerService extends GenericHttpService {
   }
 
   // UPDATE ONE
-  updateCustomerById(id: idTypes, customer: Customer): Observable<Customer> {
+  updateCustomerById(id: ResourceId, customer: Customer): Observable<Customer> {
     return this.updateOne<Customer>(this.endpoint, customer, id, this.element_i18nKey);
   }
 
   // UPDATE MULTIPLE
-  updateMultipleCustomerById(id: idTypes[], customers: Customer[]): Observable<Customer[]> {
+  updateMultipleCustomerById(id: ResourceId[], customers: Customer[]): Observable<Customer[]> {
     return this.updateMultiple<Customer>(this.endpoint, customers, id, this.element_i18nKey);
   }
 
   // DELETE ONE
-  deleteCustomerById(id: idTypes): Observable<unknown> {
+  deleteCustomerById(id: ResourceId): Observable<unknown> {
     return this.deleteOne(this.endpoint, id, this.element_i18nKey);
   }
 

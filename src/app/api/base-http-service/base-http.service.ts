@@ -1,11 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { TranslocoService } from '@jsverse/transloco';
 import { forkJoin, map, Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../other/environments/environment';
 import { ToastService } from '../../services/toast.service';
+import { HTTP_METHODS } from '../../other/enums/http-methods.enum';
 
 // Type definitions
-export type idTypes = string | number | Array<string | number>;
+export type ResourceId = string | number | Array<string | number>;
 export type ResponseWithRecords<T> = { total: number; records: T[] };
 export type BaseQueryParams = {
   skip?: number;
@@ -17,35 +19,42 @@ export type BaseQueryParams = {
 
 @Injectable({ providedIn: 'root' })
 export class GenericHttpService {
-  baseUrl: string = environment.baseUrl;
-  _refreshObservable: Subject<void> = new Subject<void>();
-  refreshObservable$: Observable<void> = this._refreshObservable.asObservable();
+  readonly baseUrl: string = environment.baseUrl;
+  readonly refreshSubject: Subject<void> = new Subject<void>();
+  readonly refreshObservable$: Observable<void> = this.refreshSubject.asObservable();
+
   readonly search: WritableSignal<string> = signal<string>('');
   readonly searchDate: WritableSignal<string> = signal<string>('');
-  readonly tabValueActive: WritableSignal<boolean | undefined> = signal<boolean | undefined>(
-    undefined,
-  );
-  private readonly http: HttpClient = inject(HttpClient);
-  private readonly snackBar: ToastService = inject(ToastService);
+  readonly tabValueActive: WritableSignal<boolean | undefined> = signal<boolean | undefined>(undefined);
 
-  private readonly i18nKeys: Record<string, string> = {
-    user: 'Benutzer',
-    users: 'Benutzer',
-    tenant: 'Mandant',
-    tenants: 'Mandant',
-    customer: 'Kunde',
-    customers: 'Kunde',
-    role: 'Rolle',
-    roles: 'Rollen',
+  private readonly http: HttpClient = inject(HttpClient);
+  private readonly toastService: ToastService = inject(ToastService);
+  private readonly translocoService: TranslocoService = inject(TranslocoService);
+
+  // Maps translation keys used in createOne/updateOne/deleteOne to transloco resource paths
+  // e.g., 'tenant' -> 'resource.tenant' resolves to the translated resource name
+  private readonly resourceTranslationKeyMappings: Record<string, string> = {
+    user: 'resource.user',
+    users: 'resource.users',
+    tenant: 'resource.tenant',
+    tenants: 'resource.tenants',
+    customer: 'resource.customer',
+    customers: 'resource.customers',
+    role: 'resource.role',
+    roles: 'resource.roles',
   };
 
-  /**
-   * Constructs a full URL based on a given endpoint and optional ID.
-   * @param endpoint - The API endpoint
-   * @param id - Optional: The ID of the resource or an array of IDs
-   * @returns A full URL string
-   */
-  getUrl(endpoint: string, id?: idTypes): string {
+  // Maps HTTP methods to transloco action keys used in the success message template
+  private readonly httpMethodToActionKey: Record<HTTP_METHODS, string> = {
+    [HTTP_METHODS.POST]: 'created',
+    [HTTP_METHODS.PATCH]: 'updated',
+    [HTTP_METHODS.DELETE]: 'deleted',
+    [HTTP_METHODS.GET]: '',
+    [HTTP_METHODS.PUT]: '',
+  };
+
+  // GET URL > Resource
+  getUrl(endpoint: string, id?: ResourceId): string {
     return id ? `${this.baseUrl}${endpoint}/${id}` : `${this.baseUrl}${endpoint}`;
   }
 
@@ -63,6 +72,7 @@ export class GenericHttpService {
     modelType?: new (data: Partial<T>) => T,
   ): Observable<ResponseWithRecords<T>> {
     const params: HttpParams = this.generateParams(queryParams);
+
     return this.http
       .get<ResponseWithRecords<T>>(this.getUrl(endpoint), {
         params,
@@ -85,7 +95,7 @@ export class GenericHttpService {
    * @param modelType - Optional: The constructor of the model class (e.g., User)
    * @returns An Observable of the single record
    */
-  getOne<T>(endpoint: string, id: idTypes, modelType?: new (data: Partial<T>) => T): Observable<T> {
+  getOne<T>(endpoint: string, id: ResourceId, modelType?: new (data: Partial<T>) => T): Observable<T> {
     return this.http
       .get<T>(this.getUrl(endpoint, id))
       .pipe(map((record: T) => (modelType ? new modelType(record as Partial<T>) : record)));
@@ -95,27 +105,27 @@ export class GenericHttpService {
    * Creates a new record.
    * @param endpoint - The API endpoint
    * @param body - The body of the resource to be created
-   * @param i18nKeyForElement - Article name for the resource (for notifications)
+   * @param translationKey - Translation key for the resource name (for notifications)
    * @returns An Observable of the created record
    */
-  createOne<T>(endpoint: string, body: T, i18nKeyForElement: string): Observable<T> {
+  createOne<T>(endpoint: string, body: T, translationKey: string): Observable<T> {
     const action: Observable<T> = this.http.post<T>(this.getUrl(endpoint), body);
-    return this.httpAction(action, i18nKeyForElement, 'POST');
+
+    return this.executeActionWithRefresh(action, translationKey, HTTP_METHODS.POST);
   }
 
   /**
    * Creates multiple new records.
    * @param endpoint - The API endpoint
    * @param bodies - An array of bodies of the resources to be created
-   * @param i18nKeyForElement - Article name for the resources (for notifications)
+   * @param translationKey - Translation key for the resource name (for notifications)
    * @returns An Observable of an array of the created records
    */
-  createMultiple<T>(endpoint: string, bodies: T[], i18nKeyForElement: string): Observable<T[]> {
-    const postObservables: Observable<T>[] = bodies.map((body: T) =>
-      this.http.post<T>(this.getUrl(endpoint), body),
-    );
+  createMultiple<T>(endpoint: string, bodies: T[], translationKey: string): Observable<T[]> {
+    const postObservables: Observable<T>[] = bodies.map((body: T) => this.http.post<T>(this.getUrl(endpoint), body));
     const batchAction: Observable<T[]> = forkJoin(postObservables);
-    return this.httpAction(batchAction, i18nKeyForElement, 'POST', true);
+
+    return this.executeActionWithRefresh(batchAction, translationKey, HTTP_METHODS.POST);
   }
 
   /**
@@ -123,12 +133,13 @@ export class GenericHttpService {
    * @param endpoint - The API endpoint
    * @param body - The updated body of the resource
    * @param id - The ID of the resource to be updated
-   * @param i18nKeyForElement - Article name for the resource (for notifications)
+   * @param translationKey - Translation key for the resource name (for notifications)
    * @returns An Observable of the updated record
    */
-  updateOne<T>(endpoint: string, body: T, id: idTypes, i18nKeyForElement: string): Observable<T> {
+  updateOne<T>(endpoint: string, body: T, id: ResourceId, translationKey: string): Observable<T> {
     const action: Observable<T> = this.http.patch<T>(this.getUrl(endpoint, id), body);
-    return this.httpAction(action, i18nKeyForElement, 'PATCH');
+
+    return this.executeActionWithRefresh(action, translationKey, HTTP_METHODS.PATCH);
   }
 
   /**
@@ -136,102 +147,88 @@ export class GenericHttpService {
    * @param endpoint - The API endpoint
    * @param bodies - An array of updated bodies of the resources
    * @param ids - An array of IDs of the resources to be updated
-   * @param i18nKeyForElement - Article name for the resources (for notifications)
+   * @param translationKey - Translation key for the resource name (for notifications)
    * @returns An Observable of an array of the updated records
    */
-  updateMultiple<T>(
-    endpoint: string,
-    bodies: T[],
-    ids: idTypes[],
-    i18nKeyForElement: string,
-  ): Observable<T[]> {
+  updateMultiple<T>(endpoint: string, bodies: T[], ids: ResourceId[], translationKey: string): Observable<T[]> {
     const patchObservables: Observable<T>[] = bodies.map((body: T, index: number) =>
       this.http.patch<T>(this.getUrl(endpoint, ids[index]), body),
     );
     const batchAction: Observable<T[]> = forkJoin(patchObservables);
-    return this.httpAction(batchAction, i18nKeyForElement, 'PATCH', true);
+
+    return this.executeActionWithRefresh(batchAction, translationKey, HTTP_METHODS.PATCH);
   }
 
   /**
    * Deletes a single record.
    * @param endpoint - The API endpoint
    * @param id - The ID of the resource to be deleted
-   * @param i18nKeyForElement - Article name for the resource (for notifications)
+   * @param translationKey - Translation key for the resource name (for notifications)
    * @returns An Observable of the delete result
    */
-  deleteOne(endpoint: string, id: idTypes, i18nKeyForElement: string): Observable<unknown> {
+  deleteOne(endpoint: string, id: ResourceId, translationKey: string): Observable<unknown> {
     const action: Observable<unknown> = this.http.delete(this.getUrl(endpoint, id));
-    return this.httpAction(action, i18nKeyForElement, 'DELETE');
+    return this.executeActionWithRefresh(action, translationKey, HTTP_METHODS.DELETE);
   }
 
-  /**
-   * Deletes all records from a given endpoint.
-   * @param endpoint - The API endpoint
-   * @returns An Observable of the delete result
-   */
+  // DELETE ALL > Records
   deleteAll<T>(endpoint: string): Observable<T> {
-    return this.http
-      .delete<T>(`${this.baseUrl}${endpoint}`)
-      .pipe(tap(() => this._refreshObservable.next()));
+    return this.http.delete<T>(`${this.baseUrl}${endpoint}`).pipe(tap(() => this.refreshSubject.next()));
   }
 
   /**
-   * Helper function to handle HTTP actions and show notifications.
+   * Executes an HTTP action, notifies the success toast, and triggers the refresh observable.
    * @param action - The Observable of the HTTP action
-   * @param i18nKeyForElement translate key for element_i18nKey
-   * @param methodType 'POST' | 'PATCH' | 'DELETE'
-   * @param plural boolean for correct translation output
+   * @param translationKey - Translation key for the resource name (e.g., 'user')
+   * @param httpMethod - 'POST' | 'PATCH' | 'DELETE'
    * @returns An Observable that manages the HTTP action and notifications
    */
-  private httpAction<U>(
+  private executeActionWithRefresh<U>(
     action: Observable<U>,
-    i18nKeyForElement: string,
-    methodType: string = 'POST',
-    plural?: boolean,
+    translationKey: string,
+    httpMethod: HTTP_METHODS = HTTP_METHODS.POST,
   ): Observable<U> {
     return action.pipe(
       tap(() => {
-        this.handleHttpSuccess(i18nKeyForElement, methodType, plural);
-        this._refreshObservable.next();
+        this.showSuccessToastForHttpAction(translationKey, httpMethod);
+        this.refreshSubject.next();
       }),
     );
   }
 
   /**
-   * Generates HTTP query parameters from an object.
+   * Generates HTTP query parameters from an object, filtering out undefined, null, and empty values.
    * @param queryParams - An object with query parameters as key-value pairs
    * @returns An HttpParams object with the generated parameters
    */
   private generateParams(queryParams?: { [key: string]: unknown }): HttpParams {
-    let params: HttpParams = new HttpParams();
     if (!queryParams) {
-      return params;
+      return new HttpParams();
     }
 
+    let params: HttpParams = new HttpParams();
+
     Object.entries(queryParams).forEach(([key, value]: [string, unknown]) => {
-      // Skip undefined, null, and empty string values so they are not sent as query params
-      if (value !== undefined && value !== null && value !== '') {
-        params = params.set(key, value as string | number | boolean);
+      const isValueExcluded: boolean = value === undefined || value === null || value === '';
+      if (isValueExcluded) {
+        return;
       }
+
+      params = params.set(key, value as string | number | boolean);
     });
 
     return params;
   }
 
-  private handleHttpSuccess(
-    i18nKeyForElement: string,
-    methodType: string = 'POST',
-    plural: boolean = false,
-  ): void {
-    const action: Record<string, string> = {
-      POST: 'erstellt',
-      PATCH: 'aktualisiert',
-      DELETE: 'gelöscht',
-    };
-    const elementName: string = this.i18nKeys[i18nKeyForElement] || i18nKeyForElement;
-    const message: string = plural
-      ? `${elementName} erfolgreich ${action[methodType]}`
-      : `${elementName} erfolgreich ${action[methodType]}`;
-    this.snackBar.showSuccess(message);
+  private showSuccessToastForHttpAction(translationKey: string, httpMethod: HTTP_METHODS = HTTP_METHODS.POST): void {
+    const translocoKey: string = this.resourceTranslationKeyMappings[translationKey] ?? `resource.${translationKey}`;
+    const resourceDisplayName: string = this.translocoService.translate(translocoKey);
+    const actionVerb: string = this.translocoService.translate(`http_action.${this.httpMethodToActionKey[httpMethod]}`);
+    const successMessage: string = this.translocoService.translate('http_action.success_template', {
+      resourceName: resourceDisplayName,
+      actionVerb: actionVerb,
+    });
+
+    this.toastService.showSuccess(successMessage);
   }
 }
