@@ -647,38 +647,41 @@ export class TenantHeader {
 
 ## 📦 Shared Components UI Docs
 
-This section serves as a compact UI documentation for the reusable Shared Components. Each component is briefly explained and shows at least two usage examples. Expansion panels (details/summary) are used to keep the view concise.
+This section serves as a compact UI documentation for the reusable Shared Components. Each component is briefly explained and shows at least two usage examples. Expansion panels keep the view concise.
 
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-delete-icon — DeleteIconComponent</h3></summary>
 
-Short description
+Displays a PrimeNG icon (delete) and emits an event on click. Useful e.g. in table rows.
 
-- Displays a PrimeNG icon (delete) and emits an event on click. Useful e.g. in table rows.
+|              |                   |
+| ------------ | ----------------- |
+| **Selector** | `app-delete-icon` |
 
-API
+**Inputs:**
 
-- Selector: app-delete-icon
-- Inputs:
-  - color?: string — CSS color (Default: var(--p-error))
-- Outputs:
-  - clickEvent: void — Emitted on click
+| Name   | Type     | Default          | Description |
+| ------ | -------- | ---------------- | ----------- |
+| color? | `string` | `var(--p-error)` | CSS color   |
+
+**Outputs:**
+
+| Name       | Type   | Description      |
+| ---------- | ------ | ---------------- |
+| clickEvent | `void` | Emitted on click |
 
 Examples
 
-1. Simple usage inside a card
-
 ```html
+<!-- Simple usage inside a card -->
 <div class="user-card">
   {{ selectedUser.fullName }}
   <app-delete-icon (clickEvent)="deleteUser(selectedUser)" />
 </div>
 ```
 
-2. Custom color and used as a table cell action
-
 ```html
-<!-- Table with custom color -->
+<!-- Custom color in a table cell action -->
 <ng-template #actions let-item>
   <app-delete-icon color="crimson" (clickEvent)="onDelete(item)" />
 </ng-template>
@@ -689,32 +692,36 @@ Examples
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-edit-icon — EditIconComponent</h3></summary>
 
-Short description
+Displays a PrimeNG icon (edit) and emits an event on click. Ideal for edit actions.
 
-- Displays a PrimeNG icon (edit) and emits an event on click. Ideal for edit actions.
+|              |                 |
+| ------------ | --------------- |
+| **Selector** | `app-edit-icon` |
 
-API
+**Inputs:**
 
-- Selector: app-edit-icon
-- Inputs:
-  - color?: string — CSS color
-- Outputs:
-  - clickEvent: void — Emitted on click
+| Name   | Type     | Default | Description |
+| ------ | -------- | ------- | ----------- |
+| color? | `string` | —       | CSS color   |
+
+**Outputs:**
+
+| Name       | Type   | Description      |
+| ---------- | ------ | ---------------- |
+| clickEvent | `void` | Emitted on click |
 
 Examples
 
-1. Next to a title
-
 ```html
+<!-- Next to a title -->
 <h3 class="flex items-center gap-8">
   {{ title }}
   <app-edit-icon (clickEvent)="openEditDialog()" />
 </h3>
 ```
 
-2. Together with the delete icon in an action bar
-
 ```html
+<!-- Together with the delete icon in an action bar -->
 <div class="flex gap-8">
   <app-edit-icon color="#1565c0" (clickEvent)="onEdit(item)" />
   <app-delete-icon (clickEvent)="onDelete(item)" />
@@ -726,47 +733,51 @@ Examples
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-template-datepicker — TemplateDatepickerComponent</h3></summary>
 
-Short description
+Wraps the PrimeNG Datepicker including label and form binding. Emits the selected date as an ISO string via dateChange. Optionally supports min/max date as well as label/field name. Can be used with a service that has a searchDate signal property.
 
-- Wraps the PrimeNG Datepicker including label and form binding. Emits the selected date as an ISO string via dateChange. Optionally supports min/max date as well as label/field name. Can be used with a service that has a searchDate signal property.
+|              |                           |
+| ------------ | ------------------------- |
+| **Selector** | `app-template-datepicker` |
 
-API
+**Inputs:**
 
-- Selector: app-template-datepicker
-- Inputs:
-  - minDate?: Date
-  - maxDate?: Date
-  - label?: string — i18n key (Default: "general.select-date")
-  - fControlName?: string — Name of the FormControl (Default: "date")
-  - service?: { searchDate: WritableSignal<string> }
-- Outputs:
-  - dateChange: string — ISO date when changed
+| Name          | Type                                     | Default                 | Description                      |
+| ------------- | ---------------------------------------- | ----------------------- | -------------------------------- |
+| minDate?      | `Date`                                   | —                       | Earliest selectable date         |
+| maxDate?      | `Date`                                   | —                       | Latest selectable date           |
+| label?        | `string`                                 | `"general.select-date"` | i18n key for the label           |
+| fControlName? | `string`                                 | `"date"`                | FormControl name to bind         |
+| service?      | `{ searchDate: WritableSignal<string> }` | —                       | Service with a searchDate signal |
+
+**Outputs:**
+
+| Name       | Type     | Description                  |
+| ---------- | -------- | ---------------------------- |
+| dateChange | `string` | ISO date string when changed |
 
 Examples
 
-1. Standalone with handler (writes date to service signal)
-
 ```ts
-// component.ts
+// Standalone with handler — writes date to service signal
 import { WritableSignal, signal } from '@angular/core';
+
 class DummyService {
   searchDate: WritableSignal<string> = signal('');
 }
+
 const service = new DummyService();
 
-function onDateChange(iso: string) {
+function onDateChange(iso: string): void {
   service.searchDate.set(iso);
 }
 ```
 
 ```html
-<!-- component.html -->
 <app-template-datepicker [service]="service" (dateChange)="onDateChange($event)" />
 ```
 
-2. With min/max and custom label/field name
-
 ```html
+<!-- With min/max and custom label/field name -->
 <app-template-datepicker
   [minDate]="min"
   [maxDate]="max"
@@ -782,33 +793,33 @@ function onDateChange(iso: string) {
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-template-date-search — TemplateDateSearchComponent</h3></summary>
 
-Short description
+Provides a datepicker search field and writes the selected date directly into `service().searchDate` (WritableSignal&lt;string&gt;). Clearing the selection removes the filter.
 
-- Provides a datepicker search field and writes the selected date directly into service().searchDate (WritableSignal<string>). Clearing the selection removes the filter.
+|              |                            |
+| ------------ | -------------------------- |
+| **Selector** | `app-template-date-search` |
 
-API
+**Inputs:**
 
-- Selector: app-template-date-search
-- Inputs:
-  - service: { searchDate: WritableSignal<string> } — required
+| Name    | Type                                     | Default  | Description      |
+| ------- | ---------------------------------------- | -------- | ---------------- |
+| service | `{ searchDate: WritableSignal<string> }` | required | Service consumer |
 
 Examples
 
-1. In a header bar for table filters
-
 ```html
+<!-- In a header bar for table filters -->
 <header class="flex gap-16 items-center">
   <app-template-date-search [service]="customerService" />
 </header>
 ```
 
-2. Together with a table component (date is automatically used as a query param)
-
 ```html
-<!-- Header -->
-<app-template-date-search [service]="customerService" />
+<!-- Together with a table component — date is used as a query param -->
+<header class="flex gap-16 items-center">
+  <app-template-date-search [service]="customerService" />
+</header>
 
-<!-- Table -->
 <app-template-table-fetch
   [displayedPropertyColumns]="columns()"
   [tableDataSource]="tableDataSource"
@@ -818,35 +829,33 @@ Examples
 />
 ```
 
-Note
-
-- Combining regular search and date search is possible (see “Adding Search and Date Search” in the Tables section above).
+> Combining regular search and date search is possible (see the Tables section above).
 
 </details>
 
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-template-input — TemplateInputComponent</h3></summary>
 
-Short description
+Input field based on PrimeNG, directly usable in Reactive Forms (automatically binds to the surrounding FormGroup via FormGroupDirective).
 
-- Input field based on PrimeNG, directly usable in Reactive Forms (automatically binds to the surrounding FormGroup via FormGroupDirective).
+|              |                      |
+| ------------ | -------------------- |
+| **Selector** | `app-template-input` |
 
-API
+**Inputs:**
 
-- Selector: app-template-input
-- Inputs:
-  - label?: string — i18n key or text (Default: "label")
-  - fControlName: string — Name of the FormControl (required)
-  - appearance?: 'fill' | 'outline' (Default: 'outline')
-  - type?: 'text' | 'password' (Default: 'text')
-  - subscriptSizing?: 'dynamic' | 'fixed' (Default: 'dynamic')
+| Name             | Type                   | Default     | Description                |
+| ---------------- | ---------------------- | ----------- | -------------------------- |
+| label?           | `string`               | `"label"`   | i18n key or text           |
+| fControlName     | `string`               | required    | FormControl name to bind   |
+| appearance?      | `'fill' \| 'outline'`  | `'outline'` | Input style variant        |
+| type?            | `'text' \| 'password'` | `'text'`    | Input type                 |
+| subscriptSizing? | `'dynamic' \| 'fixed'` | `'dynamic'` | Subscript sizing behaviour |
 
 Examples
 
-1. Simple search field in a toolbar (Reactive Form)
-
 ```ts
-// component.ts
+// Simple search field in a toolbar
 form = this.fb.group({ search: [''] });
 ```
 
@@ -856,10 +865,8 @@ form = this.fb.group({ search: [''] });
 </form>
 ```
 
-2. Password field with appearance "fill"
-
 ```ts
-// component.ts
+// Password field with appearance "fill"
 form = this.fb.group({ password: [''] });
 ```
 
@@ -874,20 +881,18 @@ form = this.fb.group({ password: [''] });
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-template-spinner — TemplateSpinnerComponent</h3></summary>
 
-Short description
+Simple loading indicator (PrimeNG). Ideal for loading states in lists, dialogs, or cards.
 
-- Simple loading indicator (PrimeNG). Ideal for loading states in lists, dialogs, or cards.
+|              |                        |
+| ------------ | ---------------------- |
+| **Selector** | `app-template-spinner` |
 
-API
-
-- Selector: app-template-spinner
-- Inputs/Outputs: —
+No inputs or outputs.
 
 Examples
 
-1. Display during an HTTP loading process
-
 ```html
+<!-- Display during an HTTP loading process -->
 <section class="min-h-200 flex-center">
   @if (loading) {
   <app-template-spinner />
@@ -897,9 +902,8 @@ Examples
 </section>
 ```
 
-2. Inline spinner in a button bar
-
 ```html
+<!-- Inline spinner in a button bar -->
 <button pButton severity="primary" [disabled]="loading">
   {{ 'general.save' | transloco }} @if (loading) {
   <app-template-spinner />
@@ -912,29 +916,29 @@ Examples
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-template-table-search — TemplateTableSearchComponent</h3></summary>
 
-Short description
+Lightweight search field for tables. Reads and writes directly to `service().search` (WritableSignal&lt;string&gt;) with debouncing in the table.
 
-- Lightweight search field for tables. Reads and writes directly to service().search (WritableSignal<string>) with debouncing in the table.
+|              |                             |
+| ------------ | --------------------------- |
+| **Selector** | `app-template-table-search` |
 
-API
+**Inputs:**
 
-- Selector: app-template-table-search
-- Inputs:
-  - service: { search: WritableSignal<string> } — required
+| Name    | Type                                 | Default  | Description      |
+| ------- | ------------------------------------ | -------- | ---------------- |
+| service | `{ search: WritableSignal<string> }` | required | Service consumer |
 
 Examples
 
-1. Search in the table header
-
 ```html
+<!-- Search in the table header -->
 <header class="flex gap-12 items-center">
   <app-template-table-search [service]="userService" />
 </header>
 ```
 
-2. Combination of search and date search
-
 ```html
+<!-- Combination of search and date search -->
 <header class="flex gap-12 items-center">
   <app-template-table-search [service]="customerService" />
   <app-template-date-search [service]="customerService" />
@@ -946,32 +950,32 @@ Examples
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-template-table-fetch — TemplateTableEnterFetchComponent</h3></summary>
 
-Short description
+Powerful table that loads data from the server via a store-backed data source. Supports pagination, sorting, search, date search, and custom cells.
 
-- Powerful table that loads data from the server via a store-backed data source. Supports pagination, sorting, search, date search, and custom cells.
+|              |                            |
+| ------------ | -------------------------- |
+| **Selector** | `app-template-table-fetch` |
 
-API
+**Inputs:**
 
-- Selector: app-template-table-fetch
-- Inputs:
-  - tableDataSource: TableDataSource<T> — required, provides data signals + sendLoadRequest
-  - columnHeaderLabels: string[] — required, column header text (i18n keys)
-  - displayedPropertyColumns: string[] — required, property names on the data model
-  - customCellTemplates?: Record<string, TemplateRef> — custom cell renderers
-  - searchFilterText?: string — Current search text (bind to service.search())
-  - dateSearchFilter?: string — ISO date string (bind to service.searchDate())
-  - initialSortingConfiguration?: SortParamType — Format "field,ASC" | "field,DESC"
-  - activeTabFilterValue?: boolean — Optional boolean filter
-  - availablePageSizeOptions?: number[] (Default: [5,10,25,100])
-  - initialSelectedPageSize?: number (Default: 10)
-  - dataRefreshTrigger?: number (Default: 0) — Increment to re-fetch data
-- Outputs: —
+| Name                         | Type                          | Default            | Description                                                               |
+| ---------------------------- | ----------------------------- | ------------------ | ------------------------------------------------------------------------- |
+| tableDataSource              | `TableDataSource<T>`          | required           | Provides entities, totalCount, loading + sendLoadRequest                  |
+| columnHeaderLabels           | `string[]`                    | required           | Translated column headers (i18n keys)                                     |
+| displayedPropertyColumns     | `string[]`                    | required           | Property names on the model (supports nested paths like `"address.city"`) |
+| customCellTemplates?         | `Record<string, TemplateRef>` | `{}`               | Maps column keys to custom cell templates                                 |
+| searchFilterText?            | `string`                      | `''`               | Current search text (bind to `service.search()`)                          |
+| dateSearchFilter?            | `string`                      | `''`               | ISO date string (bind to `service.searchDate()`)                          |
+| initialSortingConfiguration? | `SortParamType`               | —                  | Initial sort in `"field,ASC"` or `"field,DESC"` format                    |
+| activeTabFilterValue?        | `boolean \| undefined`        | —                  | Optional boolean filter for tab-based views                               |
+| availablePageSizeOptions?    | `number[]`                    | `[5, 10, 25, 100]` | Page size dropdown options                                                |
+| initialSelectedPageSize?     | `number`                      | `10`               | Default page size on first load                                           |
+| dataRefreshTrigger?          | `number`                      | `0`                | Increment to trigger a re-fetch                                           |
 
 Examples
 
-1. Basic usage with a store
-
 ```html
+<!-- Basic usage with a store -->
 <app-template-table-fetch
   [displayedPropertyColumns]="columns()"
   [tableDataSource]="tableDataSource"
@@ -980,9 +984,8 @@ Examples
 />
 ```
 
-2. With search, date, sorting and custom cells
-
 ```html
+<!-- With search, date, sorting and custom cells -->
 <header class="flex gap-12 items-center">
   <app-template-table-search [service]="userService" />
   <app-template-date-search [service]="userService" />
@@ -1005,43 +1008,45 @@ Examples
 />
 ```
 
-Notes
-
-- Nested keys in displayedPropertyColumns are supported (e.g. "address.city").
-- initialSortingConfiguration must have the format "field,ASC" or "field,DESC".
-- The tableDataSource object is typically provided by extending SignalStoreTable.
+> Nested keys in displayedPropertyColumns are supported (e.g. `"address.city"`).
+> initialSortingConfiguration must use the format `"field,ASC"` or `"field,DESC"`.
+> The tableDataSource is typically provided by extending `SignalStoreTable`.
 
 </details>
 
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-save-btn — SaveBtn</h3></summary>
 
-Short description
+PrimeNG button pre-configured with a transloco key for "save". Emits an event on click.
 
-- PrimeNG button pre-configured with a transloco key for "save". Emits an event on click.
+|              |                |
+| ------------ | -------------- |
+| **Selector** | `app-save-btn` |
 
-API
+**Inputs:**
 
-- Selector: app-save-btn
-- Inputs:
-  - disabled?: boolean — Disables the button (Default: false)
-- Outputs:
-  - clickEvent: void — Emitted on click
+| Name      | Type      | Default | Description         |
+| --------- | --------- | ------- | ------------------- |
+| disabled? | `boolean` | `false` | Disables the button |
+
+**Outputs:**
+
+| Name       | Type   | Description      |
+| ---------- | ------ | ---------------- |
+| clickEvent | `void` | Emitted on click |
 
 Examples
 
-1. In a dialog footer
-
 ```html
+<!-- In a dialog footer -->
 <footer class="flex gap-8 justify-end">
   <app-cancel-btn (cancelEvent)="cancel()" />
   <app-save-btn [disabled]="form.invalid" (clickEvent)="submit()" />
 </footer>
 ```
 
-2. Standalone save button
-
 ```html
+<!-- Standalone save button -->
 <app-save-btn (clickEvent)="saveChanges()" />
 ```
 
@@ -1050,31 +1055,30 @@ Examples
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-cancel-btn — CancelBtn</h3></summary>
 
-Short description
+PrimeNG button pre-configured with a transloco key for "cancel". Emits an event on click.
 
-- PrimeNG button pre-configured with a transloco key for "cancel". Emits an event on click.
+|              |                  |
+| ------------ | ---------------- |
+| **Selector** | `app-cancel-btn` |
 
-API
+**Outputs:**
 
-- Selector: app-cancel-btn
-- Inputs: —
-- Outputs:
-  - cancelEvent: void — Emitted on click
+| Name        | Type   | Description      |
+| ----------- | ------ | ---------------- |
+| cancelEvent | `void` | Emitted on click |
 
 Examples
 
-1. In a dialog footer
-
 ```html
+<!-- In a dialog footer -->
 <footer class="flex gap-8 justify-end">
   <app-cancel-btn (cancelEvent)="cancel()" />
   <app-save-btn (clickEvent)="submit()" />
 </footer>
 ```
 
-2. Inline cancel
-
 ```html
+<!-- Inline cancel -->
 <app-cancel-btn (cancelEvent)="resetForm()" />
 ```
 
@@ -1083,28 +1087,28 @@ Examples
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-template-icon-field — TemplateIconField</h3></summary>
 
-Short description
+Input field with a leading icon (PrimeNG IconField + InputIcon + InputText). Ideal for search bars, filter fields, or any input that benefits from a visual icon hint.
 
-- Input field with a leading icon (PrimeNG IconField + InputIcon + InputText). Ideal for search bars, filter fields, or any input that benefits from a visual icon hint.
+|              |                           |
+| ------------ | ------------------------- |
+| **Selector** | `app-template-icon-field` |
 
-API
+**Inputs:**
 
-- Selector: app-template-icon-field
-- Inputs:
-  - iconClass: string — required, PrimeNG icon class (e.g. "pi pi-search")
-  - placeholder?: string — Placeholder text (Default: "")
+| Name         | Type     | Default  | Description                                |
+| ------------ | -------- | -------- | ------------------------------------------ |
+| iconClass    | `string` | required | PrimeNG icon class (e.g. `"pi pi-search"`) |
+| placeholder? | `string` | `""`     | Placeholder text                           |
 
 Examples
 
-1. Search field with search icon
-
 ```html
+<!-- Search field with search icon -->
 <app-template-icon-field iconClass="pi pi-search" placeholder="Search..." />
 ```
 
-2. With a transloco placeholder
-
 ```html
+<!-- With a transloco placeholder -->
 <app-template-icon-field iconClass="pi pi-user" placeholder="{{ 'general.username' | transloco }}" />
 ```
 
