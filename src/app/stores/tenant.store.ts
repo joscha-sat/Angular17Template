@@ -1,12 +1,10 @@
 import { computed, inject, type Signal } from '@angular/core';
 import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
 import { addEntity, removeEntity, setAllEntities, setEntity, updateEntity, withEntities } from '@ngrx/signals/entities';
-import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { tapResponse } from '@ngrx/operators';
-import { finalize, pipe, switchMap, tap } from 'rxjs';
 import { type TenantQueryParams, TenantService } from '../api/tenant.service';
 import { ResponseWithRecords } from '../api/base-http-service/base-http.service';
 import { Tenant } from '../models/Tenant';
+import { createRxMethod } from './signal-store-utility-service/signal-store-utility.service';
 
 type TenantState = {
   tenant?: ResponseWithRecords<Tenant>;
@@ -37,86 +35,38 @@ export const TenantStore = signalStore(
   // METHODS
   withMethods((store, service: TenantService = inject(TenantService)) => ({
     // GET ALL
-    getAllTenants: rxMethod<TenantQueryParams | undefined>(
-      pipe(
-        tap(() => patchState(store, { loading: true })),
-        switchMap((queryParams?: TenantQueryParams) =>
-          service.getAllTenants(queryParams).pipe(
-            tapResponse({
-              next: (items: ResponseWithRecords<Tenant>) =>
-                patchState(store, setAllEntities(items.records), {
-                  tenant: items,
-                }),
-              error: console.error,
-            }),
-            finalize(() => patchState(store, { loading: false })),
-          ),
-        ),
-      ),
+    getAllTenants: createRxMethod<TenantQueryParams | undefined, ResponseWithRecords<Tenant>>(
+      store,
+      (queryParams) => service.getAllTenants(queryParams),
+      (items) => patchState(store, setAllEntities(items.records), { tenant: items }),
     ),
 
     // GET ONE BY ID
-    getTenantById: rxMethod<string | number>(
-      pipe(
-        tap(() => patchState(store, { loading: true })),
-        switchMap((id: string | number) =>
-          service.getTenantById(id).pipe(
-            tapResponse({
-              next: (item: Tenant) => patchState(store, setEntity(item), { selectedTenant: item }),
-              error: console.error,
-            }),
-            finalize(() => patchState(store, { loading: false })),
-          ),
-        ),
-      ),
+    getTenantById: createRxMethod<string | number, Tenant>(
+      store,
+      (id) => service.getTenantById(id),
+      (item) => patchState(store, setEntity(item), { selectedTenant: item }),
     ),
 
     // CREATE ONE
-    createOneTenant: rxMethod<Tenant>(
-      pipe(
-        tap(() => patchState(store, { loading: true })),
-        switchMap((payload: Tenant) =>
-          service.createOneTenant(payload).pipe(
-            tapResponse({
-              next: (item: Tenant) => patchState(store, addEntity(item)),
-              error: console.error,
-            }),
-            finalize(() => patchState(store, { loading: false })),
-          ),
-        ),
-      ),
+    createOneTenant: createRxMethod<Tenant, Tenant>(
+      store,
+      (payload) => service.createOneTenant(payload),
+      (item) => patchState(store, addEntity(item)),
     ),
 
     // UPDATE ONE BY ID
-    updateTenantById: rxMethod<Tenant>(
-      pipe(
-        tap(() => patchState(store, { loading: true })),
-        switchMap((payload: Tenant) =>
-          service.updateTenantById(payload.id, payload).pipe(
-            tapResponse({
-              next: (item: Tenant) => patchState(store, updateEntity({ id: item.id, changes: item })),
-              error: console.error,
-            }),
-            finalize(() => patchState(store, { loading: false })),
-          ),
-        ),
-      ),
+    updateTenantById: createRxMethod<Tenant, Tenant>(
+      store,
+      (payload) => service.updateTenantById(payload.id, payload),
+      (item) => patchState(store, updateEntity({ id: item.id, changes: item })),
     ),
 
     // DELETE ONE BY ID
-    deleteTenantById: rxMethod<string | number>(
-      pipe(
-        tap(() => patchState(store, { loading: true })),
-        switchMap((id: string | number) =>
-          service.deleteTenantById(id).pipe(
-            tapResponse({
-              next: () => patchState(store, removeEntity(id)),
-              error: console.error,
-            }),
-            finalize(() => patchState(store, { loading: false })),
-          ),
-        ),
-      ),
+    deleteTenantById: createRxMethod<string | number, unknown>(
+      store,
+      (id) => service.deleteTenantById(id),
+      (_result, id) => patchState(store, removeEntity(id)),
     ),
   })),
 
