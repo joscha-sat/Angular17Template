@@ -825,56 +825,6 @@ Examples
 
 </details>
 
-<details>
-<summary>app-template-table — TemplateTableComponent</summary>
-
-Short description
-
-- Table component for local data (Array<T>) with pagination and sorting via PrimeNG. Supports custom cells via a template map.
-
-API
-
-- Selector: app-template-table
-- Inputs:
-  - headers: string[] — Headers (i18n keys), required
-  - displayedColumns: string[] — Column keys (supports nested keys via "."), required
-  - tableData: T[] — Data source, required
-  - cellTemplatesMap?: { [key: string]: TemplateRef } — Map for custom cells
-  - pageSizes?: number[] (Default: [5,10,25,100])
-  - initialPageSize?: number (Default: 10)
-  - totalItems?: number — Total count (for paginator display)
-- Outputs:
-  - paginationChange: { first: number; rows: number }
-
-Examples
-
-1. Simple table
-
-```ts
-// component.ts
-headers = signal(['general.name', 'general.email']);
-columns = signal(['name', 'email']);
-users = signal<User[]>([]);
-
-total = computed(() => users().length); // optional
-```
-
-```html
-<app-template-table [headers]="headers()" [displayedColumns]="columns()" [tableData]="users()" [totalItems]="total()" (paginationChange)="onPage($event)" />
-```
-
-2. Custom cell via template
-
-```html
-<ng-template #actions let-item>
-  <app-edit-icon (clickEvent)="edit(item)" />
-  <app-delete-icon (clickEvent)="remove(item)" />
-</ng-template>
-
-<app-template-table [headers]="['general.name','general.actions']" [displayedColumns]="['name','actions']" [tableData]="users()" [cellTemplatesMap]="{ actions }" />
-```
-
-</details>
 
 <details>
 <summary>app-template-table-search — TemplateTableSearchComponent</summary>
