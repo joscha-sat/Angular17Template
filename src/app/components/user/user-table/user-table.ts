@@ -5,7 +5,6 @@ import {
   type TableDataSource,
   TemplateTableEnterFetch,
 } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch';
-import { type Observable } from 'rxjs';
 import { UserStore } from '../../../stores/user.store';
 import { type QueryParams, UserService } from '../../../api/user.service';
 
@@ -22,14 +21,11 @@ const COLUMN_CONFIG: TableColumnConfig = {
 })
 export class UserTable extends SignalStoreTable<User> {
   private readonly userStore: InstanceType<typeof UserStore> = inject(UserStore);
-  private readonly userService: UserService = inject(UserService);
 
-  protected override tableDataSource: TableDataSource<User> = {
-    entities: this.userStore.entities,
-    totalCount: this.userStore.totalCount,
-    loading: this.userStore.loading,
-    sendLoadRequest: (parameters: unknown) => this.userStore.getAllUsers(parameters as QueryParams | undefined),
-  };
-  protected override onDataChanged$: Observable<unknown> = this.userService.refreshObservable$;
+  protected override readonly service: UserService = inject(UserService);
   protected override readonly columnConfig: TableColumnConfig = COLUMN_CONFIG;
+  protected override readonly tableDataSource: TableDataSource<User> = this.createTableDataSource(
+    this.userStore,
+    (parameters: unknown) => this.userStore.getAllUsers(parameters as QueryParams | undefined),
+  );
 }

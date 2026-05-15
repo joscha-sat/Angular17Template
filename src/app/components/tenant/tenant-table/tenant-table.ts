@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { type Observable } from 'rxjs';
 import { SignalStoreTable, type TableColumnConfig } from '../../../other/abstract-classes/SignalStoreTable';
 import {
   type TableDataSource,
@@ -22,15 +21,11 @@ const COLUMN_CONFIG: TableColumnConfig = {
 })
 export class TenantTable extends SignalStoreTable<Tenant> {
   private readonly tenantStore: InstanceType<typeof TenantStore> = inject(TenantStore);
-  protected readonly tenantService: TenantService = inject(TenantService);
 
-  protected override tableDataSource: TableDataSource<Tenant> = {
-    entities: this.tenantStore.entities,
-    totalCount: this.tenantStore.totalCount,
-    loading: this.tenantStore.loading,
-    sendLoadRequest: (parameters: unknown) =>
-      this.tenantStore.getAllTenants(parameters as TenantQueryParams | undefined),
-  };
-  protected override onDataChanged$: Observable<unknown> = this.tenantService.refreshObservable$;
+  protected override readonly service: TenantService = inject(TenantService);
   protected override readonly columnConfig: TableColumnConfig = COLUMN_CONFIG;
+  protected override readonly tableDataSource: TableDataSource<Tenant> = this.createTableDataSource(
+    this.tenantStore,
+    (parameters: unknown) => this.tenantStore.getAllTenants(parameters as TenantQueryParams | undefined),
+  );
 }
