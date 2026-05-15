@@ -14,22 +14,8 @@
 
 A comprehensive Angular template with built-in features for rapid application development.
 
-## 📋 Table of Contents
-
-1. [✨ Overview](#-overview)
-2. [🏗️ Project Structure](#️-project-structure)
-3. [🎨 Styling](#-styling)
-4. [🧩 Components](#-components)
-5. [🔌 Services](#-services)
-6. [📊 Models and Type Definitions](#-models-and-type-definitions)
-7. [🔄 State Management](#-state-management)
-8. [👨‍💻 Development](#-development)
-9. [📑 Tables](#-tables)
-10. [💬 Dialogs](#-dialogs)
-11. [📦 Shared Components UI Docs](#-shared-components-ui-docs)
-12. [📞 Contact](#-contact)
-
-## ✨ Overview
+<details style="margin-bottom: 1rem">
+<summary><h2 style="display: inline">✨ Overview</h2></summary>
 
 This Angular template provides a solid foundation for building modern web applications with Angular 21+. It includes:
 
@@ -42,7 +28,10 @@ This Angular template provides a solid foundation for building modern web applic
 - ✅ Internationalization with Transloco
 - ✅ Code quality tools (ESLint, Prettier, Husky)
 
-## 🏗️ Project Structure
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h2 style="display: inline">🏗️ Project Structure</h2></summary>
 
 The project follows a modular structure:
 
@@ -58,7 +47,10 @@ The project follows a modular structure:
 | `src/app/stores`     | State management                                                                   |
 | `src/app/views`      | Page components used in routing                                                    |
 
-## 🎨 Styling
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h2 style="display: inline">🎨 Styling</h2></summary>
 
 ### 📁 Global SCSS Files
 
@@ -99,7 +91,10 @@ Media queries and breakpoints are defined in `src/assets/scss/`:
 }
 ```
 
-## 🧩 Components
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h2 style="display: inline">🧩 Components</h2></summary>
 
 The project uses a component-based architecture:
 
@@ -128,7 +123,10 @@ Located in `src/app/views`, these are page-level components used in routing:
 - ✅ Act as "Layout Components" for different component blocks
 - ✅ Handle page-level logic and data fetching
 
-## 🔌 Services
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h2 style="display: inline">🔌 Services</h2></summary>
 
 ### 🌐 API Services
 
@@ -157,7 +155,10 @@ Located in `src/app/services`, these services provide utility functions:
 - ✅ Shared data and state
 - ✅ Application-wide functionality
 
-## 📊 Models and Type Definitions
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h2 style="display: inline">📊 Models and Type Definitions</h2></summary>
 
 ### 📋 Models
 
@@ -200,7 +201,10 @@ export class User extends BaseModel<User> {
 
 </details>
 
-## 🔄 State Management
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h2 style="display: inline">🔄 State Management</h2></summary>
 
 The template includes state management using **@ngrx/signals**:
 
@@ -255,7 +259,10 @@ export const CustomerStore = signalStore(
 
 </details>
 
-## 👨‍💻 Development
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h2 style="display: inline">👨‍💻 Development</h2></summary>
 
 ### 🚀 Getting Started
 
@@ -292,7 +299,9 @@ The template includes:
 
 </details>
 
-<details>
+</details>
+
+<details style="margin-bottom: 1rem">
 <summary><h2 style="display: inline">📑 Tables</h2></summary>
 
 The template includes a powerful server-driven table component system. It is built from three layers that work together:
@@ -525,7 +534,7 @@ The table re-fetches data whenever the `dataRefreshTrigger` input changes. The `
 
 </details>
 
-<details>
+<details style="margin-bottom: 1rem">
 <summary><h2 style="display: inline">💬 Dialogs</h2></summary>
 
 The template uses PrimeNG's `DialogService` (`primeng/dynamicdialog`) for opening reusable modal dialogs.
@@ -645,7 +654,8 @@ export class TenantHeader {
 </details>
 </details>
 
-## 📦 Shared Components UI Docs
+<details style="margin-bottom: 1rem">
+<summary><h2 style="display: inline">📦 Shared Components UI Docs</h2></summary>
 
 This section serves as a compact UI documentation for the reusable Shared Components. Each component is briefly explained and shows at least two usage examples. Expansion panels keep the view concise.
 
@@ -1114,10 +1124,15 @@ Examples
 
 </details>
 
-## 📞 Contact
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h2 style="display: inline">📞 Contact</h2></summary>
 
 For questions or support, contact:
 
 | Name               | Email                                        |
 | ------------------ | -------------------------------------------- |
 | **Joscha Sattler** | j.sattler@28apps.de or joscha.sattler@web.de |
+
+</details>
