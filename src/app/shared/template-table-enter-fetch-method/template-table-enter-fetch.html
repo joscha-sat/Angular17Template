@@ -1,59 +1,46 @@
 <!-- TABLE CONTAINER -->
 <div class="table-container">
   <p-table
-    [value]="tableData()"
+    [value]="tableRowData()"
     [paginator]="true"
-    [rows]="pageSize()"
+    [rows]="currentSelectedPageSize()"
     [lazy]="true"
-    [rowsPerPageOptions]="pageSizes()"
-    [totalRecords]="totalItemsCount()"
-    [first]="currentPageFirstIndex()"
+    [rowsPerPageOptions]="availablePageSizeOptions()"
+    [totalRecords]="totalRecordCount()"
+    [first]="currentPageStartIndex()"
     (onPage)="handlePageChange($event)"
     [tableStyle]="{ 'mat-elevation-z8': true }"
     [scrollable]="true"
     [scrollHeight]="'flex'"
     [paginatorPosition]="'bottom'"
   >
+    <!-- TABLE HEADER -->
     <ng-template pTemplate="header">
       <tr>
-        @for (column of displayedColumns(); track column) {
-        <th>{{ headers()[$index] }}</th>
+        @for (columnKey of displayedPropertyColumns(); track columnKey) {
+        <th>{{ columnHeaderLabels()[$index] }}</th>
         }
       </tr>
     </ng-template>
+
+    <!-- TABLE BODY -->
     <ng-template pTemplate="body" let-rowData>
       <tr>
-        @for (column of displayedColumns(); track column) {
+        @for (columnKey of displayedPropertyColumns(); track columnKey) { @let cellValue =
+        retrieveNestedPropertyValue(rowData, columnKey); @let cellTemplate = customCellTemplates()[columnKey];
         <td>
-          @if (cellTemplatesMap()[column]; as template) {
+          @if (cellTemplate) {
           <ng-container
-            *ngTemplateOutlet="
-                  template;
-                  context: {
-                    $implicit: extractNestedProperty(rowData, column),
-                    object: rowData,
-                  }
-                "
+            [ngTemplateOutlet]="cellTemplate"
+            [ngTemplateOutletContext]="{
+                $implicit: cellValue,
+                object: rowData,
+              }"
           />
-          } @else {
-          <ng-container
-            *ngTemplateOutlet="
-                  defaultCellTemplate;
-                  context: {
-                    $implicit: extractNestedProperty(rowData, column),
-                    object: rowData,
-                  }
-                "
-          />
-          }
+          } @else if (cellValue | isDate) { {{ cellValue | date: 'dd.MM.yyyy HH:mm' }} } @else { {{ cellValue }} }
         </td>
         }
       </tr>
     </ng-template>
   </p-table>
-
-  <!-- DEFAULT CELL TEMPLATE -->
-  <ng-template #defaultCellTemplate let-value>
-    @if (value | isDate) { {{ value | date: 'dd.MM.yyyy HH:mm' }} } @else { {{ value }} }
-  </ng-template>
 </div>

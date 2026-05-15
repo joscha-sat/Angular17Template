@@ -1,12 +1,27 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { signal, type Signal } from '@angular/core';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
 
-import { TemplateTableEnterFetch } from './template-table-enter-fetch';
+import { type TableDataSource, TemplateTableEnterFetch } from './template-table-enter-fetch';
 
 describe('TemplateTableEnterFetch', () => {
   let component: TemplateTableEnterFetch<any>;
   let fixture: ComponentFixture<TemplateTableEnterFetch<any>>;
+
+  const createMockDataSource = (): TableDataSource<unknown> => {
+    const entities: Signal<unknown[]> = signal<unknown[]>([]);
+    const totalCount: Signal<number> = signal<number>(0);
+    const loading: Signal<boolean> = signal<boolean>(false);
+
+    return {
+      entities,
+      totalCount,
+      loading,
+      sendLoadRequest: (_parameters: unknown): void => {
+        /* noop */
+      },
+    };
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -17,18 +32,9 @@ describe('TemplateTableEnterFetch', () => {
     component = fixture.componentInstance;
 
     // Set required inputs
-    const mockFetchData = vi.fn().mockReturnValue(
-      of({
-        data: [],
-        total: 0,
-        skip: 0,
-        limit: 10,
-      }),
-    );
-
-    fixture.componentRef.setInput('fetchData', mockFetchData);
-    fixture.componentRef.setInput('headers', ['Test Header 1', 'Test Header 2']);
-    fixture.componentRef.setInput('displayedColumns', ['col1', 'col2']);
+    fixture.componentRef.setInput('tableDataSource', createMockDataSource());
+    fixture.componentRef.setInput('columnHeaderLabels', ['Test Header 1', 'Test Header 2']);
+    fixture.componentRef.setInput('displayedPropertyColumns', ['col1', 'col2']);
 
     fixture.detectChanges();
   });

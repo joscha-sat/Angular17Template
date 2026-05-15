@@ -1,5 +1,5 @@
 import { computed, inject, type Signal } from '@angular/core';
-import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
+import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { addEntity, removeEntity, setAllEntities, setEntity, updateEntity, withEntities } from '@ngrx/signals/entities';
 import { type TenantQueryParams, TenantService } from '../api/tenant.service';
 import { ResponseWithRecords } from '../api/base-http-service/base-http.service';
@@ -7,8 +7,8 @@ import { Tenant } from '../models/Tenant';
 import { createRxMethod } from './signal-store-utility-service/signal-store-utility.service';
 
 type TenantState = {
-  tenant?: ResponseWithRecords<Tenant>;
-  selectedTenant?: Tenant;
+  tenant: ResponseWithRecords<Tenant> | undefined;
+  selectedTenant: Tenant | undefined;
   loading: boolean;
 };
 
@@ -28,8 +28,8 @@ export const TenantStore = signalStore(
   withState(initialState),
 
   // COMPUTED
-  withComputed(({ entities }: { entities: Signal<Tenant[]> }) => ({
-    totalCount: computed(() => entities().length),
+  withComputed(({ tenant }: { tenant: Signal<ResponseWithRecords<Tenant> | undefined> }) => ({
+    totalCount: computed(() => tenant()?.total ?? 0),
   })),
 
   // METHODS
@@ -69,11 +69,4 @@ export const TenantStore = signalStore(
       (_result, id) => patchState(store, removeEntity(id)),
     ),
   })),
-
-  // HOOKS
-  withHooks({
-    onInit({ getAllTenants }: { getAllTenants: (value: TenantQueryParams | undefined) => void }) {
-      getAllTenants(undefined);
-    },
-  }),
 );

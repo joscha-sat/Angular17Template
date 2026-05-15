@@ -1,6 +1,7 @@
 <app-template-table-fetch
-  [displayedColumns]="columns()"
-  [fetchData]="fetchDataFn"
-  [headers]="headers()"
-  [search]="tenantService.search()"
+  [displayedPropertyColumns]="columns()"
+  [tableDataSource]="tableDataSource"
+  [columnHeaderLabels]="headers()"
+  [searchFilterText]="tenantService.search()"
+  [dataRefreshTrigger]="refreshCounter()"
 />

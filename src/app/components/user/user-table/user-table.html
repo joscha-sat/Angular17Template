@@ -1,10 +1,9 @@
-<app-template-table-fetch
-  [cellTemplatesMap]="{ name, actions }"
-  [displayedColumns]="columns()"
-  [fetchData]="fetchDataFn"
-  [headers]="headers()"
-  [search]="userService.search()"
-/>
+<!--<app-template-table-fetch-->
+<!--  [cellTemplatesMap]="{ name, actions }"-->
+<!--  [displayedColumns]="columns()"-->
+<!--  [headers]="headers()"-->
+<!--  [search]="userService.search()"-->
+<!--  [tableStoreSource]="[]" />-->
 
 <ng-template #name let-user="object"> {{ user.firstName }} {{ user.lastName }} </ng-template>
 
