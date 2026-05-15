@@ -1,12 +1,14 @@
 # Project Guidelines
 
 ## Scripts
+
 Always run these scripts at the end of your work to ensure code quality and consistency:
 
 - `npm run eslint`
 - `npx prettier --write "src/**/*.{html,ts,scss}"`
 
 ## Tech Stack
+
 - Angular: `^21.1.1`
 - PrimeNG: `^21.1.6`
 - TypeScript: `~5.9.3`
@@ -15,6 +17,7 @@ Always run these scripts at the end of your work to ensure code quality and cons
 - Prettier: `^3.8.1`
 
 ## Project Structure
+
 ```
 src/
 ├── app/
@@ -345,13 +348,13 @@ readonly tenantDetailsResource: HttpResourceRef<Tenant> = httpResource<Tenant>((
 
 #### Choosing between resource APIs
 
-| Scenario | Use |
-|---|---|
-| `HttpClient` GET (JSON response) | `httpResource()` |
-| `HttpClient` POST / mutation | `HttpClient` directly in a service method |
-| RxJS Observable loader, not HttpClient | `rxResource()` |
-| Promise-based loader (fetch, SDK, browser API) | `resource()` |
-| Value derived from a signal but user-overridable | `linkedSignal()` |
+| Scenario                                         | Use                                       |
+| ------------------------------------------------ | ----------------------------------------- |
+| `HttpClient` GET (JSON response)                 | `httpResource()`                          |
+| `HttpClient` POST / mutation                     | `HttpClient` directly in a service method |
+| RxJS Observable loader, not HttpClient           | `rxResource()`                            |
+| Promise-based loader (fetch, SDK, browser API)   | `resource()`                              |
+| Value derived from a signal but user-overridable | `linkedSignal()`                          |
 
 ---
 
@@ -400,13 +403,13 @@ Use the built-in template control flow (`@if`, `@for`, `@switch`) instead of `*n
 
 ```html
 @if (isUserAuthenticated()) {
-  <ul>
-    @for (user of userList(); track user.id) {
-      <li>{{ user.name }}</li>
-    }
-  </ul>
+<ul>
+  @for (user of userList(); track user.id) {
+  <li>{{ user.name }}</li>
+  }
+</ul>
 } @else {
-  <app-login-prompt />
+<app-login-prompt />
 }
 ```
 
@@ -544,6 +547,128 @@ constructor() {
 }
 ```
 
+### NGRX Signal Store with `createRxMethod`
+
+Use `signalStore()` for global/stateful data management (e.g., tenants, users). All CRUD methods must use the
+`createRxMethod` utility from `src/app/stores/signal-store-utility-service/signal-store-utility.service.ts` to
+avoid repeating the loading/error/finalize boilerplate.
+
+#### Store Structure
+
+Every store follows this shape:
+
+| Feature                   | Purpose                                        |
+| ------------------------- | ---------------------------------------------- |
+| `withEntities<T>()`       | Entity collection (for table data)             |
+| `withState(initialState)` | Additional state (selected item, loading flag) |
+| `withComputed(...)`       | Derived signals (e.g., total count)            |
+| `withMethods(...)`        | All CRUD operations using `createRxMethod`     |
+| `withHooks(...)`          | `onInit` to trigger initial data load          |
+
+#### `createRxMethod` Signature
+
+```typescript
+createRxMethod<Params, ApiResponse>(
+  store,
+  (input: Params) => service.someMethod(input),  // service call
+  (result: ApiResponse, input: Params) => void,   // onSuccess
+  withLoading?: boolean,                          // defaults to true; set false if no loading property
+)
+```
+
+- **`Params`** — the type you pass _into_ the method (e.g. `TenantQueryParams | undefined`, `string | number`, `Tenant`)
+- **`ApiResponse`** — the type the service Observable emits (e.g. `ResponseWithRecords<Tenant>`, `Tenant`, `unknown`)
+- **`withLoading`** — defaults to `true`. Stores without a `loading` property should pass `false` to skip the loading patch
+
+#### Full Example — `tenant.store.ts`
+
+```typescript
+import { computed, inject, type Signal } from '@angular/core';
+import { patchState, signalStore, withComputed, withHooks, withMethods, withState } from '@ngrx/signals';
+import { addEntity, removeEntity, setAllEntities, setEntity, updateEntity, withEntities } from '@ngrx/signals/entities';
+import { type TenantQueryParams, TenantService } from '../api/tenant.service';
+import { ResponseWithRecords } from '../api/base-http-service/base-http.service';
+import { Tenant } from '../models/Tenant';
+import { createRxMethod } from './signal-store-utility-service/signal-store-utility.service';
+
+type TenantState = {
+  tenant?: ResponseWithRecords<Tenant>;
+  selectedTenant?: Tenant;
+  loading: boolean;
+};
+
+const initialState: TenantState = {
+  tenant: undefined,
+  selectedTenant: undefined,
+  loading: false,
+};
+
+export const TenantStore = signalStore(
+  { providedIn: 'root' },
+
+  // ENTITIES
+  withEntities<Tenant>(),
+
+  // STATE
+  withState(initialState),
+
+  // COMPUTED
+  withComputed(({ entities }: { entities: Signal<Tenant[]> }) => ({
+    totalCount: computed(() => entities().length),
+  })),
+
+  // METHODS
+  withMethods((store, service: TenantService = inject(TenantService)) => ({
+    getAllTenants: createRxMethod<TenantQueryParams | undefined, ResponseWithRecords<Tenant>>(
+      store,
+      (queryParams) => service.getAllTenants(queryParams),
+      (items) => patchState(store, setAllEntities(items.records), { tenant: items }),
+    ),
+
+    getTenantById: createRxMethod<string | number, Tenant>(
+      store,
+      (id) => service.getTenantById(id),
+      (item) => patchState(store, setEntity(item), { selectedTenant: item }),
+    ),
+
+    createOneTenant: createRxMethod<Tenant, Tenant>(
+      store,
+      (payload) => service.createOneTenant(payload),
+      (item) => patchState(store, addEntity(item)),
+    ),
+
+    updateTenantById: createRxMethod<Tenant, Tenant>(
+      store,
+      (payload) => service.updateTenantById(payload.id, payload),
+      (item) => patchState(store, updateEntity({ id: item.id, changes: item })),
+    ),
+
+    deleteTenantById: createRxMethod<string | number, unknown>(
+      store,
+      (id) => service.deleteTenantById(id),
+      (_result, id) => patchState(store, removeEntity(id)),
+    ),
+  })),
+
+  // HOOKS
+  withHooks({
+    onInit({ getAllTenants }: { getAllTenants: (value: TenantQueryParams | undefined) => void }) {
+      getAllTenants(undefined);
+    },
+  }),
+);
+```
+
+#### Rules
+
+- Every store must define a `loading: boolean` in its state — `createRxMethod` uses this automatically
+- Stores without a `loading` property should pass `false` as the 4th argument to skip the loading patch
+- Always pass `store` as the first argument to `createRxMethod` — it is the object provided by `withMethods`
+- Name stores with the `Store` suffix (e.g. `TenantStore`, `UserStore`)
+- Keep `withHooks` minimal — just the initial data load, nothing else
+
+---
+
 ## ⚙️ Refactoring Criteria & Examples
 
 ### Guard Clauses
@@ -602,7 +727,7 @@ Simple, obvious code beats clever, compact code.
 ❌ **BAD** - Clever but unreadable:
 
 ```typescript
-const calculateDiscount = (p: number, a: number) => p > 100 ? a * 0.1 : p > 50 ? a * 0.05 : a > 1000 ? 25 : 0;
+const calculateDiscount = (p: number, a: number) => (p > 100 ? a * 0.1 : p > 50 ? a * 0.05 : a > 1000 ? 25 : 0);
 ```
 
 ✅ **GOOD** - Simple and obvious:
@@ -1018,7 +1143,9 @@ decisions should never vary between contributors — the tooling enforces consis
 
 ```typescript
 // File A
-const getUserData=()=>{ return fetch('/api/user') }
+const getUserData = () => {
+  return fetch('/api/user');
+};
 
 // File B
 const getUserData = () => {
@@ -1246,7 +1373,9 @@ following block or section.
 </header>
 
 <!-- USER TABLE -->
-<table>...</table>
+<table>
+  ...
+</table>
 
 <!-- NEW USER BUTTON -->
 <button type="button">Create User</button>
