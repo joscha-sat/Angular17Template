@@ -5,18 +5,18 @@ import { type TableDataSource } from '../../shared/template-table-enter-fetch-me
 
 @Directive()
 export abstract class SignalStoreTable<T> implements OnInit, OnDestroy {
-  protected abstract createTableDataSource(): TableDataSource<T>;
-  protected abstract readonly onDataChanged$: Observable<unknown>;
+  // Set tableDataSource and onDataChanged$ as field initializers in the child.
+  // No more abstract createTableDataSource() that generates throw-error stubs.
+  protected onDataChanged$!: Observable<unknown>;
   abstract readonly headers: WritableSignal<string[]>;
   abstract readonly columns: WritableSignal<string[]>;
 
-  tableDataSource!: TableDataSource<T>;
+  protected tableDataSource!: TableDataSource<T>;
   protected readonly refreshCounter: WritableSignal<number> = signal<number>(0);
   protected readonly translocoService: TranslocoService = inject(TranslocoService);
   private refreshSubscription?: Subscription;
 
   ngOnInit(): void {
-    this.tableDataSource = this.createTableDataSource();
     this.subscribeToDataChanges();
   }
 

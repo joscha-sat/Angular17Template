@@ -19,25 +19,22 @@ export class TenantTable extends SignalStoreTable<Tenant> implements OnInit {
   private readonly tenantStore: InstanceType<typeof TenantStore> = inject(TenantStore);
   protected readonly tenantService: TenantService = inject(TenantService);
 
-  readonly headers: WritableSignal<string[]> = signal<string[]>([
+  protected override tableDataSource: TableDataSource<Tenant> = {
+    entities: this.tenantStore.entities,
+    totalCount: this.tenantStore.totalCount,
+    loading: this.tenantStore.loading,
+    sendLoadRequest: (parameters: unknown) =>
+      this.tenantStore.getAllTenants(parameters as TenantQueryParams | undefined),
+  };
+  protected override onDataChanged$: Observable<unknown> = this.tenantService.refreshObservable$;
+
+  override readonly headers: WritableSignal<string[]> = signal<string[]>([
     'general.name',
     'general.createdAt',
     'general.updatedAt',
   ]);
 
-  readonly columns: WritableSignal<string[]> = signal<string[]>(['name', 'createdAt', 'updatedAt']);
-
-  protected readonly onDataChanged$: Observable<unknown> = this.tenantService.refreshObservable$;
-
-  protected createTableDataSource(): TableDataSource<Tenant> {
-    return {
-      entities: this.tenantStore.entities,
-      totalCount: this.tenantStore.totalCount,
-      loading: this.tenantStore.loading,
-      sendLoadRequest: (parameters: unknown) =>
-        this.tenantStore.getAllTenants(parameters as TenantQueryParams | undefined),
-    };
-  }
+  override readonly columns: WritableSignal<string[]> = signal<string[]>(['name', 'createdAt', 'updatedAt']);
 
   override ngOnInit(): void {
     super.ngOnInit();
