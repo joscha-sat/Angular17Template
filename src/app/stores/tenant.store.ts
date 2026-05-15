@@ -56,10 +56,10 @@ export const TenantStore = signalStore(
     ),
 
     // GET ONE BY ID
-    getTenantById: rxMethod<number>(
+    getTenantById: rxMethod<string | number>(
       pipe(
         tap(() => patchState(store, { loading: true })),
-        switchMap((id: number) =>
+        switchMap((id: string | number) =>
           service.getTenantById(id).pipe(
             tapResponse({
               next: (item: Tenant) => patchState(store, setEntity(item), { selectedTenant: item }),
@@ -104,10 +104,10 @@ export const TenantStore = signalStore(
     ),
 
     // DELETE ONE BY ID
-    deleteTenantById: rxMethod<number>(
+    deleteTenantById: rxMethod<string | number>(
       pipe(
         tap(() => patchState(store, { loading: true })),
-        switchMap((id: number) =>
+        switchMap((id: string | number) =>
           service.deleteTenantById(id).pipe(
             tapResponse({
               next: () => patchState(store, removeEntity(id)),
