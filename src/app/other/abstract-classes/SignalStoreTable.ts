@@ -28,6 +28,7 @@ export abstract class SignalStoreTable<T> implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.columns.set(this.columnConfig.displayedColumns);
     this.headers.set(this.columnConfig.headers);
+    this.translateHeaders(this.headers);
     this.subscribeToDataChanges();
   }
 

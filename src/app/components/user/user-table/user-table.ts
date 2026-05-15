@@ -1,4 +1,4 @@
-import { Component, inject, type OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { SignalStoreTable, type TableColumnConfig } from '../../../other/abstract-classes/SignalStoreTable';
 import { User } from '../../../models/User';
 import {
@@ -20,7 +20,7 @@ const COLUMN_CONFIG: TableColumnConfig = {
   templateUrl: './user-table.html',
   styleUrl: './user-table.scss',
 })
-export class UserTable extends SignalStoreTable<User> implements OnInit {
+export class UserTable extends SignalStoreTable<User> {
   private readonly userStore: InstanceType<typeof UserStore> = inject(UserStore);
   private readonly userService: UserService = inject(UserService);
 
@@ -32,9 +32,4 @@ export class UserTable extends SignalStoreTable<User> implements OnInit {
   };
   protected override onDataChanged$: Observable<unknown> = this.userService.refreshObservable$;
   protected override readonly columnConfig: TableColumnConfig = COLUMN_CONFIG;
-
-  override ngOnInit(): void {
-    super.ngOnInit();
-    this.translateHeaders(this.headers);
-  }
 }
