@@ -49,6 +49,7 @@ The project follows a modular structure:
 | Directory            | Purpose                                                                            |
 | -------------------- | ---------------------------------------------------------------------------------- |
 | `src/app/api`        | API services for HTTP requests                                                     |
+| `src/client`         | Auto-generated API client from OpenAPI spec (via `@hey-api/openapi-ts`)            |
 | `src/app/components` | Feature-specific components                                                        |
 | `src/app/models`     | Data models                                                                        |
 | `src/app/other`      | Abstract classes, types, enums, guards, interceptors, layouts, pipes, environments |
@@ -65,9 +66,9 @@ Global SCSS files are located in the `assets/scss` folder:
 
 | File              | Purpose                                                                          |
 | ----------------- | -------------------------------------------------------------------------------- |
+| `_index.scss`     | Forward file that re-exports all partials (use `@use 'index' as *` to import)    |
 | `_mixins.scss`    | Custom global utility classes (directly usable as HTML class, no imports needed) |
-| `_colors.scss`    | Repeating color values (import them into styles.scss as CSS variables)           |
-| `_variables.scss` | Custom repeating SCSS values                                                     |
+| `_variables.scss` | Breakpoints, media-query mixins, and custom repeating SCSS values                |
 
 ### 🧰 UI Library
 
@@ -212,6 +213,21 @@ The template includes state management using **@ngrx/signals**:
 <summary><h3 style="display: inline">📝 Example Store</h3></summary>
 
 ```typescript
+import { computed, inject, type Signal } from '@angular/core';
+import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
+import { setAllEntities, withEntities } from '@ngrx/signals/entities';
+import { type CustomerQueryParams, CustomerService } from '../api/customer.service';
+import { type ResponseWithRecords } from '../api/base-http-service/base-http.service';
+import { createRxMethod } from './signal-store-utility-service/signal-store-utility.service';
+
+type CustomerState = {
+  loading: boolean;
+};
+
+const initialState: CustomerState = {
+  loading: false,
+};
+
 export const CustomerStore = signalStore(
   { providedIn: 'root' },
 
@@ -222,29 +238,16 @@ export const CustomerStore = signalStore(
   withState(initialState),
 
   // COMPUTED
-  withComputed(({ entities, loading }) => ({
+  withComputed(({ entities }: { entities: Signal<Customer[]> }) => ({
     totalCount: computed(() => entities().length),
-    isLoading: computed(() => loading()),
   })),
 
-  // API METHODS
-  withMethods((store, service = inject(CustomerService)) => ({
-    getAllCustomers: rxMethod<void>(
-      pipe(
-        tap(() => patchState(store, { loading: true })),
-        switchMap(() =>
-          service.getAllCustomers().pipe(
-            tapResponse({
-              next: (customers: ResponseWithRecords<Customer>) =>
-                patchState(store, setAllEntities(customers.records), {
-                  ...customers,
-                  loading: false,
-                }),
-              error: () => patchState(store, { loading: false }),
-            }),
-          ),
-        ),
-      ),
+  // METHODS
+  withMethods((store, service: CustomerService = inject(CustomerService)) => ({
+    getAllCustomers: createRxMethod<CustomerQueryParams | undefined, ResponseWithRecords<Customer>>(
+      store,
+      (queryParams) => service.getAllCustomers(queryParams),
+      (result) => patchState(store, setAllEntities(result.records), { loading: false }),
     ),
   })),
 );
@@ -273,12 +276,12 @@ Navigate to `http://localhost:4200/`. The application will automatically reload 
 
 The template includes:
 
-| Tool         | Purpose         | Command                      |
-| ------------ | --------------- | ---------------------------- |
-| **ESLint**   | Code linting        | `npm run lint`               |
-| **Prettier** | Code formatting     | `npm run prettier:write`     |
-| **Vitest**   | Unit testing        | `npm run run-unit-tests:terminal` |
-| **Husky**    | Git hooks           | Runs automatically on commit |
+| Tool         | Purpose         | Command                           |
+| ------------ | --------------- | --------------------------------- |
+| **ESLint**   | Code linting    | `npm run lint`                    |
+| **Prettier** | Code formatting | `npm run prettier:write`          |
+| **Vitest**   | Unit testing    | `npm run run-unit-tests:terminal` |
+| **Husky**    | Git hooks       | Runs automatically on commit      |
 
 <details>
 <summary><h3 style="display: inline">🔧 Configuration Files</h3></summary>
@@ -294,11 +297,11 @@ The template includes:
 
 The template includes a powerful server-driven table component system. It is built from three layers that work together:
 
-| Layer | File | Purpose |
-|-------|------|---------|
-| **1. Signal Store** | `src/app/stores/*.store.ts` | Holds data in memory, provides `entities`, `totalCount`, `loading` signals |
-| **2. Abstract Component** | `src/app/other/abstract-classes/SignalStoreTable.ts` | Base class that connects a store to the table component |
-| **3. Table Component** | `src/app/shared/template-table-enter-fetch-method/` | The actual PrimeNG table with pagination, search, sorting |
+| Layer                     | File                                                 | Purpose                                                                    |
+| ------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------- |
+| **1. Signal Store**       | `src/app/stores/*.store.ts`                          | Holds data in memory, provides `entities`, `totalCount`, `loading` signals |
+| **2. Abstract Component** | `src/app/other/abstract-classes/SignalStoreTable.ts` | Base class that connects a store to the table component                    |
+| **3. Table Component**    | `src/app/shared/template-table-enter-fetch-method/`  | The actual PrimeNG table with pagination, search, sorting                  |
 
 ### 🧱 Step-by-Step Guide
 
@@ -356,7 +359,7 @@ Services that extend `GenericHttpService` already include the `search` and `sear
 @Injectable({ providedIn: 'root' })
 export class CustomerService extends GenericHttpService<Customer> {
   constructor() {
-    super(); 
+    super();
   }
 
   getAllCustomers(queryParams?: CustomerQueryParams): Observable<ResponseWithRecords<Customer>> {
@@ -486,10 +489,10 @@ You can override how individual columns are displayed using `ng-template` refere
 
 Each template receives two context variables:
 
-| Variable | Description |
-|----------|-------------|
-| `$implicit` | The cell value (same as `let-value`) |
-| `object` or `let-row` | The full row data object |
+| Variable              | Description                          |
+| --------------------- | ------------------------------------ |
+| `$implicit`           | The cell value (same as `let-value`) |
+| `object` or `let-row` | The full row data object             |
 
 If no custom template is provided for a column, the table displays the raw value. Dates are automatically formatted as `dd.MM.yyyy HH:mm`.
 
@@ -506,19 +509,19 @@ The table re-fetches data whenever the `dataRefreshTrigger` input changes. The `
 
 ### 📋 Table Input Reference
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `tableDataSource` | `TableDataSource<T>` | required | Object providing entities, totalCount, loading + sendLoadRequest |
-| `columnHeaderLabels` | `string[]` | required | Translated column headers (can be i18n keys) |
-| `displayedPropertyColumns` | `string[]` | required | Property names on the data model (supports nested paths like `"address.city"`) |
-| `customCellTemplates` | `Record<string, TemplateRef>` | `{}` | Maps column keys to custom cell templates |
-| `searchFilterText` | `string` | `''` | Current search text (bind to `service.search()`) |
-| `dateSearchFilter` | `string` | `''` | ISO date string filter (bind to `service.searchDate()`) |
-| `initialSortingConfiguration` | `SortParamType` | `undefined` | Initial sort in `"field,ASC"` or `"field,DESC"` format |
-| `activeTabFilterValue` | `boolean \| undefined` | `undefined` | Optional boolean filter for tab-based views |
-| `availablePageSizeOptions` | `number[]` | `[5, 10, 25, 100]` | Page size dropdown options |
-| `initialSelectedPageSize` | `number` | `10` | Default page size on first load |
-| `dataRefreshTrigger` | `number` | `0` | Increment to trigger a re-fetch |
+| Input                         | Type                          | Default            | Description                                                                    |
+| ----------------------------- | ----------------------------- | ------------------ | ------------------------------------------------------------------------------ |
+| `tableDataSource`             | `TableDataSource<T>`          | required           | Object providing entities, totalCount, loading + sendLoadRequest               |
+| `columnHeaderLabels`          | `string[]`                    | required           | Translated column headers (can be i18n keys)                                   |
+| `displayedPropertyColumns`    | `string[]`                    | required           | Property names on the data model (supports nested paths like `"address.city"`) |
+| `customCellTemplates`         | `Record<string, TemplateRef>` | `{}`               | Maps column keys to custom cell templates                                      |
+| `searchFilterText`            | `string`                      | `''`               | Current search text (bind to `service.search()`)                               |
+| `dateSearchFilter`            | `string`                      | `''`               | ISO date string filter (bind to `service.searchDate()`)                        |
+| `initialSortingConfiguration` | `SortParamType`               | `undefined`        | Initial sort in `"field,ASC"` or `"field,DESC"` format                         |
+| `activeTabFilterValue`        | `boolean \| undefined`        | `undefined`        | Optional boolean filter for tab-based views                                    |
+| `availablePageSizeOptions`    | `number[]`                    | `[5, 10, 25, 100]` | Page size dropdown options                                                     |
+| `initialSelectedPageSize`     | `number`                      | `10`               | Default page size on first load                                                |
+| `dataRefreshTrigger`          | `number`                      | `0`                | Increment to trigger a re-fetch                                                |
 
 </details>
 
@@ -549,7 +552,9 @@ import { AddEdit } from '../../../other/types/AddEdit.type';
 export class TenantAddEditDialog implements OnInit, AddEdit {
   private readonly fb: FormBuilder = inject(FormBuilder);
   private readonly dialogRef: DynamicDialogRef = inject(DynamicDialogRef);
-  private readonly config: DynamicDialogConfig<{ mode?: MODE; tenant?: Tenant }> = inject(DynamicDialogConfig) as DynamicDialogConfig<{ mode?: MODE; tenant?: Tenant }>;
+  private readonly config: DynamicDialogConfig<{ mode?: MODE; tenant?: Tenant }> = inject(
+    DynamicDialogConfig,
+  ) as DynamicDialogConfig<{ mode?: MODE; tenant?: Tenant }>;
 
   mode: MODE = MODE.ADD;
   tenantForm?: FormGroup;
@@ -593,7 +598,9 @@ import { MODE } from '../../../other/enums/mode.enum';
 
 @Component({
   selector: 'app-tenant-header',
-  imports: [/* ... */],
+  imports: [
+    /* ... */
+  ],
   providers: [DialogService], // Required!
 })
 export class TenantHeader {
@@ -618,13 +625,13 @@ export class TenantHeader {
 
 ### 🧩 Custom Dialogs Cheat Sheet
 
-| Step | What to do |
-|------|------------|
-| 1 | Create a component (no base class needed) |
-| 2 | Inject `DynamicDialogRef` (to close) and `DynamicDialogConfig` (to read data) |
-| 3 | Implement `AddEdit` from `src/app/other/types/AddEdit.type.ts` for consistency |
-| 4 | In the parent, provide `DialogService` at component level |
-| 5 | Call `dialogService.open(YourComponent, { data: {...} })` |
+| Step | What to do                                                                     |
+| ---- | ------------------------------------------------------------------------------ |
+| 1    | Create a component (no base class needed)                                      |
+| 2    | Inject `DynamicDialogRef` (to close) and `DynamicDialogConfig` (to read data)  |
+| 3    | Implement `AddEdit` from `src/app/other/types/AddEdit.type.ts` for consistency |
+| 4    | In the parent, provide `DialogService` at component level                      |
+| 5    | Call `dialogService.open(YourComponent, { data: {...} })`                      |
 
 <details>
 <summary><h3 style="display: inline">💡 Dialog Best Practices</h3></summary>
@@ -760,7 +767,14 @@ function onDateChange(iso: string) {
 2. With min/max and custom label/field name
 
 ```html
-<app-template-datepicker [minDate]="min" [maxDate]="max" label="filters.order-date" fControlName="orderDate" [service]="service" (dateChange)="onDateChange($event)" />
+<app-template-datepicker
+  [minDate]="min"
+  [maxDate]="max"
+  label="filters.order-date"
+  fControlName="orderDate"
+  [service]="service"
+  (dateChange)="onDateChange($event)"
+/>
 ```
 
 </details>
@@ -895,7 +909,6 @@ Examples
 
 </details>
 
-
 <details style="margin-bottom: 1rem">
 <summary><h3 style="display: inline">app-template-table-search — TemplateTableSearchComponent</h3></summary>
 
@@ -997,6 +1010,103 @@ Notes
 - Nested keys in displayedPropertyColumns are supported (e.g. "address.city").
 - initialSortingConfiguration must have the format "field,ASC" or "field,DESC".
 - The tableDataSource object is typically provided by extending SignalStoreTable.
+
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-save-btn — SaveBtn</h3></summary>
+
+Short description
+
+- PrimeNG button pre-configured with a transloco key for "save". Emits an event on click.
+
+API
+
+- Selector: app-save-btn
+- Inputs:
+  - disabled?: boolean — Disables the button (Default: false)
+- Outputs:
+  - clickEvent: void — Emitted on click
+
+Examples
+
+1. In a dialog footer
+
+```html
+<footer class="flex gap-8 justify-end">
+  <app-cancel-btn (cancelEvent)="cancel()" />
+  <app-save-btn [disabled]="form.invalid" (clickEvent)="submit()" />
+</footer>
+```
+
+2. Standalone save button
+
+```html
+<app-save-btn (clickEvent)="saveChanges()" />
+```
+
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-cancel-btn — CancelBtn</h3></summary>
+
+Short description
+
+- PrimeNG button pre-configured with a transloco key for "cancel". Emits an event on click.
+
+API
+
+- Selector: app-cancel-btn
+- Inputs: —
+- Outputs:
+  - cancelEvent: void — Emitted on click
+
+Examples
+
+1. In a dialog footer
+
+```html
+<footer class="flex gap-8 justify-end">
+  <app-cancel-btn (cancelEvent)="cancel()" />
+  <app-save-btn (clickEvent)="submit()" />
+</footer>
+```
+
+2. Inline cancel
+
+```html
+<app-cancel-btn (cancelEvent)="resetForm()" />
+```
+
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-template-icon-field — TemplateIconField</h3></summary>
+
+Short description
+
+- Input field with a leading icon (PrimeNG IconField + InputIcon + InputText). Ideal for search bars, filter fields, or any input that benefits from a visual icon hint.
+
+API
+
+- Selector: app-template-icon-field
+- Inputs:
+  - iconClass: string — required, PrimeNG icon class (e.g. "pi pi-search")
+  - placeholder?: string — Placeholder text (Default: "")
+
+Examples
+
+1. Search field with search icon
+
+```html
+<app-template-icon-field iconClass="pi pi-search" placeholder="Search..." />
+```
+
+2. With a transloco placeholder
+
+```html
+<app-template-icon-field iconClass="pi pi-user" placeholder="{{ 'general.username' | transloco }}" />
+```
 
 </details>
 
