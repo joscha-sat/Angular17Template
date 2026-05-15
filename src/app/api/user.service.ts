@@ -9,7 +9,7 @@ import {
 import { User } from '../models/User';
 import { ApiRoutes } from '../other/enums/api_routes';
 
-type QueryParams = BaseQueryParams;
+export type QueryParams = BaseQueryParams;
 
 @Injectable({
   providedIn: 'root',
