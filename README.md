@@ -379,13 +379,12 @@ export class CustomerService extends GenericHttpService<Customer> {
 
 #### Step 3: Create a Table Component
 
-Create a component that extends `SignalStoreTable<T>`.
+Create a component that extends `SignalStoreTable<T>`. The base class handles `ngOnInit`, header translation, and refresh subscription — you only provide the store connection, service, and column config.
 
 ```typescript
 // src/app/components/customer/customer-table/customer-table.ts
-import { Component, inject, type OnInit } from '@angular/core';
-import { type Observable } from 'rxjs';
-import { type TableColumnConfig, SignalStoreTable } from '../../../other/abstract-classes/SignalStoreTable';
+import { Component, inject } from '@angular/core';
+import { SignalStoreTable, type TableColumnConfig } from '../../../other/abstract-classes/SignalStoreTable';
 import {
   type TableDataSource,
   TemplateTableEnterFetch,
@@ -404,26 +403,17 @@ const COLUMN_CONFIG: TableColumnConfig = {
   imports: [TemplateTableEnterFetch],
   templateUrl: './customer-table.html',
 })
-export class CustomerTable extends SignalStoreTable<Customer> implements OnInit {
+export class CustomerTable extends SignalStoreTable<Customer> {
   private readonly customerStore: InstanceType<typeof CustomerStore> = inject(CustomerStore);
-  private readonly customerService: CustomerService = inject(CustomerService);
 
-  // Connects the store to the table
-  protected override tableDataSource: TableDataSource<Customer> = {
-    entities: this.customerStore.entities,
-    totalCount: this.customerStore.totalCount,
-    loading: this.customerStore.loading,
-    sendLoadRequest: (parameters: unknown) =>
-      this.customerStore.getAllCustomers(parameters as CustomerQueryParams | undefined),
-  };
-  // The service emits an event whenever data should be refreshed
-  protected override onDataChanged$: Observable<unknown> = this.customerService.refreshObservable$;
+  // The service provides refreshObservable$ — SignalStoreTable auto-subscribes
+  protected override readonly service: CustomerService = inject(CustomerService);
   protected override readonly columnConfig: TableColumnConfig = COLUMN_CONFIG;
-
-  override ngOnInit(): void {
-    super.ngOnInit();
-    this.translateHeaders(this.headers);
-  }
+  // createTableDataSource builds the data source from store signals + load callback
+  protected override readonly tableDataSource: TableDataSource<Customer> = this.createTableDataSource(
+    this.customerStore,
+    (parameters: unknown) => this.customerStore.getAllCustomers(parameters as CustomerQueryParams | undefined),
+  );
 }
 ```
 
@@ -501,10 +491,12 @@ If no custom template is provided for a column, the table displays the raw value
 
 ### 🔄 Auto-Refresh
 
-The table re-fetches data whenever the `dataRefreshTrigger` input changes. The `SignalStoreTable` base class increments `refreshCounter` whenever `onDataChanged$` emits. Services that extend `GenericHttpService` have a built-in `refreshObservable$` that emits after any create, update, or delete operation — so the table stays in sync automatically.
+The table re-fetches data whenever the `dataRefreshTrigger` input changes. The `SignalStoreTable` base class automatically subscribes to `service.refreshObservable$` and increments `refreshCounter` on each emission. Services that extend `GenericHttpService` have a built-in `refreshObservable$` that emits after any create, update, or delete operation — so the table stays in sync automatically.
 
 ```typescript
-// This is already set up for you in the base service:
+// This is already set up for you — just provide the service:
+// protected override readonly service = inject(CustomerService);
+//
 // After calling customerService.deleteOne(id), refreshObservable$ emits,
 // SignalStoreTable increments refreshCounter,
 // and the table re-fetches its data.
