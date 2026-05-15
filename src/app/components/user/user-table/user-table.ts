@@ -1,18 +1,15 @@
-import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
-import { SignalStoreTable } from '../../../other/abstract-classes/SignalStoreTable';
+import { Component, inject, type OnInit } from '@angular/core';
+import { SignalStoreTable, type TableColumnConfig } from '../../../other/abstract-classes/SignalStoreTable';
 import { User } from '../../../models/User';
 import {
-  TableDataSource,
+  type TableDataSource,
   TemplateTableEnterFetch,
 } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch';
-import { Observable } from 'rxjs';
+import { type Observable } from 'rxjs';
 import { UserStore } from '../../../stores/user.store';
-import { QueryParams, UserService } from '../../../api/user.service';
+import { type QueryParams, UserService } from '../../../api/user.service';
 
-const COLUMN_CONFIG: {
-  displayedColumns: string[];
-  headers: string[];
-} = {
+const COLUMN_CONFIG: TableColumnConfig = {
   displayedColumns: ['name', 'createdAt', 'updatedAt', 'actions'],
   headers: ['general.name', 'general.createdAt', 'general.updatedAt', ''],
 };
@@ -34,12 +31,10 @@ export class UserTable extends SignalStoreTable<User> implements OnInit {
     sendLoadRequest: (parameters: unknown) => this.userStore.getAllUsers(parameters as QueryParams | undefined),
   };
   protected override onDataChanged$: Observable<unknown> = this.userService.refreshObservable$;
+  protected override readonly columnConfig: TableColumnConfig = COLUMN_CONFIG;
 
   override ngOnInit(): void {
     super.ngOnInit();
     this.translateHeaders(this.headers);
   }
-
-  readonly columns: WritableSignal<string[]> = signal<string[]>(COLUMN_CONFIG.displayedColumns);
-  readonly headers: WritableSignal<string[]> = signal<string[]>(COLUMN_CONFIG.headers);
 }

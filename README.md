@@ -383,48 +383,42 @@ Create a component that extends `SignalStoreTable<T>`.
 
 ```typescript
 // src/app/components/customer/customer-table/customer-table.ts
-import { Component, inject, signal, type WritableSignal } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { type Observable } from 'rxjs';
-import { SignalStoreTable } from '../../../other/abstract-classes/SignalStoreTable';
+import { type TableColumnConfig, SignalStoreTable } from '../../../other/abstract-classes/SignalStoreTable';
 import {
   type TableDataSource,
   TemplateTableEnterFetch,
 } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch';
-import { CustomerStore } from '../../../stores/customer.store';
-import { CustomerService } from '../../../api/customer.service';
+import { type CustomerQueryParams, CustomerService } from '../../../api/customer.service';
 import { type Customer } from '../../../models/Customer';
+import { CustomerStore } from '../../../stores/customer.store';
+
+const COLUMN_CONFIG: TableColumnConfig = {
+  displayedColumns: ['name', 'email', 'createdAt', 'updatedAt'],
+  headers: ['customer.name', 'customer.email', 'general.createdAt', 'general.updatedAt'],
+};
 
 @Component({
   selector: 'app-customer-table',
   imports: [TemplateTableEnterFetch],
   templateUrl: './customer-table.html',
 })
-export class CustomerTable extends SignalStoreTable<Customer> {
+export class CustomerTable extends SignalStoreTable<Customer> implements OnInit {
   private readonly customerStore: InstanceType<typeof CustomerStore> = inject(CustomerStore);
-  protected readonly customerService: CustomerService = inject(CustomerService);
-
-  readonly headers: WritableSignal<string[]> = signal<string[]>([
-    'customer.name',
-    'customer.email',
-    'general.createdAt',
-    'general.updatedAt',
-  ]);
-
-  readonly columns: WritableSignal<string[]> = signal<string[]>(['name', 'email', 'createdAt', 'updatedAt']);
-
-  // The service emits an event whenever data should be refreshed
-  protected readonly onDataChanged$: Observable<unknown> = this.customerService.refreshObservable$;
+  private readonly customerService: CustomerService = inject(CustomerService);
 
   // Connects the store to the table
-  protected createTableDataSource(): TableDataSource<Customer> {
-    return {
-      entities: this.customerStore.entities,
-      totalCount: this.customerStore.totalCount,
-      loading: this.customerStore.loading,
-      sendLoadRequest: (parameters: unknown) =>
-        this.customerStore.getAllCustomers(parameters as CustomerQueryParams | undefined),
-    };
-  }
+  protected override tableDataSource: TableDataSource<Customer> = {
+    entities: this.customerStore.entities,
+    totalCount: this.customerStore.totalCount,
+    loading: this.customerStore.loading,
+    sendLoadRequest: (parameters: unknown) =>
+      this.customerStore.getAllCustomers(parameters as CustomerQueryParams | undefined),
+  };
+  // The service emits an event whenever data should be refreshed
+  protected override onDataChanged$: Observable<unknown> = this.customerService.refreshObservable$;
+  protected override readonly columnConfig: TableColumnConfig = COLUMN_CONFIG;
 
   override ngOnInit(): void {
     super.ngOnInit();

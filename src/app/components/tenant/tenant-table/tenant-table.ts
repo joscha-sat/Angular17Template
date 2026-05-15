@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, signal, type WritableSignal } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { type Observable } from 'rxjs';
-import { SignalStoreTable } from '../../../other/abstract-classes/SignalStoreTable';
+import { SignalStoreTable, type TableColumnConfig } from '../../../other/abstract-classes/SignalStoreTable';
 import {
   type TableDataSource,
   TemplateTableEnterFetch,
@@ -8,6 +8,11 @@ import {
 import { type TenantQueryParams, TenantService } from '../../../api/tenant.service';
 import { type Tenant } from '../../../models/Tenant';
 import { TenantStore } from '../../../stores/tenant.store';
+
+const COLUMN_CONFIG: TableColumnConfig = {
+  displayedColumns: ['name', 'createdAt', 'updatedAt'],
+  headers: ['general.name', 'general.createdAt', 'general.updatedAt'],
+};
 
 @Component({
   selector: 'app-tenant-table',
@@ -27,14 +32,7 @@ export class TenantTable extends SignalStoreTable<Tenant> implements OnInit {
       this.tenantStore.getAllTenants(parameters as TenantQueryParams | undefined),
   };
   protected override onDataChanged$: Observable<unknown> = this.tenantService.refreshObservable$;
-
-  override readonly headers: WritableSignal<string[]> = signal<string[]>([
-    'general.name',
-    'general.createdAt',
-    'general.updatedAt',
-  ]);
-
-  override readonly columns: WritableSignal<string[]> = signal<string[]>(['name', 'createdAt', 'updatedAt']);
+  protected override readonly columnConfig: TableColumnConfig = COLUMN_CONFIG;
 
   override ngOnInit(): void {
     super.ngOnInit();

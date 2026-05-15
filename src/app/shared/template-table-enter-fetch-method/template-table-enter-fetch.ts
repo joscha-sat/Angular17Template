@@ -96,20 +96,39 @@ export class TemplateTableEnterFetch<T> {
       return null;
     }
 
+    const resolvedValue: unknown = this.traverseNestedPropertyPath(dataObject, propertyPath);
+    return resolvedValue as string | number | Date | null | undefined;
+  }
+
+  private traverseNestedPropertyPath(dataObject: unknown, propertyPath: string): unknown {
     const propertyKeys: string[] = propertyPath.split('.');
     let currentValue: unknown = dataObject;
 
     for (const key of propertyKeys) {
-      if (currentValue === null || currentValue === undefined || typeof currentValue !== 'object') {
+      currentValue = this.safelyReadNestedProperty(currentValue, key);
+
+      if (currentValue === undefined) {
         return null;
       }
-      if (!Object.hasOwn(currentValue, key)) {
-        return null;
-      }
-      currentValue = (currentValue as Record<string, unknown>)[key];
     }
 
-    return currentValue as string | number | Date | null | undefined;
+    return currentValue;
+  }
+
+  private safelyReadNestedProperty(currentValue: unknown, key: string): unknown | undefined {
+    if (currentValue === null || currentValue === undefined) {
+      return undefined;
+    }
+
+    if (typeof currentValue !== 'object') {
+      return undefined;
+    }
+
+    if (!Object.hasOwn(currentValue, key)) {
+      return undefined;
+    }
+
+    return (currentValue as Record<string, unknown>)[key];
   }
 
   private fetchDataWhenQueryParametersChange(): void {
