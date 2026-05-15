@@ -4,7 +4,7 @@ import { addEntity, removeEntity, setAllEntities, setEntity, updateEntity, withE
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 import { finalize, pipe, switchMap, tap } from 'rxjs';
-import { TenantService } from '../api/tenant.service';
+import { type TenantQueryParams, TenantService } from '../api/tenant.service';
 import { ResponseWithRecords } from '../api/base-http-service/base-http.service';
 import { Tenant } from '../models/Tenant';
 
@@ -37,11 +37,11 @@ export const TenantStore = signalStore(
   // METHODS
   withMethods((store, service: TenantService = inject(TenantService)) => ({
     // GET ALL
-    getAllTenants: rxMethod<void>(
+    getAllTenants: rxMethod<TenantQueryParams | undefined>(
       pipe(
         tap(() => patchState(store, { loading: true })),
-        switchMap(() =>
-          service.getAllTenants().pipe(
+        switchMap((queryParams?: TenantQueryParams) =>
+          service.getAllTenants(queryParams).pipe(
             tapResponse({
               next: (items: ResponseWithRecords<Tenant>) =>
                 patchState(store, setAllEntities(items.records), {
@@ -122,7 +122,7 @@ export const TenantStore = signalStore(
 
   // HOOKS
   withHooks({
-    onInit({ getAllTenants }: { getAllTenants: (value: undefined) => void }) {
+    onInit({ getAllTenants }: { getAllTenants: (value: TenantQueryParams | undefined) => void }) {
       getAllTenants(undefined);
     },
   }),
