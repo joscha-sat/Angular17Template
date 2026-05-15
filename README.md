@@ -291,172 +291,234 @@ The template includes:
 
 ## 📑 Tables
 
-The template includes a powerful table component system for displaying and managing data.
+The template includes a powerful server-driven table component system. It is built from three layers that work together:
 
-### 📊 Basic Table Example
+| Layer | File | Purpose |
+|-------|------|---------|
+| **1. Signal Store** | `src/app/stores/*.store.ts` | Holds data in memory, provides `entities`, `totalCount`, `loading` signals |
+| **2. Abstract Component** | `src/app/other/abstract-classes/SignalStoreTable.ts` | Base class that connects a store to the table component |
+| **3. Table Component** | `src/app/shared/template-table-enter-fetch-method/` | The actual PrimeNG table with pagination, search, sorting |
 
-```html
-<app-template-table-fetch [displayedColumns]="columns()" [fetchData]="fetchDataFn" [headers]="headers()" />
-```
+### 🧱 Step-by-Step Guide
 
-### 🧩 Table Component Implementation
+#### Step 1: Create a Signal Store
 
-For type safety and full functionality, extend the `BaseTableComponent`:
-
-<details>
-<summary>📝 Example Implementation</summary>
+The store holds the data and provides CRUD methods. Follow the standard store pattern from [State Management](#-state-management).
 
 ```typescript
-export class UserTableComponent extends BaseTableComponent<User> implements Table<User>, OnInit {
-  // Inject the service responsible for the API call
-  userService = inject(UserService);
+// src/app/stores/customer.store.ts
+import { signalStore, withHooks, withMethods, withState } from '@ngrx/signals';
+import { setAllEntities, withEntities } from '@ngrx/signals/entities';
+import { inject } from '@angular/core';
+import { patchState } from '@ngrx/signals';
+import { CustomerService } from '../api/customer.service';
+import { createRxMethod } from './signal-store-utility-service/signal-store-utility.service';
 
-  // Data columns from the model
-  columns: WritableSignal<(keyof User | 'delete' | 'edit')[]> = signal(['firstName']);
+type CustomerState = {
+  loading: boolean;
+};
 
-  // Translated headers (i18n keys)
-  headers: WritableSignal<string[]> = signal(['general.firstName']);
+const initialState: CustomerState = {
+  loading: false,
+};
 
-  // Method name which calls the GET All endpoint
-  setTableRefreshMethodName(): string {
-    return 'getAllUsers';
+export const CustomerStore = signalStore(
+  { providedIn: 'root' },
+
+  withEntities<Customer>(),
+  withState(initialState),
+
+  withMethods((store, service: CustomerService = inject(CustomerService)) => ({
+    getAllCustomers: createRxMethod<CustomerQueryParams | undefined, ResponseWithRecords<Customer>>(
+      store,
+      (queryParams) => service.getAllCustomers(queryParams),
+      (result) => patchState(store, setAllEntities(result.records), { tenant: result }),
+    ),
+  })),
+
+  withHooks({
+    onInit({ getAllCustomers }) {
+      getAllCustomers(undefined);
+    },
+  }),
+);
+```
+
+> **Important**: The store must have a `loading: boolean` property in its state so the table can show a loading indicator.
+
+#### Step 2: Use a Service that extends GenericHttpService
+
+Services that extend `GenericHttpService` already include the `search` and `searchDate` signals needed for filtering.
+
+```typescript
+// src/app/api/customer.service.ts
+@Injectable({ providedIn: 'root' })
+export class CustomerService extends GenericHttpService<Customer> {
+  constructor() {
+    super(); 
   }
 
-  // Service responsible for the API call
-  setTableRefreshService() {
-    return this.userService;
+  getAllCustomers(queryParams?: CustomerQueryParams): Observable<ResponseWithRecords<Customer>> {
+    return this.getAll<Customer>('', queryParams);
+  }
+}
+```
+
+#### Step 3: Create a Table Component
+
+Create a component that extends `SignalStoreTable<T>`.
+
+```typescript
+// src/app/components/customer/customer-table/customer-table.ts
+import { Component, inject, signal, type WritableSignal } from '@angular/core';
+import { type Observable } from 'rxjs';
+import { SignalStoreTable } from '../../../other/abstract-classes/SignalStoreTable';
+import {
+  type TableDataSource,
+  TemplateTableEnterFetch,
+} from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch';
+import { CustomerStore } from '../../../stores/customer.store';
+import { CustomerService } from '../../../api/customer.service';
+import { type Customer } from '../../../models/Customer';
+
+@Component({
+  selector: 'app-customer-table',
+  imports: [TemplateTableEnterFetch],
+  templateUrl: './customer-table.html',
+})
+export class CustomerTable extends SignalStoreTable<Customer> {
+  private readonly customerStore: InstanceType<typeof CustomerStore> = inject(CustomerStore);
+  protected readonly customerService: CustomerService = inject(CustomerService);
+
+  readonly headers: WritableSignal<string[]> = signal<string[]>([
+    'customer.name',
+    'customer.email',
+    'general.createdAt',
+    'general.updatedAt',
+  ]);
+
+  readonly columns: WritableSignal<string[]> = signal<string[]>(['name', 'email', 'createdAt', 'updatedAt']);
+
+  // The service emits an event whenever data should be refreshed
+  protected readonly onDataChanged$: Observable<unknown> = this.customerService.refreshObservable$;
+
+  // Connects the store to the table
+  protected createTableDataSource(): TableDataSource<Customer> {
+    return {
+      entities: this.customerStore.entities,
+      totalCount: this.customerStore.totalCount,
+      loading: this.customerStore.loading,
+      sendLoadRequest: (parameters: unknown) =>
+        this.customerStore.getAllCustomers(parameters as CustomerQueryParams | undefined),
+    };
   }
 
-  // Initialize with translations
-  override ngOnInit() {
+  override ngOnInit(): void {
     super.ngOnInit();
-    super.translateHeaders(this.headers);
+    this.translateHeaders(this.headers);
   }
 }
 ```
 
-</details>
-
-### 🔔 Table Events
-
-| Event                                  | Description                              |
-| -------------------------------------- | ---------------------------------------- |
-| `(rowClickEvent)="rowClicked($event)"` | Emits the full object of the clicked row |
-
-### 🎨 Custom Table Columns
-
-You can customize table columns using templates:
-
-<details>
-<summary>📝 Example Custom Columns</summary>
+#### Step 4: Wire Everything in the Template
 
 ```html
-<app-template-table [fetchData]="fetchDataFn" [headers]="headers()" [columns]="columns()" [cellTemplatesMap]="{ name }" />
+<!-- src/app/components/customer/customer-table/customer-table.html -->
+<app-template-table-fetch
+  [displayedPropertyColumns]="columns()"
+  [tableDataSource]="tableDataSource"
+  [columnHeaderLabels]="headers()"
+  [searchFilterText]="customerService.search()"
+  [dateSearchFilter]="customerService.searchDate()"
+  [dataRefreshTrigger]="refreshCounter()"
+/>
+```
 
-<!-- Custom column template -->
-<ng-template #name let-value let-item="object">
-  {{ value }}
-  <app-delete-icon (click)="deleteItem(item)" />
+### 🔍 Adding Search and Date Search
+
+Place the search components in a header above the table. They write directly to the service's `search` and `searchDate` signals, which the table automatically picks up.
+
+```html
+<!-- Header with search bar + date picker -->
+<header class="flex gap-12 items-center">
+  <app-template-table-search [service]="customerService" />
+  <app-template-date-search [service]="customerService" />
+</header>
+
+<!-- Table (receives search signals automatically) -->
+<app-template-table-fetch
+  [displayedPropertyColumns]="columns()"
+  [tableDataSource]="tableDataSource"
+  [columnHeaderLabels]="headers()"
+  [searchFilterText]="customerService.search()"
+  [dateSearchFilter]="customerService.searchDate()"
+  [dataRefreshTrigger]="refreshCounter()"
+/>
+```
+
+The table debounces the search text by 500ms before sending a request, so rapid typing does not overload the server. When the search changes, pagination resets to the first page automatically.
+
+### 🎨 Custom Cell Templates
+
+You can override how individual columns are displayed using `ng-template` references.
+
+```html
+<!-- Define templates -->
+<ng-template #statusCell let-value let-row="object">
+  <span [class.active]="row.isActive">{{ value }}</span>
 </ng-template>
+
+<ng-template #actionsCell let-row="object">
+  <app-edit-icon (clickEvent)="editCustomer(row)" />
+  <app-delete-icon (clickEvent)="deleteCustomer(row)" />
+</ng-template>
+
+<!-- Pass them to the table -->
+<app-template-table-fetch
+  [displayedPropertyColumns]="['name', 'status', 'actions']"
+  [tableDataSource]="tableDataSource"
+  [columnHeaderLabels]="['customer.name', 'customer.status', '']"
+  [customCellTemplates]="{ status: statusCell, actions: actionsCell }"
+  [dataRefreshTrigger]="refreshCounter()"
+/>
 ```
 
-</details>
+Each template receives two context variables:
 
-### 🔄 Table Refresh
+| Variable | Description |
+|----------|-------------|
+| `$implicit` | The cell value (same as `let-value`) |
+| `object` or `let-row` | The full row data object |
 
-Tables automatically refresh after HTTP operations (POST, PATCH, DELETE) when extending `BaseTableComponent<Model>`:
+If no custom template is provided for a column, the table displays the raw value. Dates are automatically formatted as `dd.MM.yyyy HH:mm`.
 
-<details>
-<summary>📝 Example Refresh Implementation</summary>
+### 🔄 Auto-Refresh
+
+The table re-fetches data whenever the `dataRefreshTrigger` input changes. The `SignalStoreTable` base class increments `refreshCounter` whenever `onDataChanged$` emits. Services that extend `GenericHttpService` have a built-in `refreshObservable$` that emits after any create, update, or delete operation — so the table stays in sync automatically.
 
 ```typescript
-export class TenantTableComponent extends BaseTableComponent<Tenant> {
-  // Required methods
-  setTableRefreshService() {
-    return this.tenantService;
-  }
-
-  setTableRefreshMethodName() {
-    return 'getAllTenants';
-  }
-
-  // Optional methods
-  override setCustomParams(): Record<string, unknown> | null {
-    return { name: 'John' }; // Adds &name=John to query params
-  }
-
-  override noParams = true; // Removes all params from the request
-}
+// This is already set up for you in the base service:
+// After calling customerService.deleteOne(id), refreshObservable$ emits,
+// SignalStoreTable increments refreshCounter,
+// and the table re-fetches its data.
 ```
 
-</details>
+### 📋 Table Input Reference
 
-### 🔍 Table Search
+| Input | Type | Default | Description |
+|-------|------|---------|-------------|
+| `tableDataSource` | `TableDataSource<T>` | required | Object providing entities, totalCount, loading + sendLoadRequest |
+| `columnHeaderLabels` | `string[]` | required | Translated column headers (can be i18n keys) |
+| `displayedPropertyColumns` | `string[]` | required | Property names on the data model (supports nested paths like `"address.city"`) |
+| `customCellTemplates` | `Record<string, TemplateRef>` | `{}` | Maps column keys to custom cell templates |
+| `searchFilterText` | `string` | `''` | Current search text (bind to `service.search()`) |
+| `dateSearchFilter` | `string` | `''` | ISO date string filter (bind to `service.searchDate()`) |
+| `initialSortingConfiguration` | `SortParamType` | `undefined` | Initial sort in `"field,ASC"` or `"field,DESC"` format |
+| `activeTabFilterValue` | `boolean \| undefined` | `undefined` | Optional boolean filter for tab-based views |
+| `availablePageSizeOptions` | `number[]` | `[5, 10, 25, 100]` | Page size dropdown options |
+| `initialSelectedPageSize` | `number` | `10` | Default page size on first load |
+| `dataRefreshTrigger` | `number` | `0` | Increment to trigger a re-fetch |
 
-The template includes built-in search functionality:
-
-<details>
-<summary>📝 Search Example</summary>
-
-```html
-<!-- Search component -->
-<app-template-search [service]="userService" />
-
-<!-- Table with search -->
-<app-template-table [search]="userService.search()"></app-template-table>
-```
-
-This triggers a request like: `/users?search=searchTerm`
-
-</details>
-
-### 📅 Date Search
-
-For date-based filtering:
-
-<details>
-<summary>📝 Date Search Example</summary>
-
-```html
-<!-- In your header component -->
-<app-template-date-search [service]="customerService" />
-
-<!-- In your table component -->
-<app-template-table-fetch [headers]="headers()" [displayedColumns]="columns()" [fetchData]="fetchDataFn" [searchDate]="customerService.searchDate()" />
-```
-
-This triggers a request like: `/customers?searchDate=2024-06-12T00:00:00.000Z`
-
-To implement this in your service:
-
-```typescript
-// In your service class
-export class CustomerService {
-  // Create a signal for the date search
-  searchDate: WritableSignal<string> = signal('');
-
-  // Use it in your API calls
-  getAllCustomers(params?: BaseQueryParams): Promise<ResponseWithRecords<Customer>> {
-    // The searchDate will be automatically added to the query params
-    return this.httpService.getAll<Customer>('customers', params);
-  }
-}
-```
-
-You can use both regular search and date search together:
-
-```html
-<!-- In your header component -->
-<app-template-table-search [service]="customerService" />
-<app-template-date-search [service]="customerService" />
-
-<!-- In your table component -->
-<app-template-table-fetch [headers]="headers()" [displayedColumns]="columns()" [fetchData]="fetchDataFn" [search]="customerService.search()" [searchDate]="customerService.searchDate()" />
-```
-
-This will trigger a request like: `/customers?search=searchTerm&searchDate=2024-06-12T00:00:00.000Z`
-
-</details>
 
 ## 💬 Dialogs
 
@@ -663,12 +725,18 @@ Examples
 <app-template-date-search [service]="customerService" />
 
 <!-- Table -->
-<app-template-table-fetch [headers]="headers()" [columns]="columns()" [fetchData]="fetchDataFn" [searchDate]="customerService.searchDate()" />
+<app-template-table-fetch
+  [displayedPropertyColumns]="columns()"
+  [tableDataSource]="tableDataSource"
+  [columnHeaderLabels]="headers()"
+  [dateSearchFilter]="customerService.searchDate()"
+  [dataRefreshTrigger]="refreshCounter()"
+/>
 ```
 
 Note
 
-- Combining regular search and date search is possible (see the “📅 Date Search” section above).
+- Combining regular search and date search is possible (see “Adding Search and Date Search” in the Tables section above).
 
 </details>
 
@@ -847,37 +915,36 @@ Examples
 
 Short description
 
-- Powerful table that loads data from the server via a fetchData function (Observable). Supports pagination, sorting, search, date search, and custom cells.
+- Powerful table that loads data from the server via a store-backed data source. Supports pagination, sorting, search, date search, and custom cells.
 
 API
 
 - Selector: app-template-table-fetch
 - Inputs:
-  - fetchData: (params: BaseGetQueryParams) => Observable<ResponseWithRecords<T>> — required
-  - headers: string[] — i18n keys, required
-  - displayedColumns: string[] — Column keys, required
-  - cellTemplatesMap?: Record<string, TemplateRef>
-  - search?: string — Current search value (e.g. service.search())
-  - searchDate?: string — ISO date (e.g. service.searchDate())
-  - initialSort?: string — Format "field,ASC" | "field,DESC"
-  - tabValueActive?: boolean — Optional additional filter
-  - pageSizes?: number[] (Default: [5,10,25,100])
-  - initialPageSize?: number (Default: 10)
+  - tableDataSource: TableDataSource<T> — required, provides data signals + sendLoadRequest
+  - columnHeaderLabels: string[] — required, column header text (i18n keys)
+  - displayedPropertyColumns: string[] — required, property names on the data model
+  - customCellTemplates?: Record<string, TemplateRef> — custom cell renderers
+  - searchFilterText?: string — Current search text (bind to service.search())
+  - dateSearchFilter?: string — ISO date string (bind to service.searchDate())
+  - initialSortingConfiguration?: SortParamType — Format "field,ASC" | "field,DESC"
+  - activeTabFilterValue?: boolean — Optional boolean filter
+  - availablePageSizeOptions?: number[] (Default: [5,10,25,100])
+  - initialSelectedPageSize?: number (Default: 10)
+  - dataRefreshTrigger?: number (Default: 0) — Increment to re-fetch data
 - Outputs: —
 
 Examples
 
-1. Basic usage with a service function
-
-```ts
-// component.ts
-fetchDataFn = (params: BaseGetQueryParams) => this.userService.getAllUsers(params);
-headers = signal(['general.name', 'general.email']);
-columns = signal(['name', 'email']);
-```
+1. Basic usage with a store
 
 ```html
-<app-template-table-fetch [headers]="headers()" [displayedColumns]="columns()" [fetchData]="fetchDataFn" />
+<app-template-table-fetch
+  [displayedPropertyColumns]="columns()"
+  [tableDataSource]="tableDataSource"
+  [columnHeaderLabels]="headers()"
+  [dataRefreshTrigger]="refreshCounter()"
+/>
 ```
 
 2. With search, date, sorting and custom cells
@@ -888,18 +955,28 @@ columns = signal(['name', 'email']);
   <app-template-date-search [service]="userService" />
 </header>
 
-<ng-template #actions let-item>
-  <app-edit-icon (clickEvent)="edit(item)" />
-  <app-delete-icon (clickEvent)="remove(item)" />
+<ng-template #actions let-row>
+  <app-edit-icon (clickEvent)="edit(row)" />
+  <app-delete-icon (clickEvent)="remove(row)" />
 </ng-template>
 
-<app-template-table-fetch [headers]="['general.name','general.actions']" [displayedColumns]="['name','actions']" [cellTemplatesMap]="{ actions }" [fetchData]="fetchDataFn" [search]="userService.search()" [searchDate]="userService.searchDate()" initialSort="name,ASC" />
+<app-template-table-fetch
+  [displayedPropertyColumns]="['name', 'email', 'actions']"
+  [tableDataSource]="tableDataSource"
+  [columnHeaderLabels]="['general.name', 'general.email', '']"
+  [customCellTemplates]="{ actions: actionsCell }"
+  [searchFilterText]="userService.search()"
+  [dateSearchFilter]="userService.searchDate()"
+  [initialSortingConfiguration]="'name,ASC'"
+  [dataRefreshTrigger]="refreshCounter()"
+/>
 ```
 
 Notes
 
-- Nested keys in displayedColumns are supported (e.g. "address.city").
-- initialSort must have the format "field,ASC" or "field,DESC".
+- Nested keys in displayedPropertyColumns are supported (e.g. "address.city").
+- initialSortingConfiguration must have the format "field,ASC" or "field,DESC".
+- The tableDataSource object is typically provided by extending SignalStoreTable.
 
 </details>
 
