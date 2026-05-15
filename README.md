@@ -111,7 +111,7 @@ Located in `src/app/shared`, these are reusable components that can be used acro
 - ✅ Complex components like tables, dialogs, etc.
 
 <details>
-<summary>💡 Best Practices</summary>
+<summary><h3 style="display: inline">💡 Best Practices</h3></summary>
 
 - Keep shared components small and focused on a single responsibility
 - Use strong typing with interfaces for inputs and outputs
@@ -167,7 +167,7 @@ Located in `src/app/models`, these are TypeScript classes that represent data en
 - ✅ Can include business logic and computed properties
 
 <details>
-<summary>📝 Example Model</summary>
+<summary><h3 style="display: inline">📝 Example Model</h3></summary>
 
 ```typescript
 export class User extends BaseModel<User> {
@@ -191,7 +191,7 @@ export class User extends BaseModel<User> {
 | **Enums** | `src/app/other/enums` | Enumeration values for consistent data representation |
 
 <details>
-<summary>💡 Best Practices</summary>
+<summary><h3 style="display: inline">💡 Best Practices</h3></summary>
 
 - Use interfaces for object shapes and types for unions/intersections
 - Keep enums for values that won't change frequently
@@ -209,7 +209,7 @@ The template includes state management using **@ngrx/signals**:
 - 🛠️ Includes methods for CRUD operations that update the state
 
 <details>
-<summary>📝 Example Store</summary>
+<summary><h3 style="display: inline">📝 Example Store</h3></summary>
 
 ```typescript
 export const CustomerStore = signalStore(
@@ -281,7 +281,7 @@ The template includes:
 | **Husky**    | Git hooks           | Runs automatically on commit |
 
 <details>
-<summary>🔧 Configuration Files</summary>
+<summary><h3 style="display: inline">🔧 Configuration Files</h3></summary>
 
 - `eslint.config.mjs` - ESLint configuration
 - `.prettierrc` - Prettier configuration
@@ -289,7 +289,8 @@ The template includes:
 
 </details>
 
-## 📑 Tables
+<details>
+<summary><h2 style="display: inline">📑 Tables</h2></summary>
 
 The template includes a powerful server-driven table component system. It is built from three layers that work together:
 
@@ -519,61 +520,130 @@ The table re-fetches data whenever the `dataRefreshTrigger` input changes. The `
 | `initialSelectedPageSize` | `number` | `10` | Default page size on first load |
 | `dataRefreshTrigger` | `number` | `0` | Increment to trigger a re-fetch |
 
-
-## 💬 Dialogs
-
-The template includes a dialog system for user interactions.
-
-### 🗑️ Delete Dialog Example
-
-<details>
-<summary>📝 Delete Dialog Implementation</summary>
-
-```typescript
-// Create dialog data
-const deleteContextData: DeleteContextData = {
-  model: user,
-  service: this.userService,
-  deleteMethod: 'deleteUserById',
-};
-
-// Open the dialog
-this.dialogService.openDialog(BaseDeleteDialogComponent, deleteContextData);
-```
-
 </details>
 
-This handles:
+<details>
+<summary><h2 style="display: inline">💬 Dialogs</h2></summary>
 
-- ✅ Displaying a confirmation dialog
-- ✅ Calling the delete method if confirmed
-- ✅ Refreshing the table after deletion
-- ✅ Showing success/error notifications
+The template uses PrimeNG's `DialogService` (`primeng/dynamicdialog`) for opening reusable modal dialogs.
 
-### 🧩 Custom Dialogs
+### Step-by-Step: Creating an Add/Edit Dialog
 
-You can create custom dialogs by:
+#### Step 1: Create a Dialog Component
 
-1. Creating a component that extends `BaseDialogComponent`
-2. Using the `dialogService.openDialog()` method to open it
-3. Handling the dialog result in the callback
+The component receives data via `DynamicDialogConfig` and controls the dialog lifecycle via `DynamicDialogRef`. Implement the `AddEdit` interface for a consistent structure.
+
+```typescript
+// src/app/components/tenant/tenant-add-edit-dialog/tenant-add-edit-dialog.ts
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { MODE } from '../../../other/enums/mode.enum';
+import { AddEdit } from '../../../other/types/AddEdit.type';
+
+@Component({
+  selector: 'app-tenant-add-edit-dialog',
+  imports: [ReactiveFormsModule],
+  templateUrl: './tenant-add-edit-dialog.html',
+})
+export class TenantAddEditDialog implements OnInit, AddEdit {
+  private readonly fb: FormBuilder = inject(FormBuilder);
+  private readonly dialogRef: DynamicDialogRef = inject(DynamicDialogRef);
+  private readonly config: DynamicDialogConfig<{ mode?: MODE; tenant?: Tenant }> = inject(DynamicDialogConfig) as DynamicDialogConfig<{ mode?: MODE; tenant?: Tenant }>;
+
+  mode: MODE = MODE.ADD;
+  tenantForm?: FormGroup;
+
+  ngOnInit(): void {
+    this.mode = this.config.data?.mode ?? MODE.ADD;
+    this.initForm();
+  }
+
+  initForm(): void {
+    const tenant = this.config.data?.tenant;
+    this.tenantForm = this.fb.group({
+      name: [tenant?.name ?? '', Validators.required],
+    });
+  }
+
+  submit(): void {
+    if (this.tenantForm?.invalid) return;
+    // Call service, then close dialog
+    this.dialogRef.close(true); // true = success signal
+  }
+
+  cancel(): void {
+    this.dialogRef.close(false);
+  }
+
+  loadModelData(): void {
+    // Optional: load additional data before opening
+  }
+}
+```
+
+#### Step 2: Open the Dialog from a Parent Component
+
+Inject `DialogService` (from `primeng/dynamicdialog`) into the parent, then call `.open()`. Provide `DynamicDialog` as a provider at the component level.
+
+```typescript
+import { DialogService, DynamicDialog } from 'primeng/dynamicdialog';
+import { TenantAddEditDialog } from '../tenant-add-edit-dialog/tenant-add-edit-dialog';
+import { MODE } from '../../../other/enums/mode.enum';
+
+@Component({
+  selector: 'app-tenant-header',
+  imports: [/* ... */],
+  providers: [DialogService], // Required!
+})
+export class TenantHeader {
+  private readonly dialogService: DialogService = inject(DialogService);
+
+  openCreateTenantDialog(): void {
+    this.dialogService.open(TenantAddEditDialog, {
+      data: { mode: MODE.ADD },
+      showHeader: false,
+      width: '350px',
+      modal: true,
+      dismissableMask: true,
+      closable: true,
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw',
+      },
+    });
+  }
+}
+```
+
+### 🧩 Custom Dialogs Cheat Sheet
+
+| Step | What to do |
+|------|------------|
+| 1 | Create a component (no base class needed) |
+| 2 | Inject `DynamicDialogRef` (to close) and `DynamicDialogConfig` (to read data) |
+| 3 | Implement `AddEdit` from `src/app/other/types/AddEdit.type.ts` for consistency |
+| 4 | In the parent, provide `DialogService` at component level |
+| 5 | Call `dialogService.open(YourComponent, { data: {...} })` |
 
 <details>
-<summary>💡 Dialog Best Practices</summary>
+<summary><h3 style="display: inline">💡 Dialog Best Practices</h3></summary>
 
 - Keep dialogs focused on a single task
 - Use consistent styling across all dialogs
 - Handle loading states and errors gracefully
 - Provide clear feedback on actions
+- Use `breakpoints` in the config for responsive widths
 
+</details>
 </details>
 
 ## 📦 Shared Components UI Docs
 
 This section serves as a compact UI documentation for the reusable Shared Components. Each component is briefly explained and shows at least two usage examples. Expansion panels (details/summary) are used to keep the view concise.
 
-<details>
-<summary>app-delete-icon — DeleteIconComponent</summary>
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-delete-icon — DeleteIconComponent</h3></summary>
 
 Short description
 
@@ -609,8 +679,8 @@ Examples
 
 </details>
 
-<details>
-<summary>app-edit-icon — EditIconComponent</summary>
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-edit-icon — EditIconComponent</h3></summary>
 
 Short description
 
@@ -646,8 +716,8 @@ Examples
 
 </details>
 
-<details>
-<summary>app-template-datepicker — TemplateDatepickerComponent</summary>
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-template-datepicker — TemplateDatepickerComponent</h3></summary>
 
 Short description
 
@@ -695,8 +765,8 @@ function onDateChange(iso: string) {
 
 </details>
 
-<details>
-<summary>app-template-date-search — TemplateDateSearchComponent</summary>
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-template-date-search — TemplateDateSearchComponent</h3></summary>
 
 Short description
 
@@ -740,8 +810,8 @@ Note
 
 </details>
 
-<details>
-<summary>app-template-input — TemplateInputComponent</summary>
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-template-input — TemplateInputComponent</h3></summary>
 
 Short description
 
@@ -787,8 +857,8 @@ form = this.fb.group({ password: [''] });
 
 </details>
 
-<details>
-<summary>app-template-spinner — TemplateSpinnerComponent</summary>
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-template-spinner — TemplateSpinnerComponent</h3></summary>
 
 Short description
 
@@ -826,8 +896,8 @@ Examples
 </details>
 
 
-<details>
-<summary>app-template-table-search — TemplateTableSearchComponent</summary>
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-template-table-search — TemplateTableSearchComponent</h3></summary>
 
 Short description
 
@@ -860,8 +930,8 @@ Examples
 
 </details>
 
-<details>
-<summary>app-template-table-fetch — TemplateTableEnterFetchComponent</summary>
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-template-table-fetch — TemplateTableEnterFetchComponent</h3></summary>
 
 Short description
 
