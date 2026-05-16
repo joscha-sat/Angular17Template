@@ -1,0 +1,10 @@
+<!-- AUTOCOMPLETE DROPDOWN -->
+<p-autocomplete
+  [ngModel]="selectedValue()"
+  [suggestions]="suggestedOptions()"
+  [dropdown]="isDisplayedAsDropdown()"
+  (completeMethod)="search($event)"
+  optionLabel="name"
+  (onSelect)="onItemSelected($event)"
+  (onClear)="onClear()"
+/>

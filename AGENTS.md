@@ -415,35 +415,6 @@ Use the built-in template control flow (`@if`, `@for`, `@switch`) instead of `*n
 
 ---
 
-### Standalone Components Over NgModules
-
-All new components, directives, and pipes must be `standalone: true`. Do not create new NgModules.
-
-#### ❌ BAD - Module-based component
-
-```typescript
-@NgModule({
-  declarations: [UserCardComponent],
-  imports: [CommonModule],
-  exports: [UserCardComponent],
-})
-export class UserCardModule {}
-```
-
-#### ✅ GOOD - Standalone component
-
-```typescript
-@Component({
-  selector: 'app-user-card',
-  standalone: true,
-  imports: [CurrencyPipe],
-  templateUrl: './user-card.component.html',
-})
-export class UserCardComponent { ... }
-```
-
----
-
 ### `inject()` Over Constructor Injection
 
 Use the `inject()` function to declare dependencies instead of constructor parameter injection.
