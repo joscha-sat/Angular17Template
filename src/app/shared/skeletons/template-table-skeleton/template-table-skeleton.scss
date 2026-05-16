@@ -1,0 +1,17 @@
+.table-container {
+  border-radius: 1rem;
+  border: 1px solid lightgrey;
+  padding-inline: 1rem;
+  padding-block: 0.5rem;
+
+  // Responsive behavior
+  @media (max-width: 768px) {
+    .table-container {
+      border-radius: 0.5rem;
+
+      table {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
