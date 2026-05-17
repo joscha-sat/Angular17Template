@@ -7,4 +7,18 @@
   optionLabel="name"
   (onSelect)="onItemSelected($event)"
   (onClear)="onClear()"
-/>
+>
+  @let itemTpl = itemTemplate(); @if (itemTpl) {
+  <ng-template pTemplate="item" let-context>
+    <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: context }" />
+  </ng-template>
+  } @let headerTpl = headerTemplate(); @if (headerTpl) {
+  <ng-template pTemplate="header">
+    <ng-container *ngTemplateOutlet="headerTpl" />
+  </ng-template>
+  } @let footerTpl = footerTemplate(); @if (footerTpl) {
+  <ng-template pTemplate="footer">
+    <ng-container *ngTemplateOutlet="footerTpl" />
+  </ng-template>
+  }
+</p-autocomplete>
