@@ -18,7 +18,7 @@
     <ng-template pTemplate="header">
       <tr>
         @for (columnKey of displayedPropertyColumns(); track columnKey) {
-        <th>{{ columnHeaderLabels()[$index] }}</th>
+        <th scope="col">{{ columnHeaderLabels()[$index] }}</th>
         }
       </tr>
     </ng-template>
