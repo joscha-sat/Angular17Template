@@ -9,5 +9,5 @@ import { TableModule } from 'primeng/table';
   styleUrl: './template-table-skeleton.scss',
 })
 export class TemplateTableSkeleton {
-  public readonly skeletonArray: WritableSignal<Array<string>> = signal(Array(10).fill('0'));
+  public readonly skeletonArray: WritableSignal<string[]> = signal(Array<string>(10).fill('0'));
 }

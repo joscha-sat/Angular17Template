@@ -1110,6 +1110,180 @@ Examples
 
 </details>
 
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-template-card-skeleton — TemplateCardSkeleton</h3></summary>
+
+Loading placeholder for card-style layouts. Displays a circular avatar skeleton, text lines, and a content block with action buttons.
+
+|              |                            |
+| ------------ | -------------------------- |
+| **Selector** | `app-template-card-skeleton` |
+
+No inputs or outputs.
+
+Examples
+
+```html
+<!-- Show while card data is loading -->
+@if (isLoading) {
+<app-template-card-skeleton />
+} @else {
+<app-user-card [user]="selectedUser" />
+}
+```
+
+```html
+<!-- In a grid of cards during initial load -->
+<div class="grid grid-cols-3 gap-16">
+  @for (_ of loadingPlaceholders; track _) {
+  <app-template-card-skeleton />
+  }
+</div>
+```
+
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-template-list-skeleton — TemplateListSkeleton</h3></summary>
+
+Loading placeholder for list layouts. Displays a vertical list of items, each with a circular avatar and two text lines.
+
+|              |                            |
+| ------------ | -------------------------- |
+| **Selector** | `app-template-list-skeleton` |
+
+No inputs or outputs.
+
+Examples
+
+```html
+<!-- Show while list data is loading -->
+@if (isLoading) {
+<app-template-list-skeleton />
+} @else {
+<ul>
+  @for (item of items(); track item.id) {
+  <li>{{ item.name }}</li>
+  }
+</ul>
+}
+```
+
+```html
+<!-- Multiple skeletons for a longer list -->
+@for (_ of [1, 2, 3]; track _) {
+<app-template-list-skeleton />
+}
+```
+
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-template-table-skeleton — TemplateTableSkeleton</h3></summary>
+
+Loading placeholder for table layouts. Displays a PrimeNG table with skeleton cells in headers and 10 body rows.
+
+|              |                            |
+| ------------ | -------------------------- |
+| **Selector** | `app-template-table-skeleton` |
+
+No inputs or outputs.
+
+Examples
+
+```html
+<!-- Show while table data is loading -->
+@if (tableDataSource.loading()) {
+<app-template-table-skeleton />
+} @else {
+<app-template-table-fetch
+  [displayedPropertyColumns]="columns()"
+  [tableDataSource]="tableDataSource"
+  [columnHeaderLabels]="headers()"
+/>
+}
+```
+
+```html
+<!-- Full-width table skeleton -->
+<div class="w-full">
+  <app-template-table-skeleton />
+</div>
+```
+
+</details>
+
+<details style="margin-bottom: 1rem">
+<summary><h3 style="display: inline">app-template-select-autocomplete — TemplateSelectAutocomplete</h3></summary>
+
+Autocomplete input with dropdown support, filtering, and optional multi-select. Supports custom item/header/footer templates via `ng-template`.
+
+|              |                                 |
+| ------------ | ------------------------------- |
+| **Selector** | `app-template-select-autocomplete` |
+
+**Inputs:**
+
+| Name                  | Type                         | Default     | Description                              |
+| --------------------- | ---------------------------- | ----------- | ---------------------------------------- |
+| options               | `Array<SelectOptions>`       | required    | Array of `{ name, value }` options       |
+| selectedValue         | `SelectValue \| SelectValue[]` | —         | Two-way bound selected value(s)          |
+| isDisplayedAsDropdown?| `boolean`                    | `true`      | Show dropdown arrow                      |
+| multiple?             | `boolean`                    | `false`     | Enable multi-select mode                 |
+| size?                 | `'small' \| 'large'`         | —           | Input size variant                       |
+| placeholder?          | `string`                     | —           | Placeholder text                         |
+| label?                | `string`                     | —           | Float label text                         |
+
+**Outputs:**
+
+| Name          | Type                         | Description                    |
+| ------------- | ---------------------------- | ------------------------------ |
+| selectedValueChange | `SelectValue \| SelectValue[]` | Emitted when selection changes |
+
+Examples
+
+```ts
+// Component setup
+readonly countries: Array<SelectOptions> = [
+  { name: 'Germany', value: 'DE' },
+  { name: 'France', value: 'FR' },
+  { name: 'Spain', value: 'ES' },
+];
+readonly selectedCountry: WritableSignal<SelectValue | undefined> = signal(undefined);
+```
+
+```html
+<!-- Basic single-select with label -->
+<app-template-select-autocomplete
+  [options]="countries"
+  [(selectedValue)]="selectedCountry"
+  label="general.country"
+  placeholder="Select a country..."
+/>
+```
+
+```html
+<!-- Multi-select with custom item template -->
+<app-template-select-autocomplete
+  [options]="users"
+  [(selectedValue)]="selectedUsers"
+  [multiple]="true"
+  label="general.assign-users"
+>
+  <ng-template #item let-context>
+    <div class="flex items-center gap-8">
+      <span class="pi pi-user"></span>
+      <span>{{ context.name }}</span>
+    </div>
+  </ng-template>
+</app-template-select-autocomplete>
+```
+
+> `SelectOptions` type is `{ name: string; value: SelectValue }` where `SelectValue = string | number | boolean`.
+> Custom templates use `#item`, `#header`, and `#footer` ng-template references.
+
+</details>
+
 </details>
 
 <details style="margin-bottom: 1rem">
