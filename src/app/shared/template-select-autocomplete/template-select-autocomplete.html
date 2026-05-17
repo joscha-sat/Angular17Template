@@ -1,12 +1,51 @@
 <!-- AUTOCOMPLETE DROPDOWN -->
+@let currentLabel = label(); @if (currentLabel) {
+<p-floatlabel variant="on">
+  <p-autocomplete
+    [ngModel]="ngModelValue()"
+    (ngModelChange)="onNgModelChange($event)"
+    [suggestions]="suggestedOptions()"
+    [dropdown]="isDisplayedAsDropdown()"
+    (completeMethod)="search($event)"
+    optionLabel="name"
+    optionValue="value"
+    (onSelect)="onItemSelected($event)"
+    (onClear)="onClear()"
+    [multiple]="multiple()"
+    [size]="size()"
+    [placeholder]="placeholder()"
+    inputId="autocomplete"
+  >
+    @let itemTpl = itemTemplate(); @if (itemTpl) {
+    <ng-template pTemplate="item" let-context>
+      <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: context }" />
+    </ng-template>
+    } @let headerTpl = headerTemplate(); @if (headerTpl) {
+    <ng-template pTemplate="header">
+      <ng-container *ngTemplateOutlet="headerTpl" />
+    </ng-template>
+    } @let footerTpl = footerTemplate(); @if (footerTpl) {
+    <ng-template pTemplate="footer">
+      <ng-container *ngTemplateOutlet="footerTpl" />
+    </ng-template>
+    }
+  </p-autocomplete>
+  <label for="autocomplete">{{ currentLabel }}</label>
+</p-floatlabel>
+} @else {
 <p-autocomplete
-  [ngModel]="selectedValue()"
+  [ngModel]="ngModelValue()"
+  (ngModelChange)="onNgModelChange($event)"
   [suggestions]="suggestedOptions()"
   [dropdown]="isDisplayedAsDropdown()"
   (completeMethod)="search($event)"
   optionLabel="name"
+  optionValue="value"
   (onSelect)="onItemSelected($event)"
   (onClear)="onClear()"
+  [multiple]="multiple()"
+  [size]="size()"
+  [placeholder]="placeholder()"
 >
   @let itemTpl = itemTemplate(); @if (itemTpl) {
   <ng-template pTemplate="item" let-context>
@@ -22,3 +61,4 @@
   </ng-template>
   }
 </p-autocomplete>
+}

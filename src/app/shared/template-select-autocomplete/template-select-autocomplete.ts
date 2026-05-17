@@ -1,6 +1,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import {
   Component,
+  computed,
   contentChild,
   input,
   type InputSignal,
@@ -13,30 +14,43 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { type AutoCompleteCompleteEvent, AutoCompleteModule } from 'primeng/autocomplete';
+import { FloatLabel } from 'primeng/floatlabel';
+
+export type SelectValue = string | number | boolean;
+export type SelectSizes = 'small' | 'large' | undefined;
 
 export type SelectOptions = {
   name: string;
-  value: string | number | boolean;
+  value: SelectValue;
 };
 
 @Component({
   selector: 'app-template-select-autocomplete',
-  imports: [FormsModule, AutoCompleteModule, NgTemplateOutlet],
+  imports: [FormsModule, AutoCompleteModule, NgTemplateOutlet, FloatLabel],
   templateUrl: './template-select-autocomplete.html',
   styleUrl: './template-select-autocomplete.scss',
 })
 export class TemplateSelectAutocomplete {
   // models
-  readonly selectedValue: ModelSignal<string | number | boolean | undefined> = model<
-    string | number | boolean | undefined
-  >();
+  readonly selectedValue: ModelSignal<SelectValue | SelectValue[] | undefined> = model();
 
   // inputs
   readonly options: InputSignal<Array<SelectOptions>> = input.required();
   readonly isDisplayedAsDropdown: InputSignal<boolean> = input(true);
+  readonly multiple: InputSignal<boolean> = input(false);
+  readonly size: InputSignal<SelectSizes> = input<SelectSizes>(undefined);
+  readonly placeholder: InputSignal<string | undefined> = input<string | undefined>(undefined);
+  readonly label: InputSignal<string | undefined> = input<string | undefined>(undefined);
 
   // signals
   readonly suggestedOptions: WritableSignal<Array<SelectOptions>> = signal([]);
+  readonly ngModelValue: Signal<SelectValue | SelectValue[] | undefined> = computed(() => {
+    if (this.multiple()) {
+      const value: SelectValue | SelectValue[] | undefined = this.selectedValue();
+      return Array.isArray(value) ? value : [];
+    }
+    return this.selectedValue();
+  });
 
   // templates
   readonly itemTemplate: Signal<TemplateRef<unknown> | undefined> = contentChild('item', { read: TemplateRef });
@@ -50,11 +64,15 @@ export class TemplateSelectAutocomplete {
     );
   }
 
-  onItemSelected(event: { value: SelectOptions }): void {
-    this.selectedValue.set(event.value.value);
+  onItemSelected(_event: { value: SelectOptions }): void {
+    // Value is synced via ngModelChange and optionValue="value"
+  }
+
+  onNgModelChange(value: SelectValue | SelectValue[] | undefined): void {
+    this.selectedValue.set(value);
   }
 
   onClear(): void {
-    this.selectedValue.set(undefined);
+    this.selectedValue.set(this.multiple() ? [] : undefined);
   }
 }
