@@ -3,7 +3,7 @@ export const environment: {
   mapsApiKey: string;
   useMockApi: boolean;
 } = {
-  baseUrl: 'http://localhost:3000/',
+  baseUrl: 'http://mock.local/',
   mapsApiKey: '',
-  useMockApi: false,
+  useMockApi: true,
 };

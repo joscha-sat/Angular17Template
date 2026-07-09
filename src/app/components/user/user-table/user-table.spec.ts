@@ -31,4 +31,12 @@ describe('UserTable', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('registers the name template for user rows', () => {
+    const customCellTemplates: Record<string, unknown> = (
+      component as unknown as { customCellTemplates: () => Record<string, unknown> }
+    ).customCellTemplates();
+
+    expect(customCellTemplates['name']).toBeDefined();
+  });
 });

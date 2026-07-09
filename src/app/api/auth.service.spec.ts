@@ -79,18 +79,18 @@ describe('AuthService', () => {
   });
 
   describe('isLoggedIn', () => {
-    it('should return false when no tokens are in localStorage', () => {
-      expect(service.isLoggedIn()).toBe(false);
+    it('should allow access without tokens during development', () => {
+      expect(service.isLoggedIn()).toBe(true);
     });
 
-    it('should return false when only access token is present', () => {
+    it('should allow access when only an access token is present during development', () => {
       localStorageMock['access_token'] = 'access-token';
-      expect(service.isLoggedIn()).toBe(false);
+      expect(service.isLoggedIn()).toBe(true);
     });
 
-    it('should return false when only refresh token is present', () => {
+    it('should allow access when only a refresh token is present during development', () => {
       localStorageMock['refresh_token'] = 'refresh-token';
-      expect(service.isLoggedIn()).toBe(false);
+      expect(service.isLoggedIn()).toBe(true);
     });
 
     it('should return true when both tokens are present', () => {

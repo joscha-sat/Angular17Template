@@ -5,6 +5,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authTokenInterceptor } from './other/interceptors/auth-token.interceptor';
 import { isLoadingInterceptor } from './other/interceptors/is-loading.interceptor';
 import { errorInterceptor } from './other/interceptors/error.interceptor';
+import { mockApiInterceptor } from './other/interceptors/mock-api.interceptor';
 import { registerLocaleData } from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import { TranslocoHttpLoader } from './transloco-loader';
@@ -14,6 +15,7 @@ import { MessageService } from 'primeng/api';
 import { firstValueFrom } from 'rxjs';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { environment } from './other/environments/environment';
 
 // Register German locale data for DatePipe
 registerLocaleData(localeDE);
@@ -42,7 +44,14 @@ export const appConfig: ApplicationConfig = {
     { provide: LOCALE_ID, useValue: 'de-DE' },
     provideAnimations(),
     { provide: MessageService },
-    provideHttpClient(withInterceptors([authTokenInterceptor, isLoadingInterceptor, errorInterceptor])),
+    provideHttpClient(
+      withInterceptors([
+        ...(environment.useMockApi ? [mockApiInterceptor] : []),
+        authTokenInterceptor,
+        isLoadingInterceptor,
+        errorInterceptor,
+      ]),
+    ),
     provideRouter(routes),
     provideHttpClient(),
     provideTransloco({

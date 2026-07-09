@@ -2,6 +2,7 @@
   [columnHeaderLabels]="headers()"
   [displayedPropertyColumns]="columns()"
   [tableDataSource]="tableDataSource"
+  [customCellTemplates]="customCellTemplates()"
 />
 
 <ng-template #name let-user="object"> {{ user.firstName }} {{ user.lastName }} </ng-template>

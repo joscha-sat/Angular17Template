@@ -1,4 +1,4 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -48,6 +48,11 @@ export class AuthService {
   private loggedInUser?: User;
 
   isLoggedIn(): boolean {
+    // TODO: Require authentication again when the application is ready for non-developer users.
+    if (isDevMode()) {
+      return true;
+    }
+
     return (
       this.getFromLocalStorage(StorageKeys.ACCESS_TOKEN) !== null &&
       this.getFromLocalStorage(StorageKeys.REFRESH_TOKEN) !== null
