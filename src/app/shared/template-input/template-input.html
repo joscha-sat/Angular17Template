@@ -3,11 +3,17 @@
     @if (iconClass()) {
     <p-iconfield>
       <p-inputicon [class]="iconClass()" />
+      @if (field()) {
+      <input pInputText [id]="fControlName()" [formField]="field()!" [type]="type()" class="w-full" />
+      } @else {
       <input pInputText [id]="fControlName()" [formControlName]="fControlName()" [type]="type()" class="w-full" />
+      }
     </p-iconfield>
+    } @else { @if (field()) {
+    <input pInputText [id]="fControlName()" [formField]="field()!" [type]="type()" class="w-full" />
     } @else {
     <input pInputText [id]="fControlName()" [formControlName]="fControlName()" [type]="type()" class="w-full" />
-    }
+    } }
     <label [for]="fControlName()"> {{ label() | transloco }} </label>
   </p-floatlabel>
 </div>
