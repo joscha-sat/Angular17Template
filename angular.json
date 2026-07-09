@@ -44,7 +44,6 @@
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "node_modules/primeicons/primeicons.css",
               "src/styles.scss"
             ],
             "stylePreprocessorOptions": {
@@ -89,7 +88,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "local": {
               "buildTarget": "Angular-Template-V2:build:local"
@@ -104,7 +103,7 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
             "buildTarget": "Angular-Template-V2:build"
           }
