@@ -1,40 +1,33 @@
-<app-template-select-autocomplete
-  [multiple]="true"
-  [options]="[{ name: 'Joscha Sattler', value: 'value' }, { name: 'Joscha Sattler 2', value: 'value 2' }]"
-/>
+<app-view-layout>
+  <app-template-select-autocomplete
+    [multiple]="true"
+    [options]="[{ name: 'Joscha Sattler', value: 'value' }, { name: 'Joscha Sattler 2', value: 'value 2' }]"
+  />
 
-<!-- SIGNAL FORM EXAMPLE -->
-<form (submit)="submitSignalFormExample(); $event.preventDefault()">
-  <!-- FIRST NAME FIELD -->
-  <div>
-    <app-template-input label="First Name" [field]="userForm.firstName" />
-    @if (userForm.firstName().touched() && userForm.firstName().invalid()) { @for (error of
-    userForm.firstName().errors(); track error) {
-    <p>{{ error.message }}</p>
-    } }
-  </div>
+  <!-- SIGNAL FORM EXAMPLE -->
+  <form (submit)="submitSignalFormExample(); $event.preventDefault()" class="flex flex-col gap-4">
+    <!-- FIRST NAME FIELD -->
+    <div>
+      <app-template-input label="First Name" [field]="userForm.firstName" />
+      <app-input-error-msg [field]="userForm.firstName" />
+    </div>
 
-  <!-- LAST NAME FIELD -->
-  <div>
-    <app-template-input label="Last Name" [field]="userForm.lastName" />
-    @if (userForm.lastName().touched() && userForm.lastName().invalid()) { @for (error of userForm.lastName().errors();
-    track error) {
-    <p>{{ error.message }}</p>
-    } }
-  </div>
+    <!-- LAST NAME FIELD -->
+    <div>
+      <app-template-input label="Last Name" [field]="userForm.lastName" />
+      <app-input-error-msg [field]="userForm.lastName" />
+    </div>
 
-  <!-- EMAIL ADDRESS FIELD -->
-  <div>
-    <app-template-input label="Email Address" type="text" [field]="userForm.emailAddress" />
-    @if (userForm.emailAddress().touched() && userForm.emailAddress().invalid()) { @for (error of
-    userForm.emailAddress().errors(); track error) {
-    <p>{{ error.message }}</p>
-    } }
-  </div>
+    <!-- EMAIL ADDRESS FIELD -->
+    <div>
+      <app-template-input label="Email Address" type="text" [field]="userForm.emailAddress" />
+      <app-input-error-msg [field]="userForm.emailAddress" />
+    </div>
 
-  <button type="submit" [disabled]="userForm().invalid()">Submit</button>
-</form>
+    <p-button type="submit" [disabled]="userForm().invalid()">Submit</p-button>
+  </form>
 
-@if (submittedSignalFormValue()) {
-<pre>{{ submittedSignalFormValue() | json }}</pre>
-}
+  @if (submittedSignalFormValue()) {
+  <pre>{{ submittedSignalFormValue() | json }}</pre>
+  }
+</app-view-layout>

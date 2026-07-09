@@ -1,0 +1,3 @@
+@if (shouldShowErrors()) { @for (error of errors(); track error) {
+<p class="input-error-msg">{{ error.message }}</p>
+} }
