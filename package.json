@@ -38,6 +38,14 @@
   "overrides": {
     "@ngrx/signals": {
       "@angular/core": "^22.0.7"
+    },
+    "primeng": {
+      "@angular/common": "^22.0.0",
+      "@angular/core": "^22.0.0",
+      "@angular/forms": "^22.0.0",
+      "@angular/router": "^22.0.0",
+      "@angular/platform-browser": "^22.0.0",
+      "@angular/cdk": "^22.0.0"
     }
   },
   "dependencies": {
@@ -61,8 +69,8 @@
     "npm-check-updates": "^22.2.9",
     "postcss": "^8.5.19",
     "prettier": "^3.9.5",
-    "primeicons": "^8.0.0",
-    "primeng": "^22.0.0",
+    "primeicons": "^7.0.0",
+    "primeng": "^21.1.9",
     "rxjs": "~7.8.2",
     "tailwindcss-primeui": "^0.6.1",
     "tslib": "^2.8.1",
