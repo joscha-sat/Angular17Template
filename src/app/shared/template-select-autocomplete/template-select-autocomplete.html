@@ -17,15 +17,15 @@
     inputId="autocomplete"
   >
     @let itemTpl = itemTemplate(); @if (itemTpl) {
-    <ng-template pTemplate="item" let-context>
+    <ng-template #item let-context>
       <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: context }" />
     </ng-template>
     } @let headerTpl = headerTemplate(); @if (headerTpl) {
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <ng-container *ngTemplateOutlet="headerTpl" />
     </ng-template>
     } @let footerTpl = footerTemplate(); @if (footerTpl) {
-    <ng-template pTemplate="footer">
+    <ng-template #footer>
       <ng-container *ngTemplateOutlet="footerTpl" />
     </ng-template>
     }
@@ -48,15 +48,15 @@
   [placeholder]="placeholder()"
 >
   @let itemTpl = itemTemplate(); @if (itemTpl) {
-  <ng-template pTemplate="item" let-context>
+  <ng-template #item let-context>
     <ng-container *ngTemplateOutlet="itemTpl; context: { $implicit: context }" />
   </ng-template>
   } @let headerTpl = headerTemplate(); @if (headerTpl) {
-  <ng-template pTemplate="header">
+  <ng-template #header>
     <ng-container *ngTemplateOutlet="headerTpl" />
   </ng-template>
   } @let footerTpl = footerTemplate(); @if (footerTpl) {
-  <ng-template pTemplate="footer">
+  <ng-template #footer>
     <ng-container *ngTemplateOutlet="footerTpl" />
   </ng-template>
   }

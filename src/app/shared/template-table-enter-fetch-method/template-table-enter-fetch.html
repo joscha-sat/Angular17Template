@@ -15,7 +15,7 @@
     [paginatorPosition]="'bottom'"
   >
     <!-- TABLE HEADER -->
-    <ng-template pTemplate="header">
+    <ng-template #header>
       <tr>
         @for (columnKey of displayedPropertyColumns(); track columnKey) {
         <th scope="col">{{ columnHeaderLabels()[$index] }}</th>
@@ -24,7 +24,7 @@
     </ng-template>
 
     <!-- TABLE BODY -->
-    <ng-template pTemplate="body" let-rowData>
+    <ng-template #body let-rowData>
       <tr>
         @for (columnKey of displayedPropertyColumns(); track columnKey) { @let cellValue =
         retrieveNestedPropertyValue(rowData, columnKey); @let cellTemplate = customCellTemplates()[columnKey];

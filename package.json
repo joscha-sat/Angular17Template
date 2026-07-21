@@ -38,14 +38,6 @@
   "overrides": {
     "@ngrx/signals": {
       "@angular/core": "^22.0.7"
-    },
-    "primeng": {
-      "@angular/cdk": "$@angular/cdk",
-      "@angular/common": "$@angular/common",
-      "@angular/core": "$@angular/core",
-      "@angular/forms": "$@angular/forms",
-      "@angular/router": "$@angular/router",
-      "@angular/platform-browser": "$@angular/platform-browser"
     }
   },
   "dependencies": {
@@ -78,11 +70,11 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^22.0.7",
-    "@angular/build": "^22.0.7",
     "@angular-eslint/builder": "22.1.0",
     "@angular-eslint/eslint-plugin": "22.1.0",
     "@angular-eslint/eslint-plugin-template": "22.1.0",
     "@angular-eslint/template-parser": "22.1.0",
+    "@angular/build": "^22.0.7",
     "@angular/cli": "^22.0.7",
     "@angular/compiler-cli": "^22.0.7",
     "@eslint/js": "^10.0.1",
