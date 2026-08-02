@@ -19,7 +19,7 @@ export const routes: Routes = [
       },
       // || TENANT DASHBOARD || -------------------------------------- // >>
       {
-        path: ROUTES.TENANT + '/' + ROUTES.DASHBOARD + '/:id',
+        path: `${ROUTES.TENANT}/${ROUTES.DASHBOARD}/:id`,
         loadComponent: () =>
           import('./views/tenant-dashboard.view/tenant-dashboard.view.component').then(
             (m) => m.TenantDashboardViewComponent,

@@ -8,12 +8,10 @@ import { getTranslocoModule } from '@app/other/transloco-testing';
 const mockGoogle = {
   maps: {
     Map: class {
-      constructor() {}
       setCenter() {}
       setZoom() {}
     },
     MapTrafficLayer: class {
-      constructor() {}
       setMap() {}
     },
     MapOptions: {},

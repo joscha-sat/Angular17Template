@@ -36,7 +36,7 @@ export class User extends BaseModel<User> implements UserDto {
   }
 
   get roleName(): string {
-    return this.role && this.role.name ? this.role.name : User.DEFAULT_ROLE_NAME;
+    return this.role?.name ? this.role.name : User.DEFAULT_ROLE_NAME;
   }
 
   get hasInviteAccepted(): boolean {

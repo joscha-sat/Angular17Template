@@ -21,7 +21,7 @@ export class IsDatePipe implements PipeTransform {
     const date: Date = new Date(value);
 
     // Check if the date is invalid
-    if (isNaN(date.getTime())) {
+    if (Number.isNaN(date.getTime())) {
       return false;
     }
 
