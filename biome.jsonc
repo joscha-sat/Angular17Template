@@ -7,7 +7,7 @@
   // Prettier owns HTML; Biome's HTML support is experimental and cannot parse
   // Angular {{ }} without parser.interpolation, so HTML is excluded here.
   "files": {
-    "includes": ["src/**", "!**/*.html"]
+    "includes": ["src/**"]
   },
 
   "formatter": {
