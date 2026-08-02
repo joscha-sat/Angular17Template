@@ -75,6 +75,7 @@
     "@jsverse/transloco": "^8.4.0",
     "@types/jasmine": "~6.0.0",
     "@types/luxon": "^3.7.3",
+    "@types/node": "^26.1.2",
     "@typescript-eslint/eslint-plugin": "^8.65.0",
     "@typescript-eslint/parser": "8.65.0",
     "@typescript-eslint/utils": "^8.65.0",
@@ -86,6 +87,7 @@
     "globals": "^17.8.0",
     "husky": "^9.1.7",
     "jsdom": "^30.0.1",
+    "knip": "^6.31.0",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.65.0",
     "vitest": "^4.1.10"
