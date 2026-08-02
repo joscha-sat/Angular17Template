@@ -5,6 +5,7 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LoadingService } from './services/loading.service';
 import { AsyncPipe } from '@angular/common';
+import { environment } from './other/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -24,5 +25,9 @@ export class AppComponent {
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();
+  }
+
+  get isMockMode(): boolean {
+    return environment.mock;
   }
 }

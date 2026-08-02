@@ -385,7 +385,9 @@ export const mockInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
-  if (!environment.mock) {
+  // Only API requests are mocked; asset requests (e.g. transloco i18n files)
+  // must pass through to the real HTTP client.
+  if (!environment.mock || !req.url.startsWith(environment.baseUrl)) {
     return next(req);
   }
 
