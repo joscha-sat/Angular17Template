@@ -15,8 +15,8 @@
     // prettier tabWidth: 2 + .editorconfig indent_style = space
     "indentStyle": "space",
     "indentWidth": 2,
-    // prettier printWidth default 80
-    "lineWidth": 80,
+    // prettier printWidth default 120
+    "lineWidth": 120,
     // prettier endOfLine: "auto" (OS default: CRLF on Windows, LF on Unix)
     "lineEnding": "auto",
     // Explicit config wins over .editorconfig (default is already false)
