@@ -6,6 +6,13 @@ import { environment } from '../other/environments/environment';
 import { User } from '../models/User';
 import { ApiRoutes } from '../other/enums/api_routes';
 import { ROUTES } from '../other/enums/ROUTES';
+import {
+  authenticatedUserSchema,
+  type LoginResponsePayload,
+  loginResponseSchema,
+  type RefreshTokenResponsePayload,
+  refreshTokenResponseSchema,
+} from './schemas/auth.schemas';
 
 const StorageKeys: {
   ACCESS_TOKEN: string;
@@ -56,10 +63,11 @@ export class AuthService {
 
   login(loginBody: LoginBody): Observable<void> {
     const url: string = `${this.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`;
-    return this.http.post<LoginResponse>(url, loginBody).pipe(
-      map((response: LoginResponse) => {
-        this.setTokens(response.access_token, response.refresh_token);
-        this.setLoggedInUser(response.user);
+    return this.http.post<unknown>(url, loginBody).pipe(
+      map((response: unknown): void => {
+        const validatedResponse: LoginResponsePayload = loginResponseSchema.parse(response);
+        this.setTokens(validatedResponse.access_token, validatedResponse.refresh_token);
+        this.setLoggedInUser(new User(validatedResponse.user));
       }),
     );
   }
@@ -72,9 +80,23 @@ export class AuthService {
 
   sendRefreshToken(): Observable<RefreshTokenResponse> {
     const url: string = this.buildUrl(ApiRoutes.AUTH, 'refreshToken');
-    return this.http.post<RefreshTokenResponse>(url, {
-      refreshToken: this.getFromLocalStorage(StorageKeys.REFRESH_TOKEN),
-    });
+    return this.http
+      .post<unknown>(url, {
+        refreshToken: this.getFromLocalStorage(StorageKeys.REFRESH_TOKEN),
+      })
+      .pipe(
+        map((response: unknown): RefreshTokenResponse => {
+          const validatedResponse: RefreshTokenResponsePayload = refreshTokenResponseSchema.parse(response);
+
+          return {
+            ...validatedResponse,
+            data: {
+              ...validatedResponse.data,
+              user: new User(validatedResponse.data.user),
+            },
+          };
+        }),
+      );
   }
 
   getRefreshToken(): string | null {
@@ -101,7 +123,12 @@ export class AuthService {
     }
 
     const userJSON: string | null = this.getFromLocalStorage(StorageKeys.USER);
-    return userJSON ? new User(JSON.parse(userJSON)) : null;
+    if (!userJSON) {
+      return null;
+    }
+
+    const validatedUser: User = new User(authenticatedUserSchema.parse(JSON.parse(userJSON)));
+    return validatedUser;
   }
 
   private buildUrl(...parts: string[]): string {
@@ -117,7 +144,9 @@ export class AuthService {
   }
 
   private clearUserSession(): void {
-    Object.values(StorageKeys).forEach((key: string) => this.removeFromLocalStorage(key));
+    Object.values(StorageKeys).forEach((key: string) => {
+      this.removeFromLocalStorage(key);
+    });
   }
 
   private removeFromLocalStorage(key: string): void {

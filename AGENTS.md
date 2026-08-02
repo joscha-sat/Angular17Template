@@ -14,6 +14,7 @@ Always run these scripts at the end of your work to ensure code quality and cons
 - Angular Material: `^22.1.0`
 - TypeScript: `~6.0.3`
 - RxJS: `~7.8.2`
+- Zod: `^4.4.3`
 - ESLint: `^10.8.0`
 - Prettier: `^3.9.6`
 - Transloco (i18n): `^8.4.0`
@@ -23,7 +24,8 @@ Always run these scripts at the end of your work to ensure code quality and cons
 ```
 src/
 ├── app/
-│   ├── api/                          # Services for API calls
+│   ├── api/                          # Services and runtime schemas for API calls
+│   │   └── schemas/                  # Zod schemas for API response validation
 │   ├── components/                   # Reusable UI components
 │   │   ├── customers/
 │   │   ├── login/

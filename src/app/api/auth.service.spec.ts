@@ -116,6 +116,18 @@ describe('AuthService', () => {
       req.flush(mockLoginResponse);
     });
 
+    it('should reject a login response with missing tokens', () => {
+      service.login(mockLoginBody).subscribe({
+        next: () => expect.fail('should have failed validation'),
+        error: (error: Error) => {
+          expect(error.message).toContain('Invalid input');
+        },
+      });
+
+      const req = httpMock.expectOne(`${environment.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`);
+      req.flush({ user: mockUser });
+    });
+
     it('should handle login error', () => {
       service.login(mockLoginBody).subscribe({
         next: () => expect.fail('should have failed'),
@@ -158,6 +170,24 @@ describe('AuthService', () => {
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual({ refreshToken: 'refresh-token-123' });
       req.flush(mockRefreshTokenResponse);
+    });
+
+    it('should reject a refresh response with an invalid access token', () => {
+      service.sendRefreshToken().subscribe({
+        next: () => expect.fail('should have failed validation'),
+        error: (error: Error) => {
+          expect(error.message).toContain('Invalid input');
+        },
+      });
+
+      const req = httpMock.expectOne(`${environment.baseUrl}/${ApiRoutes.AUTH}/refreshToken`);
+      req.flush({
+        ...mockRefreshTokenResponse,
+        data: {
+          ...mockRefreshTokenResponse.data,
+          access: '',
+        },
+      });
     });
   });
 
@@ -214,6 +244,12 @@ describe('AuthService', () => {
       localStorageMock['user'] = 'invalid-json';
       // The service should handle the JSON.parse error gracefully
       expect(() => service.getLoggedInUser()).toThrow(SyntaxError);
+    });
+
+    it('should reject a stored user with missing identity data', () => {
+      localStorageMock['user'] = JSON.stringify({ id: '1' });
+
+      expect(() => service.getLoggedInUser()).toThrow('Invalid input');
     });
   });
 
