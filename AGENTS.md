@@ -5,7 +5,7 @@ This AGENTS.md must reflect the current state of the project at all times. Updat
 ## Scripts
 Always run these scripts at the end of your work to ensure code quality and consistency:
 
-- `npm run eslint`
+- `npm run lint:oxlint-and-eslint`
 - `npm run lint:biome-safe-fixes`
 - `npm run format:biome`
 

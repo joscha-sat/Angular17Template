@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript"],
+  "categories": {
+    "correctness": "warn"
+  },
+  "env": {
+    "browser": true,
+    "es2022": true
+  },
+  "ignorePatterns": [
+    ".angular/**",
+    "coverage/**",
+    "dist/**",
+    "node_modules/**",
+    "eslint-custom-rules/**",
+    "eslint-transloco-plugin/**"
+  ]
+}
