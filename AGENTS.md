@@ -6,8 +6,8 @@ This AGENTS.md must reflect the current state of the project at all times. Updat
 Always run these scripts at the end of your work to ensure code quality and consistency:
 
 - `npm run eslint`
+- `npm run lint:biome-safe-fixes`
 - `npm run format:biome`
-- `npx prettier --write "src/**/*.{html,ts,scss}"`
 
 ## Tech Stack
 - Angular: `^22.1.0`
