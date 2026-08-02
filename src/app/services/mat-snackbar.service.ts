@@ -5,11 +5,9 @@ import {
   type MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import type { ComponentType } from '@angular/cdk/overlay';
-import type { SnackbarComponentData } from '../shared/api-snackbar/api-snackbar.component';
+import type { SnackBarData, SnackBarTypes } from '../other/types/snackbar.type';
 
-export type SnackBarTypes = 'info' | 'success' | 'error';
-export type SnackBarData = Omit<SnackbarComponentData, 'title'>;
-export type MethodType = 'POST' | 'PATCH' | 'DELETE';
+export type { MethodType, SnackBarData, SnackBarTypes } from '../other/types/snackbar.type';
 
 @Injectable({
   providedIn: 'root',

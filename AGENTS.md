@@ -52,6 +52,7 @@ src/
 │   ├── app.config.ts
 │   ├── app.routes.ts
 │   └── transloco-loader.ts
+├── client/                         # Generated API client
 ├── assets/
 │   ├── i18n/                         # Translation files
 │   ├── scss/                         # Global styles

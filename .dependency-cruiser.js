@@ -9,7 +9,9 @@ module.exports = {
         "your solution (i.e. use dependency inversion, make sure the modules have a single responsibility) ",
       from: {},
       to: {
-        circular: true
+        circular: true,
+        // Type-only imports do not create runtime cycles.
+        dependencyTypesNot: ['type-only']
       }
     },
     {
@@ -27,7 +29,8 @@ module.exports = {
           '(^|/)[.][^/]+[.](?:js|cjs|mjs|ts|cts|mts|json)$',                  // dot files
           '[.]d[.]ts$',                                                       // TypeScript declaration files
           '(^|/)tsconfig[.]json$',                                            // TypeScript config
-          '(^|/)(?:babel|webpack)[.]config[.](?:js|cjs|mjs|ts|cts|mts|json)$' // other configs
+          '(^|/)(?:babel|webpack)[.]config[.](?:js|cjs|mjs|ts|cts|mts|json)$', // other configs
+          '(^|/)environment[.](?:local|mock)[.]ts$'                            // Angular file replacements
         ]
       },
       to: {},
