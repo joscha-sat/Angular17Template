@@ -1,7 +1,7 @@
 import { BaseModel } from './BaseModel';
-import { Tenant } from './Tenant';
-import { Role } from './Role';
-import { UserDto } from '../../client';
+import type { Tenant } from './Tenant';
+import type { Role } from './Role';
+import type { UserDto } from '../../client';
 
 export class User extends BaseModel<User> implements UserDto {
   private static readonly DEFAULT_DISPLAY_NAME: string = 'no name';

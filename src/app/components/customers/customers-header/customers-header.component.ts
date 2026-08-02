@@ -1,6 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  type FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerAddEditDialogComponent } from '../dialogs/customer-add-edit-dialog/customer-add-edit-dialog.component';

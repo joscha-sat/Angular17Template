@@ -1,11 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable, signal, WritableSignal } from '@angular/core';
-import { forkJoin, map, Observable, Subject, tap } from 'rxjs';
+import { inject, Injectable, signal, type WritableSignal } from '@angular/core';
+import { forkJoin, map, type Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../other/environments/environment';
 import {
   MatSnackbarService,
-  MethodType,
-  SnackBarData,
+  type MethodType,
+  type SnackBarData,
 } from '../../services/mat-snackbar.service';
 import { ApiSnackbarComponent } from '../../shared/api-snackbar/api-snackbar.component';
 

@@ -1,7 +1,7 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ApiRoutes } from '../../other/enums/api_routes';
+import type { HttpErrorResponse } from '@angular/common/http';
+import type { ApiRoutes } from '../../other/enums/api_routes';
 
 // A mapping of HTTP status codes to translation keys
 const STATUS_CODES: { [key: number]: string } = {

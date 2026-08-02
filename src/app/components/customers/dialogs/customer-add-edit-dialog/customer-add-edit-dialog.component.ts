@@ -1,13 +1,13 @@
 import {
   Component,
   inject,
-  OnInit,
+  type OnInit,
   signal,
-  WritableSignal,
+  type WritableSignal,
 } from '@angular/core';
 import {
   FormBuilder,
-  FormGroup,
+  type FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';

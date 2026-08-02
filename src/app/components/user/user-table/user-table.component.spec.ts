@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserTableComponent } from './user-table.component';
 import { UserService } from '../../../api/user.service';
 import { getTranslocoModule } from '@app/other/transloco-testing';

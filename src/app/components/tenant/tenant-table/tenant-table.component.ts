@@ -1,14 +1,14 @@
 import {
   Component,
   inject,
-  OnInit,
+  type OnInit,
   signal,
-  WritableSignal,
+  type WritableSignal,
 } from '@angular/core';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 import { BaseTableComponent } from '../../../other/abstract-classes/BaseTable';
-import { Tenant } from '../../../models/Tenant';
-import { Table } from '../../../other/types/Table.type';
+import type { Tenant } from '../../../models/Tenant';
+import type { Table } from '../../../other/types/Table.type';
 import { TenantService } from '../../../api/tenant.service';
 
 @Component({

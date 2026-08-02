@@ -2,15 +2,15 @@ import {
   Component,
   inject,
   input,
-  InputSignal,
-  OnChanges,
-  OnInit,
-  SimpleChange,
-  SimpleChanges,
+  type InputSignal,
+  type OnChanges,
+  type OnInit,
+  type SimpleChange,
+  type SimpleChanges,
 } from '@angular/core';
-import { Tenant } from '../../../models/Tenant';
+import type { Tenant } from '../../../models/Tenant';
 import {
-  AbstractControl,
+  type AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,

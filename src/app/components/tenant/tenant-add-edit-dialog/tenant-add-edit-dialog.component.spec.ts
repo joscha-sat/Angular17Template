@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { TenantAddEditDialogComponent } from './tenant-add-edit-dialog.component';
 import { TenantService } from '../../../api/tenant.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';

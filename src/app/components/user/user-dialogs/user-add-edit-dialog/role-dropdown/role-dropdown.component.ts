@@ -1,12 +1,12 @@
 import {
   Component,
   inject,
-  OnInit,
+  type OnInit,
   signal,
-  WritableSignal,
+  type WritableSignal,
 } from '@angular/core';
 import { RoleService } from '../../../../../api/role.service';
-import { Role } from '../../../../../models/Role';
+import type { Role } from '../../../../../models/Role';
 import { ControlContainer, FormGroupDirective } from '@angular/forms';
 
 @Component({

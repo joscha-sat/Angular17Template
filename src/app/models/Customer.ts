@@ -1,5 +1,5 @@
 import { BaseModel } from './BaseModel';
-import { Customer as GenCustomer } from '../../client';
+import type { Customer as GenCustomer } from '../../client';
 
 export class Customer extends BaseModel<Customer> implements GenCustomer {
   name!: string;

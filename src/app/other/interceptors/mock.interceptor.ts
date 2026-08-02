@@ -1,13 +1,13 @@
 import {
   HttpErrorResponse,
-  HttpEvent,
-  HttpHandlerFn,
-  HttpInterceptorFn,
-  HttpParams,
-  HttpRequest,
+  type HttpEvent,
+  type HttpHandlerFn,
+  type HttpInterceptorFn,
+  type HttpParams,
+  type HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import { delay, Observable, of, throwError } from 'rxjs';
+import { delay, type Observable, of, throwError } from 'rxjs';
 import { environment } from '../../other/environments/environment';
 
 const MOCK_LATENCY_MS: number = 400;

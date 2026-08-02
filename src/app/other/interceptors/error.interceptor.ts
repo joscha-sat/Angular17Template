@@ -1,4 +1,4 @@
-import {
+import type {
   HttpErrorResponse,
   HttpHandlerFn,
   HttpInterceptorFn,
@@ -9,7 +9,7 @@ import { inject } from '@angular/core';
 import { HttpStatusMsgService } from '../../api/base-error-messages/http-status-msg.service';
 import {
   MatSnackbarService,
-  SnackBarData,
+  type SnackBarData,
 } from '../../services/mat-snackbar.service';
 import { ApiSnackbarComponent } from '../../shared/api-snackbar/api-snackbar.component';
 

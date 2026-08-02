@@ -1,14 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, type OnInit } from '@angular/core';
 import { MODE } from '../../../other/enums/mode.enum';
 import {
   FormBuilder,
-  FormGroup,
+  type FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { Tenant } from '../../../models/Tenant';
 import { TenantService } from '../../../api/tenant.service';
-import { AddEdit } from '../../../other/types/AddEdit.type';
+import type { AddEdit } from '../../../other/types/AddEdit.type';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({

@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import {
   MatSnackBar,
-  MatSnackBarHorizontalPosition,
-  MatSnackBarVerticalPosition,
+  type MatSnackBarHorizontalPosition,
+  type MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
-import { ComponentType } from '@angular/cdk/overlay';
-import { SnackbarComponentData } from '../shared/api-snackbar/api-snackbar.component';
+import type { ComponentType } from '@angular/cdk/overlay';
+import type { SnackbarComponentData } from '../shared/api-snackbar/api-snackbar.component';
 
 export type SnackBarTypes = 'info' | 'success' | 'error';
 export type SnackBarData = Omit<SnackbarComponentData, 'title'>;

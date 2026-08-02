@@ -1,11 +1,11 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { Injectable, signal, type WritableSignal } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 import {
-  BaseQueryParams,
+  type BaseQueryParams,
   GenericHttpService,
-  idTypes,
-  ResponseWithRecords,
+  type idTypes,
+  type ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import { Tenant } from '../models/Tenant';
 import { ApiRoutes } from '../other/enums/api_routes';

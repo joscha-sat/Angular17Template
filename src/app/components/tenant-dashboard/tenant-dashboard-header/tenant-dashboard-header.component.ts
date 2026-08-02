@@ -1,6 +1,6 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, input, type InputSignal } from '@angular/core';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
-import { Tenant } from '../../../models/Tenant';
+import type { Tenant } from '../../../models/Tenant';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { TemplateTableEnterFetchComponent } from './template-table-enter-fetch.component';

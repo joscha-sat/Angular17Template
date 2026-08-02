@@ -1,4 +1,9 @@
-import { Component, input, InputSignal, WritableSignal } from '@angular/core';
+import {
+  Component,
+  input,
+  type InputSignal,
+  type WritableSignal,
+} from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TemplateDatepickerComponent } from '../template-datepicker/template-datepicker.component';
 

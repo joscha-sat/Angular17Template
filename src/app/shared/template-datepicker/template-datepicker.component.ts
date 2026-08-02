@@ -1,10 +1,10 @@
 import {
   Component,
   input,
-  InputSignal,
+  type InputSignal,
   output,
-  OutputEmitterRef,
-  WritableSignal,
+  type OutputEmitterRef,
+  type WritableSignal,
 } from '@angular/core';
 import {
   MatFormField,

@@ -1,6 +1,6 @@
-import { Component, inject, signal, WritableSignal } from '@angular/core';
-import { Role } from '../../../../../models/Role';
-import { Table } from '../../../../../other/types/Table.type';
+import { Component, inject, signal, type WritableSignal } from '@angular/core';
+import type { Role } from '../../../../../models/Role';
+import type { Table } from '../../../../../other/types/Table.type';
 import { RoleService } from '../../../../../api/role.service';
 
 @Component({

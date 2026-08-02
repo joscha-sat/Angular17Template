@@ -1,12 +1,12 @@
 import {
   Component,
   inject,
-  OnInit,
+  type OnInit,
   signal,
-  WritableSignal,
+  type WritableSignal,
 } from '@angular/core';
 import { UserService } from '../../../api/user.service';
-import { User } from '../../../models/User';
+import type { User } from '../../../models/User';
 import { BaseTableComponent } from '../../../other/abstract-classes/BaseTable';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 

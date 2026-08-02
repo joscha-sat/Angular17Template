@@ -1,9 +1,9 @@
-import { CanActivateFn, Router } from '@angular/router';
+import { type CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
 
 import { ROUTES } from '../enums/ROUTES';
 import { AuthService } from '../../api/auth.service';
-import { User } from '../../models/User';
+import type { User } from '../../models/User';
 
 export const globalUserGuard: CanActivateFn = () => {
   const authService: AuthService = inject(AuthService);

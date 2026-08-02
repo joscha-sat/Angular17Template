@@ -1,16 +1,16 @@
 import {
   Component,
   inject,
-  OnInit,
+  type OnInit,
   signal,
-  WritableSignal,
+  type WritableSignal,
 } from '@angular/core';
 import { TenantHeaderComponent } from '../../components/tenant/tenant-header/tenant-header.component';
 import { TenantService } from '../../api/tenant.service';
-import { Tenant } from '../../models/Tenant';
+import type { Tenant } from '../../models/Tenant';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
 import { TenantTableComponent } from '../../components/tenant/tenant-table/tenant-table.component';
-import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
+import type { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
 
 @Component({
   selector: 'app-tenant.view',

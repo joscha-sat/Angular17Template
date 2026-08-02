@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, map, Observable } from 'rxjs';
+import { filter, map, type Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

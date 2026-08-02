@@ -1,6 +1,6 @@
 import { BaseModel } from './BaseModel';
-import { User } from './User';
-import { RoleDto } from '../../client';
+import type { User } from './User';
+import type { RoleDto } from '../../client';
 
 type Permissions =
   | 'FILE_READ'

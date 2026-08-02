@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserHeaderComponent } from './user-header.component';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';

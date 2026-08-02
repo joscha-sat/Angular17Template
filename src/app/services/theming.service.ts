@@ -1,4 +1,4 @@
-import { inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { inject, Injectable, signal, type WritableSignal } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 export enum THEME {

@@ -1,5 +1,5 @@
 import {
-  AfterViewInit,
+  type AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -7,19 +7,23 @@ import {
   effect,
   inject,
   input,
-  InputSignal,
-  Signal,
+  type InputSignal,
+  type Signal,
   signal,
-  TemplateRef,
+  type TemplateRef,
   viewChild,
-  WritableSignal,
+  type WritableSignal,
 } from '@angular/core';
 import {
   MatPaginator,
   MatPaginatorModule,
-  PageEvent,
+  type PageEvent,
 } from '@angular/material/paginator';
-import { MatSort, MatSortModule, SortDirection } from '@angular/material/sort';
+import {
+  MatSort,
+  MatSortModule,
+  type SortDirection,
+} from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -28,17 +32,17 @@ import {
   debounceTime,
   distinctUntilChanged,
   map,
-  Observable,
+  type Observable,
   of,
   switchMap,
   tap,
 } from 'rxjs';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
-import {
+import type {
   BaseGetQueryParams,
   SortParamType,
 } from '../../other/types/Table.type';
-import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
+import type { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
 
 // Type for the function that fetches data from the server
 export type FetchDataFunction<T> = (

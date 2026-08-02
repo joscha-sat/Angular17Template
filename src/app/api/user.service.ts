@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 import {
-  BaseQueryParams,
+  type BaseQueryParams,
   GenericHttpService,
-  idTypes,
-  ResponseWithRecords,
+  type idTypes,
+  type ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import { User } from '../models/User';
 import { ApiRoutes } from '../other/enums/api_routes';

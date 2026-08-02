@@ -1,9 +1,9 @@
 import {
   APP_INITIALIZER,
-  ApplicationConfig,
+  type ApplicationConfig,
   isDevMode,
   LOCALE_ID,
-  Provider,
+  type Provider,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';

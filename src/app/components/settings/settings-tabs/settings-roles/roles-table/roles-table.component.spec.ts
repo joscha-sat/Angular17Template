@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { RolesTableComponent } from './roles-table.component';
 import { RoleService } from '../../../../../api/role.service';
 

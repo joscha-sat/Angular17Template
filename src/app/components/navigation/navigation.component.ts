@@ -1,14 +1,14 @@
 import {
   Component,
   inject,
-  OnInit,
+  type OnInit,
   signal,
-  WritableSignal,
+  type WritableSignal,
 } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatMiniFabButton } from '@angular/material/button';
-import { NavItem } from '../../other/enums/nav-items';
+import type { NavItem } from '../../other/enums/nav-items';
 import { ROUTES } from '../../other/enums/ROUTES';
 import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 

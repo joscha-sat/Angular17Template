@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { MapViewComponent } from './map.view.component';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
 import { MapHeaderComponent } from '../../components/map/map-header/map-header.component';

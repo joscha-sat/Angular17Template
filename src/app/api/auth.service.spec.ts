@@ -7,9 +7,9 @@ import {
 import { Router } from '@angular/router';
 import {
   AuthService,
-  LoginBody,
-  LoginResponse,
-  RefreshTokenResponse,
+  type LoginBody,
+  type LoginResponse,
+  type RefreshTokenResponse,
 } from './auth.service';
 import { User } from '../models/User';
 import { environment } from '../other/environments/environment';

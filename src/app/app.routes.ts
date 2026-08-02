@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import type { Routes } from '@angular/router';
 import { ROUTES } from './other/enums/ROUTES';
 
 import { authGuard } from './other/guards/auth.guard';

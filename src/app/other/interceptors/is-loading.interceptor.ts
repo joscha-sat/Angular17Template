@@ -1,12 +1,12 @@
 import {
-  HttpEvent,
-  HttpHandlerFn,
-  HttpInterceptorFn,
-  HttpRequest,
+  type HttpEvent,
+  type HttpHandlerFn,
+  type HttpInterceptorFn,
+  type HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
 import { catchError, delay, finalize, of, tap } from 'rxjs';
-import { inject, signal, WritableSignal } from '@angular/core';
+import { inject, signal, type WritableSignal } from '@angular/core';
 import { LoadingService } from '../../services/loading.service';
 
 // Set initial request count at '0'

@@ -1,15 +1,15 @@
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import type { Observable } from 'rxjs';
 import {
-  BaseQueryParams,
+  type BaseQueryParams,
   GenericHttpService,
-  idTypes,
-  ResponseWithRecords,
+  type idTypes,
+  type ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import { Role } from '../models/Role';
 import { AuthService } from './auth.service';
 import { ApiRoutes } from '../other/enums/api_routes';
-import { User } from '../models/User';
+import type { User } from '../models/User';
 
 export type RoleQueryParams = BaseQueryParams & {};
 

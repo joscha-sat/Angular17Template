@@ -1,11 +1,11 @@
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
-import { AuthService, RefreshTokenResponse } from '../../api/auth.service';
+import { catchError, type Observable, switchMap, throwError } from 'rxjs';
+import { AuthService, type RefreshTokenResponse } from '../../api/auth.service';
 import {
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandlerFn,
-  HttpInterceptorFn,
-  HttpRequest,
+  type HttpErrorResponse,
+  type HttpEvent,
+  type HttpHandlerFn,
+  type HttpInterceptorFn,
+  type HttpRequest,
   HttpStatusCode,
 } from '@angular/common/http';
 import { inject } from '@angular/core';

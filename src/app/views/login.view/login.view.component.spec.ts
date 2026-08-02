@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginViewComponent } from './login.view.component';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 import { LoginFormComponent } from '../../components/login/login-form/login-form.component';

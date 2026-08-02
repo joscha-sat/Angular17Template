@@ -2,16 +2,16 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnInit,
+  type OnInit,
   signal,
-  WritableSignal,
+  type WritableSignal,
 } from '@angular/core';
-import { Customer } from '../../../models/Customer';
+import type { Customer } from '../../../models/Customer';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 import { BaseTableComponent } from '../../../other/abstract-classes/BaseTable';
 import { CustomerService } from '../../../api/customer.service';
 import { DeleteIconComponent } from '../../../shared/icons/delete-icon/delete-icon.component';
-import { BaseGetQueryParams } from '../../../other/types/Table.type';
+import type { BaseGetQueryParams } from '../../../other/types/Table.type';
 
 @Component({
   selector: 'app-customer-table',

@@ -1,12 +1,12 @@
 import {
-  AfterViewInit,
+  type AfterViewInit,
   Component,
   input,
-  InputSignal,
+  type InputSignal,
   output,
-  OutputEmitterRef,
-  Signal,
-  TemplateRef,
+  type OutputEmitterRef,
+  type Signal,
+  type TemplateRef,
   viewChild,
 } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';

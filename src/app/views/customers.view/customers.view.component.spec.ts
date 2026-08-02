@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { CustomersViewComponent } from './customers.view.component';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
 import { CustomersHeaderComponent } from '../../components/customers/customers-header/customers-header.component';

@@ -1,8 +1,8 @@
 import {
-  HttpHandlerFn,
+  type HttpHandlerFn,
   HttpParams,
   HttpRequest,
-  HttpRequestOptions,
+  type HttpRequestOptions,
   HttpResponse,
 } from '@angular/common/http';
 import { firstValueFrom, of } from 'rxjs';

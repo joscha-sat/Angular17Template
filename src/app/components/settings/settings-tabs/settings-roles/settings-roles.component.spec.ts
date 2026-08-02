@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { SettingsRolesComponent } from './settings-roles.component';
 
 describe('SettingsRolesComponent', () => {

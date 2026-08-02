@@ -1,21 +1,21 @@
 import {
   Component,
   inject,
-  OnInit,
+  type OnInit,
   signal,
-  WritableSignal,
+  type WritableSignal,
 } from '@angular/core';
 import { User } from '../../../../models/User';
 import {
-  FormControl,
-  FormGroup,
+  type FormControl,
+  type FormGroup,
   NonNullableFormBuilder,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
 import { UserService } from '../../../../api/user.service';
 import { TwoInputsRowLayoutComponent } from '../../../../other/layouts/two-inputs-row-layout/two-inputs-row-layout.component';
-import { AddEdit } from '../../../../other/types/AddEdit.type';
+import type { AddEdit } from '../../../../other/types/AddEdit.type';
 import { RoleDropdownComponent } from './role-dropdown/role-dropdown.component';
 
 import { TranslocoPipe } from '@jsverse/transloco';

@@ -1,14 +1,19 @@
 import {
   Component,
   inject,
-  OnDestroy,
-  OnInit,
-  WritableSignal,
+  type OnDestroy,
+  type OnInit,
+  type WritableSignal,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
-import { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
-import { BaseGetQueryParams } from '../types/Table.type';
-import { FetchDataFunction } from '../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
+import {
+  BehaviorSubject,
+  type Observable,
+  type Subscription,
+  switchMap,
+} from 'rxjs';
+import type { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
+import type { BaseGetQueryParams } from '../types/Table.type';
+import type { FetchDataFunction } from '../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 import { TranslocoService } from '@jsverse/transloco';
 
 @Component({

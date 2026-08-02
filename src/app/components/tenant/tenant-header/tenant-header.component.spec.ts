@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 import { TenantHeaderComponent } from './tenant-header.component';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';

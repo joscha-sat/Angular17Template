@@ -2,11 +2,15 @@ import {
   Component,
   inject,
   input,
-  InputSignal,
-  OnInit,
-  WritableSignal,
+  type InputSignal,
+  type OnInit,
+  type WritableSignal,
 } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  type FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { TemplateInputComponent } from '../template-input/template-input.component';
 
 type SearchableService = {

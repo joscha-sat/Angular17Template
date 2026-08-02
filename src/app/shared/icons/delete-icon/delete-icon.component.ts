@@ -1,9 +1,9 @@
 import {
   Component,
   input,
-  InputSignal,
+  type InputSignal,
   output,
-  OutputEmitterRef,
+  type OutputEmitterRef,
 } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
