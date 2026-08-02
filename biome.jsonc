@@ -1,0 +1,34 @@
+{
+  // Local schema matches the installed @biomejs/biome version (^2.5.6).
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+
+  // Scope to src/ — mirrors prettier:write's "src/**/*.{html,ts,scss}" and keeps
+  // Biome away from repo-root config files that Prettier never touches.
+  "files": {
+    "includes": ["src/**"]
+  },
+
+  "formatter": {
+    "enabled": true,
+    // prettier tabWidth: 2 + .editorconfig indent_style = space
+    "indentStyle": "space",
+    "indentWidth": 2,
+    // prettier printWidth default 80
+    "lineWidth": 80,
+    // prettier endOfLine: "auto" (OS default: CRLF on Windows, LF on Unix)
+    "lineEnding": "auto",
+    // Explicit config wins over .editorconfig (default is already false)
+    "useEditorconfig": false
+  },
+
+  "javascript": {
+    "formatter": {
+      // prettier singleQuote: true
+      "quoteStyle": "single",
+      // prettier semi: true
+      "semicolons": "always",
+      // prettier trailingComma: "all"
+      "trailingCommas": "all"
+    }
+  }
+}

@@ -8,6 +8,7 @@
     "start:mock": "ng serve --configuration=mock",
     "build": "ng build",
     "prettier:write": "npx prettier --write \"src/**/*.{html,ts,scss}\"",
+    "format:biome": "npx @biomejs/biome format --write ./src",
     "watch": "ng build --watch --configuration development",
     "run-unit-tests:terminal": "ng test --no-watch",
     "run-unit-tests:coverage": "ng test --no-watch --coverage",
