@@ -5,36 +5,30 @@
     "start": "ng serve",
     "start:local": "ng serve --configuration=local",
     "start:mock": "ng serve --configuration=mock",
-
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-
     "prettier:write": "npx prettier --write \"src/**/*.{html,ts,scss}\"",
     "format:biome": "npx @biomejs/biome format --write ./src",
-
     "lint": "ng lint",
     "lint:biome-safe-fixes": "npx @biomejs/biome lint ./src --write",
     "lint:biome-unsafe-fixes": "npx @biomejs/biome lint --write --unsafe ./src",
     "lint:oxlint": "oxlint",
     "lint:oxlint:fix": "oxlint --fix",
     "lint:oxlint-and-eslint": "oxlint && eslint",
+    "lint:imports": "npx depcruise src",
     "eslint": "eslint",
-
     "fallow:dead-code": "npx fallow dead-code",
     "fallow:dupes": "npx fallow dupes",
     "fallow:health": "npx fallow health",
     "fallow:review": "npx fallow review",
     "fallow:fix:dry-run": "npx fallow fix --dry-run",
     "knip": "knip",
-
     "prepare": "husky",
     "openapi-ts": "npx @hey-api/openapi-ts",
-
     "run-unit-tests:terminal": "ng test --no-watch",
     "run-unit-tests:coverage": "ng test --no-watch --coverage",
     "run-unit-tests:coverage-browser": "ng test --no-watch --coverage && start coverage/Angular-Template-V2/index.html",
     "run-unit-tests:browser": "ng test --configuration=browser",
-
     "migrate:standalone": "ng generate @angular/core:standalone",
     "migrate:control_flow": "ng generate @angular/core:control-flow",
     "migrate:signal_inputs": "ng generate @angular/core:signal-input-migration",
@@ -48,7 +42,6 @@
     "migrate:ngclass_to_class": "ng generate @angular/core:ngclass-to-class",
     "migrate:ngstyle_to_style": "ng generate @angular/core:ngstyle-to-style",
     "migrate:router_testing_module": "ng generate @angular/core:router-testing-module-migration",
-
     "migrate:all": "npm run migrate:standalone && npm run migrate:control_flow && npm run migrate:signal_inputs && npm run migrate:signal_outputs && npm run migrate:signal_queries && npm run migrate:inject && npm run migrate:route_lazy_loading && npm run migrate:ngclass_to_class && npm run migrate:ngstyle_to_style && npm run migrate:self_closing_tags && npm run migrate:common_module && npm run migrate:router_testing_module && npm run migrate:cleanup_imports"
   },
   "private": true,
@@ -98,6 +91,7 @@
     "@vitest/browser-playwright": "^4.1.10",
     "@vitest/coverage-v8": "^4.1.10",
     "angular-eslint": "^22.1.0",
+    "dependency-cruiser": "^18.1.0",
     "eslint": "^10.8.0",
     "eslint-plugin-oxlint": "^1.76.0",
     "eslint-plugin-rxjs-x": "^1.0.4",
