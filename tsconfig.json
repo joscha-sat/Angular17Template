@@ -2,9 +2,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "paths": {
-      "@app/other/transloco-testing": ["src/app/other/transloco-testing.ts"]
+      "@app/other/transloco-testing": ["./src/app/other/transloco-testing.ts"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

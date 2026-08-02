@@ -84,6 +84,18 @@
                   "with": "src/app/other/environments/environment.local.ts"
                 }
               ]
+            },
+            "mock": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/app/other/environments/environment.ts",
+                  "with": "src/app/other/environments/environment.mock.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -93,6 +105,9 @@
           "configurations": {
             "local": {
               "buildTarget": "Angular-Template-V2:build:local"
+            },
+            "mock": {
+              "buildTarget": "Angular-Template-V2:build:mock"
             },
             "production": {
               "buildTarget": "Angular-Template-V2:build:production"

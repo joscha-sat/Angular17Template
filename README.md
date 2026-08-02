@@ -458,9 +458,26 @@ npm start
 
 # Development with local configuration
 npm run start:local
+
+# Development with mocked backend (no backend required)
+npm run start:mock
 ```
 
 Navigate to `http://localhost:4200/`. The application will automatically reload when you change any source files.
+
+### 🧪 Mock Mode
+
+The `mock` configuration starts the application without a running backend. A dedicated HTTP interceptor
+(`src/app/other/interceptors/mock.interceptor.ts`) intercepts all API requests and simulates the backend with an
+in-memory database:
+
+- Three seeded records for each major object (tenants, roles, users, customers)
+- Full CRUD simulation (create, read, update, delete, delete all) — changes live in memory for the session
+- **No authentication required** — routes are accessible without logging in, and the navigation is shown right away; login and token refresh are still simulated (any credentials work, e.g. `admin@acme-gmbh.de` / `MockPasswort123!`)
+- Search, sorting, pagination, and the active-tab filter are honored exactly like the real backend
+- Requests are delayed by ~400 ms to make loading states visible
+
+To enable mock mode for a build, use `ng build --configuration=mock`.
 
 ### ✅ Code Quality
 

@@ -11,6 +11,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authTokenInterceptor } from './other/interceptors/auth-token.interceptor';
 import { isLoadingInterceptor } from './other/interceptors/is-loading.interceptor';
 import { errorInterceptor } from './other/interceptors/error.interceptor';
+import { mockInterceptor } from './other/interceptors/mock.interceptor';
 import {
   MAT_LUXON_DATE_FORMATS,
   provideLuxonDateAdapter,
@@ -74,13 +75,13 @@ export const appConfig: ApplicationConfig = {
     ...provideLuxonDateAdapterWithLocale(),
     provideHttpClient(
       withInterceptors([
+        mockInterceptor,
         authTokenInterceptor,
         isLoadingInterceptor,
         errorInterceptor,
       ]),
     ),
     provideRouter(routes),
-    provideHttpClient(),
     provideTransloco({
       config: {
         availableLangs: ['en', 'de'],

@@ -1,5 +1,7 @@
 # Project Guidelines
 
+This AGENTS.md must reflect the current state of the project at all times. Update/Synchronize it if you spot differences!
+
 ## Scripts
 Always run these scripts at the end of your work to ensure code quality and consistency:
 
