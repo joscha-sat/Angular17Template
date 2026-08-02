@@ -4,8 +4,10 @@
 
   // Scope to src/ — mirrors prettier:write's "src/**/*.{html,ts,scss}" and keeps
   // Biome away from repo-root config files that Prettier never touches.
+  // Prettier owns HTML; Biome's HTML support is experimental and cannot parse
+  // Angular {{ }} without parser.interpolation, so HTML is excluded here.
   "files": {
-    "includes": ["src/**"]
+    "includes": ["src/**", "!**/*.html"]
   },
 
   "formatter": {
