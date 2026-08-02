@@ -67,7 +67,7 @@ export class AuthService {
       map((response: unknown): void => {
         const validatedResponse: LoginResponsePayload = loginResponseSchema.parse(response);
         this.setTokens(validatedResponse.access_token, validatedResponse.refresh_token);
-        this.setLoggedInUser(new User(validatedResponse.user));
+        this.setLoggedInUser(validatedResponse.user);
       }),
     );
   }
@@ -92,7 +92,7 @@ export class AuthService {
             ...validatedResponse,
             data: {
               ...validatedResponse.data,
-              user: new User(validatedResponse.data.user),
+              user: validatedResponse.data.user,
             },
           };
         }),

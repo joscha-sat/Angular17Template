@@ -211,14 +211,16 @@ export class MockApiDatabase {
 
     records.splice(index, 1);
 
-    return this.createSuccessResponse({});
+    return this.createSuccessResponse({ affected: 1 });
   }
 
   // DELETE ALL > Records
   private deleteAllRecords(resource: MockResourceName): Observable<HttpEvent<unknown>> {
-    this.getRecords(resource).length = 0;
+    const records: MockRecord[] = this.getRecords(resource);
+    const affected: number = records.length;
+    records.length = 0;
 
-    return this.createSuccessResponse({});
+    return this.createSuccessResponse({ affected });
   }
 
   private createLoginResponse(): unknown {

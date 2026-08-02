@@ -6,8 +6,10 @@ import {
   type idTypes,
   type ResponseWithRecords,
 } from './base-http-service/base-http.service';
-import { User } from '../models/User';
+import type { User } from '../models/User';
 import { ApiRoutes } from '../other/enums/api_routes';
+import { type EmptyDeleteResponse, emptyDeleteResponseSchema } from './schemas/common.schemas';
+import { userListResponseSchema, userResponseSchema } from './schemas/resource.schemas';
 
 type QueryParams = BaseQueryParams;
 
@@ -20,41 +22,41 @@ export class UserService extends GenericHttpService {
 
   // GET ALL
   getAllUsers(queryParams?: QueryParams): Observable<ResponseWithRecords<User>> {
-    return this.getAll<User>(this.endpoint, queryParams, User);
+    return this.getAll<User>(this.endpoint, queryParams, userListResponseSchema);
   }
 
   // GET ONE
   getUserById(id: string | number): Observable<User> {
-    return this.getOne<User>(this.endpoint, id, User);
+    return this.getOne<User>(this.endpoint, id, userResponseSchema);
   }
 
   // CREATE ONE
   createOneUser(user: User): Observable<User> {
-    return this.createOne<User>(this.endpoint, user, this.element_i18nKey);
+    return this.createOne<User>(this.endpoint, user, this.element_i18nKey, userResponseSchema);
   }
 
   // CREATE MULTIPLE
   createMultipleUser(user: User[]): Observable<User[]> {
-    return this.createMultiple<User>(this.endpoint, user, this.element_i18nKey);
+    return this.createMultiple<User>(this.endpoint, user, this.element_i18nKey, userResponseSchema);
   }
 
   // UPDATE ONE
   updateUserById(id: idTypes, user: User): Observable<User> {
-    return this.updateOne<User>(this.endpoint, user, id, this.element_i18nKey);
+    return this.updateOne<User>(this.endpoint, user, id, this.element_i18nKey, userResponseSchema);
   }
 
   // UPDATE MULTIPLE
   updateMultipleUserById(id: idTypes[], users: User[]): Observable<User[]> {
-    return this.updateMultiple<User>(this.endpoint, users, id, this.element_i18nKey);
+    return this.updateMultiple<User>(this.endpoint, users, id, this.element_i18nKey, userResponseSchema);
   }
 
   // DELETE ONE
-  deleteUserById(id: idTypes): Observable<unknown> {
-    return this.deleteOne(this.endpoint, id, this.element_i18nKey);
+  deleteUserById(id: idTypes): Observable<EmptyDeleteResponse> {
+    return this.deleteOne(this.endpoint, id, this.element_i18nKey, emptyDeleteResponseSchema);
   }
 
   // DELETE ALL
-  deleteAllUsers(): Observable<unknown> {
-    return this.deleteAll<unknown>(this.endpoint);
+  deleteAllUsers(): Observable<EmptyDeleteResponse> {
+    return this.deleteAll(this.endpoint, emptyDeleteResponseSchema);
   }
 }

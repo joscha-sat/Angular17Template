@@ -3,11 +3,17 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { GenericHttpService } from './base-http.service';
 import { MatSnackbarService } from '../../services/mat-snackbar.service';
+import { createPaginatedResponseSchema } from '../schemas/common.schemas';
+import { z } from 'zod';
 
 interface TestModel {
   id: number;
   name?: string;
 }
+
+type TestDeleteResponse = {
+  success: boolean;
+};
 
 class TestClassModel {
   id!: number;
@@ -17,6 +23,19 @@ class TestClassModel {
     Object.assign(this, data);
   }
 }
+
+const testModelSchema: z.ZodType<TestModel> = z.object({
+  id: z.number(),
+  name: z.string().optional(),
+});
+const testClassModelSchema: z.ZodType<TestClassModel> = testModelSchema.transform(
+  (data: TestModel): TestClassModel => new TestClassModel(data),
+);
+const testModelListResponseSchema: z.ZodType<{ total: number; records: TestModel[] }> =
+  createPaginatedResponseSchema(testModelSchema);
+const testClassModelListResponseSchema: z.ZodType<{ total: number; records: TestClassModel[] }> =
+  createPaginatedResponseSchema(testClassModelSchema);
+const testDeleteResponseSchema: z.ZodType<TestDeleteResponse> = z.object({ success: z.boolean() });
 
 describe('GenericHttpService', () => {
   let service: GenericHttpService;
@@ -67,7 +86,7 @@ describe('GenericHttpService', () => {
     it('should fetch all records without model type', () => {
       const mockResponse = { total: 2, records: [{ id: 1 }, { id: 2 }] };
 
-      service.getAll<TestModel>('users').subscribe((response) => {
+      service.getAll<TestModel>('users', undefined, testModelListResponseSchema).subscribe((response) => {
         expect(response).toEqual(mockResponse);
       });
 
@@ -80,7 +99,7 @@ describe('GenericHttpService', () => {
       const mockResponse = { total: 1, records: [{ id: 1 }] };
       const queryParams = { skip: 0, limit: 10, search: 'test' };
 
-      service.getAll<TestModel>('users', queryParams).subscribe((response) => {
+      service.getAll<TestModel>('users', queryParams, testModelListResponseSchema).subscribe((response) => {
         expect(response).toEqual(mockResponse);
       });
 
@@ -92,7 +111,7 @@ describe('GenericHttpService', () => {
     it('should map records to model type when provided', () => {
       const mockResponse = { total: 1, records: [{ id: 1 }] };
 
-      service.getAll<TestClassModel>('users', undefined, TestClassModel).subscribe((response) => {
+      service.getAll<TestClassModel>('users', undefined, testClassModelListResponseSchema).subscribe((response) => {
         expect(response.records[0]).toBeInstanceOf(TestClassModel);
         expect(response.records[0].id).toBe(1);
       });
@@ -106,7 +125,7 @@ describe('GenericHttpService', () => {
     it('should fetch single record without model type', () => {
       const mockResponse = { id: 1, name: 'Test' };
 
-      service.getOne<TestModel>('users', '1').subscribe((response) => {
+      service.getOne<TestModel>('users', '1', testModelSchema).subscribe((response) => {
         expect(response).toEqual(mockResponse);
       });
 
@@ -118,13 +137,25 @@ describe('GenericHttpService', () => {
     it('should map record to model type when provided', () => {
       const mockResponse = { id: 1, name: 'Test' };
 
-      service.getOne<TestClassModel>('users', '1', TestClassModel).subscribe((response) => {
+      service.getOne<TestClassModel>('users', '1', testClassModelSchema).subscribe((response) => {
         expect(response).toBeInstanceOf(TestClassModel);
         expect(response.id).toBe(1);
       });
 
       const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users/1');
       req.flush(mockResponse);
+    });
+
+    it('should reject a single record that does not match its schema', () => {
+      service.getOne<TestModel>('users', '1', testModelSchema).subscribe({
+        next: () => expect.fail('should have failed validation'),
+        error: (error: Error) => {
+          expect(error).toBeInstanceOf(z.ZodError);
+        },
+      });
+
+      const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users/1');
+      req.flush({ id: '1', name: 'Test' });
     });
   });
 
@@ -133,7 +164,7 @@ describe('GenericHttpService', () => {
       const mockBody = { id: 1, name: 'New User' };
       const mockResponse = { id: 1, name: 'New User' };
 
-      service.createOne<TestModel>('users', mockBody, 'user').subscribe((response) => {
+      service.createOne<TestModel>('users', mockBody, 'user', testModelSchema).subscribe((response) => {
         expect(response).toEqual(mockResponse);
       });
 
@@ -151,7 +182,7 @@ describe('GenericHttpService', () => {
       const mockBody = { id: 1, name: 'Updated User' };
       const mockResponse = { id: 1, name: 'Updated User' };
 
-      service.updateOne<TestModel>('users', mockBody, '1', 'user').subscribe((response) => {
+      service.updateOne<TestModel>('users', mockBody, '1', 'user', testModelSchema).subscribe((response) => {
         expect(response).toEqual(mockResponse);
       });
 
@@ -168,7 +199,7 @@ describe('GenericHttpService', () => {
     it('should delete single record', () => {
       const mockResponse = { success: true };
 
-      service.deleteOne('users', '1', 'user').subscribe((response) => {
+      service.deleteOne('users', '1', 'user', testDeleteResponseSchema).subscribe((response) => {
         expect(response).toEqual(mockResponse);
       });
 
@@ -184,7 +215,7 @@ describe('GenericHttpService', () => {
     it('should delete all records', () => {
       const mockResponse = { success: true };
 
-      service.deleteAll<TestModel>('users').subscribe((response) => {
+      service.deleteAll<TestDeleteResponse>('users', testDeleteResponseSchema).subscribe((response) => {
         expect(response).toEqual(mockResponse);
       });
 
@@ -219,7 +250,7 @@ describe('GenericHttpService', () => {
       const spy = vi.fn();
       service.refreshObservable$.subscribe(spy);
 
-      service.createOne<TestModel>('users', { id: 1, name: 'Test' }, 'user').subscribe();
+      service.createOne<TestModel>('users', { id: 1, name: 'Test' }, 'user', testModelSchema).subscribe();
 
       const req = httpMock.expectOne('https://nest.template.dev.28apps-software.de/users');
       req.flush({ id: 1, name: 'Test' });

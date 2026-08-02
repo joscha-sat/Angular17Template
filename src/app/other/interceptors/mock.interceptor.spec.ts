@@ -170,7 +170,7 @@ describe('MockApiDatabase', () => {
         `customers/${createdId}`,
       )) as HttpResponse<Record<string, unknown>>;
 
-      expect(deleteResponse.body).toEqual({});
+      expect(deleteResponse.body).toEqual({ affected: 1 });
 
       const listAfterDelete: HttpResponse<unknown> = (await sendRequest(
         database,
@@ -185,7 +185,7 @@ describe('MockApiDatabase', () => {
         Record<string, unknown>
       >;
 
-      expect(deleteAllResponse.body).toEqual({});
+      expect(deleteAllResponse.body).toEqual({ affected: 3 });
 
       const listAfterDeleteAll: HttpResponse<unknown> = (await sendRequest(
         database,

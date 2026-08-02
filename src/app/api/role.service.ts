@@ -6,10 +6,12 @@ import {
   type idTypes,
   type ResponseWithRecords,
 } from './base-http-service/base-http.service';
-import { Role } from '../models/Role';
+import type { Role } from '../models/Role';
 import { AuthService } from './auth.service';
 import { ApiRoutes } from '../other/enums/api_routes';
 import type { User } from '../models/User';
+import { type EmptyDeleteResponse, emptyDeleteResponseSchema } from './schemas/common.schemas';
+import { roleListResponseSchema, roleResponseSchema } from './schemas/resource.schemas';
 
 export type RoleQueryParams = BaseQueryParams & {};
 
@@ -34,41 +36,41 @@ export class RoleService extends GenericHttpService {
 
   // GET ALL
   getAllRoles(queryParams?: RoleQueryParams): Observable<ResponseWithRecords<Role>> {
-    return this.getAll<Role>(this.endpoint, queryParams, Role);
+    return this.getAll<Role>(this.endpoint, queryParams, roleListResponseSchema);
   }
 
   // GET ONE Role
   getRoleById(id: string | number): Observable<Role> {
-    return this.getOne<Role>(this.endpoint, id, Role);
+    return this.getOne<Role>(this.endpoint, id, roleResponseSchema);
   }
 
   // CREATE ONE Role
   createOneRole(role: Role): Observable<Role> {
-    return this.createOne<Role>(this.endpoint, role, this.element_i18nKey);
+    return this.createOne<Role>(this.endpoint, role, this.element_i18nKey, roleResponseSchema);
   }
 
   // CREATE MULTIPLE Roles
   createMultipleRole(role: Role[]): Observable<Role[]> {
-    return this.createMultiple<Role>(this.endpoint, role, this.element_i18nKey);
+    return this.createMultiple<Role>(this.endpoint, role, this.element_i18nKey, roleResponseSchema);
   }
 
   // UPDATE ONE Role
   updateRoleById(id: idTypes, role: Role): Observable<Role> {
-    return this.updateOne<Role>(this.endpoint, role, id, this.element_i18nKey);
+    return this.updateOne<Role>(this.endpoint, role, id, this.element_i18nKey, roleResponseSchema);
   }
 
   // UPDATE MULTIPLE Roles
   updateMultipleRoleById(id: idTypes[], roles: Role[]): Observable<Role[]> {
-    return this.updateMultiple<Role>(this.endpoint, roles, id, this.element_i18nKey);
+    return this.updateMultiple<Role>(this.endpoint, roles, id, this.element_i18nKey, roleResponseSchema);
   }
 
   // DELETE ONE Role
-  deleteRoleById(id: idTypes): Observable<unknown> {
-    return this.deleteOne(this.endpoint, id, this.element_i18nKey);
+  deleteRoleById(id: idTypes): Observable<EmptyDeleteResponse> {
+    return this.deleteOne(this.endpoint, id, this.element_i18nKey, emptyDeleteResponseSchema);
   }
 
   // DELETE ALL Roles
-  deleteAllRoles(): Observable<unknown> {
-    return this.deleteAll<unknown>(this.endpoint);
+  deleteAllRoles(): Observable<EmptyDeleteResponse> {
+    return this.deleteAll(this.endpoint, emptyDeleteResponseSchema);
   }
 }

@@ -16,9 +16,13 @@ describe('AuthService', () => {
 
   const mockUser: User = new User({
     id: '1',
+    createdAt: '2026-01-01T00:00:00.000Z',
+    updatedAt: '2026-01-01T00:00:00.000Z',
     firstName: 'Test',
     lastName: 'User',
     email: 'test@example.com',
+    phone: '+49 30 12345678',
+    active: true,
     tenantId: '1',
     roleId: '1',
   });

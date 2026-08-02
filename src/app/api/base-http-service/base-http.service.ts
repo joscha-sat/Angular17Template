@@ -1,11 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal, type WritableSignal } from '@angular/core';
 import { forkJoin, map, type Observable, Subject, tap } from 'rxjs';
+import type { ApiResponseSchema } from '../schemas/common.schemas';
 import { environment } from '../../other/environments/environment';
 import { MatSnackbarService, type MethodType, type SnackBarData } from '../../services/mat-snackbar.service';
 import { ApiSnackbarComponent } from '../../shared/api-snackbar/api-snackbar.component';
 
-// Type definitions
 export type idTypes = string | number | Array<string | number>;
 export type ResponseWithRecords<T> = { total: number; records: T[] };
 export type BaseQueryParams = {
@@ -38,132 +38,168 @@ export class GenericHttpService {
   }
 
   /**
-   * Fetches all records from a given endpoint with optional query parameters,
-   * optionally mapping them to instances of the provided model type.
+   * Fetches all records from a given endpoint and validates the complete response.
    * @param endpoint - The API endpoint
    * @param queryParams - Optional: Query parameters
-   * @param modelType - Optional: The constructor of the model class (e.g., User)
-   * @returns An Observable of the response containing the total count and list of records
+   * @param responseSchema - Zod schema for the complete API response
+   * @returns An Observable of the validated response containing records
    */
   getAll<T>(
     endpoint: string,
-    queryParams?: { [key: string]: unknown },
-    modelType?: new (data: Partial<T>) => T,
+    queryParams: { [key: string]: unknown } | undefined,
+    responseSchema: ApiResponseSchema<ResponseWithRecords<T>>,
   ): Observable<ResponseWithRecords<T>> {
     const params: HttpParams = this.generateParams(queryParams);
     return this.http
-      .get<ResponseWithRecords<T>>(this.getUrl(endpoint), {
-        params,
-      })
-      .pipe(
-        map((response: ResponseWithRecords<T>) => ({
-          ...response,
-          records: modelType
-            ? response.records.map((record: T) => new modelType(record as Partial<T>))
-            : response.records,
-        })),
-      );
+      .get<unknown>(this.getUrl(endpoint), { params })
+      .pipe(map((response: unknown): ResponseWithRecords<T> => this.parseResponse(response, responseSchema)));
   }
 
   /**
-   * Fetches a single record by ID from a given endpoint,
-   * optionally mapping it to an instance of the provided model type.
+   * Fetches a single record by ID and validates the complete response.
    * @param endpoint - The API endpoint
    * @param id - The ID of the resource
-   * @param modelType - Optional: The constructor of the model class (e.g., User)
-   * @returns An Observable of the single record
+   * @param responseSchema - Zod schema for the complete API response
+   * @returns An Observable of the validated record
    */
-  getOne<T>(endpoint: string, id: idTypes, modelType?: new (data: Partial<T>) => T): Observable<T> {
+  getOne<T>(endpoint: string, id: idTypes, responseSchema: ApiResponseSchema<T>): Observable<T> {
     return this.http
-      .get<T>(this.getUrl(endpoint, id))
-      .pipe(map((record: T) => (modelType ? new modelType(record as Partial<T>) : record)));
+      .get<unknown>(this.getUrl(endpoint, id))
+      .pipe(map((response: unknown): T => this.parseResponse(response, responseSchema)));
   }
 
   /**
-   * Creates a new record.
+   * Creates a new record and validates the complete response.
    * @param endpoint - The API endpoint
    * @param body - The body of the resource to be created
    * @param i18nKeyForElement - Article name for the resource (for notifications)
-   * @returns An Observable of the created record
+   * @param responseSchema - Zod schema for the complete API response
+   * @returns An Observable of the validated created record
    */
-  createOne<T>(endpoint: string, body: T, i18nKeyForElement: string): Observable<T> {
-    const action: Observable<T> = this.http.post<T>(this.getUrl(endpoint), body);
+  createOne<T>(
+    endpoint: string,
+    body: T,
+    i18nKeyForElement: string,
+    responseSchema: ApiResponseSchema<T>,
+  ): Observable<T> {
+    const action: Observable<T> = this.http
+      .post<unknown>(this.getUrl(endpoint), body)
+      .pipe(map((response: unknown): T => this.parseResponse(response, responseSchema)));
     return this.httpAction(action, i18nKeyForElement, 'POST');
   }
 
   /**
-   * Creates multiple new records.
+   * Creates multiple records and validates every response.
    * @param endpoint - The API endpoint
-   * @param bodies - An array of bodies of the resources to be created
+   * @param bodies - The bodies of the resources to be created
    * @param i18nKeyForElement - Article name for the resources (for notifications)
-   * @returns An Observable of an array of the created records
+   * @param responseSchema - Zod schema for each created record response
+   * @returns An Observable of validated created records
    */
-  createMultiple<T>(endpoint: string, bodies: T[], i18nKeyForElement: string): Observable<T[]> {
-    const postObservables: Observable<T>[] = bodies.map((body: T) => this.http.post<T>(this.getUrl(endpoint), body));
+  createMultiple<T>(
+    endpoint: string,
+    bodies: T[],
+    i18nKeyForElement: string,
+    responseSchema: ApiResponseSchema<T>,
+  ): Observable<T[]> {
+    const postObservables: Observable<T>[] = bodies.map((body: T) =>
+      this.http
+        .post<unknown>(this.getUrl(endpoint), body)
+        .pipe(map((response: unknown): T => this.parseResponse(response, responseSchema))),
+    );
     const batchAction: Observable<T[]> = forkJoin(postObservables);
     return this.httpAction(batchAction, i18nKeyForElement, 'POST', true);
   }
 
   /**
-   * Updates a single record.
+   * Updates a single record and validates the complete response.
    * @param endpoint - The API endpoint
    * @param body - The updated body of the resource
    * @param id - The ID of the resource to be updated
    * @param i18nKeyForElement - Article name for the resource (for notifications)
-   * @returns An Observable of the updated record
+   * @param responseSchema - Zod schema for the complete API response
+   * @returns An Observable of the validated updated record
    */
-  updateOne<T>(endpoint: string, body: T, id: idTypes, i18nKeyForElement: string): Observable<T> {
-    const action: Observable<T> = this.http.patch<T>(this.getUrl(endpoint, id), body);
+  updateOne<T>(
+    endpoint: string,
+    body: T,
+    id: idTypes,
+    i18nKeyForElement: string,
+    responseSchema: ApiResponseSchema<T>,
+  ): Observable<T> {
+    const action: Observable<T> = this.http
+      .patch<unknown>(this.getUrl(endpoint, id), body)
+      .pipe(map((response: unknown): T => this.parseResponse(response, responseSchema)));
     return this.httpAction(action, i18nKeyForElement, 'PATCH');
   }
 
   /**
-   * Updates multiple records.
+   * Updates multiple records and validates every response.
    * @param endpoint - The API endpoint
-   * @param bodies - An array of updated bodies of the resources
-   * @param ids - An array of IDs of the resources to be updated
+   * @param bodies - The updated bodies of the resources
+   * @param ids - The IDs of the resources to be updated
    * @param i18nKeyForElement - Article name for the resources (for notifications)
-   * @returns An Observable of an array of the updated records
+   * @param responseSchema - Zod schema for each updated record response
+   * @returns An Observable of validated updated records
    */
-  updateMultiple<T>(endpoint: string, bodies: T[], ids: idTypes[], i18nKeyForElement: string): Observable<T[]> {
+  updateMultiple<T>(
+    endpoint: string,
+    bodies: T[],
+    ids: idTypes[],
+    i18nKeyForElement: string,
+    responseSchema: ApiResponseSchema<T>,
+  ): Observable<T[]> {
     const patchObservables: Observable<T>[] = bodies.map((body: T, index: number) =>
-      this.http.patch<T>(this.getUrl(endpoint, ids[index]), body),
+      this.http
+        .patch<unknown>(this.getUrl(endpoint, ids[index]), body)
+        .pipe(map((response: unknown): T => this.parseResponse(response, responseSchema))),
     );
     const batchAction: Observable<T[]> = forkJoin(patchObservables);
     return this.httpAction(batchAction, i18nKeyForElement, 'PATCH', true);
   }
 
   /**
-   * Deletes a single record.
+   * Deletes a single record and validates the complete response.
    * @param endpoint - The API endpoint
    * @param id - The ID of the resource to be deleted
    * @param i18nKeyForElement - Article name for the resource (for notifications)
-   * @returns An Observable of the delete result
+   * @param responseSchema - Zod schema for the complete API response
+   * @returns An Observable of the validated delete result
    */
-  deleteOne(endpoint: string, id: idTypes, i18nKeyForElement: string): Observable<unknown> {
-    const action: Observable<unknown> = this.http.delete(this.getUrl(endpoint, id));
+  deleteOne<T>(
+    endpoint: string,
+    id: idTypes,
+    i18nKeyForElement: string,
+    responseSchema: ApiResponseSchema<T>,
+  ): Observable<T> {
+    const action: Observable<T> = this.http
+      .delete<unknown>(this.getUrl(endpoint, id))
+      .pipe(map((response: unknown): T => this.parseResponse(response, responseSchema)));
     return this.httpAction(action, i18nKeyForElement, 'DELETE');
   }
 
   /**
-   * Deletes all records from a given endpoint.
+   * Deletes all records from a given endpoint and validates the complete response.
    * @param endpoint - The API endpoint
-   * @returns An Observable of the delete result
+   * @param responseSchema - Zod schema for the complete API response
+   * @returns An Observable of the validated delete result
    */
-  deleteAll<T>(endpoint: string): Observable<T> {
-    return this.http.delete<T>(`${this.baseUrl}${endpoint}`).pipe(tap(() => this._refreshObservable.next()));
+  deleteAll<T>(endpoint: string, responseSchema: ApiResponseSchema<T>): Observable<T> {
+    return this.http.delete<unknown>(`${this.baseUrl}${endpoint}`).pipe(
+      map((response: unknown): T => this.parseResponse(response, responseSchema)),
+      tap(() => this._refreshObservable.next()),
+    );
   }
 
   /**
    * Helper function to handle HTTP actions and show notifications.
    * @param action - The Observable of the HTTP action
-   * @param i18nKeyForElement translate key for element_i18nKey
-   * @param methodType 'POST' | 'PATCH' | 'DELETE'
-   * @param plural boolean for correct translation output
+   * @param i18nKeyForElement - Translation key for the element
+   * @param methodType - The HTTP method
+   * @param plural - Whether the translation describes multiple records
    * @returns An Observable that manages the HTTP action and notifications
    */
   private httpAction<U>(
-    // Renamed generic type to U to avoid conflict if T is T[]
     action: Observable<U>,
     i18nKeyForElement: string,
     methodType?: MethodType,
@@ -175,6 +211,10 @@ export class GenericHttpService {
         this._refreshObservable.next();
       }),
     );
+  }
+
+  private parseResponse<T>(response: unknown, responseSchema: ApiResponseSchema<T>): T {
+    return responseSchema.parse(response);
   }
 
   /**
