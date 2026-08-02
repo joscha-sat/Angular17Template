@@ -1,4 +1,4 @@
-import { type ModuleWithProviders } from '@angular/core';
+import type { ModuleWithProviders } from '@angular/core';
 import { TranslocoTestingModule, type TranslocoTestingOptions } from '@jsverse/transloco';
 import en from '../../assets/i18n/en.json';
 import de from '../../assets/i18n/de.json';
