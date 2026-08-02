@@ -23,7 +23,6 @@
     "prepare": "husky",
     "eslint": "eslint",
     "knip": "knip",
-    "type-coverage": "type-coverage --detail",
     "openapi-ts": "npx @hey-api/openapi-ts",
     "migrate:standalone": "ng generate @angular/core:standalone",
     "migrate:control_flow": "ng generate @angular/core:control-flow",
