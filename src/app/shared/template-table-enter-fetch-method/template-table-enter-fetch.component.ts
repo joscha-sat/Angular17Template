@@ -256,9 +256,7 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
       .split(',')
       .map((part: string) => part.trim());
     const direction: 'ASC' | 'DESC' | undefined = directionStr.toUpperCase() as
-      | 'ASC'
-      | 'DESC'
-      | undefined;
+      'ASC' | 'DESC' | undefined;
     if (field && direction && VALID_SORT_DIRECTIONS.includes(direction)) {
       sortInstance.active = field;
       sortInstance.direction = direction.toLowerCase() as SortDirection;

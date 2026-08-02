@@ -42,8 +42,7 @@ export class HttpStatusMsgService {
     const errorKey: string =
       (() => {
         const errorObj: { key?: string } | undefined = err.error as
-          | { key?: string }
-          | undefined;
+          { key?: string } | undefined;
         return errorObj && typeof errorObj.key === 'string' && errorObj.key
           ? errorObj.key
           : '';
@@ -145,8 +144,7 @@ export class HttpStatusMsgService {
 
   private getErrorMessage(err: HttpErrorResponse): string | null {
     const errorObj: { message?: string } | undefined = err.error as
-      | { message?: string }
-      | undefined;
+      { message?: string } | undefined;
     return errorObj && typeof errorObj.message === 'string' && errorObj.message
       ? errorObj.message
       : null;

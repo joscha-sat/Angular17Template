@@ -5,6 +5,7 @@ import tseslint from 'typescript-eslint';
 import angularEslint from '@angular-eslint/eslint-plugin';
 import angularEslintTemplate from '@angular-eslint/eslint-plugin-template';
 import templateParser from '@angular-eslint/template-parser';
+import angular from 'angular-eslint';
 import rxjsX from 'eslint-plugin-rxjs-x';
 import customRules from './eslint-custom-rules/index.js';
 import translocoPlugin from './eslint-transloco-plugin/index.js';
@@ -25,7 +26,7 @@ const appParserOptions = {
 const tsRules = {
   ...js.configs.recommended.rules,
   ...tseslint.configs.recommended.rules,
-  ...angularEslint.configs.recommended.rules,
+  ...angular.configs.tsRecommended[1].rules,
   ...rxjsX.configs.recommended.rules,
 
   // Basic JavaScript rules from reference
@@ -83,7 +84,6 @@ const tsRules = {
   '@angular-eslint/use-lifecycle-interface': 'error',
   '@angular-eslint/no-input-rename': 'error',
   '@angular-eslint/no-output-rename': 'error',
-  '@angular-eslint/no-conflicting-lifecycle': 'error',
   '@angular-eslint/no-lifecycle-call': 'error',
   '@angular-eslint/contextual-lifecycle': 'error',
   '@angular-eslint/no-pipe-impure': 'warn',
@@ -227,8 +227,8 @@ const tsFilesConfig = {
 
 // Rules for HTML templates
 const htmlTemplateRules = {
-  ...angularEslintTemplate.configs.recommended.rules,
-  ...angularEslintTemplate.configs.accessibility.rules,
+  ...angular.configs.templateRecommended[1].rules,
+  ...angular.configs.templateAccessibility[1].rules,
   ...Object.fromEntries(
     Object.entries(translocoPlugin.rules).map(([ruleName, rule]) => [
       `angular-transloco/${ruleName}`,
