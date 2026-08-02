@@ -14,7 +14,7 @@
     "run-unit-tests:coverage-browser": "ng test --no-watch --coverage && start coverage/Angular-Template-V2/index.html",
     "run-unit-tests:browser": "ng test --configuration=browser",
     "lint": "ng lint",
-    "lint:biome": "@biomejs/biome lint ./src",
+    "lint:biome": "npx @biomejs/biome lint ./src --write",
     "prepare": "husky",
     "eslint": "eslint",
     "openapi-ts": "npx @hey-api/openapi-ts",
