@@ -12,10 +12,7 @@ import { LoadingService } from '../../services/loading.service';
 // Set initial request count at '0'
 const count: WritableSignal<number> = signal(0);
 
-export const isLoadingInterceptor: HttpInterceptorFn = (
-  req: HttpRequest<unknown>,
-  next: HttpHandlerFn,
-) => {
+export const isLoadingInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   // Inject the LoadingService
   const loaderService: LoadingService = inject(LoadingService);
 

@@ -1,8 +1,5 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  MAT_SNACK_BAR_DATA,
-  MatSnackBarRef,
-} from '@angular/material/snack-bar';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 
 import { ApiSnackbarComponent } from './api-snackbar.component';

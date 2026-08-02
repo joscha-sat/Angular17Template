@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  type OnInit,
-  signal,
-  type WritableSignal,
-} from '@angular/core';
+import { Component, inject, type OnInit, signal, type WritableSignal } from '@angular/core';
 import { User } from '../../../../models/User';
 import {
   type FormControl,
@@ -22,14 +16,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-user-add-edit-dialog',
-  imports: [
-    ReactiveFormsModule,
-
-    TwoInputsRowLayoutComponent,
-
-    RoleDropdownComponent,
-    TranslocoPipe,
-  ],
+  imports: [ReactiveFormsModule, TwoInputsRowLayoutComponent, RoleDropdownComponent, TranslocoPipe],
   templateUrl: './user-add-edit-dialog.component.html',
   styleUrl: './user-add-edit-dialog.component.scss',
 })
@@ -42,10 +29,7 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   private readonly fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
   private readonly userService: UserService = inject(UserService);
 
-  readonly radioItems: WritableSignal<{ name: string }[]> = signal([
-    { name: 'Active' },
-    { name: 'Inactive' },
-  ]);
+  readonly radioItems: WritableSignal<{ name: string }[]> = signal([{ name: 'Active' }, { name: 'Inactive' }]);
 
   get userFromFormData(): User {
     const formData: {
@@ -111,8 +95,6 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
     if (!this.model) {
       return;
     }
-    this.userService
-      .updateUserById(this.model.id, this.userFromFormData)
-      .subscribe(() => {});
+    this.userService.updateUserById(this.model.id, this.userFromFormData).subscribe(() => {});
   }
 }

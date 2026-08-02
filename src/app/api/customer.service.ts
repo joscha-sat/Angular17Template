@@ -19,9 +19,7 @@ export class CustomerService extends GenericHttpService {
   element_i18nKey: string = 'customer.a_customer';
 
   // GET ALL
-  getAllCustomers(
-    queryParams?: QueryParams,
-  ): Observable<ResponseWithRecords<Customer>> {
+  getAllCustomers(queryParams?: QueryParams): Observable<ResponseWithRecords<Customer>> {
     return this.getAll<Customer>(this.endpoint, queryParams, Customer);
   }
 
@@ -32,43 +30,22 @@ export class CustomerService extends GenericHttpService {
 
   // CREATE ONE
   createOneCustomer(customer: Customer): Observable<Customer> {
-    return this.createOne<Customer>(
-      this.endpoint,
-      customer,
-      this.element_i18nKey,
-    );
+    return this.createOne<Customer>(this.endpoint, customer, this.element_i18nKey);
   }
 
   // CREATE MULTIPLE
   createMultipleCustomer(customer: Customer[]): Observable<Customer[]> {
-    return this.createMultiple<Customer>(
-      this.endpoint,
-      customer,
-      this.element_i18nKey,
-    );
+    return this.createMultiple<Customer>(this.endpoint, customer, this.element_i18nKey);
   }
 
   // UPDATE ONE
   updateCustomerById(id: idTypes, customer: Customer): Observable<Customer> {
-    return this.updateOne<Customer>(
-      this.endpoint,
-      customer,
-      id,
-      this.element_i18nKey,
-    );
+    return this.updateOne<Customer>(this.endpoint, customer, id, this.element_i18nKey);
   }
 
   // UPDATE MULTIPLE
-  updateMultipleCustomerById(
-    id: idTypes[],
-    customers: Customer[],
-  ): Observable<Customer[]> {
-    return this.updateMultiple<Customer>(
-      this.endpoint,
-      customers,
-      id,
-      this.element_i18nKey,
-    );
+  updateMultipleCustomerById(id: idTypes[], customers: Customer[]): Observable<Customer[]> {
+    return this.updateMultiple<Customer>(this.endpoint, customers, id, this.element_i18nKey);
   }
 
   // DELETE ONE

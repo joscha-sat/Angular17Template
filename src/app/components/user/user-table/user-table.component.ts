@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  type OnInit,
-  signal,
-  type WritableSignal,
-} from '@angular/core';
+import { Component, inject, type OnInit, signal, type WritableSignal } from '@angular/core';
 import { UserService } from '../../../api/user.service';
 import type { User } from '../../../models/User';
 import { BaseTableComponent } from '../../../other/abstract-classes/BaseTable';
@@ -24,18 +18,11 @@ const COLUMN_CONFIG: {
   templateUrl: './user-table.component.html',
   styleUrl: './user-table.component.scss',
 })
-export class UserTableComponent
-  extends BaseTableComponent<User>
-  implements OnInit
-{
+export class UserTableComponent extends BaseTableComponent<User> implements OnInit {
   userService: UserService = inject(UserService);
 
-  readonly columns: WritableSignal<string[]> = signal<string[]>(
-    COLUMN_CONFIG.displayedColumns,
-  );
-  readonly headers: WritableSignal<string[]> = signal<string[]>(
-    COLUMN_CONFIG.headers,
-  );
+  readonly columns: WritableSignal<string[]> = signal<string[]>(COLUMN_CONFIG.displayedColumns);
+  readonly headers: WritableSignal<string[]> = signal<string[]>(COLUMN_CONFIG.headers);
 
   override ngOnInit(): void {
     super.ngOnInit();

@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  type OnInit,
-  signal,
-  type WritableSignal,
-} from '@angular/core';
+import { Component, inject, type OnInit, signal, type WritableSignal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { LANGUAGE_FULL, Languages } from '../../../../../other/enums/languages';
 
@@ -22,9 +16,7 @@ type LanguageOption = {
 export class SettingsLanguageSwitcherComponent implements OnInit {
   fb: FormBuilder = inject(FormBuilder);
 
-  readonly dataArray: WritableSignal<LanguageOption[]> = signal<
-    LanguageOption[]
-  >([
+  readonly dataArray: WritableSignal<LanguageOption[]> = signal<LanguageOption[]>([
     {
       name: 'German',
       id: 'de',

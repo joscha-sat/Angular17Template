@@ -35,9 +35,7 @@ describe('TemplateMultiSelect Component', () => {
 
   it('should handle clear action', () => {
     const fixture = TestBed.createComponent(TemplateMultiSelect);
-    fixture.componentInstance.options.set([
-      { label: 'Option 1', value: 'option1' },
-    ]);
+    fixture.componentInstance.options.set([{ label: 'Option 1', value: 'option1' }]);
     fixture.componentInstance.selectedValues.set(['option1']);
     fixture.detectChanges();
     expect(fixture.componentInstance.selectedValues()).toEqual(['option1']);

@@ -51,10 +51,7 @@ describe('UtilityService', () => {
     });
 
     it('should handle multiple navigation events', () => {
-      const events = [
-        new NavigationEnd(1, '/users', '/users'),
-        new NavigationEnd(2, '/customers', '/customers'),
-      ];
+      const events = [new NavigationEnd(1, '/users', '/users'), new NavigationEnd(2, '/customers', '/customers')];
       routerMock.events = of(...events);
 
       service.urlContainsName('customers').subscribe((result) => {

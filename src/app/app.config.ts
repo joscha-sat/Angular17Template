@@ -1,10 +1,4 @@
-import {
-  APP_INITIALIZER,
-  type ApplicationConfig,
-  isDevMode,
-  LOCALE_ID,
-  type Provider,
-} from '@angular/core';
+import { APP_INITIALIZER, type ApplicationConfig, isDevMode, LOCALE_ID, type Provider } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -12,10 +6,7 @@ import { authTokenInterceptor } from './other/interceptors/auth-token.intercepto
 import { isLoadingInterceptor } from './other/interceptors/is-loading.interceptor';
 import { errorInterceptor } from './other/interceptors/error.interceptor';
 import { mockInterceptor } from './other/interceptors/mock.interceptor';
-import {
-  MAT_LUXON_DATE_FORMATS,
-  provideLuxonDateAdapter,
-} from '@angular/material-luxon-adapter';
+import { MAT_LUXON_DATE_FORMATS, provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
 import { registerLocaleData } from '@angular/common';
 import localeDE from '@angular/common/locales/de';
 import { TranslocoHttpLoader } from './transloco-loader';
@@ -29,9 +20,7 @@ registerLocaleData(localeDE);
 const DEFAULT_LANGUAGE: string = 'de';
 
 // Initialize Transloco with default language
-export function initializeTransloco(
-  translocoService: TranslocoService,
-): () => Promise<unknown> {
+export function initializeTransloco(translocoService: TranslocoService): () => Promise<unknown> {
   return () => {
     translocoService.setActiveLang(DEFAULT_LANGUAGE);
     return firstValueFrom(translocoService.load(DEFAULT_LANGUAGE));
@@ -74,12 +63,7 @@ export const appConfig: ApplicationConfig = {
     { provide: LOCALE_ID, useValue: 'de-DE' },
     ...provideLuxonDateAdapterWithLocale(),
     provideHttpClient(
-      withInterceptors([
-        mockInterceptor,
-        authTokenInterceptor,
-        isLoadingInterceptor,
-        errorInterceptor,
-      ]),
+      withInterceptors([mockInterceptor, authTokenInterceptor, isLoadingInterceptor, errorInterceptor]),
     ),
     provideRouter(routes),
     provideTransloco({

@@ -9,11 +9,7 @@ describe('TenantDashboardHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TenantDashboardHeaderComponent,
-        getTranslocoModule(),
-        HeaderLayoutComponent,
-      ],
+      imports: [TenantDashboardHeaderComponent, getTranslocoModule(), HeaderLayoutComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TenantDashboardHeaderComponent);

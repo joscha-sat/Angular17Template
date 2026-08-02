@@ -9,11 +9,7 @@ describe('SettingsHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        SettingsHeaderComponent,
-        HeaderLayoutComponent,
-        getTranslocoModule(),
-      ],
+      imports: [SettingsHeaderComponent, HeaderLayoutComponent, getTranslocoModule()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SettingsHeaderComponent);

@@ -19,9 +19,7 @@ export class UserService extends GenericHttpService {
   element_i18nKey: string = 'user.a_title';
 
   // GET ALL
-  getAllUsers(
-    queryParams?: QueryParams,
-  ): Observable<ResponseWithRecords<User>> {
+  getAllUsers(queryParams?: QueryParams): Observable<ResponseWithRecords<User>> {
     return this.getAll<User>(this.endpoint, queryParams, User);
   }
 
@@ -47,12 +45,7 @@ export class UserService extends GenericHttpService {
 
   // UPDATE MULTIPLE
   updateMultipleUserById(id: idTypes[], users: User[]): Observable<User[]> {
-    return this.updateMultiple<User>(
-      this.endpoint,
-      users,
-      id,
-      this.element_i18nKey,
-    );
+    return this.updateMultiple<User>(this.endpoint, users, id, this.element_i18nKey);
   }
 
   // DELETE ONE

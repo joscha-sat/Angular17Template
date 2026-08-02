@@ -16,16 +16,12 @@ export type TenantQueryParams = BaseQueryParams & {};
   providedIn: 'root',
 })
 export class TenantService extends GenericHttpService {
-  readonly selectedTenantId: WritableSignal<string> = signal(
-    'be9733b2-7695-4a41-96ed-9c0fcb2772dd',
-  );
+  readonly selectedTenantId: WritableSignal<string> = signal('be9733b2-7695-4a41-96ed-9c0fcb2772dd');
   endpoint: ApiRoutes = ApiRoutes.TENANT;
   element_i18nKey: string = 'tenant.a_title';
 
   // GET ALL > Tenants
-  getAllTenants(
-    queryParams?: TenantQueryParams,
-  ): Observable<ResponseWithRecords<Tenant>> {
+  getAllTenants(queryParams?: TenantQueryParams): Observable<ResponseWithRecords<Tenant>> {
     return this.getAll<Tenant>(this.endpoint, queryParams, Tenant);
   }
 
@@ -41,34 +37,17 @@ export class TenantService extends GenericHttpService {
 
   // CREATE MULTIPLE > Tenants
   createMultipleTenant(tenant: Tenant[]): Observable<Tenant[]> {
-    return this.createMultiple<Tenant>(
-      this.endpoint,
-      tenant,
-      this.element_i18nKey,
-    );
+    return this.createMultiple<Tenant>(this.endpoint, tenant, this.element_i18nKey);
   }
 
   // PATCH / UPDATE ONE > Tenant
   updateTenantById(id: idTypes, tenant: Tenant): Observable<Tenant> {
-    return this.updateOne<Tenant>(
-      this.endpoint,
-      tenant,
-      id,
-      this.element_i18nKey,
-    );
+    return this.updateOne<Tenant>(this.endpoint, tenant, id, this.element_i18nKey);
   }
 
   // UPDATE MULTIPLE > Tenants
-  updateMultipleTenantById(
-    id: idTypes[],
-    tenants: Tenant[],
-  ): Observable<Tenant[]> {
-    return this.updateMultiple<Tenant>(
-      this.endpoint,
-      tenants,
-      id,
-      this.element_i18nKey,
-    );
+  updateMultipleTenantById(id: idTypes[], tenants: Tenant[]): Observable<Tenant[]> {
+    return this.updateMultiple<Tenant>(this.endpoint, tenants, id, this.element_i18nKey);
   }
 
   // DELETE ONE > Tenant

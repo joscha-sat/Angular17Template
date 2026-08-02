@@ -26,10 +26,7 @@ describe('TemplateTableEnterFetchComponent', () => {
     );
 
     fixture.componentRef.setInput('fetchData', mockFetchData);
-    fixture.componentRef.setInput('headers', [
-      'Test Header 1',
-      'Test Header 2',
-    ]);
+    fixture.componentRef.setInput('headers', ['Test Header 1', 'Test Header 2']);
     fixture.componentRef.setInput('displayedColumns', ['col1', 'col2']);
 
     fixture.detectChanges();

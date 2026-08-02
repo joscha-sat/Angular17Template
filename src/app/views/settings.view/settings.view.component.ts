@@ -5,11 +5,7 @@ import { SettingsTabsComponent } from '../../components/settings/settings-tabs/s
 
 @Component({
   selector: 'app-settings.view',
-  imports: [
-    ViewLayoutComponent,
-    SettingsHeaderComponent,
-    SettingsTabsComponent,
-  ],
+  imports: [ViewLayoutComponent, SettingsHeaderComponent, SettingsTabsComponent],
   templateUrl: './settings.view.component.html',
   styleUrl: './settings.view.component.scss',
 })

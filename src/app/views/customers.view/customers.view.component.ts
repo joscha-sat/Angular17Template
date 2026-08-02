@@ -6,12 +6,7 @@ import { CustomerTableComponent } from '../../components/customers/customer-tabl
 
 @Component({
   selector: 'app-customers.view',
-  imports: [
-    ViewLayoutComponent,
-    CustomersHeaderComponent,
-    ReactiveFormsModule,
-    CustomerTableComponent,
-  ],
+  imports: [ViewLayoutComponent, CustomersHeaderComponent, ReactiveFormsModule, CustomerTableComponent],
   templateUrl: './customers.view.component.html',
   styleUrl: './customers.view.component.scss',
 })

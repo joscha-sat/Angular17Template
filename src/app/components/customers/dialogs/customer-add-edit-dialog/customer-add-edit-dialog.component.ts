@@ -1,16 +1,5 @@
-import {
-  Component,
-  inject,
-  type OnInit,
-  signal,
-  type WritableSignal,
-} from '@angular/core';
-import {
-  FormBuilder,
-  type FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, inject, type OnInit, signal, type WritableSignal } from '@angular/core';
+import { FormBuilder, type FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Customer } from '../../../../models/Customer';
 import { CustomerService } from '../../../../api/customer.service';
 import {
@@ -85,19 +74,15 @@ export class CustomerAddEditDialogComponent implements OnInit {
   }
 
   createCustomer(): void {
-    this.customerService
-      .createOneCustomer(this.customerFromFormData)
-      .subscribe(() => {
-        this.dialog.closeAll();
-      });
+    this.customerService.createOneCustomer(this.customerFromFormData).subscribe(() => {
+      this.dialog.closeAll();
+    });
   }
 
   updateCustomer(): void {
     if (!this.model) {
       return;
     }
-    this.customerService
-      .updateCustomerById(this.model.id, this.customerFromFormData)
-      .subscribe();
+    this.customerService.updateCustomerById(this.model.id, this.customerFromFormData).subscribe();
   }
 }

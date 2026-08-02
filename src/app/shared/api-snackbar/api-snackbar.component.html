@@ -17,11 +17,7 @@
   <span matSnackBarActions>
     {{ currentDate() | date: 'dd.MM.yyyy, HH:mm' }}
 
-    <button
-      (click)="snackBarRef.dismissWithAction()"
-      mat-icon-button
-      matSnackBarAction
-    >
+    <button (click)="snackBarRef.dismissWithAction()" mat-icon-button matSnackBarAction>
       <mat-icon>close</mat-icon>
     </button>
   </span>

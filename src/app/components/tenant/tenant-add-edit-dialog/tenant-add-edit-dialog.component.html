@@ -1,10 +1,6 @@
 @if (tenantForm) {
   <div class="view-title pb-1">
-    {{
-      mode === MODE.ADD
-        ? ('tenant.create' | transloco)
-        : ('tenant.edit' | transloco)
-    }}
+    {{ mode === MODE.ADD ? ('tenant.create' | transloco) : ('tenant.edit' | transloco) }}
   </div>
 
   <form [formGroup]="tenantForm" (ngSubmit)="tenantForm.valid && submit()">

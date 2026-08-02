@@ -100,12 +100,7 @@ export class MockApiDatabase {
     req: HttpRequest<unknown>,
   ): Observable<HttpEvent<unknown>> {
     if (route.idOrAction) {
-      return this.updateOneRecord(
-        resource,
-        route.idOrAction,
-        req.body,
-        req.url,
-      );
+      return this.updateOneRecord(resource, route.idOrAction, req.body, req.url);
     }
 
     return this.createNotFoundResponse(req.url);
@@ -125,10 +120,7 @@ export class MockApiDatabase {
   }
 
   // AUTH > Login & RefreshToken
-  private respondToAuthRequest(
-    action: string | null,
-    url: string,
-  ): Observable<HttpEvent<unknown>> {
+  private respondToAuthRequest(action: string | null, url: string): Observable<HttpEvent<unknown>> {
     if (action === LOGIN_ACTION_NAME) {
       return this.createSuccessResponse(this.createLoginResponse());
     }
@@ -141,43 +133,24 @@ export class MockApiDatabase {
   }
 
   // GET ALL > Records
-  private getAllRecords(
-    resource: MockResourceName,
-    params: HttpParams,
-  ): Observable<HttpEvent<unknown>> {
+  private getAllRecords(resource: MockResourceName, params: HttpParams): Observable<HttpEvent<unknown>> {
     const records: MockRecord[] = this.getRecords(resource);
 
-    let filteredRecords: MockRecord[] = this.applySearchFilter(
-      records,
-      params.get('search'),
-    );
-    filteredRecords = this.applyActiveFilter(
-      filteredRecords,
-      params.get('active'),
-    );
+    let filteredRecords: MockRecord[] = this.applySearchFilter(records, params.get('search'));
+    filteredRecords = this.applyActiveFilter(filteredRecords, params.get('active'));
     filteredRecords = this.applySort(filteredRecords, params.get('sort'));
 
     const total: number = filteredRecords.length;
     const skip: number = Number(params.get('skip') ?? 0);
     const limit: number = Number(params.get('limit') ?? total);
-    const pagedRecords: MockRecord[] = filteredRecords.slice(
-      skip,
-      skip + limit,
-    );
+    const pagedRecords: MockRecord[] = filteredRecords.slice(skip, skip + limit);
 
     return this.createSuccessResponse({ total, records: pagedRecords });
   }
 
   // GET ONE > Record
-  private getOneRecord(
-    resource: MockResourceName,
-    id: string,
-    url: string,
-  ): Observable<HttpEvent<unknown>> {
-    const foundRecord: MockRecord | undefined = this.findRecordById(
-      resource,
-      id,
-    );
+  private getOneRecord(resource: MockResourceName, id: string, url: string): Observable<HttpEvent<unknown>> {
+    const foundRecord: MockRecord | undefined = this.findRecordById(resource, id);
 
     if (!foundRecord) {
       return this.createNotFoundResponse(url);
@@ -187,10 +160,7 @@ export class MockApiDatabase {
   }
 
   // CREATE ONE > Record
-  private createOneRecord(
-    resource: MockResourceName,
-    body: unknown,
-  ): Observable<HttpEvent<unknown>> {
+  private createOneRecord(resource: MockResourceName, body: unknown): Observable<HttpEvent<unknown>> {
     const now: string = new Date().toISOString();
     const newRecord: MockRecord = {
       ...(body as MockRecord),
@@ -212,9 +182,7 @@ export class MockApiDatabase {
     url: string,
   ): Observable<HttpEvent<unknown>> {
     const records: MockRecord[] = this.getRecords(resource);
-    const index: number = records.findIndex(
-      (record: MockRecord) => record.id === id,
-    );
+    const index: number = records.findIndex((record: MockRecord) => record.id === id);
 
     if (index === -1) {
       return this.createNotFoundResponse(url);
@@ -233,15 +201,9 @@ export class MockApiDatabase {
   }
 
   // DELETE ONE > Record
-  private deleteOneRecord(
-    resource: MockResourceName,
-    id: string,
-    url: string,
-  ): Observable<HttpEvent<unknown>> {
+  private deleteOneRecord(resource: MockResourceName, id: string, url: string): Observable<HttpEvent<unknown>> {
     const records: MockRecord[] = this.getRecords(resource);
-    const index: number = records.findIndex(
-      (record: MockRecord) => record.id === id,
-    );
+    const index: number = records.findIndex((record: MockRecord) => record.id === id);
 
     if (index === -1) {
       return this.createNotFoundResponse(url);
@@ -253,9 +215,7 @@ export class MockApiDatabase {
   }
 
   // DELETE ALL > Records
-  private deleteAllRecords(
-    resource: MockResourceName,
-  ): Observable<HttpEvent<unknown>> {
+  private deleteAllRecords(resource: MockResourceName): Observable<HttpEvent<unknown>> {
     this.getRecords(resource).length = 0;
 
     return this.createSuccessResponse({});
@@ -286,18 +246,13 @@ export class MockApiDatabase {
 
   private parseRoute(url: string): MockRoute {
     const urlWithoutQuery: string = url.split('?')[0];
-    const pathWithoutBaseUrl: string = urlWithoutQuery.replace(
-      environment.baseUrl,
-      '',
-    );
+    const pathWithoutBaseUrl: string = urlWithoutQuery.replace(environment.baseUrl, '');
     const segments: string[] = pathWithoutBaseUrl.split('/').filter(Boolean);
     const resourceName: string = segments[0] ?? '';
     const idOrAction: string | null = segments.length > 1 ? segments[1] : null;
 
     return {
-      resource: this.isMockResource(resourceName)
-        ? (resourceName as MockResourceName)
-        : null,
+      resource: this.isMockResource(resourceName) ? (resourceName as MockResourceName) : null,
       idOrAction,
     };
   }
@@ -327,19 +282,11 @@ export class MockApiDatabase {
     }
   }
 
-  private findRecordById(
-    resource: MockResourceName,
-    id: string | null,
-  ): MockRecord | undefined {
-    return this.getRecords(resource).find(
-      (record: MockRecord) => record.id === id,
-    );
+  private findRecordById(resource: MockResourceName, id: string | null): MockRecord | undefined {
+    return this.getRecords(resource).find((record: MockRecord) => record.id === id);
   }
 
-  private applySearchFilter(
-    records: MockRecord[],
-    searchQuery: string | null,
-  ): MockRecord[] {
+  private applySearchFilter(records: MockRecord[], searchQuery: string | null): MockRecord[] {
     if (!searchQuery) {
       return records;
     }
@@ -347,47 +294,32 @@ export class MockApiDatabase {
     const normalizedQuery: string = searchQuery.toLowerCase();
     return records.filter((record: MockRecord) =>
       Object.values(record).some((value: unknown) => {
-        const isMatchingString: boolean =
-          typeof value === 'string' &&
-          value.toLowerCase().includes(normalizedQuery);
+        const isMatchingString: boolean = typeof value === 'string' && value.toLowerCase().includes(normalizedQuery);
         return isMatchingString;
       }),
     );
   }
 
-  private applyActiveFilter(
-    records: MockRecord[],
-    activeParam: string | null,
-  ): MockRecord[] {
+  private applyActiveFilter(records: MockRecord[], activeParam: string | null): MockRecord[] {
     if (activeParam === null) {
       return records;
     }
 
     const isActive: boolean = activeParam === 'true';
-    return records.filter(
-      (record: MockRecord) => record['active'] === isActive,
-    );
+    return records.filter((record: MockRecord) => record['active'] === isActive);
   }
 
-  private applySort(
-    records: MockRecord[],
-    sortParam: string | null,
-  ): MockRecord[] {
+  private applySort(records: MockRecord[], sortParam: string | null): MockRecord[] {
     if (!sortParam) {
       return records;
     }
 
     const sortParts: string[] = sortParam.split(SORT_DIRECTION_SEPARATOR);
     const field: string = sortParts[0];
-    const isAscending: boolean =
-      sortParts.length > 1 &&
-      sortParts[1].toUpperCase() === ASCENDING_SORT_DIRECTION;
+    const isAscending: boolean = sortParts.length > 1 && sortParts[1].toUpperCase() === ASCENDING_SORT_DIRECTION;
 
     return [...records].sort((recordA: MockRecord, recordB: MockRecord) => {
-      const comparison: number = this.compareValues(
-        recordA[field],
-        recordB[field],
-      );
+      const comparison: number = this.compareValues(recordA[field], recordB[field]);
       return isAscending ? comparison : -comparison;
     });
   }
@@ -397,10 +329,7 @@ export class MockApiDatabase {
       return 0;
     }
 
-    const missingValueComparison: number | null = this.compareMissingValue(
-      valueA,
-      valueB,
-    );
+    const missingValueComparison: number | null = this.compareMissingValue(valueA, valueB);
     if (missingValueComparison !== null) {
       return missingValueComparison;
     }
@@ -428,17 +357,12 @@ export class MockApiDatabase {
     return String(valueA).localeCompare(String(valueB));
   }
 
-  private createSuccessResponse(
-    body: unknown,
-  ): Observable<HttpResponse<unknown>> {
+  private createSuccessResponse(body: unknown): Observable<HttpResponse<unknown>> {
     return of(new HttpResponse({ status: 200, body }));
   }
 
   private createNotFoundResponse(url: string): Observable<never> {
-    return throwError(
-      () =>
-        new HttpErrorResponse({ status: 404, statusText: 'Not Found', url }),
-    );
+    return throwError(() => new HttpErrorResponse({ status: 404, statusText: 'Not Found', url }));
   }
 }
 
@@ -456,8 +380,7 @@ export const mockInterceptor: HttpInterceptorFn = (
     return next(req);
   }
 
-  const mockResponse: Observable<HttpEvent<unknown>> =
-    mockApiDatabase.respondToRequest(req);
+  const mockResponse: Observable<HttpEvent<unknown>> = mockApiDatabase.respondToRequest(req);
 
   return mockResponse.pipe(delay(MOCK_LATENCY_MS));
 };

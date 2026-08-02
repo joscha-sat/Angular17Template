@@ -1,22 +1,6 @@
-import {
-  Component,
-  input,
-  type InputSignal,
-  output,
-  type OutputEmitterRef,
-  type WritableSignal,
-} from '@angular/core';
-import {
-  MatFormField,
-  MatInput,
-  MatLabel,
-  MatSuffix,
-} from '@angular/material/input';
-import {
-  MatDatepicker,
-  MatDatepickerInput,
-  MatDatepickerToggle,
-} from '@angular/material/datepicker';
+import { Component, input, type InputSignal, output, type OutputEmitterRef, type WritableSignal } from '@angular/core';
+import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
+import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 
@@ -44,9 +28,9 @@ export class TemplateDatepickerComponent {
   readonly label: InputSignal<string> = input('general.select-date');
 
   readonly fControlName: InputSignal<string> = input<string>('date');
-  readonly service: InputSignal<
-    { searchDate: WritableSignal<string> } | undefined
-  > = input<{ searchDate: WritableSignal<string> }>();
+  readonly service: InputSignal<{ searchDate: WritableSignal<string> } | undefined> = input<{
+    searchDate: WritableSignal<string>;
+  }>();
 
   readonly dateChange: OutputEmitterRef<string> = output<string>();
 

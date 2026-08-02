@@ -2,11 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable, signal, type WritableSignal } from '@angular/core';
 import { forkJoin, map, type Observable, Subject, tap } from 'rxjs';
 import { environment } from '../../other/environments/environment';
-import {
-  MatSnackbarService,
-  type MethodType,
-  type SnackBarData,
-} from '../../services/mat-snackbar.service';
+import { MatSnackbarService, type MethodType, type SnackBarData } from '../../services/mat-snackbar.service';
 import { ApiSnackbarComponent } from '../../shared/api-snackbar/api-snackbar.component';
 
 // Type definitions
@@ -27,9 +23,7 @@ export class GenericHttpService {
   refreshObservable$: Observable<void> = this._refreshObservable.asObservable();
   readonly search: WritableSignal<string> = signal<string>('');
   readonly searchDate: WritableSignal<string> = signal<string>('');
-  readonly tabValueActive: WritableSignal<boolean | undefined> = signal<
-    boolean | undefined
-  >(undefined);
+  readonly tabValueActive: WritableSignal<boolean | undefined> = signal<boolean | undefined>(undefined);
   private readonly http: HttpClient = inject(HttpClient);
   private readonly snackBar: MatSnackbarService = inject(MatSnackbarService);
 
@@ -40,9 +34,7 @@ export class GenericHttpService {
    * @returns A full URL string
    */
   getUrl(endpoint: string, id?: idTypes): string {
-    return id
-      ? `${this.baseUrl}${endpoint}/${id}`
-      : `${this.baseUrl}${endpoint}`;
+    return id ? `${this.baseUrl}${endpoint}/${id}` : `${this.baseUrl}${endpoint}`;
   }
 
   /**
@@ -67,9 +59,7 @@ export class GenericHttpService {
         map((response: ResponseWithRecords<T>) => ({
           ...response,
           records: modelType
-            ? response.records.map(
-                (record: T) => new modelType(record as Partial<T>),
-              )
+            ? response.records.map((record: T) => new modelType(record as Partial<T>))
             : response.records,
         })),
       );
@@ -83,18 +73,10 @@ export class GenericHttpService {
    * @param modelType - Optional: The constructor of the model class (e.g., User)
    * @returns An Observable of the single record
    */
-  getOne<T>(
-    endpoint: string,
-    id: idTypes,
-    modelType?: new (data: Partial<T>) => T,
-  ): Observable<T> {
+  getOne<T>(endpoint: string, id: idTypes, modelType?: new (data: Partial<T>) => T): Observable<T> {
     return this.http
       .get<T>(this.getUrl(endpoint, id))
-      .pipe(
-        map((record: T) =>
-          modelType ? new modelType(record as Partial<T>) : record,
-        ),
-      );
+      .pipe(map((record: T) => (modelType ? new modelType(record as Partial<T>) : record)));
   }
 
   /**
@@ -104,15 +86,8 @@ export class GenericHttpService {
    * @param i18nKeyForElement - Article name for the resource (for notifications)
    * @returns An Observable of the created record
    */
-  createOne<T>(
-    endpoint: string,
-    body: T,
-    i18nKeyForElement: string,
-  ): Observable<T> {
-    const action: Observable<T> = this.http.post<T>(
-      this.getUrl(endpoint),
-      body,
-    );
+  createOne<T>(endpoint: string, body: T, i18nKeyForElement: string): Observable<T> {
+    const action: Observable<T> = this.http.post<T>(this.getUrl(endpoint), body);
     return this.httpAction(action, i18nKeyForElement, 'POST');
   }
 
@@ -123,14 +98,8 @@ export class GenericHttpService {
    * @param i18nKeyForElement - Article name for the resources (for notifications)
    * @returns An Observable of an array of the created records
    */
-  createMultiple<T>(
-    endpoint: string,
-    bodies: T[],
-    i18nKeyForElement: string,
-  ): Observable<T[]> {
-    const postObservables: Observable<T>[] = bodies.map((body: T) =>
-      this.http.post<T>(this.getUrl(endpoint), body),
-    );
+  createMultiple<T>(endpoint: string, bodies: T[], i18nKeyForElement: string): Observable<T[]> {
+    const postObservables: Observable<T>[] = bodies.map((body: T) => this.http.post<T>(this.getUrl(endpoint), body));
     const batchAction: Observable<T[]> = forkJoin(postObservables);
     return this.httpAction(batchAction, i18nKeyForElement, 'POST', true);
   }
@@ -143,16 +112,8 @@ export class GenericHttpService {
    * @param i18nKeyForElement - Article name for the resource (for notifications)
    * @returns An Observable of the updated record
    */
-  updateOne<T>(
-    endpoint: string,
-    body: T,
-    id: idTypes,
-    i18nKeyForElement: string,
-  ): Observable<T> {
-    const action: Observable<T> = this.http.patch<T>(
-      this.getUrl(endpoint, id),
-      body,
-    );
+  updateOne<T>(endpoint: string, body: T, id: idTypes, i18nKeyForElement: string): Observable<T> {
+    const action: Observable<T> = this.http.patch<T>(this.getUrl(endpoint, id), body);
     return this.httpAction(action, i18nKeyForElement, 'PATCH');
   }
 
@@ -164,15 +125,9 @@ export class GenericHttpService {
    * @param i18nKeyForElement - Article name for the resources (for notifications)
    * @returns An Observable of an array of the updated records
    */
-  updateMultiple<T>(
-    endpoint: string,
-    bodies: T[],
-    ids: idTypes[],
-    i18nKeyForElement: string,
-  ): Observable<T[]> {
-    const patchObservables: Observable<T>[] = bodies.map(
-      (body: T, index: number) =>
-        this.http.patch<T>(this.getUrl(endpoint, ids[index]), body),
+  updateMultiple<T>(endpoint: string, bodies: T[], ids: idTypes[], i18nKeyForElement: string): Observable<T[]> {
+    const patchObservables: Observable<T>[] = bodies.map((body: T, index: number) =>
+      this.http.patch<T>(this.getUrl(endpoint, ids[index]), body),
     );
     const batchAction: Observable<T[]> = forkJoin(patchObservables);
     return this.httpAction(batchAction, i18nKeyForElement, 'PATCH', true);
@@ -185,14 +140,8 @@ export class GenericHttpService {
    * @param i18nKeyForElement - Article name for the resource (for notifications)
    * @returns An Observable of the delete result
    */
-  deleteOne(
-    endpoint: string,
-    id: idTypes,
-    i18nKeyForElement: string,
-  ): Observable<unknown> {
-    const action: Observable<unknown> = this.http.delete(
-      this.getUrl(endpoint, id),
-    );
+  deleteOne(endpoint: string, id: idTypes, i18nKeyForElement: string): Observable<unknown> {
+    const action: Observable<unknown> = this.http.delete(this.getUrl(endpoint, id));
     return this.httpAction(action, i18nKeyForElement, 'DELETE');
   }
 
@@ -202,9 +151,7 @@ export class GenericHttpService {
    * @returns An Observable of the delete result
    */
   deleteAll<T>(endpoint: string): Observable<T> {
-    return this.http
-      .delete<T>(`${this.baseUrl}${endpoint}`)
-      .pipe(tap(() => this._refreshObservable.next()));
+    return this.http.delete<T>(`${this.baseUrl}${endpoint}`).pipe(tap(() => this._refreshObservable.next()));
   }
 
   /**
@@ -250,11 +197,7 @@ export class GenericHttpService {
     return params;
   }
 
-  private handleHttpSuccess(
-    i18nKeyForElement: string,
-    methodType?: MethodType,
-    plural: boolean = false,
-  ): void {
+  private handleHttpSuccess(i18nKeyForElement: string, methodType?: MethodType, plural: boolean = false): void {
     const payload: SnackBarData = {
       i18nKeyOrMessage: i18nKeyForElement,
       methodType,

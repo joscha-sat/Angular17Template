@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  type OnInit,
-  signal,
-  type WritableSignal,
-} from '@angular/core';
+import { Component, inject, type OnInit, signal, type WritableSignal } from '@angular/core';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
 import { BaseTableComponent } from '../../../other/abstract-classes/BaseTable';
 import type { Tenant } from '../../../models/Tenant';
@@ -17,10 +11,7 @@ import { TenantService } from '../../../api/tenant.service';
   templateUrl: './tenant-table.component.html',
   styleUrl: './tenant-table.component.scss',
 })
-export class TenantTableComponent
-  extends BaseTableComponent<Tenant>
-  implements Table<Tenant>, OnInit
-{
+export class TenantTableComponent extends BaseTableComponent<Tenant> implements Table<Tenant>, OnInit {
   tenantService: TenantService = inject(TenantService);
 
   readonly headers: WritableSignal<string[]> = signal<string[]>([
@@ -29,9 +20,7 @@ export class TenantTableComponent
     'general.updatedAt',
   ]);
 
-  readonly columns: WritableSignal<(keyof Tenant)[]> = signal<(keyof Tenant)[]>(
-    ['name', 'createdAt', 'updatedAt'],
-  );
+  readonly columns: WritableSignal<(keyof Tenant)[]> = signal<(keyof Tenant)[]>(['name', 'createdAt', 'updatedAt']);
 
   override ngOnInit(): void {
     super.ngOnInit();

@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  type OnInit,
-  signal,
-  type WritableSignal,
-} from '@angular/core';
+import { Component, inject, type OnInit, signal, type WritableSignal } from '@angular/core';
 import { TenantHeaderComponent } from '../../components/tenant/tenant-header/tenant-header.component';
 import { TenantService } from '../../api/tenant.service';
 import type { Tenant } from '../../models/Tenant';
@@ -32,10 +26,8 @@ export class TenantViewComponent implements OnInit {
 
   // | normal methods | --------------------------------------------------------------------  ||
   getTenants(): void {
-    this.tenantService
-      .getAllTenants()
-      .subscribe((tenants: ResponseWithRecords<Tenant>) => {
-        this.tenants.set(tenants.records);
-      });
+    this.tenantService.getAllTenants().subscribe((tenants: ResponseWithRecords<Tenant>) => {
+      this.tenants.set(tenants.records);
+    });
   }
 }

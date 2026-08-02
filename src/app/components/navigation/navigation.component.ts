@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  type OnInit,
-  signal,
-  type WritableSignal,
-} from '@angular/core';
+import { Component, inject, type OnInit, signal, type WritableSignal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 import { MatMiniFabButton } from '@angular/material/button';
@@ -14,34 +8,26 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-navigation',
-  imports: [
-    RouterLinkActive,
-    MatIcon,
-    RouterLink,
-    MatMiniFabButton,
-    TranslocoPipe,
-  ],
+  imports: [RouterLinkActive, MatIcon, RouterLink, MatMiniFabButton, TranslocoPipe],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
 })
 export class NavigationComponent implements OnInit {
   readonly navItems: WritableSignal<NavItem[]> = signal<NavItem[]>([]);
-  private readonly translocoService: TranslocoService =
-    inject(TranslocoService);
+  private readonly translocoService: TranslocoService = inject(TranslocoService);
 
   ngOnInit(): void {
     this.setTranslatedTextWithNavItems();
   }
 
   setTranslatedTextWithNavItems(): void {
-    const translations: Record<string, string> =
-      this.translocoService.translate([
-        'tenant.title',
-        'user.title',
-        'customer.title-plural',
-        'settings.title',
-        'map.title',
-      ]);
+    const translations: Record<string, string> = this.translocoService.translate([
+      'tenant.title',
+      'user.title',
+      'customer.title-plural',
+      'settings.title',
+      'map.title',
+    ]);
 
     this.navItems.set([
       // tenant

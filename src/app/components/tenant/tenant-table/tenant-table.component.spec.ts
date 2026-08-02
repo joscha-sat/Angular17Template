@@ -18,11 +18,7 @@ describe('TenantTableComponent', () => {
     };
 
     await TestBed.configureTestingModule({
-      imports: [
-        TenantTableComponent,
-        getTranslocoModule(),
-        TemplateTableEnterFetchComponent,
-      ],
+      imports: [TenantTableComponent, getTranslocoModule(), TemplateTableEnterFetchComponent],
       providers: [{ provide: TenantService, useValue: mockTenantService }],
     }).compileComponents();
 

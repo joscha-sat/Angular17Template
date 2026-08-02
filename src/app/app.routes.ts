@@ -15,10 +15,7 @@ export const routes: Routes = [
       // || TENANT || ----------------------------------------------- // >>
       {
         path: ROUTES.TENANT,
-        loadComponent: () =>
-          import('./views/tenant.view/tenant.view.component').then(
-            (m) => m.TenantViewComponent,
-          ),
+        loadComponent: () => import('./views/tenant.view/tenant.view.component').then((m) => m.TenantViewComponent),
       },
       // || TENANT DASHBOARD || -------------------------------------- // >>
       {
@@ -31,34 +28,24 @@ export const routes: Routes = [
       // || USER || ----------------------------------------------- // >>
       {
         path: ROUTES.USER,
-        loadComponent: () =>
-          import('./views/user.view/user.view.component').then(
-            (m) => m.UserViewComponent,
-          ),
+        loadComponent: () => import('./views/user.view/user.view.component').then((m) => m.UserViewComponent),
       },
       // || CUSTOMER || ----------------------------------------------- // >>
       {
         path: ROUTES.CUSTOMERS,
         loadComponent: () =>
-          import('./views/customers.view/customers.view.component').then(
-            (m) => m.CustomersViewComponent,
-          ),
+          import('./views/customers.view/customers.view.component').then((m) => m.CustomersViewComponent),
       },
       // || MAP || ----------------------------------------------- // >>
       {
         path: ROUTES.MAP,
-        loadComponent: () =>
-          import('./views/map.view/map.view.component').then(
-            (m) => m.MapViewComponent,
-          ),
+        loadComponent: () => import('./views/map.view/map.view.component').then((m) => m.MapViewComponent),
       },
       // || SETTINGS || ----------------------------------------------- // >>
       {
         path: ROUTES.SETTINGS,
         loadComponent: () =>
-          import('./views/settings.view/settings.view.component').then(
-            (m) => m.SettingsViewComponent,
-          ),
+          import('./views/settings.view/settings.view.component').then((m) => m.SettingsViewComponent),
         children: [
           {
             path: ROUTES.GENERAL,
@@ -80,25 +67,17 @@ export const routes: Routes = [
       // || TEST TODO: REMOVE FOR PRODUCTION!!! || ----------------------------------------------- // >>
       {
         path: 'test',
-        loadComponent: () =>
-          import('./views/test-view/test-view.component').then(
-            (m) => m.TestViewComponent,
-          ),
+        loadComponent: () => import('./views/test-view/test-view.component').then((m) => m.TestViewComponent),
         children: [
           {
             path: 'settings',
             loadComponent: () =>
-              import('./views/settings.view/settings.view.component').then(
-                (m) => m.SettingsViewComponent,
-              ),
+              import('./views/settings.view/settings.view.component').then((m) => m.SettingsViewComponent),
           },
 
           {
             path: 'tenant',
-            loadComponent: () =>
-              import('./views/tenant.view/tenant.view.component').then(
-                (m) => m.TenantViewComponent,
-              ),
+            loadComponent: () => import('./views/tenant.view/tenant.view.component').then((m) => m.TenantViewComponent),
           },
         ],
       },
@@ -108,10 +87,7 @@ export const routes: Routes = [
   // || LOGIN || ----------------------------------------------- // >>
   {
     path: ROUTES.LOGIN,
-    loadComponent: () =>
-      import('./views/login.view/login.view.component').then(
-        (m) => m.LoginViewComponent,
-      ),
+    loadComponent: () => import('./views/login.view/login.view.component').then((m) => m.LoginViewComponent),
   },
 
   // || WILDCARD || ----------------------------------------------- // >>

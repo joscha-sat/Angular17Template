@@ -329,8 +329,7 @@ export type UserControllerFindAllResponses = {
   default: UserFindAllResponseDto;
 };
 
-export type UserControllerFindAllResponse =
-  UserControllerFindAllResponses[keyof UserControllerFindAllResponses];
+export type UserControllerFindAllResponse = UserControllerFindAllResponses[keyof UserControllerFindAllResponses];
 
 export type UserControllerCreateData = {
   body: UserDto;
@@ -379,8 +378,7 @@ export type UserControllerFindOneResponses = {
   default: User;
 };
 
-export type UserControllerFindOneResponse =
-  UserControllerFindOneResponses[keyof UserControllerFindOneResponses];
+export type UserControllerFindOneResponse = UserControllerFindOneResponses[keyof UserControllerFindOneResponses];
 
 export type UserControllerUpdateData = {
   body: UserDto;
@@ -416,8 +414,7 @@ export type AuthControllerLoginResponses = {
   201: AuthResponse;
 };
 
-export type AuthControllerLoginResponse =
-  AuthControllerLoginResponses[keyof AuthControllerLoginResponses];
+export type AuthControllerLoginResponse = AuthControllerLoginResponses[keyof AuthControllerLoginResponses];
 
 export type AuthControllerRefreshTokenData = {
   body: RefreshBody;
@@ -553,8 +550,7 @@ export type RoleControllerFindAllResponses = {
   default: RoleFindAllResponseDto;
 };
 
-export type RoleControllerFindAllResponse =
-  RoleControllerFindAllResponses[keyof RoleControllerFindAllResponses];
+export type RoleControllerFindAllResponse = RoleControllerFindAllResponses[keyof RoleControllerFindAllResponses];
 
 export type RoleControllerCreateData = {
   body: RoleDto;
@@ -623,8 +619,7 @@ export type RoleControllerFindOneResponses = {
   default: Role;
 };
 
-export type RoleControllerFindOneResponse =
-  RoleControllerFindOneResponses[keyof RoleControllerFindOneResponses];
+export type RoleControllerFindOneResponse = RoleControllerFindOneResponses[keyof RoleControllerFindOneResponses];
 
 export type RoleControllerUpdateData = {
   body: RoleDto;
@@ -659,8 +654,7 @@ export type TenantControllerFindAllResponses = {
   default: TenantFindAllResponseDto;
 };
 
-export type TenantControllerFindAllResponse =
-  TenantControllerFindAllResponses[keyof TenantControllerFindAllResponses];
+export type TenantControllerFindAllResponse = TenantControllerFindAllResponses[keyof TenantControllerFindAllResponses];
 
 export type TenantControllerCreateData = {
   body: TenantDto;
@@ -702,8 +696,7 @@ export type TenantControllerFindOneResponses = {
   default: Tenant;
 };
 
-export type TenantControllerFindOneResponse =
-  TenantControllerFindOneResponses[keyof TenantControllerFindOneResponses];
+export type TenantControllerFindOneResponse = TenantControllerFindOneResponses[keyof TenantControllerFindOneResponses];
 
 export type TenantControllerUpdateData = {
   body: TenantDto;

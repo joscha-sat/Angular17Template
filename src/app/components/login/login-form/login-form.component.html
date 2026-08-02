@@ -1,18 +1,10 @@
 <!--  form  -->
-<form
-  (ngSubmit)="form.valid && submit()"
-  [formGroup]="form!"
-  class="flex-col-gap1"
->
+<form (ngSubmit)="form.valid && submit()" [formGroup]="form!" class="flex-col-gap1">
   <!--   username input   -->
   <app-template-input fControlName="username" label="general.username" />
 
   <!--   password input   -->
-  <app-template-input
-    fControlName="password"
-    label="general.password"
-    type="password"
-  />
+  <app-template-input fControlName="password" label="general.password" type="password" />
 
   <!-- forgot password, TODO: add forgot passwort dialog / logic -->
   <span class="forgot-pw-button text-center pointer">

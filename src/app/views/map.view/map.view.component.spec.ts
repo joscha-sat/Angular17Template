@@ -32,12 +32,7 @@ describe('MapViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        MapViewComponent,
-        ViewLayoutComponent,
-        MapHeaderComponent,
-        getTranslocoModule(),
-      ],
+      imports: [MapViewComponent, ViewLayoutComponent, MapHeaderComponent, getTranslocoModule()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MapViewComponent);

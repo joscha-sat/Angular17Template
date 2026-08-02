@@ -42,12 +42,9 @@ describe('MockApiDatabase', () => {
     });
 
     it('should filter records by search query', async () => {
-      const request: HttpRequest<unknown> = createRequest(
-        'GET',
-        'user',
-        undefined,
-        { params: new HttpParams({ fromObject: { search: 'Max' } }) },
-      );
+      const request: HttpRequest<unknown> = createRequest('GET', 'user', undefined, {
+        params: new HttpParams({ fromObject: { search: 'Max' } }),
+      });
 
       const response: HttpResponse<unknown> = (await firstValueFrom(
         database.respondToRequest(request),
@@ -59,12 +56,9 @@ describe('MockApiDatabase', () => {
     });
 
     it('should filter records by active flag', async () => {
-      const request: HttpRequest<unknown> = createRequest(
-        'GET',
-        'user',
-        undefined,
-        { params: new HttpParams({ fromObject: { active: 'false' } }) },
-      );
+      const request: HttpRequest<unknown> = createRequest('GET', 'user', undefined, {
+        params: new HttpParams({ fromObject: { active: 'false' } }),
+      });
 
       const response: HttpResponse<unknown> = (await firstValueFrom(
         database.respondToRequest(request),
@@ -76,12 +70,9 @@ describe('MockApiDatabase', () => {
     });
 
     it('should apply pagination', async () => {
-      const request: HttpRequest<unknown> = createRequest(
-        'GET',
-        'tenant',
-        undefined,
-        { params: new HttpParams({ fromObject: { skip: '0', limit: '2' } }) },
-      );
+      const request: HttpRequest<unknown> = createRequest('GET', 'tenant', undefined, {
+        params: new HttpParams({ fromObject: { skip: '0', limit: '2' } }),
+      });
 
       const response: HttpResponse<unknown> = (await firstValueFrom(
         database.respondToRequest(request),
@@ -93,12 +84,9 @@ describe('MockApiDatabase', () => {
     });
 
     it('should sort records', async () => {
-      const request: HttpRequest<unknown> = createRequest(
-        'GET',
-        'tenant',
-        undefined,
-        { params: new HttpParams({ fromObject: { sort: 'name,DESC' } }) },
-      );
+      const request: HttpRequest<unknown> = createRequest('GET', 'tenant', undefined, {
+        params: new HttpParams({ fromObject: { sort: 'name,DESC' } }),
+      });
 
       const response: HttpResponse<unknown> = (await firstValueFrom(
         database.respondToRequest(request),
@@ -115,10 +103,7 @@ describe('MockApiDatabase', () => {
         'GET',
         'tenant/be9733b2-7695-4a41-96ed-9c0fcb2772dd',
       )) as HttpResponse<Record<string, unknown>>;
-      const body: Record<string, unknown> = response.body as Record<
-        string,
-        unknown
-      >;
+      const body: Record<string, unknown> = response.body as Record<string, unknown>;
 
       expect(body['name']).toBe('Acme GmbH');
     });
@@ -134,35 +119,22 @@ describe('MockApiDatabase', () => {
 
   describe('AUTH', () => {
     it('should simulate a successful login', async () => {
-      const response: HttpResponse<unknown> = (await sendRequest(
-        database,
-        'POST',
-        'auth/login',
-        { username: 'admin@acme-gmbh.de', password: 'MockPasswort123!' },
-      )) as HttpResponse<Record<string, unknown>>;
-      const body: Record<string, unknown> = response.body as Record<
-        string,
-        unknown
-      >;
+      const response: HttpResponse<unknown> = (await sendRequest(database, 'POST', 'auth/login', {
+        username: 'admin@acme-gmbh.de',
+        password: 'MockPasswort123!',
+      })) as HttpResponse<Record<string, unknown>>;
+      const body: Record<string, unknown> = response.body as Record<string, unknown>;
 
       expect(body['access_token']).toBeDefined();
       expect(body['refresh_token']).toBeDefined();
-      expect((body['user'] as Record<string, unknown>)?.['email']).toBe(
-        'admin@acme-gmbh.de',
-      );
+      expect((body['user'] as Record<string, unknown>)?.['email']).toBe('admin@acme-gmbh.de');
     });
 
     it('should simulate a token refresh', async () => {
-      const response: HttpResponse<unknown> = (await sendRequest(
-        database,
-        'POST',
-        'auth/refreshToken',
-        { refreshToken: 'mock-refresh-token' },
-      )) as HttpResponse<Record<string, unknown>>;
-      const body: Record<string, unknown> = response.body as Record<
-        string,
-        unknown
-      >;
+      const response: HttpResponse<unknown> = (await sendRequest(database, 'POST', 'auth/refreshToken', {
+        refreshToken: 'mock-refresh-token',
+      })) as HttpResponse<Record<string, unknown>>;
+      const body: Record<string, unknown> = response.body as Record<string, unknown>;
 
       expect(body['status']).toBe(201);
     });
@@ -170,14 +142,10 @@ describe('MockApiDatabase', () => {
 
   describe('CRUD', () => {
     it('should create, update and delete a record', async () => {
-      const createResponse: HttpResponse<unknown> = (await sendRequest(
-        database,
-        'POST',
-        'customers',
-        { name: 'Testkunde XYZ' },
-      )) as HttpResponse<Record<string, unknown>>;
-      const createdRecord: Record<string, unknown> =
-        createResponse.body as Record<string, unknown>;
+      const createResponse: HttpResponse<unknown> = (await sendRequest(database, 'POST', 'customers', {
+        name: 'Testkunde XYZ',
+      })) as HttpResponse<Record<string, unknown>>;
+      const createdRecord: Record<string, unknown> = createResponse.body as Record<string, unknown>;
       const createdId: string = createdRecord['id'] as string;
 
       expect(createdId).toBeDefined();
@@ -190,16 +158,11 @@ describe('MockApiDatabase', () => {
       )) as HttpResponse<MockResponse>;
       expect((listAfterCreate.body as MockResponse).total).toBe(4);
 
-      const updateResponse: HttpResponse<unknown> = (await sendRequest(
-        database,
-        'PATCH',
-        `customers/${createdId}`,
-        { name: 'Testkunde ABC' },
-      )) as HttpResponse<Record<string, unknown>>;
+      const updateResponse: HttpResponse<unknown> = (await sendRequest(database, 'PATCH', `customers/${createdId}`, {
+        name: 'Testkunde ABC',
+      })) as HttpResponse<Record<string, unknown>>;
 
-      expect((updateResponse.body as Record<string, unknown>)['name']).toBe(
-        'Testkunde ABC',
-      );
+      expect((updateResponse.body as Record<string, unknown>)['name']).toBe('Testkunde ABC');
 
       const deleteResponse: HttpResponse<unknown> = (await sendRequest(
         database,
@@ -218,11 +181,9 @@ describe('MockApiDatabase', () => {
     });
 
     it('should delete all records of a resource', async () => {
-      const deleteAllResponse: HttpResponse<unknown> = (await sendRequest(
-        database,
-        'DELETE',
-        'role',
-      )) as HttpResponse<Record<string, unknown>>;
+      const deleteAllResponse: HttpResponse<unknown> = (await sendRequest(database, 'DELETE', 'role')) as HttpResponse<
+        Record<string, unknown>
+      >;
 
       expect(deleteAllResponse.body).toEqual({});
 
@@ -239,29 +200,17 @@ describe('MockApiDatabase', () => {
     });
 
     it('should return 404 when deleting an unknown record', async () => {
-      await expectRejectsWithStatus(
-        database,
-        'DELETE',
-        'tenant/unknown-id',
-        404,
-      );
+      await expectRejectsWithStatus(database, 'DELETE', 'tenant/unknown-id', 404);
     });
   });
 });
 
 describe('mockInterceptor', () => {
   it('should pass through requests when mock mode is disabled', async () => {
-    const nextHandler: HttpHandlerFn = vi.fn(() =>
-      of(new HttpResponse({ status: 200, body: null })),
-    );
-    const request: HttpRequest<unknown> = new HttpRequest(
-      'GET',
-      `${MOCK_BASE_URL}user`,
-    );
+    const nextHandler: HttpHandlerFn = vi.fn(() => of(new HttpResponse({ status: 200, body: null })));
+    const request: HttpRequest<unknown> = new HttpRequest('GET', `${MOCK_BASE_URL}user`);
 
-    const response: unknown = await firstValueFrom(
-      mockInterceptor(request, nextHandler),
-    );
+    const response: unknown = await firstValueFrom(mockInterceptor(request, nextHandler));
 
     expect(nextHandler).toHaveBeenCalledWith(request);
     expect((response as HttpResponse<unknown>).status).toBe(200);
@@ -284,12 +233,7 @@ function createRequest(
   body?: unknown,
   options?: HttpRequestOptions,
 ): HttpRequest<unknown> {
-  return new HttpRequest(
-    method,
-    `${MOCK_BASE_URL}${path}`,
-    body ?? null,
-    options ?? {},
-  );
+  return new HttpRequest(method, `${MOCK_BASE_URL}${path}`, body ?? null, options ?? {});
 }
 
 async function expectRejectsWithStatus(

@@ -37,8 +37,6 @@ export class IsDatePipe implements PipeTransform {
     // Check if date string has only year and month, or only year
     const yearMonthPattern: RegExp = /^\d{4}-\d{1,2}$/;
     const yearOnlyPattern: RegExp = /^\d{4}$/;
-    return (
-      yearMonthPattern.test(dateString) || yearOnlyPattern.test(dateString)
-    );
+    return yearMonthPattern.test(dateString) || yearOnlyPattern.test(dateString);
   }
 }

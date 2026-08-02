@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  type OnInit,
-  signal,
-  type WritableSignal,
-} from '@angular/core';
+import { Component, inject, type OnInit, signal, type WritableSignal } from '@angular/core';
 import { TenantDashboardGridComponent } from '../../components/tenant-dashboard/tenant-dashboard-grid/tenant-dashboard-grid.component';
 import { TenantDashboardHeaderComponent } from '../../components/tenant-dashboard/tenant-dashboard-header/tenant-dashboard-header.component';
 import { ViewLayoutComponent } from '../../other/layouts/view-layout/view-layout.component';
@@ -14,11 +8,7 @@ import { Tenant } from '../../models/Tenant';
 
 @Component({
   selector: 'app-tenant-dashboard.view',
-  imports: [
-    TenantDashboardGridComponent,
-    TenantDashboardHeaderComponent,
-    ViewLayoutComponent,
-  ],
+  imports: [TenantDashboardGridComponent, TenantDashboardHeaderComponent, ViewLayoutComponent],
   templateUrl: './tenant-dashboard.view.component.html',
   styleUrl: './tenant-dashboard.view.component.scss',
 })

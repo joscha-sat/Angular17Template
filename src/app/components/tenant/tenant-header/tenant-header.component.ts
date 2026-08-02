@@ -9,12 +9,7 @@ import {
   type SimpleChanges,
 } from '@angular/core';
 import type { Tenant } from '../../../models/Tenant';
-import {
-  type AbstractControl,
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { type AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TenantService } from '../../../api/tenant.service';
 import { HeaderLayoutComponent } from '../../../other/layouts/header-layout/header-layout.component';
 import { MatButton } from '@angular/material/button';
@@ -23,13 +18,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-tenant-header',
-  imports: [
-    ReactiveFormsModule,
-    HeaderLayoutComponent,
-    MatButton,
-    TemplateTableSearchComponent,
-    TranslocoPipe,
-  ],
+  imports: [ReactiveFormsModule, HeaderLayoutComponent, MatButton, TemplateTableSearchComponent, TranslocoPipe],
   templateUrl: './tenant-header.component.html',
   styleUrl: './tenant-header.component.scss',
 })
@@ -43,10 +32,7 @@ export class TenantHeaderComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     const tenantsChange: SimpleChange | undefined = changes['tenants'];
 
-    if (
-      !tenantsChange.currentValue ||
-      tenantsChange.currentValue === tenantsChange.previousValue
-    ) {
+    if (!tenantsChange.currentValue || tenantsChange.currentValue === tenantsChange.previousValue) {
       return;
     }
 

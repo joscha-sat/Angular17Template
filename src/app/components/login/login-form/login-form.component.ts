@@ -1,11 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-  FormBuilder,
-  type FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, type FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService, type LoginBody } from '../../../api/auth.service';
 import { Router } from '@angular/router';
 import { ROUTES } from '../../../other/enums/ROUTES';
@@ -15,13 +9,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
   selector: 'app-login-form',
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    TemplateInputComponent,
-    MatButton,
-    TranslocoPipe,
-  ],
+  imports: [FormsModule, ReactiveFormsModule, TemplateInputComponent, MatButton, TranslocoPipe],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.scss',
 })

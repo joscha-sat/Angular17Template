@@ -6,9 +6,7 @@
   [search]="userService.search()"
 />
 
-<ng-template #name let-user="object">
-  {{ user.firstName }} {{ user.lastName }}
-</ng-template>
+<ng-template #name let-user="object"> {{ user.firstName }} {{ user.lastName }} </ng-template>
 
 <ng-template #actions let-user="object">
   <div class="flex-a-center-g1">

@@ -9,12 +9,7 @@ import { environment } from './other/environments/environment';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    NavigationComponent,
-    MatProgressSpinnerModule,
-    AsyncPipe,
-  ],
+  imports: [RouterOutlet, NavigationComponent, MatProgressSpinnerModule, AsyncPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

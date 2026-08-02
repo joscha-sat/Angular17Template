@@ -1,10 +1,4 @@
-import {
-  Component,
-  input,
-  type InputSignal,
-  output,
-  type OutputEmitterRef,
-} from '@angular/core';
+import { Component, input, type InputSignal, output, type OutputEmitterRef } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
 @Component({
