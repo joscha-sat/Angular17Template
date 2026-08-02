@@ -162,7 +162,8 @@ export class GenericHttpService {
    * @param plural boolean for correct translation output
    * @returns An Observable that manages the HTTP action and notifications
    */
-  private httpAction<U>( // Renamed generic type to U to avoid conflict if T is T[]
+  private httpAction<U>(
+    // Renamed generic type to U to avoid conflict if T is T[]
     action: Observable<U>,
     i18nKeyForElement: string,
     methodType?: MethodType,
