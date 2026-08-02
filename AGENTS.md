@@ -9,12 +9,14 @@ Always run these scripts at the end of your work to ensure code quality and cons
 - `npx prettier --write "src/**/*.{html,ts,scss}"`
 
 ## Tech Stack
-- Angular: `^21.1.1`
-- PrimeNG: `^21.1.6`
-- TypeScript: `~5.9.3`
+- Angular: `^22.1.0`
+- Angular Material: `^22.1.0`
+- TypeScript: `~6.0.3`
 - RxJS: `~7.8.2`
-- ESLint: `^9.39.2`
-- Prettier: `^3.8.1`
+- ESLint: `^10.8.0`
+- Prettier: `^3.9.6`
+- Transloco (i18n): `^8.4.0`
+- Vitest: `^4.1.10`
 
 ## Project Structure
 ```
@@ -37,15 +39,22 @@ src/
 │   │   ├── environments/
 │   │   ├── guards/
 │   │   ├── interceptors/
-│   │   └── layouts/
+│   │   ├── layouts/
+│   │   ├── pipes/
+│   │   ├── types/
+│   │   └── transloco-testing.ts
+│   ├── services/                     # Cross-cutting services
 │   ├── shared/                       # Shared components (templates)
 │   ├── stores/                       # State management
-│   ├── views/                        # Page-level components
+│   ├── views/                        # Page-level components (suffix: .view)
 │   ├── app.component.ts
 │   ├── app.config.ts
-│   └── app.routes.ts
+│   ├── app.routes.ts
+│   └── transloco-loader.ts
 ├── assets/
-│   └── scss/                         # Global styles
+│   ├── i18n/                         # Translation files
+│   ├── scss/                         # Global styles
+│   └── themes/
 ├── index.html
 ├── main.ts
 └── styles.scss
