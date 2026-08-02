@@ -57,24 +57,71 @@ export class MockApiDatabase {
       return this.respondToAuthRequest(route.idOrAction, req.url);
     }
 
+    return this.respondToResourceRequest(resource, route, req);
+  }
+
+  // CRUD > Resource by HTTP method
+  private respondToResourceRequest(
+    resource: MockResourceName,
+    route: MockRoute,
+    req: HttpRequest<unknown>,
+  ): Observable<HttpEvent<unknown>> {
     switch (req.method) {
       case 'GET':
-        return route.idOrAction
-          ? this.getOneRecord(resource, route.idOrAction, req.url)
-          : this.getAllRecords(resource, req.params);
+        return this.respondToGetRequest(resource, route, req);
       case 'POST':
-        return this.createOneRecord(resource, req.body, req.url);
+        return this.createOneRecord(resource, req.body);
       case 'PATCH':
-        return route.idOrAction
-          ? this.updateOneRecord(resource, route.idOrAction, req.body, req.url)
-          : this.createNotFoundResponse(req.url);
+        return this.respondToPatchRequest(resource, route, req);
       case 'DELETE':
-        return route.idOrAction
-          ? this.deleteOneRecord(resource, route.idOrAction, req.url)
-          : this.deleteAllRecords(resource, req.url);
+        return this.respondToDeleteRequest(resource, route, req);
       default:
         return this.createNotFoundResponse(req.url);
     }
+  }
+
+  // GET ONE / ALL > Record
+  private respondToGetRequest(
+    resource: MockResourceName,
+    route: MockRoute,
+    req: HttpRequest<unknown>,
+  ): Observable<HttpEvent<unknown>> {
+    if (route.idOrAction) {
+      return this.getOneRecord(resource, route.idOrAction, req.url);
+    }
+
+    return this.getAllRecords(resource, req.params);
+  }
+
+  // PATCH / UPDATE ONE > Record
+  private respondToPatchRequest(
+    resource: MockResourceName,
+    route: MockRoute,
+    req: HttpRequest<unknown>,
+  ): Observable<HttpEvent<unknown>> {
+    if (route.idOrAction) {
+      return this.updateOneRecord(
+        resource,
+        route.idOrAction,
+        req.body,
+        req.url,
+      );
+    }
+
+    return this.createNotFoundResponse(req.url);
+  }
+
+  // DELETE ONE / ALL > Records
+  private respondToDeleteRequest(
+    resource: MockResourceName,
+    route: MockRoute,
+    req: HttpRequest<unknown>,
+  ): Observable<HttpEvent<unknown>> {
+    if (route.idOrAction) {
+      return this.deleteOneRecord(resource, route.idOrAction, req.url);
+    }
+
+    return this.deleteAllRecords(resource);
   }
 
   // AUTH > Login & RefreshToken
@@ -143,7 +190,6 @@ export class MockApiDatabase {
   private createOneRecord(
     resource: MockResourceName,
     body: unknown,
-    url: string,
   ): Observable<HttpEvent<unknown>> {
     const now: string = new Date().toISOString();
     const newRecord: MockRecord = {
@@ -209,7 +255,6 @@ export class MockApiDatabase {
   // DELETE ALL > Records
   private deleteAllRecords(
     resource: MockResourceName,
-    url: string,
   ): Observable<HttpEvent<unknown>> {
     this.getRecords(resource).length = 0;
 
@@ -247,13 +292,13 @@ export class MockApiDatabase {
     );
     const segments: string[] = pathWithoutBaseUrl.split('/').filter(Boolean);
     const resourceName: string = segments[0] ?? '';
-    const idOrAction: string | undefined = segments[1];
+    const idOrAction: string | null = segments.length > 1 ? segments[1] : null;
 
     return {
       resource: this.isMockResource(resourceName)
         ? (resourceName as MockResourceName)
         : null,
-      idOrAction: idOrAction ?? null,
+      idOrAction,
     };
   }
 
@@ -332,11 +377,11 @@ export class MockApiDatabase {
       return records;
     }
 
-    const [field, direction]: string[] = sortParam.split(
-      SORT_DIRECTION_SEPARATOR,
-    );
+    const sortParts: string[] = sortParam.split(SORT_DIRECTION_SEPARATOR);
+    const field: string = sortParts[0];
     const isAscending: boolean =
-      direction?.toUpperCase() === ASCENDING_SORT_DIRECTION;
+      sortParts.length > 1 &&
+      sortParts[1].toUpperCase() === ASCENDING_SORT_DIRECTION;
 
     return [...records].sort((recordA: MockRecord, recordB: MockRecord) => {
       const comparison: number = this.compareValues(
@@ -351,15 +396,35 @@ export class MockApiDatabase {
     if (valueA === valueB) {
       return 0;
     }
+
+    const missingValueComparison: number | null = this.compareMissingValue(
+      valueA,
+      valueB,
+    );
+    if (missingValueComparison !== null) {
+      return missingValueComparison;
+    }
+
+    return this.compareDefinedValues(valueA, valueB);
+  }
+
+  private compareMissingValue(valueA: unknown, valueB: unknown): number | null {
     if (valueA === undefined || valueA === null) {
       return -1;
     }
+
     if (valueB === undefined || valueB === null) {
       return 1;
     }
+
+    return null;
+  }
+
+  private compareDefinedValues(valueA: unknown, valueB: unknown): number {
     if (typeof valueA === 'number' && typeof valueB === 'number') {
       return valueA - valueB;
     }
+
     return String(valueA).localeCompare(String(valueB));
   }
 

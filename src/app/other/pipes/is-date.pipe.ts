@@ -14,7 +14,11 @@ export class IsDatePipe implements PipeTransform {
       return true; // Empty string should be considered valid (creates Invalid Date)
     }
 
-    const date = new Date(value);
+    return this.isValidDateValue(value);
+  }
+
+  private isValidDateValue(value: string | number | Date): boolean {
+    const date: Date = new Date(value);
 
     // Check if the date is invalid
     if (isNaN(date.getTime())) {
@@ -31,8 +35,8 @@ export class IsDatePipe implements PipeTransform {
 
   private isPartialDate(dateString: string): boolean {
     // Check if date string has only year and month, or only year
-    const yearMonthPattern = /^\d{4}-\d{1,2}$/;
-    const yearOnlyPattern = /^\d{4}$/;
+    const yearMonthPattern: RegExp = /^\d{4}-\d{1,2}$/;
+    const yearOnlyPattern: RegExp = /^\d{4}$/;
     return (
       yearMonthPattern.test(dateString) || yearOnlyPattern.test(dateString)
     );

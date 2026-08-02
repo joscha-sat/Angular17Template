@@ -52,19 +52,10 @@ export class TemplateTableSearchComponent implements OnInit {
 
   // Synchronizes the form value with the current service search value
   private syncSearchValueFromService(): void {
-    if (!this.hasServiceSearchFunction()) {
-      return;
-    }
-
     const currentSearchValue: string = this.service().search();
     if (currentSearchValue) {
       this.searchForm.get('search')?.setValue(currentSearchValue);
     }
-  }
-
-  // Checks if the service has a search function
-  private hasServiceSearchFunction(): boolean {
-    return !!this.service().search;
   }
 
   // Extracts the input value from an event
