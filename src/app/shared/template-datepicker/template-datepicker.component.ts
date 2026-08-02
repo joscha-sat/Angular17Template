@@ -1,7 +1,6 @@
 import { Component, input, type InputSignal, output, type OutputEmitterRef, type WritableSignal } from '@angular/core';
 import { MatFormField, MatInput, MatLabel, MatSuffix } from '@angular/material/input';
 import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
-import { ReactiveFormsModule } from '@angular/forms';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
@@ -14,9 +13,6 @@ import { TranslocoPipe } from '@jsverse/transloco';
     MatDatepicker,
     MatSuffix,
     MatDatepickerInput,
-    MatLabel,
-    MatFormField,
-    ReactiveFormsModule,
     TranslocoPipe,
   ],
   templateUrl: './template-datepicker.component.html',
@@ -34,7 +30,9 @@ export class TemplateDatepickerComponent {
 
   readonly dateChange: OutputEmitterRef<string> = output<string>();
 
-  selectedDateChanged(isoString: string): void {
-    this.dateChange.emit(isoString);
+  selectedDateChanged(isoString: string | null): void {
+    const normalizedIsoString: string = isoString ?? '';
+    this.service()?.searchDate.set(normalizedIsoString);
+    this.dateChange.emit(normalizedIsoString);
   }
 }

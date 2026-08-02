@@ -12,7 +12,6 @@ import {
 import { TemplateInputComponent } from '../../../../shared/template-input/template-input.component';
 import { SaveBtnComponent } from '../../../../shared/buttons/save-btn/save-btn.component';
 import { CancelBtnComponent } from '../../../../shared/buttons/cancel-btn/cancel-btn.component';
-import { UtilityService } from '../../../../services/utility.service';
 
 import { TranslocoPipe } from '@jsverse/transloco';
 
@@ -33,7 +32,6 @@ import { TranslocoPipe } from '@jsverse/transloco';
   styleUrl: './customer-add-edit-dialog.component.scss',
 })
 export class CustomerAddEditDialogComponent implements OnInit {
-  utilityService: UtilityService = inject(UtilityService);
   readonly dialog: MatDialog = inject(MatDialog);
   model?: Customer;
   form?: FormGroup;
@@ -50,15 +48,9 @@ export class CustomerAddEditDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.loadModelData();
+    this.isCreateCustomerMode.set(this.model === undefined);
     this.initForm();
   }
-
-  // Todo
-  // loadModelData() {
-  //   this.isCreateCustomerMode.set(true);
-  //   this.isCreateCustomerMode.set(false);
-  // }
 
   initForm(): void {
     this.form = this.fb.group({
@@ -69,7 +61,9 @@ export class CustomerAddEditDialogComponent implements OnInit {
   submit(): void {
     if (this.isCreateCustomerMode()) {
       this.createCustomer();
+      return;
     }
+
     this.updateCustomer();
   }
 

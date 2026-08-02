@@ -1,11 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { NavigationEnd, Router } from '@angular/router';
+import type { Event as RouterEvent } from '@angular/router';
 import { of } from 'rxjs';
 import { UtilityService } from './utility.service';
 
+type RouterMock = {
+  events: Router['events'];
+  url: string;
+};
+
 describe('UtilityService', () => {
   let service: UtilityService;
-  let routerMock: any;
+  let routerMock: RouterMock;
 
   beforeEach(() => {
     routerMock = {
@@ -61,9 +67,9 @@ describe('UtilityService', () => {
 
     it('should filter only NavigationEnd events', () => {
       const events = [
-        { type: 'RouteConfigLoadStart' } as any,
+        { type: 'RouteConfigLoadStart' } as unknown as RouterEvent,
         new NavigationEnd(1, '/test', '/test'),
-        { type: 'RouteConfigLoadEnd' } as any,
+        { type: 'RouteConfigLoadEnd' } as unknown as RouterEvent,
       ];
       routerMock.events = of(...events);
 

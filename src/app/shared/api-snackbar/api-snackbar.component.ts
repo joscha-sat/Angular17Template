@@ -13,8 +13,21 @@ import type { SnackbarComponentData } from '../../other/types/snackbar.type';
   styleUrl: './api-snackbar.component.scss',
 })
 export class ApiSnackbarComponent {
-  data: SnackbarComponentData<unknown> = inject<SnackbarComponentData>(MAT_SNACK_BAR_DATA);
+  readonly data: SnackbarComponentData<unknown> = inject<SnackbarComponentData>(MAT_SNACK_BAR_DATA);
 
-  snackBarRef: MatSnackBarRef<unknown> = inject(MatSnackBarRef);
+  readonly snackBarRef: MatSnackBarRef<unknown> = inject(MatSnackBarRef);
   readonly currentDate: WritableSignal<Date> = signal(new Date());
+
+  get alertTitleTranslationKey(): string {
+    return `alert.${this.data.title}`;
+  }
+
+  get successMessageTranslationKey(): string {
+    if (!this.data.methodType) {
+      return '';
+    }
+
+    const pluralSuffix: string = this.data.plural ? '_plural' : '';
+    return `http_success.${this.data.methodType.toLowerCase()}${pluralSuffix}`;
+  }
 }

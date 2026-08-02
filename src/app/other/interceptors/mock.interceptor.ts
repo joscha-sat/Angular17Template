@@ -182,7 +182,7 @@ export class MockApiDatabase {
     url: string,
   ): Observable<HttpEvent<unknown>> {
     const records: MockRecord[] = this.getRecords(resource);
-    const index: number = records.findIndex((record: MockRecord) => record.id === id);
+    const index: number = this.findRecordIndex(records, id);
 
     if (index === -1) {
       return this.createNotFoundResponse(url);
@@ -203,7 +203,7 @@ export class MockApiDatabase {
   // DELETE ONE > Record
   private deleteOneRecord(resource: MockResourceName, id: string, url: string): Observable<HttpEvent<unknown>> {
     const records: MockRecord[] = this.getRecords(resource);
-    const index: number = records.findIndex((record: MockRecord) => record.id === id);
+    const index: number = this.findRecordIndex(records, id);
 
     if (index === -1) {
       return this.createNotFoundResponse(url);
@@ -286,6 +286,10 @@ export class MockApiDatabase {
 
   private findRecordById(resource: MockResourceName, id: string | null): MockRecord | undefined {
     return this.getRecords(resource).find((record: MockRecord) => record.id === id);
+  }
+
+  private findRecordIndex(records: MockRecord[], id: string): number {
+    return records.findIndex((record: MockRecord) => record.id === id);
   }
 
   private applySearchFilter(records: MockRecord[], searchQuery: string | null): MockRecord[] {

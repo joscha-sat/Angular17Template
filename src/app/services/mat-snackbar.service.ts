@@ -13,17 +13,17 @@ export type { MethodType, SnackBarData, SnackBarTypes } from '../other/types/sna
   providedIn: 'root',
 })
 export class MatSnackbarService {
-  private readonly _snackBar: MatSnackBar = inject(MatSnackBar);
+  private readonly snackBar: MatSnackBar = inject(MatSnackBar);
 
   openSnackBar(
     component: ComponentType<unknown>,
     type: SnackBarTypes,
     data?: SnackBarData,
-    plural: boolean = false,
+    plural: boolean = data?.plural ?? false,
     horizontalPosition: MatSnackBarHorizontalPosition = 'end',
     verticalPosition: MatSnackBarVerticalPosition = 'top',
   ): void {
-    this._snackBar.openFromComponent(component, {
+    this.snackBar.openFromComponent(component, {
       horizontalPosition,
       verticalPosition,
       panelClass: [`snackbar-${type}`],

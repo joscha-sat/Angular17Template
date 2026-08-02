@@ -1,4 +1,9 @@
 <div class="container">
+  @if (useBreadcrumbs()) {
+    <!-- BREADCRUMBS -->
+    <ng-content select="[breadcrumbs]" />
+  }
+
   <div>
     <ng-content select="[left]" />
   </div>

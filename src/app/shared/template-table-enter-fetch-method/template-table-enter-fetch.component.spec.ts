@@ -4,21 +4,21 @@ import { of } from 'rxjs';
 import { TemplateTableEnterFetchComponent } from './template-table-enter-fetch.component';
 
 describe('TemplateTableEnterFetchComponent', () => {
-  let component: TemplateTableEnterFetchComponent<any>;
-  let fixture: ComponentFixture<TemplateTableEnterFetchComponent<any>>;
+  let component: TemplateTableEnterFetchComponent<unknown>;
+  let fixture: ComponentFixture<TemplateTableEnterFetchComponent<unknown>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TemplateTableEnterFetchComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TemplateTableEnterFetchComponent<any>);
+    fixture = TestBed.createComponent(TemplateTableEnterFetchComponent<unknown>);
     component = fixture.componentInstance;
 
     // Set required inputs
     const mockFetchData = vi.fn().mockReturnValue(
       of({
-        data: [],
+        records: [],
         total: 0,
         skip: 0,
         limit: 10,

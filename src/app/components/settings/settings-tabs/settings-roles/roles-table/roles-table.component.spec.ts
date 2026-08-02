@@ -2,10 +2,14 @@ import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { RolesTableComponent } from './roles-table.component';
 import { RoleService } from '../../../../../api/role.service';
 
+type RoleServiceMock = {
+  getAllRoles: ReturnType<typeof vi.fn>;
+};
+
 describe('RolesTableComponent', () => {
   let component: RolesTableComponent;
   let fixture: ComponentFixture<RolesTableComponent>;
-  let mockRoleService: any;
+  let mockRoleService: RoleServiceMock;
 
   beforeEach(async () => {
     mockRoleService = {

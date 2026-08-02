@@ -43,7 +43,12 @@
     <tr *matRowDef="let row; columns: displayedColumns()" mat-row></tr>
   </table>
 
-  <mat-paginator [length]="totalItems()" [pageSizeOptions]="pageSizes()" [pageSize]="initialPageSize()" />
+  <mat-paginator
+    (page)="handlePageEvent($event)"
+    [length]="totalItems()"
+    [pageSizeOptions]="pageSizes()"
+    [pageSize]="initialPageSize()"
+  />
 
   <!-- Default template used when no custom template exists for a column -->
   <ng-template #defaultCellTemplate let-value>

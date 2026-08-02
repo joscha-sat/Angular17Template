@@ -20,7 +20,7 @@ registerLocaleData(localeDE);
 const DEFAULT_LANGUAGE: string = 'de';
 
 // Initialize Transloco with default language
-export function initializeTransloco(translocoService: TranslocoService): () => Promise<unknown> {
+function initializeTransloco(translocoService: TranslocoService): () => Promise<unknown> {
   return () => {
     translocoService.setActiveLang(DEFAULT_LANGUAGE);
     return firstValueFrom(translocoService.load(DEFAULT_LANGUAGE));

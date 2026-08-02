@@ -2,9 +2,11 @@
   <mat-label>{{ label() | transloco }}</mat-label>
   <input
     (dateChange)="selectedDateChanged($event.value)"
+    [attr.id]="fControlName()"
     [matDatepicker]="picker"
     [max]="maxDate()"
     [min]="minDate()"
+    [attr.name]="fControlName()"
     matInput
   />
   <!--  <mat-hint>MM/DD/YYYY</mat-hint>-->

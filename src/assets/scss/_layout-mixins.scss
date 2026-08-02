@@ -1,0 +1,36 @@
+// Shared breakpoints include the navigation rail width.
+$nav-space: 88px;
+$mobile-view: 599px + $nav-space;
+$tablet-view: 849px + $nav-space;
+$laptop-view: 1999px + $nav-space;
+$desktop-view: 1200px + $nav-space;
+
+@mixin desktop-view {
+  @media screen and (min-width: $laptop-view) {
+    @content;
+  }
+}
+
+@mixin laptop-view {
+  @media screen and (max-width: $laptop-view) {
+    @content;
+  }
+}
+
+@mixin tablet-view {
+  @media screen and (max-width: $tablet-view) {
+    @content;
+  }
+}
+
+@mixin mobile-view {
+  @media screen and (max-width: $mobile-view) {
+    @content;
+  }
+}
+
+@mixin customizable-grid($cols: 4, $notSmallerAs: 15rem, $gap: 1.5rem) {
+  display: grid;
+  gap: $gap;
+  grid-template-columns: repeat(auto-fit, minmax(min(max(100% / $cols - $gap, $notSmallerAs), 100%), 1fr));
+}

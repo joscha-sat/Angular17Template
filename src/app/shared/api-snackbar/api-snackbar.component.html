@@ -1,23 +1,16 @@
 <!-- HEADER -->
 <div class="flex align-center justify-between">
   <h3>
-    @switch (data.title) {
-      @case ('info') {
-        {{ 'alert.info' | transloco }}!
-      }
-      @case ('success') {
-        {{ 'alert.success' | transloco }}!
-      }
-      @case ('error') {
-        {{ 'alert.error' | transloco }}! Status: {{ data.errorStatus }}
-      }
+    {{ alertTitleTranslationKey | transloco }}!
+    @if (data.title === 'error' && data.errorStatus !== undefined) {
+      Status: {{ data.errorStatus }}
     }
   </h3>
 
   <span matSnackBarActions>
     {{ currentDate() | date: 'dd.MM.yyyy, HH:mm' }}
 
-    <button (click)="snackBarRef.dismissWithAction()" mat-icon-button matSnackBarAction>
+    <button (click)="snackBarRef.dismissWithAction()" mat-icon-button matSnackBarAction type="button">
       <mat-icon>close</mat-icon>
     </button>
   </span>
@@ -25,38 +18,14 @@
 
 <!-- CONTENT -->
 <div>
-  @switch (data.title) {
-    @case ('info') {
-      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | transloco) : '' }}!
+  @if (data.i18nKeyOrMessage) {
+    {{ data.i18nKeyOrMessage | transloco }}
+    @if (data.title === 'info') {
+      !
     }
-    @case ('success') {
-      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | transloco) : '' }}
-      @switch (data.methodType) {
-        @case ('POST') {
-          @if (data.plural) {
-            {{ 'http_success.post_plural' | transloco }}
-          } @else {
-            {{ 'http_success.post' | transloco }}
-          }
-        }
-        @case ('PATCH') {
-          @if (data.plural) {
-            {{ 'http_success.patch_plural' | transloco }}
-          } @else {
-            {{ 'http_success.patch' | transloco }}
-          }
-        }
-        @case ('DELETE') {
-          @if (data.plural) {
-            {{ 'http_success.delete_plural' | transloco }}
-          } @else {
-            {{ 'http_success.delete' | transloco }}
-          }
-        }
-      }
-    }
-    @case ('error') {
-      {{ data.i18nKeyOrMessage ? (data.i18nKeyOrMessage | transloco) : '' }}
-    }
+  }
+
+  @if (data.title === 'success' && successMessageTranslationKey) {
+    {{ successMessageTranslationKey | transloco }}
   }
 </div>

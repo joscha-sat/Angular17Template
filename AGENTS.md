@@ -48,7 +48,6 @@ src/
 │   │   └── transloco-testing.ts
 │   ├── services/                     # Cross-cutting services
 │   ├── shared/                       # Shared components (templates)
-│   ├── stores/                       # State management
 │   ├── views/                        # Page-level components (suffix: .view)
 │   ├── app.component.ts
 │   ├── app.config.ts

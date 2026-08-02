@@ -59,7 +59,7 @@ type TenantApiResponse = {
   [key: string]: unknown;
 };
 
-const tenantApiResponseSchema: ApiResponseSchema<TenantApiResponse> = z
+const namedResourceApiResponseSchema: ApiResponseSchema<TenantApiResponse> = z
   .object({
     id: z.string().min(1),
     createdAt: z.iso.datetime(),
@@ -74,7 +74,8 @@ function createTenantModel(tenantResponse: TenantApiResponse): Tenant {
   return tenant;
 }
 
-export const tenantResponseSchema: ApiResponseSchema<Tenant> = tenantApiResponseSchema.transform(createTenantModel);
+export const tenantResponseSchema: ApiResponseSchema<Tenant> =
+  namedResourceApiResponseSchema.transform(createTenantModel);
 
 export const tenantListResponseSchema: ApiResponseSchema<PaginatedApiResponse<Tenant>> =
   createPaginatedResponseSchema(tenantResponseSchema);
@@ -188,15 +189,6 @@ type CustomerApiResponse = {
   [key: string]: unknown;
 };
 
-const customerApiResponseSchema: ApiResponseSchema<CustomerApiResponse> = z
-  .object({
-    id: z.string().min(1),
-    createdAt: z.iso.datetime(),
-    updatedAt: z.iso.datetime(),
-    name: z.string().min(1),
-  })
-  .passthrough();
-
 function createCustomerModel(customerResponse: CustomerApiResponse): Customer {
   const customer: Customer = new Customer({});
   Object.assign(customer, customerResponse);
@@ -204,7 +196,7 @@ function createCustomerModel(customerResponse: CustomerApiResponse): Customer {
 }
 
 export const customerResponseSchema: ApiResponseSchema<Customer> =
-  customerApiResponseSchema.transform(createCustomerModel);
+  namedResourceApiResponseSchema.transform(createCustomerModel);
 
 export const customerListResponseSchema: ApiResponseSchema<PaginatedApiResponse<Customer>> =
   createPaginatedResponseSchema(customerResponseSchema);

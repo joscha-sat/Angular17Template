@@ -1,4 +1,4 @@
-@use 'index' as *;
+@use 'layout-mixins' as *;
 
 .grid-with-custom-settings {
   --min-column-size: 200px;

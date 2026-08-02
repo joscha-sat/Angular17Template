@@ -20,6 +20,7 @@ const mockGoogle = {
 
 // Add to window object
 Object.defineProperty(window, 'google', {
+  configurable: true,
   value: mockGoogle,
   writable: true,
 });

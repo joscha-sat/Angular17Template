@@ -3,12 +3,18 @@ import { UserTableComponent } from './user-table.component';
 import { UserService } from '../../../api/user.service';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
-import { of } from 'rxjs';
+import { of, type Observable } from 'rxjs';
+
+type UserServiceMock = {
+  getAllUsers: ReturnType<typeof vi.fn>;
+  refreshObservable$: Observable<null>;
+  search: ReturnType<typeof vi.fn>;
+};
 
 describe('UserTableComponent', () => {
   let component: UserTableComponent;
   let fixture: ComponentFixture<UserTableComponent>;
-  let mockUserService: any;
+  let mockUserService: UserServiceMock;
 
   beforeEach(async () => {
     mockUserService = {

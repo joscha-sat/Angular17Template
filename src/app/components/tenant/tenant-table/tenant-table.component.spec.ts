@@ -3,12 +3,18 @@ import { TenantTableComponent } from './tenant-table.component';
 import { TenantService } from '../../../api/tenant.service';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 import { TemplateTableEnterFetchComponent } from '../../../shared/template-table-enter-fetch-method/template-table-enter-fetch.component';
-import { of } from 'rxjs';
+import { of, type Observable } from 'rxjs';
+
+type TenantServiceMock = {
+  getAllTenants: ReturnType<typeof vi.fn>;
+  refreshObservable$: Observable<null>;
+  search: ReturnType<typeof vi.fn>;
+};
 
 describe('TenantTableComponent', () => {
   let component: TenantTableComponent;
   let fixture: ComponentFixture<TenantTableComponent>;
-  let mockTenantService: any;
+  let mockTenantService: TenantServiceMock;
 
   beforeEach(async () => {
     mockTenantService = {

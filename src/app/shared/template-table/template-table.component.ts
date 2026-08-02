@@ -13,7 +13,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { IsDatePipe } from '../../other/pipes/is-date.pipe';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, type PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-template-table',
@@ -51,6 +51,13 @@ export class TemplateTableComponent<T> implements AfterViewInit {
   ngAfterViewInit(): void {
     this.setupDataSourcePaginator();
     this.setupDataSourceSort();
+  }
+
+  handlePageEvent(event: PageEvent): void {
+    this.paginationChange.emit({
+      skip: event.pageIndex * event.pageSize,
+      limit: event.pageSize,
+    });
   }
 
   // methods --------------------------------------------------- ||

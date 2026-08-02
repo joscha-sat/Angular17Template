@@ -29,8 +29,6 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   private readonly fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
   private readonly userService: UserService = inject(UserService);
 
-  readonly radioItems: WritableSignal<{ name: string }[]> = signal([{ name: 'Active' }, { name: 'Inactive' }]);
-
   get userFromFormData(): User {
     const formData: {
       firstName?: string;
@@ -57,8 +55,7 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   }
 
   loadModelData(): void {
-    this.createUserMode.set(true);
-    this.createUserMode.set(false);
+    this.createUserMode.set(this.model === undefined);
   }
 
   // if the model is provided set the form data with it, else set to null
@@ -88,13 +85,13 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   }
 
   createUser(): void {
-    this.userService.createOneUser(this.userFromFormData).subscribe(() => {});
+    this.userService.createOneUser(this.userFromFormData).subscribe();
   }
 
   updateUser(): void {
     if (!this.model) {
       return;
     }
-    this.userService.updateUserById(this.model.id, this.userFromFormData).subscribe(() => {});
+    this.userService.updateUserById(this.model.id, this.userFromFormData).subscribe();
   }
 }

@@ -1,6 +1,4 @@
-import { Component, inject, type OnInit, signal, type WritableSignal } from '@angular/core';
-import { RoleService } from '../../../../../api/role.service';
-import type { Role } from '../../../../../models/Role';
+import { Component } from '@angular/core';
 import { ControlContainer, FormGroupDirective } from '@angular/forms';
 
 @Component({
@@ -15,21 +13,4 @@ import { ControlContainer, FormGroupDirective } from '@angular/forms';
     },
   ],
 })
-export class RoleDropdownComponent implements OnInit {
-  readonly roles: WritableSignal<Role[]> = signal<Role[]>([]);
-  private readonly roleService: RoleService = inject(RoleService);
-
-  ngOnInit(): void {
-    this.getAllRoles();
-  }
-
-  getAllRoles(): void {
-    this.roleService
-      .getAllRoles()
-      .subscribe(
-        (roles: import('../../../../../api/base-http-service/base-http.service').ResponseWithRecords<Role>) => {
-          this.roles.set(roles.records);
-        },
-      );
-  }
-}
+export class RoleDropdownComponent {}

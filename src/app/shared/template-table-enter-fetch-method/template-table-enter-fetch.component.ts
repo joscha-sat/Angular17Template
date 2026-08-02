@@ -4,9 +4,9 @@ import {
   Component,
   computed,
   DestroyRef,
-  effect,
   inject,
   input,
+  linkedSignal,
   type InputSignal,
   type Signal,
   signal,
@@ -46,6 +46,7 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   readonly fetchData: InputSignal<FetchDataFunction<T>> = input.required<FetchDataFunction<T>>();
   readonly headers: InputSignal<string[]> = input.required<string[]>();
   readonly displayedColumns: InputSignal<string[]> = input.required<string[]>();
+  // Fallow cannot trace Angular template reads for this input.
   readonly cellTemplatesMap: InputSignal<Record<string, TemplateRef<unknown>>> = input<
     Record<string, TemplateRef<unknown>>
   >({});
@@ -60,7 +61,10 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
 
   // Reactive signals for internal state
   readonly totalItemsCount: WritableSignal<number> = signal(0);
-  readonly limit: WritableSignal<number> = signal(this.initialPageSize());
+  readonly limit: WritableSignal<number> = linkedSignal<number, number>({
+    source: this.initialPageSize,
+    computation: (initialPageSize: number) => initialPageSize,
+  });
   readonly skip: WritableSignal<number> = signal(0);
   readonly tableData: WritableSignal<T[]> = signal<T[]>([]);
   readonly debouncedSearch: WritableSignal<string> = signal('');
@@ -122,7 +126,6 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
    * search debouncing, and data fetching subscription
    */
   private initializeReactiveFeatures(): void {
-    this.syncSignalsWithInputs();
     this.setupSearchDebounce();
     this.setupDataFetchingSubscription();
   }
@@ -134,13 +137,6 @@ export class TemplateTableEnterFetchComponent<T> implements AfterViewInit {
   private initializeMatComponents(): void {
     this.initializePaginator();
     this.initializeSort();
-  }
-
-  // Sets up the initial table state and synchronizes signals with inputs
-  private syncSignalsWithInputs(): void {
-    effect(() => {
-      this.limit.set(this.initialPageSize());
-    });
   }
 
   // Debounces search input to avoid excessive API calls

@@ -7,6 +7,7 @@ import { User } from '../models/User';
 import { environment } from '../other/environments/environment';
 import { ROUTES } from '../other/enums/ROUTES';
 import { ApiRoutes } from '../other/enums/api_routes';
+import { ZodError } from 'zod';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -66,7 +67,7 @@ describe('AuthService', () => {
 
     routerMock = {
       navigateByUrl: vi.fn().mockResolvedValue(true),
-    } as any;
+    } as unknown as MockedObject<Router>;
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
@@ -123,8 +124,8 @@ describe('AuthService', () => {
     it('should reject a login response with missing tokens', () => {
       service.login(mockLoginBody).subscribe({
         next: () => expect.fail('should have failed validation'),
-        error: (error: Error) => {
-          expect(error.message).toContain('Invalid input');
+        error: (error: unknown) => {
+          expect(error).toBeInstanceOf(ZodError);
         },
       });
 
@@ -179,8 +180,8 @@ describe('AuthService', () => {
     it('should reject a refresh response with an invalid access token', () => {
       service.sendRefreshToken().subscribe({
         next: () => expect.fail('should have failed validation'),
-        error: (error: Error) => {
-          expect(error.message).toContain('Invalid input');
+        error: (error: unknown) => {
+          expect(error).toBeInstanceOf(ZodError);
         },
       });
 
@@ -253,7 +254,7 @@ describe('AuthService', () => {
     it('should reject a stored user with missing identity data', () => {
       localStorageMock['user'] = JSON.stringify({ id: '1' });
 
-      expect(() => service.getLoggedInUser()).toThrow('Invalid input');
+      expect(() => service.getLoggedInUser()).toThrow(ZodError);
     });
   });
 

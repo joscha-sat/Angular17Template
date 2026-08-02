@@ -45,7 +45,7 @@ describe('GenericHttpService', () => {
   beforeEach(() => {
     snackBarMock = {
       openSnackBar: vi.fn(),
-    } as any;
+    } as unknown as MockedObject<MatSnackbarService>;
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],

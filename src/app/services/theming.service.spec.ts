@@ -33,7 +33,7 @@ describe('ThemingService', () => {
           contains: vi.fn(),
         },
       },
-    } as any;
+    } as unknown as Document;
 
     TestBed.configureTestingModule({
       providers: [{ provide: DOCUMENT, useValue: documentMock }],

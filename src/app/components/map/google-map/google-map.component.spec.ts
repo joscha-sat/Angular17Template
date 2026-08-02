@@ -9,11 +9,14 @@ describe('GoogleMapComponent', () => {
 
   beforeEach(async () => {
     // Mock google object to avoid API requirement
-    (window as any).google = {
-      maps: {
-        Map: vi.fn(),
+    Object.defineProperty(window, 'google', {
+      configurable: true,
+      value: {
+        maps: {
+          Map: vi.fn(),
+        },
       },
-    };
+    });
 
     await TestBed.configureTestingModule({
       imports: [GoogleMapComponent, getTranslocoModule()],
