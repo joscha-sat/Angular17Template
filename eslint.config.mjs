@@ -10,6 +10,7 @@ import rxjsX from 'eslint-plugin-rxjs-x';
 import customRules from './eslint-custom-rules/index.js';
 import translocoPlugin from './eslint-transloco-plugin/index.js';
 import oxlint from 'eslint-plugin-oxlint';
+import sonarjs from 'eslint-plugin-sonarjs';
 
 // Extract common browser globals for better maintainability
 const browserGlobals = {
@@ -252,6 +253,7 @@ const htmlTemplateFilesConfig = {
 
 // Export updated configuration
 export default defineConfig([
+  sonarjs.configs.recommended,
   tsFilesConfig,
   htmlTemplateFilesConfig,
   {
