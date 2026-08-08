@@ -1,6 +1,12 @@
 import { z } from 'zod';
 import type { User } from '../../models/User';
-import { userResponseSchema } from './resource.schemas';
+import type { ApiResponseSchema } from './common.schemas';
+import { createUserResponseSchema } from './resource.schemas';
+
+const TEST_LOGIN_USERNAME: string = 'admin';
+const authenticatedUserEmailSchema: z.ZodType<string> = z.union([z.email(), z.literal(TEST_LOGIN_USERNAME)]);
+
+export const authUserResponseSchema: ApiResponseSchema<User> = createUserResponseSchema(authenticatedUserEmailSchema);
 
 export type AuthenticatedUserResponse = {
   id: string;
@@ -12,7 +18,7 @@ export type AuthenticatedUserResponse = {
 export const authenticatedUserSchema: z.ZodType<AuthenticatedUserResponse> = z
   .object({
     id: z.string().min(1),
-    email: z.email(),
+    email: authenticatedUserEmailSchema,
     firstName: z.string(),
     lastName: z.string(),
   })
@@ -27,7 +33,7 @@ export type LoginResponsePayload = {
 export const loginResponseSchema: z.ZodType<LoginResponsePayload> = z.object({
   access_token: z.string().min(1),
   refresh_token: z.string().min(1),
-  user: userResponseSchema,
+  user: authUserResponseSchema,
 });
 
 export type RefreshTokenResponsePayload = {
@@ -44,6 +50,6 @@ export const refreshTokenResponseSchema: z.ZodType<RefreshTokenResponsePayload> 
   data: z.object({
     access: z.string().min(1),
     refresh: z.string().min(1),
-    user: userResponseSchema,
+    user: authUserResponseSchema,
   }),
 });

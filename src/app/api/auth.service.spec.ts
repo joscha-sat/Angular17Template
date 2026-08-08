@@ -33,10 +33,20 @@ describe('AuthService', () => {
     password: 'password123',
   };
 
+  const testLoginBody: LoginBody = {
+    username: 'admin',
+    password: 'admin',
+  };
+
   const mockLoginResponse: LoginResponse = {
     access_token: 'access-token-123',
     refresh_token: 'refresh-token-123',
     user: mockUser,
+  };
+
+  const testLoginResponse: LoginResponse = {
+    ...mockLoginResponse,
+    user: new User({ ...mockUser, email: 'admin' }),
   };
 
   const mockRefreshTokenResponse: RefreshTokenResponse = {
@@ -119,6 +129,16 @@ describe('AuthService', () => {
       expect(req.request.method).toBe('POST');
       expect(req.request.body).toEqual(mockLoginBody);
       req.flush(mockLoginResponse);
+    });
+
+    it('should accept the test username as the authenticated user email', () => {
+      service.login(testLoginBody).subscribe(() => {
+        expect(service.getLoggedInUser()?.email).toBe('admin');
+      });
+
+      const req = httpMock.expectOne(`${environment.baseUrl}${ROUTES.AUTH}/${ROUTES.LOGIN}`);
+      expect(req.request.body).toEqual(testLoginBody);
+      req.flush(testLoginResponse);
     });
 
     it('should reject a login response with missing tokens', () => {
@@ -239,6 +259,12 @@ describe('AuthService', () => {
       localStorageMock['user'] = JSON.stringify(mockUser);
       const user = service.getLoggedInUser();
       expect(user).toEqual(mockUser);
+    });
+
+    it('should restore the test user username from localStorage', () => {
+      localStorageMock['user'] = JSON.stringify({ ...mockUser, email: 'admin' });
+
+      expect(service.getLoggedInUser()?.email).toBe('admin');
     });
 
     it('should return null when user is not found', () => {

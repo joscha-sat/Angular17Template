@@ -22,34 +22,39 @@ type UserApiResponse = {
   [key: string]: unknown;
 };
 
-const userApiResponseSchema: ApiResponseSchema<UserApiResponse> = z
-  .object({
-    id: z.string().min(1),
-    createdAt: z.iso.datetime(),
-    updatedAt: z.iso.datetime(),
-    tenantId: z.string().nullable().optional(),
-    email: z.email(),
-    firstName: z.string(),
-    lastName: z.string(),
-    phone: z.string(),
-    active: z.boolean(),
-    inviteAcceptedAt: z.iso.datetime().nullable().optional(),
-    language: z.enum(['de', 'en']).optional(),
-    roleId: z.string().nullable().optional(),
-    password: z.string().nullable().optional(),
-  })
-  .passthrough();
-
 function createUserModel(userResponse: UserApiResponse): User {
   const user: User = new User({});
   Object.assign(user, userResponse);
   return user;
 }
 
-export const userResponseSchema: ApiResponseSchema<User> = userApiResponseSchema.transform(createUserModel);
+export function createUserResponseSchema(emailSchema: z.ZodType<string>): ApiResponseSchema<User> {
+  const userApiResponseSchema: ApiResponseSchema<UserApiResponse> = z
+    .object({
+      id: z.string().min(1),
+      createdAt: z.iso.datetime(),
+      updatedAt: z.iso.datetime(),
+      tenantId: z.string().nullable().optional(),
+      email: emailSchema,
+      firstName: z.string(),
+      lastName: z.string(),
+      phone: z.string(),
+      active: z.boolean(),
+      inviteAcceptedAt: z.iso.datetime().nullable().optional(),
+      language: z.enum(['de', 'en']).optional(),
+      roleId: z.string().nullable().optional(),
+      password: z.string().nullable().optional(),
+    })
+    .passthrough();
 
-export const userListResponseSchema: ApiResponseSchema<PaginatedApiResponse<User>> =
-  createPaginatedResponseSchema(userResponseSchema);
+  return userApiResponseSchema.transform(createUserModel);
+}
+
+export const userResponseSchema: ApiResponseSchema<User> = createUserResponseSchema(z.email());
+
+export const userListResponseSchema: ApiResponseSchema<PaginatedApiResponse<User>> = createPaginatedResponseSchema(
+  createUserResponseSchema(z.union([z.email(), z.literal('admin')])),
+);
 
 type TenantApiResponse = {
   id: string;

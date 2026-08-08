@@ -68,6 +68,15 @@ describe('resource response schemas', () => {
     expect(customerResponseSchema.parse(validCustomerResponse)).toBeInstanceOf(Customer);
   });
 
+  it('rejects the test username in regular user resource responses', () => {
+    const invalidUserResponse: Record<string, unknown> = {
+      ...validUserResponse,
+      email: 'admin',
+    };
+
+    expect(() => userResponseSchema.parse(invalidUserResponse)).toThrow(z.ZodError);
+  });
+
   it('transforms validated list records into model instances', () => {
     const userResponse: { total: number; records: User[] } = userListResponseSchema.parse({
       total: 1,
@@ -90,6 +99,27 @@ describe('resource response schemas', () => {
     expect(roleResponse.records[0]).toBeInstanceOf(Role);
     expect(tenantResponse.records[0]).toBeInstanceOf(Tenant);
     expect(customerResponse.records[0]).toBeInstanceOf(Customer);
+  });
+
+  it('accepts the system administrator username in user lists', () => {
+    const userResponse: { total: number; records: User[] } = userListResponseSchema.parse({
+      total: 2,
+      records: [
+        validUserResponse,
+        {
+          ...validUserResponse,
+          id: 'system-user-1',
+          tenantId: null,
+          email: 'admin',
+          firstName: 'super',
+          lastName: 'admin',
+        },
+      ],
+    });
+
+    expect(userResponse.records).toHaveLength(2);
+    expect(userResponse.records[1]).toBeInstanceOf(User);
+    expect(userResponse.records[1].email).toBe('admin');
   });
 
   it('rejects unknown role permissions', () => {

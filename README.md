@@ -473,7 +473,7 @@ in-memory database:
 
 - Three seeded records for each major object (tenants, roles, users, customers)
 - Full CRUD simulation (create, read, update, delete, delete all) — changes live in memory for the session
-- **No authentication required** — routes are accessible without logging in, and the navigation is shown right away; login and token refresh are still simulated (any credentials work, e.g. `admin@acme-gmbh.de` / `MockPasswort123!`)
+- **No authentication required** — routes are accessible without logging in, and the navigation is shown right away; login and token refresh are still simulated (any credentials work, including `admin` / `admin`)
 - Search, sorting, pagination, and the active-tab filter are honored exactly like the real backend
 - Requests are delayed by ~400 ms to make loading states visible
 
