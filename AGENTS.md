@@ -10,6 +10,7 @@ Before running these commands, check whether a skill or MCP exists to automate o
 - `npm run lint:oxlint-and-eslint`
 - `npm run lint:biome-safe-fixes`
 - `npm run format:biome`
+- `npm run lint:ai-guard`
 - `npm run knip`
 - `npm run find:same-code`
 - `npm run fallow:dead-code`

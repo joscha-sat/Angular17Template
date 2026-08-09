@@ -15,6 +15,7 @@
     "lint:oxlint": "oxlint",
     "lint:oxlint:fix": "oxlint --fix",
     "lint:oxlint-and-eslint": "oxlint && eslint",
+    "lint:ai-guard": "npx ai-guard run --path src",
     "lint:imports": "npx depcruise src",
     "eslint": "eslint",
     "fallow:dead-code": "npx fallow dead-code",
