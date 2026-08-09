@@ -30,7 +30,7 @@ describe('AuthService', () => {
 
   const mockLoginBody: LoginBody = {
     username: 'test@example.com',
-    password: 'password123',
+    password: 'password',
   };
 
   const testLoginBody: LoginBody = {
@@ -39,7 +39,7 @@ describe('AuthService', () => {
   };
 
   const mockLoginResponse: LoginResponse = {
-    access_token: 'access-token-123',
+    access_token: 'token',
     refresh_token: 'refresh-token-123',
     user: mockUser,
   };
@@ -121,7 +121,7 @@ describe('AuthService', () => {
       const setUserSpy = vi.spyOn(service, 'setLoggedInUser');
 
       service.login(mockLoginBody).subscribe(() => {
-        expect(loginSpy).toHaveBeenCalledWith('access-token-123', 'refresh-token-123');
+        expect(loginSpy).toHaveBeenCalledWith('token', 'refresh-token-123');
         expect(setUserSpy).toHaveBeenCalledWith(mockUser);
       });
 

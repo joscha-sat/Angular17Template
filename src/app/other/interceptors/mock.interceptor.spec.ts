@@ -121,7 +121,7 @@ describe('MockApiDatabase', () => {
     it('should simulate a successful login', async () => {
       const response: HttpResponse<unknown> = (await sendRequest(database, 'POST', 'auth/login', {
         username: 'admin@acme-gmbh.de',
-        password: 'MockPasswort123!',
+        password: 'password',
       })) as HttpResponse<Record<string, unknown>>;
       const body: Record<string, unknown> = response.body as Record<string, unknown>;
 
