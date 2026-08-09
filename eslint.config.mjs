@@ -218,6 +218,7 @@ const tsFilesConfig = {
     },
     globals: browserGlobals,
   },
+  processor: angular.processInlineTemplates,
   plugins: {
     '@typescript-eslint': tseslint.plugin,
     '@angular-eslint': angularEslint,
