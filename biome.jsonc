@@ -1,36 +1,132 @@
 {
-  // Local schema matches the installed @biomejs/biome version (^2.5.6).
+  // Keep this schema local so the configuration follows the pinned package version.
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-
-  // Scope to src/ — mirrors prettier:write's "src/**/*.{html,ts,scss}" and keeps
-  // Biome away from repo-root config files that Prettier never touches.
-  // Prettier owns HTML; Biome's HTML support is experimental and cannot parse
-  // Angular {{ }} without parser.interpolation, so HTML is excluded here.
+  // Keep Biome scoped to the same TypeScript and SCSS files previously owned by it.
+  // Angular templates remain with the Angular ESLint template rules and Prettier.
   "files": {
-    "includes": ["src/**/*.ts", "src/**/*.scss"]
+    "includes": [
+      "src/**/*.ts",
+      "src/**/*.scss"
+    ]
   },
-
   "formatter": {
     "enabled": true,
-    // prettier tabWidth: 2 + .editorconfig indent_style = space
     "indentStyle": "space",
     "indentWidth": 2,
-    // prettier printWidth default 120
-    "lineWidth": 120,
-    // prettier endOfLine: "auto" (OS default: CRLF on Windows, LF on Unix)
     "lineEnding": "auto",
-    // Explicit config wins over .editorconfig (default is already false)
+    "lineWidth": 120,
     "useEditorconfig": false
   },
-
+  "linter": {
+    "enabled": true,
+    // ESLint remains responsible for Angular, template, type-aware, RxJS,
+    // Transloco, custom, and unsupported SonarJS rules.
+    "includes": [
+      "src/**/*.ts",
+      "!src/**/*.spec.ts"
+    ],
+    "rules": {
+      // Only rules with a direct Biome migration are enabled here. This avoids
+      // silently replacing unsupported ESLint coverage with unrelated defaults.
+      "preset": "none",
+      "complexity": {
+        "noAdjacentSpacesInRegex": "error",
+        "noCommaOperator": "error",
+        "noExcessiveCognitiveComplexity": "error",
+        "noExtraBooleanCast": "error",
+        "noUselessCatch": "error",
+        "noUselessEscapeInRegex": "error",
+        "noVoid": "error",
+        "useWhile": "error"
+      },
+      "correctness": {
+        "noConstAssign": "error",
+        "noConstantCondition": "error",
+        "noEmptyCharacterClassInRegex": "error",
+        "noEmptyPattern": "error",
+        "noGlobalObjectCalls": "error",
+        "noInvalidBuiltinInstantiation": "error",
+        "noInvalidConstructorSuper": "error",
+        "noNonoctalDecimalEscape": "error",
+        "noPrecisionLoss": "error",
+        "noSelfAssign": "error",
+        "noSetterReturn": "error",
+        "noSwitchDeclarations": "error",
+        "noUndeclaredVariables": "error",
+        "noUnreachable": "error",
+        "noUnreachableSuper": "error",
+        "noUnsafeFinally": "error",
+        "noUnsafeOptionalChaining": "error",
+        "noUnusedLabels": "error",
+        "noUnusedPrivateClassMembers": "error",
+        "noUnusedVariables": "warn",
+        "useIsNan": "error",
+        "useValidForDirection": "error",
+        "useValidTypeof": "error",
+        "useYield": "error"
+      },
+      "style": {
+        "noCommonJs": "error",
+        "noNonNullAssertion": "warn",
+        "noParameterAssign": "error",
+        "noYodaExpression": "error",
+        "useBlockStatements": "error",
+        "useConsistentArrowReturn": "error",
+        // The project convention is `type` over `interface`.
+        "useConsistentTypeDefinitions": "off",
+        "useDefaultSwitchClause": "error",
+        "useErrorCause": "error",
+        "useObjectSpread": "error",
+        "useReadonlyClassProperties": "error",
+        "useTemplate": "error"
+      },
+      "suspicious": {
+        "noAsyncPromiseExecutor": "error",
+        "noCatchAssign": "error",
+        "noClassAssign": "error",
+        "noCompareNegZero": "error",
+        "noConstantBinaryExpressions": "error",
+        "noControlCharactersInRegex": "error",
+        "noDebugger": "error",
+        "noDoubleEquals": "error",
+        "noDuplicateCase": "error",
+        "noDuplicateClassMembers": "error",
+        "noDuplicateElseIf": "error",
+        "noDuplicateObjectKeys": "error",
+        "noDuplicateParameters": "error",
+        "noEmptyBlockStatements": "error",
+        "noExplicitAny": "warn",
+        "noFallthroughSwitchClause": "error",
+        "noFunctionAssign": "error",
+        "noGlobalAssign": "error",
+        "noImportAssign": "error",
+        "noIrregularWhitespace": "error",
+        "noMisleadingCharacterClass": "error",
+        "noPrototypeBuiltins": "error",
+        "noRedeclare": "error",
+        "noShadowRestrictedNames": "error",
+        "noSparseArray": "error",
+        "noTemplateCurlyInString": "error",
+        "noUnassignedVariables": "error",
+        "noUnsafeNegation": "error",
+        "noUselessRegexBackrefs": "error",
+        "noWith": "error",
+        "useGetterReturn": "error"
+      }
+    }
+  },
   "javascript": {
     "formatter": {
-      // prettier singleQuote: true
       "quoteStyle": "single",
-      // prettier semi: true
       "semicolons": "always",
-      // prettier trailingComma: "all"
       "trailingCommas": "all"
-    }
+    },
+    "globals": [
+      "localStorage"
+    ]
+  },
+  // Import organization is intentionally left to the existing editor/lint setup.
+  "assist": {
+    "enabled": false
   }
 }
