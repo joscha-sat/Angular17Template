@@ -13,7 +13,7 @@ import type { User } from '../models/User';
 import { type EmptyDeleteResponse, emptyDeleteResponseSchema } from './schemas/common.schemas';
 import { roleListResponseSchema, roleResponseSchema } from './schemas/resource.schemas';
 
-export type RoleQueryParams = BaseQueryParams & {};
+export type RoleQueryParams = BaseQueryParams;
 
 @Injectable({
   providedIn: 'root',

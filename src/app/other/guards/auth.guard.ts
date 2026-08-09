@@ -1,4 +1,4 @@
-import { type CanActivateFn, Router } from '@angular/router';
+import { type CanActivateFn, Router, type UrlTree } from '@angular/router';
 import { inject } from '@angular/core';
 
 import { environment } from '../environments/environment';
@@ -10,20 +10,20 @@ import { AuthService } from '../../api/auth.service';
  * Protects routes from access by unauthenticated users.
  * navigates to login page if user is not logged in.
  */
-export const authGuard: CanActivateFn = () => {
-  // Mock mode does not require authentication
-  if (environment.mock) {
-    return true;
-  }
-
+export const authGuard: CanActivateFn = (): boolean | UrlTree => {
   const authService: AuthService = inject(AuthService);
   const router: Router = inject(Router);
   const isLoggedIn: boolean = authService.isLoggedIn();
 
-  if (!isLoggedIn) {
-    // navigation to login page
-    return router.parseUrl(ROUTES.LOGIN);
+  let navigationResult: boolean | UrlTree;
+
+  if (environment.mock) {
+    navigationResult = true;
+  } else if (!isLoggedIn) {
+    navigationResult = router.parseUrl(ROUTES.LOGIN);
+  } else {
+    navigationResult = isLoggedIn;
   }
 
-  return isLoggedIn;
+  return navigationResult;
 };

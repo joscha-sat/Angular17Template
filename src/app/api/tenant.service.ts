@@ -12,7 +12,7 @@ import { ApiRoutes } from '../other/enums/api_routes';
 import { type EmptyDeleteResponse, emptyDeleteResponseSchema } from './schemas/common.schemas';
 import { tenantListResponseSchema, tenantResponseSchema } from './schemas/resource.schemas';
 
-export type TenantQueryParams = BaseQueryParams & {};
+export type TenantQueryParams = BaseQueryParams;
 
 @Injectable({
   providedIn: 'root',

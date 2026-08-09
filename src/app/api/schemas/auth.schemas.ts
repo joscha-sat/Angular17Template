@@ -22,7 +22,7 @@ export const authenticatedUserSchema: z.ZodType<AuthenticatedUserResponse> = z
     firstName: z.string(),
     lastName: z.string(),
   })
-  .passthrough();
+  .catchall(z.any());
 
 export type LoginResponsePayload = {
   access_token: string;

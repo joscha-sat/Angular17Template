@@ -45,7 +45,7 @@ export function createUserResponseSchema(emailSchema: z.ZodType<string>): ApiRes
       roleId: z.string().nullable().optional(),
       password: z.string().nullable().optional(),
     })
-    .passthrough();
+    .catchall(z.any());
 
   return userApiResponseSchema.transform(createUserModel);
 }
@@ -71,7 +71,7 @@ const namedResourceApiResponseSchema: ApiResponseSchema<TenantApiResponse> = z
     updatedAt: z.iso.datetime(),
     name: z.string().min(1),
   })
-  .passthrough();
+  .catchall(z.any());
 
 function createTenantModel(tenantResponse: TenantApiResponse): Tenant {
   const tenant: Tenant = new Tenant({});
@@ -173,7 +173,7 @@ const roleApiResponseSchema: ApiResponseSchema<RoleApiResponse> = z
     tenantAdmin: z.boolean(),
     permissions: z.enum(ROLE_PERMISSION_VALUES).array(),
   })
-  .passthrough();
+  .catchall(z.any());
 
 function createRoleModel(roleResponse: RoleApiResponse): Role {
   const role: Role = new Role({});

@@ -127,6 +127,7 @@ const tsRules = {
   // New Signals-related rules
   '@angular-eslint/no-uncalled-signals': 'error',
   '@angular-eslint/prefer-signal-model': 'warn',
+  'sonarjs/todo-tag': 'warn',
 
   // Additional recommended rules you might want to add:
   '@angular-eslint/sort-keys-in-type-decorator': 'warn',
@@ -237,6 +238,7 @@ const htmlTemplateRules = {
       'error',
     ]),
   ),
+  'sonarjs/todo-tag': 'warn',
 };
 // Config for Angular HTML templates
 const htmlTemplateFilesConfig = {

@@ -1,4 +1,11 @@
-import { APP_INITIALIZER, type ApplicationConfig, isDevMode, LOCALE_ID, type Provider } from '@angular/core';
+import {
+  type ApplicationConfig,
+  inject,
+  isDevMode,
+  LOCALE_ID,
+  type Provider,
+  provideAppInitializer,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -18,14 +25,6 @@ registerLocaleData(localeDE);
 
 // Translation configuration constants
 const DEFAULT_LANGUAGE: string = 'de';
-
-// Initialize Transloco with default language
-function initializeTransloco(translocoService: TranslocoService): () => Promise<unknown> {
-  return () => {
-    translocoService.setActiveLang(DEFAULT_LANGUAGE);
-    return firstValueFrom(translocoService.load(DEFAULT_LANGUAGE));
-  };
-}
 
 // Date format configuration constant
 const LUXON_DATE_FORMAT_CONFIG: {
@@ -76,11 +75,10 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslocoHttpLoader,
     }),
-    {
-      provide: APP_INITIALIZER,
-      multi: true,
-      deps: [TranslocoService],
-      useFactory: initializeTransloco,
-    },
+    provideAppInitializer(() => {
+      const translocoService: TranslocoService = inject(TranslocoService);
+      translocoService.setActiveLang(DEFAULT_LANGUAGE);
+      return firstValueFrom(translocoService.load(DEFAULT_LANGUAGE));
+    }),
   ],
 };

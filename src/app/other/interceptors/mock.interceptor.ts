@@ -502,7 +502,7 @@ function createMockUsers(): MockRecord[] {
       email: 'admin@acme-gmbh.de',
       firstName: 'Max',
       lastName: 'Mustermann',
-      password: 'MockPasswort123!',
+      password: 'MockPasswort123!', // eslint-disable-line sonarjs/no-hardcoded-passwords
       phone: '+49 30 12345678',
       active: true,
       inviteAcceptedAt: daysAgo(25),
@@ -525,7 +525,7 @@ function createMockUsers(): MockRecord[] {
       email: 'erika@acme-gmbh.de',
       firstName: 'Erika',
       lastName: 'Musterfrau',
-      password: 'MockPasswort123!',
+      password: 'MockPasswort123!', // eslint-disable-line sonarjs/no-hardcoded-passwords
       phone: '+49 30 87654321',
       active: true,
       inviteAcceptedAt: daysAgo(15),
@@ -548,7 +548,7 @@ function createMockUsers(): MockRecord[] {
       email: 'john.doe@globex.com',
       firstName: 'John',
       lastName: 'Doe',
-      password: 'MockPasswort123!',
+      password: 'MockPasswort123!', // eslint-disable-line sonarjs/no-hardcoded-passwords
       phone: '+49 40 5551234',
       active: false,
       inviteAcceptedAt: undefined,
@@ -591,7 +591,7 @@ function createMockCustomers(): MockRecord[] {
 }
 
 function createRecordId(): string {
-  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`; // eslint-disable-line sonarjs/pseudo-random
 }
 
 function daysAgo(days: number): string {

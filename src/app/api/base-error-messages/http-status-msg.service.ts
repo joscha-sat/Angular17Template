@@ -14,6 +14,8 @@ const STATUS_CODES: { [key: number]: string } = {
   500: 'generic-http-error.status-500',
 };
 
+type ResolvedEndpoint = ApiRoutes | string | undefined;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -33,7 +35,7 @@ export class HttpStatusMsgService {
    * @returns The translated error message
    */
   getStatusErrorMessage = (err: HttpErrorResponse, method?: string, endpoint?: ApiRoutes | string): string => {
-    const resolvedEndpoint: ApiRoutes | string | undefined = this.resolveEndpoint(err, endpoint);
+    const resolvedEndpoint: ResolvedEndpoint = this.resolveEndpoint(err, endpoint);
     const errorKey: string =
       (() => {
         const errorObj: { key?: string } | undefined = err.error as { key?: string } | undefined;
@@ -68,7 +70,7 @@ export class HttpStatusMsgService {
       : segments[segments.length - 1];
   }
 
-  private resolveEndpoint(err: HttpErrorResponse, endpoint?: ApiRoutes | string): ApiRoutes | string | undefined {
+  private resolveEndpoint(err: HttpErrorResponse, endpoint?: ApiRoutes | string): ResolvedEndpoint {
     const endpointFromError: string | undefined = this.getEndpointFromError(err);
     return endpointFromError || endpoint;
   }
