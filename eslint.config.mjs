@@ -27,13 +27,17 @@ const appParserOptions = {
   ecmaVersion: 2022,
 };
 
+const aiGuardConfig = {
+  plugins: { 'ai-guard': aiGuard },
+  rules: { ...aiGuard.configs.recommended.rules },
+};
+
 // Reusable rules for TypeScript files (updated)
 const tsRules = {
   ...js.configs.recommended.rules,
   ...tseslint.configs.recommended.rules,
   ...angular.configs.tsRecommended[1].rules,
   ...rxjsX.configs.recommended.rules,
-  ...aiGuard.configs.recommended.rules,
   ...unicorn.configs.recommended.rules,
 
   // Basic JavaScript rules from reference
@@ -229,7 +233,6 @@ const tsFilesConfig = {
     '@angular-eslint': angularEslint,
     js: js,
     'rxjs-x': rxjsX,
-    'ai-guard': aiGuard,
     unicorn,
     'custom-rules': customRules,
   },
@@ -343,6 +346,7 @@ const intentionalTodoCommentConfig = {
 export default defineConfig([
   sonarjs.configs.recommended,
   deslint.configs.recommended,
+  aiGuardConfig,
   tsParserSupportConfig,
   tsFilesConfig,
   htmlTemplateFilesConfig,
