@@ -15,7 +15,35 @@
     "**/*.generated.*",
     "**/*.gen.*",
     "src/client/**",
-    "src/assets/themes/theme.css"
+    "src/assets/themes/theme.css",
+    "openapi-ts.config.ts",
+    "transloco.config.ts"
+  ],
+  "ignoreFindings": [
+    "src/app/shared/template-table-enter-fetch-method/template-table-enter-fetch.component.ts"
+  ],
+  "ignoreDependencies": [
+    "@angular-eslint/builder",
+    "@angular-eslint/schematics",
+    "@jsverse/transloco-utils"
+  ],
+  "ignoreExports": [
+    {
+      "file": "eslint-transloco-plugin/rules/require-alt-transloco-t.js",
+      "exports": ["*"]
+    },
+    {
+      "file": "eslint-transloco-plugin/rules/require-transloco-t.js",
+      "exports": ["*"]
+    },
+    {
+      "file": "eslint-custom-rules/index.js",
+      "exports": ["*"]
+    },
+    {
+      "file": "eslint-transloco-plugin/index.js",
+      "exports": ["*"]
+    }
   ],
   "duplicates": {
     // Hide pair-only clones; focus on widespread copy-paste
