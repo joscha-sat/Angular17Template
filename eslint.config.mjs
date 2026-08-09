@@ -1,4 +1,5 @@
 import { defineConfig } from 'eslint/config';
+import deslint from '@deslint/eslint-plugin';
 import globals from 'globals';
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
@@ -6,11 +7,13 @@ import angularEslint from '@angular-eslint/eslint-plugin';
 import angularEslintTemplate from '@angular-eslint/eslint-plugin-template';
 import templateParser from '@angular-eslint/template-parser';
 import angular from 'angular-eslint';
+import aiGuard from 'eslint-plugin-ai-guard';
 import rxjsX from 'eslint-plugin-rxjs-x';
 import customRules from './eslint-custom-rules/index.js';
 import translocoPlugin from './eslint-transloco-plugin/index.js';
 import oxlint from 'eslint-plugin-oxlint';
 import sonarjs from 'eslint-plugin-sonarjs';
+import unicorn from 'eslint-plugin-unicorn';
 
 // Extract common browser globals for better maintainability
 const browserGlobals = {
@@ -30,6 +33,8 @@ const tsRules = {
   ...tseslint.configs.recommended.rules,
   ...angular.configs.tsRecommended[1].rules,
   ...rxjsX.configs.recommended.rules,
+  ...aiGuard.configs.recommended.rules,
+  ...unicorn.configs.recommended.rules,
 
   // Basic JavaScript rules from reference
   'arrow-body-style': 'error',
@@ -224,6 +229,8 @@ const tsFilesConfig = {
     '@angular-eslint': angularEslint,
     js: js,
     'rxjs-x': rxjsX,
+    'ai-guard': aiGuard,
+    unicorn,
     'custom-rules': customRules,
   },
   rules: tsRules,
@@ -257,6 +264,7 @@ const htmlTemplateFilesConfig = {
 // Export updated configuration
 export default defineConfig([
   sonarjs.configs.recommended,
+  deslint.configs.recommended,
   tsFilesConfig,
   htmlTemplateFilesConfig,
   {
