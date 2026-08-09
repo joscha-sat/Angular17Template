@@ -22,6 +22,7 @@
     "fallow:health": "npx fallow health",
     "fallow:review": "npx fallow review",
     "fallow:fix:dry-run": "npx fallow fix --dry-run",
+    "find:same-code": "jscpd ./src",
     "knip": "knip",
     "prepare": "husky",
     "openapi-ts": "npx @hey-api/openapi-ts",

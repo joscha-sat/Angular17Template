@@ -1,0 +1,14 @@
+{
+  "ignore": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/coverage/**",
+    "**/client/**",
+    "**/generated/**",
+    "**/mocks/**",
+    "**/__mocks__/**",
+    "**/*.gen.*",
+    "**/*.generated.*",
+    "**/*mock*.*"
+  ]
+}
