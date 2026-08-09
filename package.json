@@ -24,8 +24,6 @@
     "fallow:fix:dry-run": "npx fallow fix --dry-run",
     "find:same-code": "jscpd ./src",
     "knip": "knip",
-    "prepare": "husky",
-    "openapi-ts": "npx @hey-api/openapi-ts",
     "run-unit-tests:terminal": "ng test --no-watch",
     "run-unit-tests:coverage": "ng test --no-watch --coverage",
     "run-unit-tests:coverage-browser": "ng test --no-watch --coverage && start coverage/Angular-Template-V2/index.html",
@@ -43,7 +41,9 @@
     "migrate:ngclass_to_class": "ng generate @angular/core:ngclass-to-class",
     "migrate:ngstyle_to_style": "ng generate @angular/core:ngstyle-to-style",
     "migrate:router_testing_module": "ng generate @angular/core:router-testing-module-migration",
-    "migrate:all": "npm run migrate:standalone && npm run migrate:control_flow && npm run migrate:signal_inputs && npm run migrate:signal_outputs && npm run migrate:signal_queries && npm run migrate:inject && npm run migrate:route_lazy_loading && npm run migrate:ngclass_to_class && npm run migrate:ngstyle_to_style && npm run migrate:self_closing_tags && npm run migrate:common_module && npm run migrate:router_testing_module && npm run migrate:cleanup_imports"
+    "migrate:all": "npm run migrate:standalone && npm run migrate:control_flow && npm run migrate:signal_inputs && npm run migrate:signal_outputs && npm run migrate:signal_queries && npm run migrate:inject && npm run migrate:route_lazy_loading && npm run migrate:ngclass_to_class && npm run migrate:ngstyle_to_style && npm run migrate:self_closing_tags && npm run migrate:common_module && npm run migrate:router_testing_module && npm run migrate:cleanup_imports",
+    "openapi-ts": "npx @hey-api/openapi-ts",
+    "prepare": "husky"
   },
   "private": true,
   "type": "commonjs",
