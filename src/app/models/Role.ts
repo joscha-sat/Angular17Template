@@ -15,7 +15,7 @@ export class Role extends BaseModel<Role> implements RoleDto {
   permissions!: RolePermission[];
   users?: User[];
 
-  constructor(params: Partial<Role>) {
-    super(params);
+  constructor(parameters: Partial<Role>) {
+    super(parameters);
   }
 }

@@ -4,7 +4,7 @@ import { TemplateTableEnterFetchComponent } from '../../../shared/template-table
 import { BaseTableComponent } from '../../../other/abstract-classes/BaseTable';
 import { CustomerService } from '../../../api/customer.service';
 import { DeleteIconComponent } from '../../../shared/icons/delete-icon/delete-icon.component';
-import type { BaseGetQueryParams } from '../../../other/types/Table.type';
+import type { BaseGetQueryParameters } from '../../../other/types/Table.type';
 
 @Component({
   selector: 'app-customer-table',
@@ -40,7 +40,7 @@ export class CustomerTableComponent extends BaseTableComponent<Customer> impleme
     return 'getAllCustomers';
   }
 
-  override setCustomParams(): Partial<BaseGetQueryParams> {
+  override setCustomParams(): Partial<BaseGetQueryParameters> {
     return { sort: 'createdAt,DESC' };
   }
 

@@ -45,38 +45,28 @@ export class MockApiDatabase {
   private readonly users: MockRecord[] = createMockUsers();
   private readonly customers: MockRecord[] = createMockCustomers();
 
-  respondToRequest(req: HttpRequest<unknown>): Observable<HttpEvent<unknown>> {
-    const route: MockRoute = this.parseRoute(req.url);
-    const resource: MockResourceName | null = route.resource;
-
-    if (!resource) {
-      return this.createNotFoundResponse(req.url);
-    }
-
-    if (resource === AUTH_RESOURCE_NAME) {
-      return this.respondToAuthRequest(route.idOrAction, req.url);
-    }
-
-    return this.respondToResourceRequest(resource, route, req);
-  }
-
   // CRUD > Resource by HTTP method
   private respondToResourceRequest(
     resource: MockResourceName,
     route: MockRoute,
-    req: HttpRequest<unknown>,
+    request: HttpRequest<unknown>,
   ): Observable<HttpEvent<unknown>> {
-    switch (req.method) {
-      case 'GET':
-        return this.respondToGetRequest(resource, route, req);
-      case 'POST':
-        return this.createOneRecord(resource, req.body);
-      case 'PATCH':
-        return this.respondToPatchRequest(resource, route, req);
-      case 'DELETE':
-        return this.respondToDeleteRequest(resource, route, req);
-      default:
-        return this.createNotFoundResponse(req.url);
+    switch (request.method) {
+      case 'GET': {
+        return this.respondToGetRequest(resource, route, request);
+      }
+      case 'POST': {
+        return this.createOneRecord(resource, request.body);
+      }
+      case 'PATCH': {
+        return this.respondToPatchRequest(resource, route, request);
+      }
+      case 'DELETE': {
+        return this.respondToDeleteRequest(resource, route, request);
+      }
+      default: {
+        return this.createNotFoundResponse(request.url);
+      }
     }
   }
 
@@ -84,36 +74,36 @@ export class MockApiDatabase {
   private respondToGetRequest(
     resource: MockResourceName,
     route: MockRoute,
-    req: HttpRequest<unknown>,
+    request: HttpRequest<unknown>,
   ): Observable<HttpEvent<unknown>> {
     if (route.idOrAction) {
-      return this.getOneRecord(resource, route.idOrAction, req.url);
+      return this.getOneRecord(resource, route.idOrAction, request.url);
     }
 
-    return this.getAllRecords(resource, req.params);
+    return this.getAllRecords(resource, request.params);
   }
 
   // PATCH / UPDATE ONE > Record
   private respondToPatchRequest(
     resource: MockResourceName,
     route: MockRoute,
-    req: HttpRequest<unknown>,
+    request: HttpRequest<unknown>,
   ): Observable<HttpEvent<unknown>> {
     if (route.idOrAction) {
-      return this.updateOneRecord(resource, route.idOrAction, req.body, req.url);
+      return this.updateOneRecord(resource, route.idOrAction, request.body, request.url);
     }
 
-    return this.createNotFoundResponse(req.url);
+    return this.createNotFoundResponse(request.url);
   }
 
   // DELETE ONE / ALL > Records
   private respondToDeleteRequest(
     resource: MockResourceName,
     route: MockRoute,
-    req: HttpRequest<unknown>,
+    request: HttpRequest<unknown>,
   ): Observable<HttpEvent<unknown>> {
     if (route.idOrAction) {
-      return this.deleteOneRecord(resource, route.idOrAction, req.url);
+      return this.deleteOneRecord(resource, route.idOrAction, request.url);
     }
 
     return this.deleteAllRecords(resource);
@@ -133,16 +123,16 @@ export class MockApiDatabase {
   }
 
   // GET ALL > Records
-  private getAllRecords(resource: MockResourceName, params: HttpParams): Observable<HttpEvent<unknown>> {
+  private getAllRecords(resource: MockResourceName, parameters: HttpParams): Observable<HttpEvent<unknown>> {
     const records: MockRecord[] = this.getRecords(resource);
 
-    let filteredRecords: MockRecord[] = this.applySearchFilter(records, params.get('search'));
-    filteredRecords = this.applyActiveFilter(filteredRecords, params.get('active'));
-    filteredRecords = this.applySort(filteredRecords, params.get('sort'));
+    let filteredRecords: MockRecord[] = this.applySearchFilter(records, parameters.get('search'));
+    filteredRecords = this.applyActiveFilter(filteredRecords, parameters.get('active'));
+    filteredRecords = this.applySort(filteredRecords, parameters.get('sort'));
 
     const total: number = filteredRecords.length;
-    const skip: number = Number(params.get('skip') ?? 0);
-    const limit: number = Number(params.get('limit') ?? total);
+    const skip: number = Number(parameters.get('skip') ?? 0);
+    const limit: number = Number(parameters.get('limit') ?? total);
     const pagedRecords: MockRecord[] = filteredRecords.slice(skip, skip + limit);
 
     return this.createSuccessResponse({ total, records: pagedRecords });
@@ -247,7 +237,7 @@ export class MockApiDatabase {
   }
 
   private parseRoute(url: string): MockRoute {
-    const urlWithoutQuery: string = url.split('?')[0];
+    const urlWithoutQuery: string = url.split('?', 1)[0];
     const pathWithoutBaseUrl: string = urlWithoutQuery.replace(environment.baseUrl, '');
     const segments: string[] = pathWithoutBaseUrl.split('/').filter(Boolean);
     const resourceName: string = segments[0] ?? '';
@@ -260,27 +250,26 @@ export class MockApiDatabase {
   }
 
   private isMockResource(resourceName: string): boolean {
-    return (
-      resourceName === AUTH_RESOURCE_NAME ||
-      resourceName === 'user' ||
-      resourceName === 'role' ||
-      resourceName === 'tenant' ||
-      resourceName === 'customers'
-    );
+    return [AUTH_RESOURCE_NAME, 'user', 'role', 'tenant', 'customers'].includes(resourceName);
   }
 
   private getRecords(resource: MockResourceName): MockRecord[] {
     switch (resource) {
-      case 'user':
+      case 'user': {
         return this.users;
-      case 'role':
+      }
+      case 'role': {
         return this.roles;
-      case 'tenant':
+      }
+      case 'tenant': {
         return this.tenants;
-      case 'customers':
+      }
+      case 'customers': {
         return this.customers;
-      default:
+      }
+      default: {
         return [];
+      }
     }
   }
 
@@ -306,21 +295,21 @@ export class MockApiDatabase {
     );
   }
 
-  private applyActiveFilter(records: MockRecord[], activeParam: string | null): MockRecord[] {
-    if (activeParam === null) {
+  private applyActiveFilter(records: MockRecord[], activeParameter: string | null): MockRecord[] {
+    if (activeParameter === null) {
       return records;
     }
 
-    const isActive: boolean = activeParam === 'true';
+    const isActive: boolean = activeParameter === 'true';
     return records.filter((record: MockRecord) => record['active'] === isActive);
   }
 
-  private applySort(records: MockRecord[], sortParam: string | null): MockRecord[] {
-    if (!sortParam) {
+  private applySort(records: MockRecord[], sortParameter: string | null): MockRecord[] {
+    if (!sortParameter) {
       return records;
     }
 
-    const sortParts: string[] = sortParam.split(SORT_DIRECTION_SEPARATOR);
+    const sortParts: string[] = sortParameter.split(SORT_DIRECTION_SEPARATOR);
     const field: string = sortParts[0];
     const isAscending: boolean = sortParts.length > 1 && sortParts[1].toUpperCase() === ASCENDING_SORT_DIRECTION;
 
@@ -370,6 +359,21 @@ export class MockApiDatabase {
   private createNotFoundResponse(url: string): Observable<never> {
     return throwError(() => new HttpErrorResponse({ status: 404, statusText: 'Not Found', url }));
   }
+
+  respondToRequest(request: HttpRequest<unknown>): Observable<HttpEvent<unknown>> {
+    const route: MockRoute = this.parseRoute(request.url);
+    const resource: MockResourceName | null = route.resource;
+
+    if (!resource) {
+      return this.createNotFoundResponse(request.url);
+    }
+
+    if (resource === AUTH_RESOURCE_NAME) {
+      return this.respondToAuthRequest(route.idOrAction, request.url);
+    }
+
+    return this.respondToResourceRequest(resource, route, request);
+  }
 }
 
 /**
@@ -377,16 +381,16 @@ export class MockApiDatabase {
  * and simulates the backend with an in-memory database.
  */
 export const mockInterceptor: HttpInterceptorFn = (
-  req: HttpRequest<unknown>,
+  request: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
   // Only API requests are mocked; asset requests (e.g. transloco i18n files)
   // must pass through to the real HTTP client.
-  if (!environment.mock || !req.url.startsWith(environment.baseUrl)) {
-    return next(req);
+  if (!environment.mock || !request.url.startsWith(environment.baseUrl)) {
+    return next(request);
   }
 
-  const mockResponse: Observable<HttpEvent<unknown>> = mockApiDatabase.respondToRequest(req);
+  const mockResponse: Observable<HttpEvent<unknown>> = mockApiDatabase.respondToRequest(request);
 
   return mockResponse.pipe(delay(MOCK_LATENCY_MS));
 };

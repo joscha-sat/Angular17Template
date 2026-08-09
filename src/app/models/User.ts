@@ -19,8 +19,8 @@ export class User extends BaseModel<User> implements UserDto {
   active!: boolean;
   inviteAcceptedAt?: string;
 
-  constructor(params: Partial<User>) {
-    super(params);
+  constructor(parameters: Partial<User>) {
+    super(parameters);
   }
 
   get fullName(): string {
@@ -36,7 +36,7 @@ export class User extends BaseModel<User> implements UserDto {
   }
 
   get roleName(): string {
-    return this.role?.name ? this.role.name : User.DEFAULT_ROLE_NAME;
+    return this.role?.name || User.DEFAULT_ROLE_NAME;
   }
 
   get hasInviteAccepted(): boolean {

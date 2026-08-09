@@ -1,4 +1,4 @@
-import { catchError, type Observable, switchMap, throwError } from 'rxjs';
+import { catchError, from, map, of, type Observable, switchMap, throwError } from 'rxjs';
 import { AuthService, type RefreshTokenResponse } from '../../api/auth.service';
 import {
   type HttpErrorResponse,
@@ -12,10 +12,10 @@ import { inject } from '@angular/core';
 
 const TOKEN_REFRESH_SUCCESS_STATUS: HttpStatusCode = HttpStatusCode.Created;
 
-export const authTokenInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+export const authTokenInterceptor: HttpInterceptorFn = (request: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const authService: AuthService = inject(AuthService);
   // Add authorization header to the request
-  const requestWithToken: HttpRequest<unknown> = addAuthorizationHeader(req, authService);
+  const requestWithToken: HttpRequest<unknown> = addAuthorizationHeader(request, authService);
   // Handle request and catch errors
   return next(requestWithToken).pipe(
     catchError((error: HttpErrorResponse) => handleHttpError(error, requestWithToken, next, authService)),
@@ -25,8 +25,8 @@ export const authTokenInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown
 /**
  * Adds the authorization header with bearer token to the request
  */
-function addAuthorizationHeader(req: HttpRequest<unknown>, authService: AuthService): HttpRequest<unknown> {
-  return req.clone({
+function addAuthorizationHeader(request: HttpRequest<unknown>, authService: AuthService): HttpRequest<unknown> {
+  return request.clone({
     setHeaders: {
       Authorization: `Bearer ${authService.getAccessToken()}`,
     },
@@ -70,14 +70,20 @@ function handleHttpError(
         const requestWithNewToken: HttpRequest<unknown> = addAuthorizationHeader(originalRequest, authService);
         // Retry the original request with the new token
         return next(requestWithNewToken);
-      } else {
-        authService.logout().then();
-        return throwError(() => createError(response)) as Observable<HttpEvent<unknown>>;
       }
+      return from(authService.logout()).pipe(
+        map(() => false),
+        catchError(() => of(false)),
+        switchMap(() => throwError(() => createError(response))),
+      ) as Observable<HttpEvent<unknown>>;
     }),
-    catchError((refreshError: unknown) => {
-      authService.logout().then();
-      return throwError(() => createError(refreshError)) as Observable<HttpEvent<unknown>>;
-    }),
+    catchError(
+      (refreshError: unknown) =>
+        from(authService.logout()).pipe(
+          map(() => false),
+          catchError(() => of(false)),
+          switchMap(() => throwError(() => createError(refreshError))),
+        ) as Observable<HttpEvent<unknown>>,
+    ),
   );
 }

@@ -19,7 +19,7 @@ export class MatSnackbarService {
     component: ComponentType<unknown>,
     type: SnackBarTypes,
     data?: SnackBarData,
-    plural: boolean = data?.plural ?? false,
+    isPlural: boolean = data?.plural ?? false,
     horizontalPosition: MatSnackBarHorizontalPosition = 'end',
     verticalPosition: MatSnackBarVerticalPosition = 'top',
   ): void {
@@ -28,7 +28,7 @@ export class MatSnackbarService {
       verticalPosition,
       panelClass: [`snackbar-${type}`],
       duration: 4000,
-      data: { ...data, title: type, plural },
+      data: { ...data, title: type, plural: isPlural },
     });
   }
 }

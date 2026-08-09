@@ -6,7 +6,7 @@ export class Customer extends BaseModel<Customer> implements GenCustomer {
   declare createdAt: string;
   declare updatedAt: string;
 
-  constructor(params: Partial<Customer>) {
-    super(params);
+  constructor(parameters: Partial<Customer>) {
+    super(parameters);
   }
 }

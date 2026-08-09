@@ -19,7 +19,7 @@ export type DeleteResponse = {
   affected: number;
 };
 
-export const deleteResponseSchema: ApiResponseSchema<DeleteResponse> = z.object({
+export const deletedResponseSchema: ApiResponseSchema<DeleteResponse> = z.object({
   affected: z.number().int().nonnegative(),
 });
 

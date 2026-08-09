@@ -17,7 +17,7 @@ export class LoadingService {
     return this.loading$.asObservable();
   }
 
-  setLoadingState(value: boolean): void {
-    this.loading$.next(value);
+  setLoadingState(isLoading: boolean): void {
+    this.loading$.next(isLoading);
   }
 }

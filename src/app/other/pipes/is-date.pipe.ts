@@ -5,18 +5,6 @@ import { Pipe, type PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class IsDatePipe implements PipeTransform {
-  transform(value: string | number | Date | undefined | null): boolean {
-    if (value === undefined || value === null) {
-      return false;
-    }
-
-    if (value === '') {
-      return true; // Empty string should be considered valid (creates Invalid Date)
-    }
-
-    return this.isValidDateValue(value);
-  }
-
   private isValidDateValue(value: string | number | Date): boolean {
     const date: Date = new Date(value);
 
@@ -38,5 +26,17 @@ export class IsDatePipe implements PipeTransform {
     const yearMonthPattern: RegExp = /^\d{4}-\d{1,2}$/;
     const yearOnlyPattern: RegExp = /^\d{4}$/;
     return yearMonthPattern.test(dateString) || yearOnlyPattern.test(dateString);
+  }
+
+  transform(value: string | number | Date | undefined | null): boolean {
+    if (value === undefined || value === null) {
+      return false;
+    }
+
+    if (value === '') {
+      return true; // Empty string should be considered valid (creates Invalid Date)
+    }
+
+    return this.isValidDateValue(value);
   }
 }

@@ -5,10 +5,10 @@ import { TranslocoPipe } from '@jsverse/transloco';
 @Component({
   selector: 'app-save-btn',
   imports: [MatButton, TranslocoPipe],
-  templateUrl: './save-btn.component.html',
-  styleUrl: './save-btn.component.scss',
+  templateUrl: './save-button.component.html',
+  styleUrl: './save-button.component.scss',
 })
-export class SaveBtnComponent {
+export class SaveButtonComponent {
   readonly disabled: InputSignal<boolean> = input(false);
   readonly clickEvent: OutputEmitterRef<void> = output<void>();
 

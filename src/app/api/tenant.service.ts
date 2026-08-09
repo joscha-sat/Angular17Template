@@ -2,17 +2,17 @@ import { Injectable, signal, type WritableSignal } from '@angular/core';
 
 import type { Observable } from 'rxjs';
 import {
-  type BaseQueryParams,
+  type BaseQueryParameters,
   GenericHttpService,
   type idTypes,
   type ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import type { Tenant } from '../models/Tenant';
-import { ApiRoutes } from '../other/enums/api_routes';
+import { ApiRoutes } from '../other/enums/api-routes';
 import { type EmptyDeleteResponse, emptyDeleteResponseSchema } from './schemas/common.schemas';
 import { tenantListResponseSchema, tenantResponseSchema } from './schemas/resource.schemas';
 
-export type TenantQueryParams = BaseQueryParams;
+export type TenantQueryParameters = BaseQueryParameters;
 
 @Injectable({
   providedIn: 'root',
@@ -23,8 +23,8 @@ export class TenantService extends GenericHttpService {
   element_i18nKey: string = 'tenant.a_title';
 
   // GET ALL > Tenants
-  getAllTenants(queryParams?: TenantQueryParams): Observable<ResponseWithRecords<Tenant>> {
-    return this.getAll<Tenant>(this.endpoint, queryParams, tenantListResponseSchema);
+  getAllTenants(queryParameters?: TenantQueryParameters): Observable<ResponseWithRecords<Tenant>> {
+    return this.getAll<Tenant>(this.endpoint, queryParameters, tenantListResponseSchema);
   }
 
   // GET ONE > Tenant

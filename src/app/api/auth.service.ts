@@ -4,7 +4,7 @@ import { map, type Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../other/environments/environment';
 import { User } from '../models/User';
-import { ApiRoutes } from '../other/enums/api_routes';
+import { ApiRoutes } from '../other/enums/api-routes';
 import { ROUTES } from '../other/enums/ROUTES';
 import {
   authenticatedUserSchema,
@@ -53,6 +53,28 @@ export class AuthService {
 
   private readonly baseUrl: string = environment.baseUrl;
   private loggedInUser?: User;
+
+  private buildUrl(...parts: string[]): string {
+    return [this.baseUrl, ...parts].join('/');
+  }
+
+  private setToLocalStorage(key: string, value: string): void {
+    localStorage.setItem(key, value);
+  }
+
+  private getFromLocalStorage(key: string): string | null {
+    return localStorage.getItem(key);
+  }
+
+  private clearUserSession(): void {
+    for (const key of Object.values(StorageKeys)) {
+      this.removeFromLocalStorage(key);
+    }
+  }
+
+  private removeFromLocalStorage(key: string): void {
+    localStorage.removeItem(key);
+  }
 
   isLoggedIn(): boolean {
     return (
@@ -129,28 +151,6 @@ export class AuthService {
 
     const validatedUser: User = new User(authenticatedUserSchema.parse(JSON.parse(userJSON)));
     return validatedUser;
-  }
-
-  private buildUrl(...parts: string[]): string {
-    return [this.baseUrl, ...parts].join('/');
-  }
-
-  private setToLocalStorage(key: string, value: string): void {
-    localStorage.setItem(key, value);
-  }
-
-  private getFromLocalStorage(key: string): string | null {
-    return localStorage.getItem(key);
-  }
-
-  private clearUserSession(): void {
-    Object.values(StorageKeys).forEach((key: string) => {
-      this.removeFromLocalStorage(key);
-    });
-  }
-
-  private removeFromLocalStorage(key: string): void {
-    localStorage.removeItem(key);
   }
 }
 

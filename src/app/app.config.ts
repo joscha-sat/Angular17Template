@@ -10,7 +10,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authTokenInterceptor } from './other/interceptors/auth-token.interceptor';
-import { isLoadingInterceptor } from './other/interceptors/is-loading.interceptor';
+import { loadingInterceptor } from './other/interceptors/is-loading.interceptor';
 import { errorInterceptor } from './other/interceptors/error.interceptor';
 import { mockInterceptor } from './other/interceptors/mock.interceptor';
 import { MAT_LUXON_DATE_FORMATS, provideLuxonDateAdapter } from '@angular/material-luxon-adapter';
@@ -61,9 +61,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     { provide: LOCALE_ID, useValue: 'de-DE' },
     ...provideLuxonDateAdapterWithLocale(),
-    provideHttpClient(
-      withInterceptors([mockInterceptor, authTokenInterceptor, isLoadingInterceptor, errorInterceptor]),
-    ),
+    provideHttpClient(withInterceptors([mockInterceptor, authTokenInterceptor, loadingInterceptor, errorInterceptor])),
     provideRouter(routes),
     provideTransloco({
       config: {

@@ -31,7 +31,7 @@ export class TemplateDatepickerComponent {
   readonly dateChange: OutputEmitterRef<string> = output<string>();
 
   selectedDateChanged(isoString: string | null): void {
-    const normalizedIsoString: string = isoString ?? '';
+    const normalizedIsoString: string = isoString === null ? '' : isoString;
     this.service()?.searchDate.set(normalizedIsoString);
     this.dateChange.emit(normalizedIsoString);
   }

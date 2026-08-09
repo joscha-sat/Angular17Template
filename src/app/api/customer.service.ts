@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
 import {
-  type BaseQueryParams,
+  type BaseQueryParameters,
   GenericHttpService,
   type idTypes,
   type ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import type { Customer } from '../models/Customer';
-import { ApiRoutes } from '../other/enums/api_routes';
-import { type DeleteResponse, deleteResponseSchema } from './schemas/common.schemas';
+import { ApiRoutes } from '../other/enums/api-routes';
+import { type DeleteResponse, deletedResponseSchema } from './schemas/common.schemas';
 import { customerListResponseSchema, customerResponseSchema } from './schemas/resource.schemas';
 
-type QueryParams = BaseQueryParams;
+type QueryParameters = BaseQueryParameters;
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +21,8 @@ export class CustomerService extends GenericHttpService {
   element_i18nKey: string = 'customer.a_customer';
 
   // GET ALL
-  getAllCustomers(queryParams?: QueryParams): Observable<ResponseWithRecords<Customer>> {
-    return this.getAll<Customer>(this.endpoint, queryParams, customerListResponseSchema);
+  getAllCustomers(queryParameters?: QueryParameters): Observable<ResponseWithRecords<Customer>> {
+    return this.getAll<Customer>(this.endpoint, queryParameters, customerListResponseSchema);
   }
 
   // GET ONE
@@ -52,11 +52,11 @@ export class CustomerService extends GenericHttpService {
 
   // DELETE ONE
   deleteCustomerById(id: idTypes): Observable<DeleteResponse> {
-    return this.deleteOne(this.endpoint, id, this.element_i18nKey, deleteResponseSchema);
+    return this.deleteOne(this.endpoint, id, this.element_i18nKey, deletedResponseSchema);
   }
 
   // DELETE ALL
   deleteAllCustomers(): Observable<DeleteResponse> {
-    return this.deleteAll(this.endpoint, deleteResponseSchema);
+    return this.deleteAll(this.endpoint, deletedResponseSchema);
   }
 }

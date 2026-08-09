@@ -21,13 +21,14 @@ import { TranslocoPipe } from '@jsverse/transloco';
   styleUrl: './user-add-edit-dialog.component.scss',
 })
 export class UserAddEditDialogComponent implements OnInit, AddEdit {
+  private readonly fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
+  private readonly userService: UserService = inject(UserService);
+
   model?: User;
   form!: FormGroup<{
     [K in keyof Partial<User>]: FormControl<User[K]>;
   }>;
   readonly createUserMode: WritableSignal<boolean> = signal(true);
-  private readonly fb: NonNullableFormBuilder = inject(NonNullableFormBuilder);
-  private readonly userService: UserService = inject(UserService);
 
   get userFromFormData(): User {
     const formData: {
@@ -58,7 +59,7 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
     this.createUserMode.set(this.model === undefined);
   }
 
-  // if the model is provided set the form data with it, else set to null
+  // Initialize the form with model data when editing and empty defaults when creating.
   initForm(): void {
     this.form = this.fb.group({
       firstName: [this.model?.firstName ?? '', Validators.required],

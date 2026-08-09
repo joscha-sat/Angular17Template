@@ -5,10 +5,10 @@ import { TranslocoPipe } from '@jsverse/transloco';
 @Component({
   selector: 'app-cancel-btn',
   imports: [MatButton, TranslocoPipe],
-  templateUrl: './cancel-btn.component.html',
-  styleUrl: './cancel-btn.component.scss',
+  templateUrl: './cancel-button.component.html',
+  styleUrl: './cancel-button.component.scss',
 })
-export class CancelBtnComponent {
+export class CancelButtonComponent {
   readonly cancelEvent: OutputEmitterRef<void> = output<void>();
 
   cancel(): void {

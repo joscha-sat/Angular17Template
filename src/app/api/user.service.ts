@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
 import {
-  type BaseQueryParams,
+  type BaseQueryParameters,
   GenericHttpService,
   type idTypes,
   type ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import type { User } from '../models/User';
-import { ApiRoutes } from '../other/enums/api_routes';
+import { ApiRoutes } from '../other/enums/api-routes';
 import { type EmptyDeleteResponse, emptyDeleteResponseSchema } from './schemas/common.schemas';
 import { userListResponseSchema, userResponseSchema } from './schemas/resource.schemas';
 
-type QueryParams = BaseQueryParams;
+type QueryParameters = BaseQueryParameters;
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +21,8 @@ export class UserService extends GenericHttpService {
   element_i18nKey: string = 'user.a_title';
 
   // GET ALL
-  getAllUsers(queryParams?: QueryParams): Observable<ResponseWithRecords<User>> {
-    return this.getAll<User>(this.endpoint, queryParams, userListResponseSchema);
+  getAllUsers(queryParameters?: QueryParameters): Observable<ResponseWithRecords<User>> {
+    return this.getAll<User>(this.endpoint, queryParameters, userListResponseSchema);
   }
 
   // GET ONE

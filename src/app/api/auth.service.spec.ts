@@ -6,7 +6,7 @@ import { AuthService, type LoginBody, type LoginResponse, type RefreshTokenRespo
 import { User } from '../models/User';
 import { environment } from '../other/environments/environment';
 import { ROUTES } from '../other/enums/ROUTES';
-import { ApiRoutes } from '../other/enums/api_routes';
+import { ApiRoutes } from '../other/enums/api-routes';
 import { ZodError } from 'zod';
 
 describe('AuthService', () => {

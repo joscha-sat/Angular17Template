@@ -47,6 +47,28 @@ export class TemplateTableComponent<T> implements AfterViewInit {
   readonly paginator: Signal<MatPaginator | undefined> = viewChild(MatPaginator);
   readonly sort: Signal<MatSort | undefined> = viewChild(MatSort);
 
+  private resolvePath(item: unknown, key: string): unknown {
+    let currentValue: unknown = item;
+
+    for (const pathSegment of key.split('.')) {
+      if (!currentValue || typeof currentValue !== 'object') {
+        return undefined;
+      }
+
+      currentValue = (currentValue as Record<string, unknown>)[pathSegment];
+    }
+
+    return currentValue;
+  }
+
+  private isAllowedType(value: unknown): value is string | number | Date | null | undefined {
+    if (value === null || value === undefined) {
+      return true;
+    }
+
+    return typeof value === 'string' || typeof value === 'number' || value instanceof Date;
+  }
+
   // hooks --------------------------------------------------- ||
   ngAfterViewInit(): void {
     this.setupDataSourcePaginator();
@@ -83,22 +105,5 @@ export class TemplateTableComponent<T> implements AfterViewInit {
     }
 
     return null;
-  }
-
-  private resolvePath(item: unknown, key: string): unknown {
-    return key.split('.').reduce((acc: unknown, k: string) => {
-      if (acc && typeof acc === 'object') {
-        return (acc as Record<string, unknown>)[k];
-      }
-      return undefined;
-    }, item);
-  }
-
-  private isAllowedType(value: unknown): value is string | number | Date | null | undefined {
-    if (value === null || value === undefined) {
-      return true;
-    }
-
-    return typeof value === 'string' || typeof value === 'number' || value instanceof Date;
   }
 }

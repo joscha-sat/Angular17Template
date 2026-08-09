@@ -8,7 +8,7 @@ import { ApiSnackbarComponent } from '../../shared/api-snackbar/api-snackbar.com
 
 export type idTypes = string | number | Array<string | number>;
 export type ResponseWithRecords<T> = { total: number; records: T[] };
-export type BaseQueryParams = {
+export type BaseQueryParameters = {
   skip?: number;
   limit?: number;
   search?: string;
@@ -18,14 +18,75 @@ export type BaseQueryParams = {
 
 @Injectable({ providedIn: 'root' })
 export class GenericHttpService {
+  private readonly http: HttpClient = inject(HttpClient);
+  private readonly snackBar: MatSnackbarService = inject(MatSnackbarService);
+  readonly #refreshObservable: Subject<void> = new Subject<void>();
+
   baseUrl: string = environment.baseUrl;
-  _refreshObservable: Subject<void> = new Subject<void>();
-  refreshObservable$: Observable<void> = this._refreshObservable.asObservable();
+  refreshObservable$: Observable<void> = this.#refreshObservable.asObservable();
   readonly search: WritableSignal<string> = signal<string>('');
   readonly searchDate: WritableSignal<string> = signal<string>('');
   readonly tabValueActive: WritableSignal<boolean | undefined> = signal<boolean | undefined>(undefined);
-  private readonly http: HttpClient = inject(HttpClient);
-  private readonly snackBar: MatSnackbarService = inject(MatSnackbarService);
+
+  /**
+   * Helper function to handle HTTP actions and show notifications.
+   * @param action - The Observable of the HTTP action
+   * @param i18nKeyForElement - Translation key for the element
+   * @param methodType - The HTTP method
+   * @param isPlural - Whether the translation describes multiple records
+   * @returns An Observable that manages the HTTP action and notifications
+   */
+  private httpAction<U>(
+    action: Observable<U>,
+    i18nKeyForElement: string,
+    methodType?: MethodType,
+    isPlural?: boolean,
+  ): Observable<U> {
+    return action.pipe(
+      tap(() => {
+        this.handleHttpSuccess(i18nKeyForElement, methodType, isPlural);
+        this.#refreshObservable.next();
+      }),
+    );
+  }
+
+  private parseResponse<T>(response: unknown, responseSchema: ApiResponseSchema<T>): T {
+    return responseSchema.parse(response);
+  }
+
+  /**
+   * Generates HTTP query parameters from an object.
+   * @param queryParameters - An object with query parameters as key-value pairs
+   * @returns An HttpParams object with the generated parameters
+   */
+  private generateParameters(queryParameters?: { [key: string]: unknown }): HttpParams {
+    let parameters: HttpParams = new HttpParams();
+    if (!queryParameters) {
+      return parameters;
+    }
+
+    for (const [key, value] of Object.entries(queryParameters)) {
+      // Skip undefined, null, and empty string values so they are not sent as query params
+      if (this.hasQueryParameterValue(value)) {
+        parameters = parameters.set(key, value as string | number | boolean);
+      }
+    }
+
+    return parameters;
+  }
+
+  private hasQueryParameterValue(value: unknown): boolean {
+    return value !== undefined && value !== null && value !== '';
+  }
+
+  private handleHttpSuccess(i18nKeyForElement: string, methodType?: MethodType, isPlural: boolean = false): void {
+    const payload: SnackBarData = {
+      i18nKeyOrMessage: i18nKeyForElement,
+      methodType,
+      plural: isPlural,
+    };
+    this.snackBar.openSnackBar(ApiSnackbarComponent, 'success', payload);
+  }
 
   /**
    * Constructs a full URL based on a given endpoint and optional ID.
@@ -40,18 +101,18 @@ export class GenericHttpService {
   /**
    * Fetches all records from a given endpoint and validates the complete response.
    * @param endpoint - The API endpoint
-   * @param queryParams - Optional: Query parameters
+   * @param queryParameters - Optional: Query parameters
    * @param responseSchema - Zod schema for the complete API response
    * @returns An Observable of the validated response containing records
    */
   getAll<T>(
     endpoint: string,
-    queryParams: { [key: string]: unknown } | undefined,
+    queryParameters: { [key: string]: unknown } | undefined,
     responseSchema: ApiResponseSchema<ResponseWithRecords<T>>,
   ): Observable<ResponseWithRecords<T>> {
-    const params: HttpParams = this.generateParams(queryParams);
+    const parameters: HttpParams = this.generateParameters(queryParameters);
     return this.http
-      .get<unknown>(this.getUrl(endpoint), { params })
+      .get<unknown>(this.getUrl(endpoint), { params: parameters })
       .pipe(map((response: unknown): ResponseWithRecords<T> => this.parseResponse(response, responseSchema)));
   }
 
@@ -187,63 +248,7 @@ export class GenericHttpService {
   deleteAll<T>(endpoint: string, responseSchema: ApiResponseSchema<T>): Observable<T> {
     return this.http.delete<unknown>(`${this.baseUrl}${endpoint}`).pipe(
       map((response: unknown): T => this.parseResponse(response, responseSchema)),
-      tap(() => this._refreshObservable.next()),
+      tap(() => this.#refreshObservable.next()),
     );
-  }
-
-  /**
-   * Helper function to handle HTTP actions and show notifications.
-   * @param action - The Observable of the HTTP action
-   * @param i18nKeyForElement - Translation key for the element
-   * @param methodType - The HTTP method
-   * @param plural - Whether the translation describes multiple records
-   * @returns An Observable that manages the HTTP action and notifications
-   */
-  private httpAction<U>(
-    action: Observable<U>,
-    i18nKeyForElement: string,
-    methodType?: MethodType,
-    plural?: boolean,
-  ): Observable<U> {
-    return action.pipe(
-      tap(() => {
-        this.handleHttpSuccess(i18nKeyForElement, methodType, plural);
-        this._refreshObservable.next();
-      }),
-    );
-  }
-
-  private parseResponse<T>(response: unknown, responseSchema: ApiResponseSchema<T>): T {
-    return responseSchema.parse(response);
-  }
-
-  /**
-   * Generates HTTP query parameters from an object.
-   * @param queryParams - An object with query parameters as key-value pairs
-   * @returns An HttpParams object with the generated parameters
-   */
-  private generateParams(queryParams?: { [key: string]: unknown }): HttpParams {
-    let params: HttpParams = new HttpParams();
-    if (!queryParams) {
-      return params;
-    }
-
-    Object.entries(queryParams).forEach(([key, value]: [string, unknown]) => {
-      // Skip undefined, null, and empty string values so they are not sent as query params
-      if (value !== undefined && value !== null && value !== '') {
-        params = params.set(key, value as string | number | boolean);
-      }
-    });
-
-    return params;
-  }
-
-  private handleHttpSuccess(i18nKeyForElement: string, methodType?: MethodType, plural: boolean = false): void {
-    const payload: SnackBarData = {
-      i18nKeyOrMessage: i18nKeyForElement,
-      methodType,
-      plural,
-    };
-    this.snackBar.openSnackBar(ApiSnackbarComponent, 'success', payload);
   }
 }

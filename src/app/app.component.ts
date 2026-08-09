@@ -14,9 +14,9 @@ import { environment } from './other/environments/environment';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  private readonly authService: AuthService = inject(AuthService);
   title: string = 'Angular-Template-V2';
   public loadingService: LoadingService = inject(LoadingService);
-  private readonly authService: AuthService = inject(AuthService);
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();

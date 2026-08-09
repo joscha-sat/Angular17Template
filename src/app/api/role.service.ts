@@ -1,19 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
 import {
-  type BaseQueryParams,
+  type BaseQueryParameters,
   GenericHttpService,
   type idTypes,
   type ResponseWithRecords,
 } from './base-http-service/base-http.service';
 import type { Role } from '../models/Role';
 import { AuthService } from './auth.service';
-import { ApiRoutes } from '../other/enums/api_routes';
+import { ApiRoutes } from '../other/enums/api-routes';
 import type { User } from '../models/User';
 import { type EmptyDeleteResponse, emptyDeleteResponseSchema } from './schemas/common.schemas';
 import { roleListResponseSchema, roleResponseSchema } from './schemas/resource.schemas';
 
-export type RoleQueryParams = BaseQueryParams;
+export type RoleQueryParameters = BaseQueryParameters;
 
 @Injectable({
   providedIn: 'root',
@@ -35,8 +35,8 @@ export class RoleService extends GenericHttpService {
   }
 
   // GET ALL
-  getAllRoles(queryParams?: RoleQueryParams): Observable<ResponseWithRecords<Role>> {
-    return this.getAll<Role>(this.endpoint, queryParams, roleListResponseSchema);
+  getAllRoles(queryParameters?: RoleQueryParameters): Observable<ResponseWithRecords<Role>> {
+    return this.getAll<Role>(this.endpoint, queryParameters, roleListResponseSchema);
   }
 
   // GET ONE Role

@@ -13,22 +13,13 @@ type SearchableService = {
   styleUrl: './template-table-search.component.scss',
 })
 export class TemplateTableSearchComponent implements OnInit {
+  private readonly fb: FormBuilder = inject(FormBuilder);
+
   readonly service: InputSignal<SearchableService> = input.required<SearchableService>();
   searchForm: FormGroup;
-  private readonly fb: FormBuilder = inject(FormBuilder);
 
   constructor() {
     this.searchForm = this.createSearchForm();
-  }
-
-  ngOnInit(): void {
-    this.syncSearchValueFromService();
-  }
-
-  // Updates the form value when the search input changes
-  onSearchChange(event: Event): void {
-    const inputValue: string = this.getInputValueFromEvent(event);
-    this.updateServiceSearchValue(inputValue);
   }
 
   // Creates the search form with initial empty value
@@ -54,5 +45,15 @@ export class TemplateTableSearchComponent implements OnInit {
   // Updates the service search value
   private updateServiceSearchValue(value: string): void {
     this.service().search.set(value);
+  }
+
+  ngOnInit(): void {
+    this.syncSearchValueFromService();
+  }
+
+  // Updates the form value when the search input changes
+  onSearchChange(event: Event): void {
+    const inputValue: string = this.getInputValueFromEvent(event);
+    this.updateServiceSearchValue(inputValue);
   }
 }

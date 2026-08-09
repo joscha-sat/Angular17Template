@@ -24,11 +24,7 @@ export class ThemingService {
   setTheme(theme: THEME): void {
     this.currentTheme.set(theme);
 
-    if (theme === THEME.DARK) {
-      this.document.documentElement.classList.add('dark-mode');
-    } else {
-      this.document.documentElement.classList.remove('dark-mode');
-    }
+    this.document.documentElement.classList.toggle('dark-mode', theme === THEME.DARK);
 
     localStorage.setItem('theme', theme);
   }

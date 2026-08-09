@@ -61,9 +61,10 @@ export function createUserResponseSchema(emailSchema: z.ZodType<string>): ApiRes
 
 export const userResponseSchema: ApiResponseSchema<User> = createUserResponseSchema(z.email());
 
-export const userListResponseSchema: ApiResponseSchema<PaginatedApiResponse<User>> = createPaginatedResponseSchema(
-  createUserResponseSchema(z.union([z.email(), z.literal('admin')])),
-);
+const userListEmailSchema: z.ZodType<string> = z.union([z.email(), z.literal('admin')]);
+const userListUserSchema: ApiResponseSchema<User> = createUserResponseSchema(userListEmailSchema);
+export const userListResponseSchema: ApiResponseSchema<PaginatedApiResponse<User>> =
+  createPaginatedResponseSchema(userListUserSchema);
 
 type TenantApiResponse = {
   id: string;

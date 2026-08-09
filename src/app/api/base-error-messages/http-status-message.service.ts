@@ -1,7 +1,7 @@
 import { inject, Injectable, Injector } from '@angular/core';
 import { TranslocoService } from '@jsverse/transloco';
 import type { HttpErrorResponse } from '@angular/common/http';
-import type { ApiRoutes } from '../../other/enums/api_routes';
+import type { ApiRoutes } from '../../other/enums/api-routes';
 
 // A mapping of HTTP status codes to translation keys
 const STATUS_CODES: { [key: number]: string } = {
@@ -19,59 +19,38 @@ type ResolvedEndpoint = ApiRoutes | string | undefined;
 @Injectable({
   providedIn: 'root',
 })
-export class HttpStatusMsgService {
+export class HttpStatusMessageService {
   private readonly injector: Injector = inject(Injector);
+
+  /**
+   * Method to get the appropriate error message for a given HTTP error status
+   * @param error - The HttpErrorResponse object
+   * @param method - Optional: The HTTP method (e.g., "GET", "POST")
+   * @param endpoint - Optional: Specific endpoint (e.g., "user")
+   * @returns The translated error message
+   */
+  getStatusErrorMessage = (error: HttpErrorResponse, method?: string, endpoint?: ApiRoutes | string): string => {
+    const resolvedEndpoint: ResolvedEndpoint = this.resolveEndpoint(error, endpoint);
+    const errorKey: string =
+      (() => {
+        const errorObject: { key?: string } | undefined = error.error as { key?: string } | undefined;
+        return errorObject && typeof errorObject.key === 'string' && errorObject.key ? errorObject.key : '';
+      })().toLowerCase() || '';
+
+    return (
+      this.getTranslatedMessage(resolvedEndpoint, method, errorKey) ||
+      this.getErrorMessage(error) ||
+      this.getStatusMessage(error)
+    );
+  };
 
   // Lazy retrieves the TranslocoService instance
   private get translocoService(): TranslocoService {
     return this.injector.get(TranslocoService);
   }
 
-  /**
-   * Method to get the appropriate error message for a given HTTP error status
-   * @param err - The HttpErrorResponse object
-   * @param method - Optional: The HTTP method (e.g., "GET", "POST")
-   * @param endpoint - Optional: Specific endpoint (e.g., "user")
-   * @returns The translated error message
-   */
-  getStatusErrorMessage = (err: HttpErrorResponse, method?: string, endpoint?: ApiRoutes | string): string => {
-    const resolvedEndpoint: ResolvedEndpoint = this.resolveEndpoint(err, endpoint);
-    const errorKey: string =
-      (() => {
-        const errorObj: { key?: string } | undefined = err.error as { key?: string } | undefined;
-        return errorObj && typeof errorObj.key === 'string' && errorObj.key ? errorObj.key : '';
-      })().toLowerCase() || '';
-
-    return (
-      this.getTranslatedMessage(resolvedEndpoint, method, errorKey) ||
-      this.getErrorMessage(err) ||
-      this.getStatusMessage(err)
-    );
-  };
-
-  /**
-   * Method to extract the endpoint from the error URL
-   * @param err - The HttpErrorResponse object
-   * @returns The extracted endpoint as a string
-   */
-  getEndpointFromError(err: HttpErrorResponse): string | undefined {
-    if (!err.url) {
-      return undefined;
-    }
-
-    // Extracting the endpoint segments from the URL
-    const url: URL = new URL(err.url);
-    const segments: string[] = url.pathname.split('/').filter((segment: string) => segment !== '');
-
-    // Check if the last segment matches a UUID pattern
-    const lastSegmentPattern: RegExp = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-    return lastSegmentPattern.test(segments[segments.length - 1])
-      ? segments[segments.length - 2]
-      : segments[segments.length - 1];
-  }
-
-  private resolveEndpoint(err: HttpErrorResponse, endpoint?: ApiRoutes | string): ResolvedEndpoint {
-    const endpointFromError: string | undefined = this.getEndpointFromError(err);
+  private resolveEndpoint(error: HttpErrorResponse, endpoint?: ApiRoutes | string): ResolvedEndpoint {
+    const endpointFromError: string | undefined = this.getEndpointFromError(error);
     return endpointFromError || endpoint;
   }
 
@@ -116,14 +95,34 @@ export class HttpStatusMsgService {
     }
   }
 
-  private getErrorMessage(err: HttpErrorResponse): string | null {
-    const errorObj: { message?: string } | undefined = err.error as { message?: string } | undefined;
-    return errorObj && typeof errorObj.message === 'string' && errorObj.message ? errorObj.message : null;
+  private getErrorMessage(error: HttpErrorResponse): string | null {
+    const errorObject: { message?: string } | undefined = error.error as { message?: string } | undefined;
+    return errorObject && typeof errorObject.message === 'string' && errorObject.message ? errorObject.message : null;
   }
 
-  private getStatusMessage(err: HttpErrorResponse): string {
-    const statusKey: string = STATUS_CODES[err.status];
+  private getStatusMessage(error: HttpErrorResponse): string {
+    const statusKey: string = STATUS_CODES[error.status];
     const statusMessage: string = statusKey ? this.translocoService.translate(statusKey) : '';
-    return statusMessage || `Unknown error, status code ${err.status}.`;
+    return statusMessage || `Unknown error, status code ${error.status}.`;
+  }
+
+  /**
+   * Method to extract the endpoint from the error URL
+   * @param error - The HttpErrorResponse object
+   * @returns The extracted endpoint as a string
+   */
+  getEndpointFromError(error: HttpErrorResponse): string | undefined {
+    if (!error.url) {
+      return undefined;
+    }
+
+    // Extracting the endpoint segments from the URL
+    const url: URL = new URL(error.url);
+    const segments: string[] = url.pathname.split('/').filter((segment: string) => segment !== '');
+
+    // Check if the last segment matches a UUID pattern
+    const lastSegmentPattern: RegExp = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    const lastSegment: string | undefined = segments.at(-1);
+    return lastSegmentPattern.test(lastSegment ?? '') ? segments.at(-2) : lastSegment;
   }
 }

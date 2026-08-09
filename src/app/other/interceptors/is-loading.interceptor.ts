@@ -12,29 +12,29 @@ import { LoadingService } from '../../services/loading.service';
 // Set initial request count at '0'
 const count: WritableSignal<number> = signal(0);
 
-export const isLoadingInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
+export const loadingInterceptor: HttpInterceptorFn = (request: HttpRequest<unknown>, next: HttpHandlerFn) => {
   // Inject the LoadingService
   const loaderService: LoadingService = inject(LoadingService);
 
   // Increase request count by '1'
-  count.update((val: number) => val + 1);
+  count.update((value: number) => value + 1);
 
   // Start a subscription that sets loading state to true after 300ms
   const load$: import('rxjs').Subscription = of(null)
     .pipe(delay(300))
     .subscribe(() => loaderService.setLoadingState(true));
 
-  return next(req).pipe(
-    tap((res: HttpEvent<unknown>) => {
-      if (res instanceof HttpResponse) {
+  return next(request).pipe(
+    tap((response: HttpEvent<unknown>) => {
+      if (response instanceof HttpResponse) {
         // If response received, decrease request count by '1'
         count.update((value: number) => value - 1);
       }
     }),
-    catchError((err: unknown) => {
+    catchError((error: unknown) => {
       // If error occurs, decrease request count by '1'
       count.update((value: number) => value - 1);
-      throw err;
+      throw error;
     }),
     finalize(() => {
       // On finalize, end the subscription and hide the loading state

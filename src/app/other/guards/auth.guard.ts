@@ -19,10 +19,10 @@ export const authGuard: CanActivateFn = (): boolean | UrlTree => {
 
   if (environment.mock) {
     navigationResult = true;
-  } else if (!isLoggedIn) {
-    navigationResult = router.parseUrl(ROUTES.LOGIN);
-  } else {
+  } else if (isLoggedIn) {
     navigationResult = isLoggedIn;
+  } else {
+    navigationResult = router.parseUrl(ROUTES.LOGIN);
   }
 
   return navigationResult;

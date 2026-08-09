@@ -10,8 +10,8 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { TemplateInputComponent } from '../../../../shared/template-input/template-input.component';
-import { SaveBtnComponent } from '../../../../shared/buttons/save-btn/save-btn.component';
-import { CancelBtnComponent } from '../../../../shared/buttons/cancel-btn/cancel-btn.component';
+import { SaveButtonComponent } from '../../../../shared/buttons/save-btn/save-button.component';
+import { CancelButtonComponent } from '../../../../shared/buttons/cancel-btn/cancel-button.component';
 
 import { TranslocoPipe } from '@jsverse/transloco';
 
@@ -24,20 +24,21 @@ import { TranslocoPipe } from '@jsverse/transloco';
     TemplateInputComponent,
     MatDialogActions,
     MatDialogClose,
-    SaveBtnComponent,
-    CancelBtnComponent,
+    SaveButtonComponent,
+    CancelButtonComponent,
     TranslocoPipe,
   ],
   templateUrl: './customer-add-edit-dialog.component.html',
   styleUrl: './customer-add-edit-dialog.component.scss',
 })
 export class CustomerAddEditDialogComponent implements OnInit {
+  private readonly fb: FormBuilder = inject(FormBuilder);
+  private readonly customerService: CustomerService = inject(CustomerService);
+
   readonly dialog: MatDialog = inject(MatDialog);
   model?: Customer;
   form?: FormGroup;
   readonly isCreateCustomerMode: WritableSignal<boolean> = signal(true);
-  private readonly fb: FormBuilder = inject(FormBuilder);
-  private readonly customerService: CustomerService = inject(CustomerService);
 
   get customerFromFormData(): Customer {
     // Reads form data and prepares a user object

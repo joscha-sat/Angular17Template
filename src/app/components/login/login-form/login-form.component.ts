@@ -6,6 +6,7 @@ import { ROUTES } from '../../../other/enums/ROUTES';
 import { TemplateInputComponent } from '../../../shared/template-input/template-input.component';
 import { MatButton } from '@angular/material/button';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { from, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-login-form',
@@ -14,9 +15,10 @@ import { TranslocoPipe } from '@jsverse/transloco';
   styleUrl: './login-form.component.scss',
 })
 export class LoginFormComponent {
+  private readonly fb: FormBuilder = inject(FormBuilder);
+
   router: Router = inject(Router);
   authService: AuthService = inject(AuthService);
-  private readonly fb: FormBuilder = inject(FormBuilder);
   form: FormGroup = this.fb.group({
     username: ['', { validators: Validators.required, nonNullable: true }],
     password: ['', { validators: Validators.required, nonNullable: true }],
@@ -31,8 +33,9 @@ export class LoginFormComponent {
       return;
     }
 
-    this.authService.login(this.loginBody).subscribe(() => {
-      this.router.navigate([`/${ROUTES.TENANT}`]).then();
-    });
+    this.authService
+      .login(this.loginBody)
+      .pipe(switchMap(() => from(this.router.navigate([`/${ROUTES.TENANT}`]))))
+      .subscribe();
   }
 }

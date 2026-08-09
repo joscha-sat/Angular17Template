@@ -1246,6 +1246,13 @@ class TenantRepository {
 
 ---
 
+## TODO Warnings
+
+It is acceptable for genuine TODO comments to remain as ESLint warnings. Do not remove, weaken, or rewrite a TODO
+solely to make lint quiet. Keep the TODO while the work is still incomplete and the comment accurately describes an
+outstanding task; remove or update it when the task is finished, obsolete, or no longer actionable. TODO warnings are
+acceptable, but unrelated ESLint errors must still be fixed.
+
 ## HTML / Template Comments & Formatting
 
 Use comments for HTML/template blocks in ALL CAPS. A comment must never exceed 5 words and should describe the

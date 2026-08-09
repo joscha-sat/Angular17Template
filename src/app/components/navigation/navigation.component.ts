@@ -13,8 +13,8 @@ import { TranslocoPipe, TranslocoService } from '@jsverse/transloco';
   styleUrl: './navigation.component.scss',
 })
 export class NavigationComponent implements OnInit {
-  readonly navItems: WritableSignal<NavItem[]> = signal<NavItem[]>([]);
   private readonly translocoService: TranslocoService = inject(TranslocoService);
+  readonly navItems: WritableSignal<NavItem[]> = signal<NavItem[]>([]);
 
   ngOnInit(): void {
     this.setTranslatedTextWithNavItems();
@@ -48,12 +48,6 @@ export class NavigationComponent implements OnInit {
         icon: 'cases',
         link: ROUTES.CUSTOMERS,
       },
-      // map
-      // {
-      //   tooltip: translations[4],
-      //   icon: 'map-pin',
-      //   link: ROUTES.MAP,
-      // },
       // settings
       {
         tooltip: translations[3],
