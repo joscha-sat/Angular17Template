@@ -103,7 +103,6 @@
     "@angular/cli": "^22.1.3",
     "@angular/compiler-cli": "^22.1.1",
     "@biomejs/biome": "^2.5.7",
-    "@deslint/cli": "^0.10.0",
     "@deslint/eslint-plugin": "^0.10.0",
     "@eslint/js": "^10.0.1",
     "@hey-api/openapi-ts": "^0.99.0",

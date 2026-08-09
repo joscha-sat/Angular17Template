@@ -1,17 +1,17 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { getTranslocoModule } from '@app/other/transloco-testing';
-import { SaveBtnComponent } from './save-btn.component';
+import { SaveButtonComponent } from './save-button.component';
 
-describe('SaveBtnComponent', () => {
-  let component: SaveBtnComponent;
-  let fixture: ComponentFixture<SaveBtnComponent>;
+describe('SaveButtonComponent', () => {
+  let component: SaveButtonComponent;
+  let fixture: ComponentFixture<SaveButtonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SaveBtnComponent, getTranslocoModule()],
+      imports: [SaveButtonComponent, getTranslocoModule()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SaveBtnComponent);
+    fixture = TestBed.createComponent(SaveButtonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

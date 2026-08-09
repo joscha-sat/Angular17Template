@@ -30,6 +30,14 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   }>;
   readonly createUserMode: WritableSignal<boolean> = signal(true);
 
+  private getFormValue<T extends keyof User>(propertyName: T, defaultValue: User[T]): User[T] {
+    if (this.model === undefined) {
+      return defaultValue;
+    }
+
+    return this.model[propertyName] ?? defaultValue;
+  }
+
   get userFromFormData(): User {
     const formData: {
       firstName?: string;
@@ -62,12 +70,12 @@ export class UserAddEditDialogComponent implements OnInit, AddEdit {
   // Initialize the form with model data when editing and empty defaults when creating.
   initForm(): void {
     this.form = this.fb.group({
-      firstName: [this.model?.firstName ?? '', Validators.required],
-      lastName: [this.model?.lastName ?? '', Validators.required],
-      phone: [this.model?.phone ?? ''],
-      active: [this.model?.active ?? true, Validators.required],
-      email: [this.model?.email ?? '', Validators.email],
-      roleId: [this.model?.roleId ?? ''],
+      firstName: [this.getFormValue('firstName', ''), Validators.required],
+      lastName: [this.getFormValue('lastName', ''), Validators.required],
+      phone: [this.getFormValue('phone', '')],
+      active: [this.getFormValue('active', true), Validators.required],
+      email: [this.getFormValue('email', ''), Validators.email],
+      roleId: [this.getFormValue('roleId', '')],
     }) as FormGroup<{
       [K in keyof Partial<User>]: FormControl<User[K]>;
     }>;

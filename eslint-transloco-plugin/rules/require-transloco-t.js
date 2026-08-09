@@ -1,3 +1,73 @@
+const TEXT_SKIP_CHECKS = [
+  (text) => text.length < 2,
+  (text) => /^[\d\s\-\+\*\/\=\.\,\;\:\!\?\(\)\[\]\{\}\<\>]+$/.test(text),
+  (text) => text.includes('{{') || text.includes('}}') || text.includes('[') || text.includes(']'),
+  (text) => /^(class|style|id|ng-|mat-)[a-zA-Z-]+$/.test(text),
+  (text) => /^(https?:\/\/|\/|\.\.\/|#)[\w\-\.\/\?=&%]+$/.test(text),
+  (text) => /^[a-zA-Z]+$/.test(text) && text.length < 4,
+];
+
+const TRANSLATION_ATTRIBUTE_NAMES = new Set(['transloco', 'translate']);
+const NON_TRANSLATABLE_ELEMENT_NAMES = new Set(['title', 'mat-icon']);
+
+const getNodeProperty = (node, propertyName) => {
+  if (!node) {
+    return undefined;
+  }
+
+  return node[propertyName];
+};
+
+const getReportableText = (node) => {
+  const text = node.value?.trim();
+  if (!text || TEXT_SKIP_CHECKS.some((skipCheck) => skipCheck(text))) {
+    return undefined;
+  }
+
+  return text;
+};
+
+const isTranslationAttribute = (attribute) =>
+  TRANSLATION_ATTRIBUTE_NAMES.has(attribute.name) || attribute.name?.startsWith('translate');
+
+const hasTranslationAttribute = (element) =>
+  element.attributes?.some(isTranslationAttribute) ?? false;
+
+const shouldSkipElement = (element) => {
+  if (element.type !== 'Element') {
+    return false;
+  }
+
+  return hasTranslationAttribute(element) || NON_TRANSLATABLE_ELEMENT_NAMES.has(element.name);
+};
+
+const isInsideTranslatableElement = (node) => {
+  let parent = node.parent;
+  while (parent) {
+    if (shouldSkipElement(parent)) {
+      return true;
+    }
+
+    parent = parent.parent;
+  }
+
+  return false;
+};
+
+const isTranslocoPipeContainer = (parent) => {
+  if (getNodeProperty(parent, 'type') !== 'Container') {
+    return false;
+  }
+
+  const pipeName = getNodeProperty(getNodeProperty(parent, 'name'), 'name');
+  if (pipeName !== 'pipe') {
+    return false;
+  }
+
+  const callee = getNodeProperty(getNodeProperty(parent, 'name'), 'callee');
+  return getNodeProperty(callee, 'name') === 'transloco';
+};
+
 module.exports = {
   meta: {
     type: 'problem',
@@ -13,74 +83,19 @@ module.exports = {
     return {
       // Visit text nodes in Angular templates
       Text(node) {
-        // Skip if the text is empty or just whitespace
-        const text = node.value?.trim();
-        if (!text) return;
-
-        // Skip if the text is too short (likely just punctuation or single characters)
-        if (text.length < 2) return;
-
-        // Skip if the text contains only numbers, symbols, or common non-translatable content
-        if (/^[\d\s\-\+\*\/\=\.\,\;\:\!\?\(\)\[\]\{\}\<\>]+$/.test(text))
-          return;
-
-        // Skip if it looks like a variable/expression (contains common programming patterns)
-        if (
-          text.includes('{{') ||
-          text.includes('}}') ||
-          text.includes('[') ||
-          text.includes(']')
-        )
-          return;
-
-        // Skip if it's a common CSS class or attribute pattern
-        if (/^(class|style|id|ng-|mat-)[a-zA-Z-]+$/.test(text)) return;
-
-        // Skip if it's a common HTML attribute value
-        if (/^(https?:\/\/|\/|\.\.\/|#)[\w\-\.\/\?=&%]+$/.test(text)) return;
-
-        // Skip if it's a single word that's likely a technical term
-        if (/^[a-zA-Z]+$/.test(text) && text.length < 4) return;
-
-        // Check if this text node is inside an element with transloco or translate directives
-        let parent = node.parent;
-        while (parent) {
-          if (parent.type === 'Element') {
-            // Check for transloco attributes
-            if (
-              parent.attributes?.some(
-                (attr) =>
-                  attr.name === 'transloco' ||
-                  attr.name === 'translate' ||
-                  attr.name?.startsWith('translate'),
-              )
-            ) {
-              return;
-            }
-            // Skip title tags as they're usually not translated in the HTML head
-            if (parent.name === 'title') {
-              return;
-            }
-            // Skip mat-icon elements as they use icon names, not translatable text
-            if (parent.name === 'mat-icon') {
-              return;
-            }
-          }
-          parent = parent.parent;
-        }
-
-        // Check if the text is already inside a transloco pipe
-        const parentContainer = node.parent;
-        if (
-          parentContainer &&
-          parentContainer.type === 'Container' &&
-          parentContainer.name?.name === 'pipe' &&
-          parentContainer.name?.callee?.name === 'transloco'
-        ) {
+        const text = getReportableText(node);
+        if (!text) {
           return;
         }
 
-        // Report the violation
+        if (isInsideTranslatableElement(node)) {
+          return;
+        }
+
+        if (isTranslocoPipeContainer(node.parent)) {
+          return;
+        }
+
         context.report({
           node,
           message: `"${text}" should be piped in transloco.`,

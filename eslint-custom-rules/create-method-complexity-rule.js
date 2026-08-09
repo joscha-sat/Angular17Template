@@ -11,6 +11,7 @@ const CONTROL_FLOW_NODE_TYPES = new Set([
   'ForOfStatement',
   'CatchClause',
 ]);
+const LOGICAL_OPERATORS = new Set(['&&', '||']);
 
 const isObject = (value) => value !== null && typeof value === 'object';
 
@@ -19,12 +20,12 @@ const getComplexityContribution = (currentNode) => {
     return 1;
   }
 
-  if (currentNode.type === 'SwitchCase' && currentNode.test) {
-    return 1;
+  if (currentNode.type === 'SwitchCase') {
+    return Number(Boolean(currentNode.test));
   }
 
-  if (currentNode.type === 'LogicalExpression' && ['&&', '||'].includes(currentNode.operator)) {
-    return 1;
+  if (currentNode.type === 'LogicalExpression') {
+    return Number(LOGICAL_OPERATORS.has(currentNode.operator));
   }
 
   return 0;
@@ -32,7 +33,11 @@ const getComplexityContribution = (currentNode) => {
 
 const getChildNodes = (currentNode) =>
   Object.entries(currentNode).flatMap(([propertyName, propertyValue]) => {
-    if (propertyName === 'parent' || propertyValue === null) {
+    if (propertyName === 'parent') {
+      return [];
+    }
+
+    if (!isObject(propertyValue)) {
       return [];
     }
 
@@ -40,7 +45,7 @@ const getChildNodes = (currentNode) =>
       return propertyValue.filter(isObject);
     }
 
-    return isObject(propertyValue) ? [propertyValue] : [];
+    return [propertyValue];
   });
 
 const countComplexity = (functionNode) => {
@@ -60,12 +65,22 @@ const countComplexity = (functionNode) => {
   return complexity;
 };
 
-const getFunctionName = (functionNode) => {
-  if (functionNode.id?.name) {
-    return functionNode.id.name;
+const getNodeName = (node) => {
+  if (!isObject(node)) {
+    return undefined;
   }
 
-  return functionNode.parent?.key?.name || 'anonymous';
+  return typeof node.name === 'string' ? node.name : undefined;
+};
+
+const getFunctionName = (functionNode) => {
+  const functionName = getNodeName(functionNode.id);
+  if (functionName) {
+    return functionName;
+  }
+
+  const parentKey = functionNode.parent ? functionNode.parent.key : undefined;
+  return getNodeName(parentKey) || 'anonymous';
 };
 
 module.exports = ({ defaultMax, description, message }) => ({

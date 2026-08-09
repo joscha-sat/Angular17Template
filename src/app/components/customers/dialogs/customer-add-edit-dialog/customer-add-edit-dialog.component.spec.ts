@@ -12,8 +12,8 @@ import {
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { getTranslocoModule } from '@app/other/transloco-testing';
 import { TemplateInputComponent } from '../../../../shared/template-input/template-input.component';
-import { SaveBtnComponent } from '../../../../shared/buttons/save-btn/save-btn.component';
-import { CancelBtnComponent } from '../../../../shared/buttons/cancel-btn/cancel-btn.component';
+import { SaveButtonComponent } from '../../../../shared/buttons/save-btn/save-button.component';
+import { CancelButtonComponent } from '../../../../shared/buttons/cancel-btn/cancel-button.component';
 import { of } from 'rxjs';
 
 describe('CustomerAddEditDialogComponent', () => {
@@ -36,8 +36,8 @@ describe('CustomerAddEditDialogComponent', () => {
         ReactiveFormsModule,
         getTranslocoModule(),
         TemplateInputComponent,
-        SaveBtnComponent,
-        CancelBtnComponent,
+        SaveButtonComponent,
+        CancelButtonComponent,
         MatDialogTitle,
         MatDialogContent,
         MatDialogActions,

@@ -26,12 +26,21 @@ const countSourceLines = (lines, skipBlankLines, skipComments) => {
   return countedLines.length;
 };
 
+const getOptionValue = (options, optionName, defaultValue) => {
+  const optionValue = options[optionName];
+  if (optionValue === null || optionValue === undefined) {
+    return defaultValue;
+  }
+
+  return optionValue;
+};
+
 const getRuleOptions = (context, defaultMax) => {
-  const options = context.options[0] || {};
+  const options = context.options[0] ?? {};
   return {
-    maximumLineCount: options.max ?? defaultMax,
-    skipBlankLines: options.skipBlankLines ?? false,
-    skipComments: options.skipComments ?? false,
+    maximumLineCount: getOptionValue(options, 'max', defaultMax),
+    skipBlankLines: getOptionValue(options, 'skipBlankLines', false),
+    skipComments: getOptionValue(options, 'skipComments', false),
   };
 };
 

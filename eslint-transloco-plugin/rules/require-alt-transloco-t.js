@@ -1,3 +1,26 @@
+const ALT_TEXT_SKIP_CHECKS = [
+  (altText) => altText.length < 3,
+  (altText) => /\.(jpg|jpeg|png|gif|svg|webp)$/i.test(altText),
+  (altText) => /^[\d\s\-\+\*\/\=\.\,\;\:\!\?]+$/.test(altText),
+  (altText) => altText.includes('| transloco') || altText.includes('|transloco'),
+];
+
+const getTextAltValue = (attribute) => {
+  if (attribute?.value?.type !== 'Text') {
+    return undefined;
+  }
+
+  return attribute.value.value?.trim();
+};
+
+const shouldReportAltText = (altText) => {
+  if (!altText) {
+    return false;
+  }
+
+  return !ALT_TEXT_SKIP_CHECKS.some((skipCheck) => skipCheck(altText));
+};
+
 module.exports = {
   meta: {
     type: 'problem',
@@ -13,38 +36,17 @@ module.exports = {
     return {
       // Visit img elements in templates
       'Element[name="img"]'(node) {
-        // Find the alt attribute
         const altAttr = node.attributes?.find((attr) => attr.name === 'alt');
+        const altText = getTextAltValue(altAttr);
 
-        if (altAttr && altAttr.value && altAttr.value.type === 'Text') {
-          const altText = altAttr.value.value?.trim();
-
-          // Skip empty alt attributes (intentionally decorative)
-          if (!altText) return;
-
-          // Skip if it's just a placeholder or very short
-          if (altText.length < 3) return;
-
-          // Skip if it looks like a filename or URL
-          if (/\.(jpg|jpeg|png|gif|svg|webp)$/i.test(altText)) return;
-
-          // Skip if it contains only numbers/symbols
-          if (/^[\d\s\-\+\*\/\=\.\,\;\:\!\?]+$/.test(altText)) return;
-
-          // Skip if it's already using transloco
-          if (
-            altText.includes('| transloco') ||
-            altText.includes('|transloco')
-          ) {
-            return;
-          }
-
-          // Report the violation
-          context.report({
-            node: altAttr,
-            message: `Alt text "${altText}" should be piped in transloco.`,
-          });
+        if (!shouldReportAltText(altText)) {
+          return;
         }
+
+        context.report({
+          node: altAttr,
+          message: `Alt text "${altText}" should be piped in transloco.`,
+        });
       },
     };
   },
