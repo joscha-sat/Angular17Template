@@ -11,16 +11,20 @@
         <!-- If a custom template exists for this column, use it -->
         <!-- otherwise, fall back to the default template -->
         <td mat-cell *matCellDef="let element">
-          <ng-container
-            *ngTemplateOutlet="
-              cellTemplatesMap()[column] ? customCellTemplate : defaultCellTemplate;
-              context: {
-                $implicit: extractNestedProperty(element, column),
-                element: element,
-                column: column,
-              }
-            "
-          />
+          @if (cellTemplatesMap()[column]) {
+            <ng-container
+              *ngTemplateOutlet="
+                customCellTemplate;
+                context: {
+                  $implicit: extractNestedProperty(element, column),
+                  element: element,
+                  column: column,
+                }
+              "
+            />
+          } @else {
+            <app-template-table-default-cell [value]="extractNestedProperty(element, column)" />
+          }
         </td>
       </ng-container>
     }
@@ -55,14 +59,4 @@
     />
   </ng-template>
 
-  <!-- Default template used when no custom template exists for a column -->
-  <ng-template #defaultCellTemplate let-value>
-    <!-- For date values: format as DD.MM.YYYY HH:MM -->
-    @if (value | isDate) {
-      {{ value | date: 'dd.MM.yyyy HH:mm' }}
-    } @else {
-      <!-- For all other values: display as plain text -->
-      {{ value }}
-    }
-  </ng-template>
 </div>

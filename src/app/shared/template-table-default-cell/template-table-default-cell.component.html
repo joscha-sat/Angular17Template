@@ -1,0 +1,5 @@
+@if (value() | isDate) {
+  {{ value() | date: 'dd.MM.yyyy HH:mm' }}
+} @else {
+  {{ value() }}
+}

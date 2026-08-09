@@ -11,13 +11,13 @@ import {
 } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { DatePipe, NgTemplateOutlet } from '@angular/common';
-import { IsDatePipe } from '../../other/pipes/is-date.pipe';
+import { NgTemplateOutlet } from '@angular/common';
 import { MatPaginator, type PageEvent } from '@angular/material/paginator';
+import { TemplateTableDefaultCellComponent } from '../template-table-default-cell/template-table-default-cell.component';
 
 @Component({
   selector: 'app-template-table',
-  imports: [MatTableModule, MatPaginator, NgTemplateOutlet, DatePipe, IsDatePipe],
+  imports: [MatTableModule, MatPaginator, NgTemplateOutlet, TemplateTableDefaultCellComponent],
   standalone: true,
   templateUrl: './template-table.component.html',
   styleUrl: './template-table.component.scss',

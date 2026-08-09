@@ -18,11 +18,11 @@ import { MatPaginator, MatPaginatorModule, type PageEvent } from '@angular/mater
 import { MatSort, MatSortModule, type SortDirection } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { catchError, debounceTime, distinctUntilChanged, map, type Observable, of, switchMap, tap } from 'rxjs';
-import { IsDatePipe } from '../../other/pipes/is-date.pipe';
 import type { BaseGetQueryParams, SortParamType } from '../../other/types/Table.type';
 import type { ResponseWithRecords } from '../../api/base-http-service/base-http.service';
+import { TemplateTableDefaultCellComponent } from '../template-table-default-cell/template-table-default-cell.component';
 
 // Type for the function that fetches data from the server
 export type FetchDataFunction<T> = (params: BaseGetQueryParams) => Observable<ResponseWithRecords<T>>;
@@ -35,7 +35,7 @@ const VALID_SORT_DIRECTIONS: string[] = ['ASC', 'DESC'];
 
 @Component({
   selector: 'app-template-table-fetch',
-  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, DatePipe, IsDatePipe],
+  imports: [CommonModule, MatTableModule, MatPaginatorModule, MatSortModule, TemplateTableDefaultCellComponent],
   standalone: true,
   templateUrl: './template-table-enter-fetch.component.html',
   styleUrl: './template-table-enter-fetch.component.scss',

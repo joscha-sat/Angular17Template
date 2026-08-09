@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { Customer } from '../../models/Customer';
-import { Role } from '../../models/Role';
+import { Role, type RolePermission } from '../../models/Role';
 import { Tenant } from '../../models/Tenant';
 import { User } from '../../models/User';
 import { type ApiResponseSchema, createPaginatedResponseSchema, type PaginatedApiResponse } from './common.schemas';
@@ -22,6 +22,18 @@ type UserApiResponse = {
   [key: string]: unknown;
 };
 
+const resourceMetadataSchema: z.ZodObject<{
+  id: z.ZodString;
+  createdAt: z.ZodISODateTime;
+  updatedAt: z.ZodISODateTime;
+  tenantId: z.ZodOptional<z.ZodNullable<z.ZodString>>;
+}> = z.object({
+  id: z.string().min(1),
+  createdAt: z.iso.datetime(),
+  updatedAt: z.iso.datetime(),
+  tenantId: z.string().nullable().optional(),
+});
+
 function createUserModel(userResponse: UserApiResponse): User {
   const user: User = new User({});
   Object.assign(user, userResponse);
@@ -31,10 +43,6 @@ function createUserModel(userResponse: UserApiResponse): User {
 export function createUserResponseSchema(emailSchema: z.ZodType<string>): ApiResponseSchema<User> {
   const userApiResponseSchema: ApiResponseSchema<UserApiResponse> = z
     .object({
-      id: z.string().min(1),
-      createdAt: z.iso.datetime(),
-      updatedAt: z.iso.datetime(),
-      tenantId: z.string().nullable().optional(),
       email: emailSchema,
       firstName: z.string(),
       lastName: z.string(),
@@ -45,6 +53,7 @@ export function createUserResponseSchema(emailSchema: z.ZodType<string>): ApiRes
       roleId: z.string().nullable().optional(),
       password: z.string().nullable().optional(),
     })
+    .extend(resourceMetadataSchema.shape)
     .catchall(z.any());
 
   return userApiResponseSchema.transform(createUserModel);
@@ -84,35 +93,6 @@ export const tenantResponseSchema: ApiResponseSchema<Tenant> =
 
 export const tenantListResponseSchema: ApiResponseSchema<PaginatedApiResponse<Tenant>> =
   createPaginatedResponseSchema(tenantResponseSchema);
-
-type RolePermission =
-  | 'FILE_READ'
-  | 'FILE_READ_OWN'
-  | 'FILE_CREATE'
-  | 'FILE_UPDATE'
-  | 'FILE_UPDATE_OWN'
-  | 'FILE_DELETE'
-  | 'FILE_DELETE_OWN'
-  | 'ROLE_READ'
-  | 'ROLE_READ_OWN'
-  | 'ROLE_CREATE'
-  | 'ROLE_UPDATE'
-  | 'ROLE_DELETE'
-  | 'TENANT_READ'
-  | 'TENANT_READ_OWN'
-  | 'TENANT_CREATE'
-  | 'TENANT_UPDATE'
-  | 'TENANT_UPDATE_OWN'
-  | 'TENANT_DELETE'
-  | 'TENANT_DELETE_OWN'
-  | 'USER_READ'
-  | 'USER_READ_OWN'
-  | 'USER_CREATE'
-  | 'USER_UPDATE'
-  | 'USER_UPDATE_OWN'
-  | 'USER_DELETE'
-  | 'USER_DELETE_OWN'
-  | 'KPI_TENANT';
 
 const ROLE_PERMISSION_VALUES: readonly [RolePermission, ...RolePermission[]] = [
   'FILE_READ',
@@ -161,10 +141,6 @@ type RoleApiResponse = {
 
 const roleApiResponseSchema: ApiResponseSchema<RoleApiResponse> = z
   .object({
-    id: z.string().min(1),
-    createdAt: z.iso.datetime(),
-    updatedAt: z.iso.datetime(),
-    tenantId: z.string().nullable().optional(),
     name: z.string().min(1),
     description: z.string(),
     global: z.boolean(),
@@ -173,6 +149,7 @@ const roleApiResponseSchema: ApiResponseSchema<RoleApiResponse> = z
     tenantAdmin: z.boolean(),
     permissions: z.enum(ROLE_PERMISSION_VALUES).array(),
   })
+  .extend(resourceMetadataSchema.shape)
   .catchall(z.any());
 
 function createRoleModel(roleResponse: RoleApiResponse): Role {
