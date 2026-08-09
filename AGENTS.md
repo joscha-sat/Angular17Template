@@ -3,24 +3,36 @@
 This AGENTS.md must reflect the current state of the project at all times. Update/Synchronize it if you spot differences!
 
 ## Scripts
-Always run these scripts at the end of your work to ensure code quality and consistency:
+
+Not every small change requires running all of these; use judgment to select the relevant ones for the task at hand.
+Before running these commands, check whether a skill or MCP exists to automate or assist them; Fallow has an AI Agent skill for help.
 
 - `npm run lint:oxlint-and-eslint`
 - `npm run lint:biome-safe-fixes`
 - `npm run format:biome`
+- `npm run knip`
+- `npm run find:same-code`
+- `npm run fallow:dead-code`
+- `npm run fallow:dupes`
+- `npm run fallow:health`
+- `npm run fallow:review`
+- `npm run fallow:fix:dry-run`
+- `npm run lint:imports`
 
 ## Tech Stack
-- Angular: `^22.1.0`
-- Angular Material: `^22.1.0`
+
+- Angular: `^22.1.1`
+- Angular Material: `^22.1.1`
 - TypeScript: `~6.0.3`
 - RxJS: `~7.8.2`
 - Zod: `^4.4.3`
-- ESLint: `^10.8.0`
-- Prettier: `^3.9.6`
+- ESLint: `^10.8.1`
+- Biome: `^2.5.7`
 - Transloco (i18n): `^8.4.0`
 - Vitest: `^4.1.10`
 
 ## Project Structure
+
 ```
 src/
 ├── app/
@@ -49,6 +61,14 @@ src/
 │   ├── services/                     # Cross-cutting services
 │   ├── shared/                       # Shared components (templates)
 │   ├── views/                        # Page-level components (suffix: .view)
+│   │   ├── customers.view/
+│   │   ├── login.view/
+│   │   ├── map.view/
+│   │   ├── settings.view/
+│   │   ├── tenant.view/
+│   │   ├── tenant-dashboard.view/
+│   │   ├── test-view/
+│   │   └── user.view/
 │   ├── app.component.ts
 │   ├── app.config.ts
 │   ├── app.routes.ts
@@ -359,13 +379,13 @@ readonly tenantDetailsResource: HttpResourceRef<Tenant> = httpResource<Tenant>((
 
 #### Choosing between resource APIs
 
-| Scenario | Use |
-|---|---|
-| `HttpClient` GET (JSON response) | `httpResource()` |
-| `HttpClient` POST / mutation | `HttpClient` directly in a service method |
-| RxJS Observable loader, not HttpClient | `rxResource()` |
-| Promise-based loader (fetch, SDK, browser API) | `resource()` |
-| Value derived from a signal but user-overridable | `linkedSignal()` |
+| Scenario                                         | Use                                       |
+| ------------------------------------------------ | ----------------------------------------- |
+| `HttpClient` GET (JSON response)                 | `httpResource()`                          |
+| `HttpClient` POST / mutation                     | `HttpClient` directly in a service method |
+| RxJS Observable loader, not HttpClient           | `rxResource()`                            |
+| Promise-based loader (fetch, SDK, browser API)   | `resource()`                              |
+| Value derived from a signal but user-overridable | `linkedSignal()`                          |
 
 ---
 
@@ -414,13 +434,13 @@ Use the built-in template control flow (`@if`, `@for`, `@switch`) instead of `*n
 
 ```html
 @if (isUserAuthenticated()) {
-  <ul>
-    @for (user of userList(); track user.id) {
-      <li>{{ user.name }}</li>
-    }
-  </ul>
+<ul>
+  @for (user of userList(); track user.id) {
+  <li>{{ user.name }}</li>
+  }
+</ul>
 } @else {
-  <app-login-prompt />
+<app-login-prompt />
 }
 ```
 
@@ -616,7 +636,7 @@ Simple, obvious code beats clever, compact code.
 ❌ **BAD** - Clever but unreadable:
 
 ```typescript
-const calculateDiscount = (p: number, a: number) => p > 100 ? a * 0.1 : p > 50 ? a * 0.05 : a > 1000 ? 25 : 0;
+const calculateDiscount = (p: number, a: number) => (p > 100 ? a * 0.1 : p > 50 ? a * 0.05 : a > 1000 ? 25 : 0);
 ```
 
 ✅ **GOOD** - Simple and obvious:
@@ -1024,7 +1044,7 @@ function processItemIfEligible(item: Item): void {
 All code must be formatted using a shared, project-wide formatter and linter configuration. Manual formatting
 decisions should never vary between contributors — the tooling enforces consistency automatically.
 
-- Use the project's configured **formatter** (e.g., Prettier) for all files on save
+- Use the project's configured **formatter** (Biome) for all files on save
 - Use the project's configured **linter** (e.g., ESLint) to catch style and quality violations
 - Never commit code that has outstanding linter errors or bypasses formatter rules
 
@@ -1032,7 +1052,9 @@ decisions should never vary between contributors — the tooling enforces consis
 
 ```typescript
 // File A
-const getUserData=()=>{ return fetch('/api/user') }
+const getUserData = () => {
+  return fetch('/api/user');
+};
 
 // File B
 const getUserData = () => {
@@ -1266,7 +1288,9 @@ following block or section.
 </header>
 
 <!-- USER TABLE -->
-<table>...</table>
+<table>
+  ...
+</table>
 
 <!-- NEW USER BUTTON -->
 <button type="button">Create User</button>

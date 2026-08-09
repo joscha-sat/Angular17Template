@@ -12,6 +12,7 @@ import { environment } from '../../other/environments/environment';
 
 const MOCK_LATENCY_MS: number = 400;
 
+// eslint-disable-next-line ai-guard/no-hardcoded-secret -- Deterministic mock token, not a credential.
 const MOCK_ACCESS_TOKEN: string = 'mock-access-token';
 const MOCK_REFRESH_TOKEN: string = 'mock-refresh-token';
 
@@ -506,7 +507,7 @@ function createMockUsers(): MockRecord[] {
       email: 'admin@acme-gmbh.de',
       firstName: 'Max',
       lastName: 'Mustermann',
-      password: 'MockPasswort123!', // eslint-disable-line sonarjs/no-hardcoded-passwords
+      password: 'MockPasswort123!', // eslint-disable-line sonarjs/no-hardcoded-passwords, ai-guard/no-hardcoded-secret -- Deterministic mock credential.
       phone: '+49 30 12345678',
       active: true,
       inviteAcceptedAt: daysAgo(25),
@@ -529,7 +530,7 @@ function createMockUsers(): MockRecord[] {
       email: 'erika@acme-gmbh.de',
       firstName: 'Erika',
       lastName: 'Musterfrau',
-      password: 'MockPasswort123!', // eslint-disable-line sonarjs/no-hardcoded-passwords
+      password: 'MockPasswort123!', // eslint-disable-line sonarjs/no-hardcoded-passwords, ai-guard/no-hardcoded-secret -- Deterministic mock credential.
       phone: '+49 30 87654321',
       active: true,
       inviteAcceptedAt: daysAgo(15),
@@ -552,7 +553,7 @@ function createMockUsers(): MockRecord[] {
       email: 'john.doe@globex.com',
       firstName: 'John',
       lastName: 'Doe',
-      password: 'MockPasswort123!', // eslint-disable-line sonarjs/no-hardcoded-passwords
+      password: 'MockPasswort123!', // eslint-disable-line sonarjs/no-hardcoded-passwords, ai-guard/no-hardcoded-secret -- Deterministic mock credential.
       phone: '+49 40 5551234',
       active: false,
       inviteAcceptedAt: undefined,

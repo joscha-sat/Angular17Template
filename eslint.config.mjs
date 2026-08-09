@@ -287,11 +287,18 @@ const intentionalFalsePositiveConfig = {
     'src/app/shared/template-input/template-input.component.html',
   ],
   rules: {
-    'ai-guard/no-hardcoded-secret': 'off',
     'deslint/form-labels': 'off',
     'deslint/no-hardcoded-localhost': 'off',
     'deslint/no-hardcoded-secrets': 'off',
     'unicorn/no-array-sort': 'off',
+  },
+};
+
+// Browser API keys are public by design; keep them visible without failing the lint gate.
+const intentionalPublicConfigurationConfig = {
+  files: ['src/app/other/environments/environment*.ts'],
+  rules: {
+    'ai-guard/no-hardcoded-secret': 'warn',
   },
 };
 
@@ -351,6 +358,7 @@ export default defineConfig([
   tsFilesConfig,
   htmlTemplateFilesConfig,
   intentionalFalsePositiveConfig,
+  intentionalPublicConfigurationConfig,
   angularNullContractConfig,
   angularBootstrapSideEffectConfig,
   intentionalFilenameConventionConfig,
@@ -360,7 +368,11 @@ export default defineConfig([
       'projects/**/*',
       'node_modules/**/*',
       'dist/**/*',
-      '.angular/**/*',
+      '**/.angular/**/*',
+      'src/client/**/*',
+      '**/generated/**/*',
+      '**/__generated__/**/*',
+      '**/*.generated.*',
       '**/*.spec.ts',
     ],
   },

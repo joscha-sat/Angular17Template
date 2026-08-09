@@ -19,6 +19,8 @@ const StorageKeys: {
   REFRESH_TOKEN: string;
   USER: string;
 } = {
+  // This is a local-storage key, not an access-token credential.
+  // eslint-disable-next-line ai-guard/no-hardcoded-secret -- Storage key, not a credential.
   ACCESS_TOKEN: 'access_token',
   REFRESH_TOKEN: 'refresh_token',
   USER: 'user',
