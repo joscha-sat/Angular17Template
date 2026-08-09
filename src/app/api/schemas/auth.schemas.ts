@@ -6,7 +6,7 @@ import { createUserResponseSchema } from './resource.schemas';
 const TEST_LOGIN_USERNAME: string = 'admin';
 const authenticatedUserEmailSchema: z.ZodType<string> = z.union([z.email(), z.literal(TEST_LOGIN_USERNAME)]);
 
-export const authUserResponseSchema: ApiResponseSchema<User> = createUserResponseSchema(authenticatedUserEmailSchema);
+const authUserResponseSchema: ApiResponseSchema<User> = createUserResponseSchema(authenticatedUserEmailSchema);
 
 export type AuthenticatedUserResponse = {
   id: string;

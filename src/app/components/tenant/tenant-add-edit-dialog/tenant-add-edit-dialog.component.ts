@@ -21,11 +21,8 @@ export class TenantAddEditDialogComponent implements OnInit, AddEdit {
   protected readonly MODE: typeof MODE = MODE;
 
   ngOnInit(): void {
-    this.getMode();
     this.initForm();
   }
-
-  getMode(): void {}
 
   initForm(): void {
     this.tenantForm = this.fb.group({
