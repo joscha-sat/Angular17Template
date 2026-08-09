@@ -1,0 +1,13 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": ["transloco.config.ts"],
+  "ignore": ["src/client/**"],
+  "ignoreBinaries": ["jscpd", "start"],
+  "ignoreDependencies": ["@angular-eslint/schematics"],
+  "ignoreIssues": {
+    "src/app/other/enums/ROUTES.ts": ["enumMembers"]
+  },
+  "tags": [
+    "-lintignore"
+  ]
+}
